@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: egor
+  - include:
+      file: USER/DDL/001_create_user.sql
+      relativeToChangelogFile: true

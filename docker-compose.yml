@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: database
+    image: postgres:15.2
+    volumes:
+      - dbvolume:/var/lib/postgresql/dbvolume
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  dbvolume:
