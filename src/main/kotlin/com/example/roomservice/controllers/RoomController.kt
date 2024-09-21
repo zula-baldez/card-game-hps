@@ -22,6 +22,7 @@ class RoomController(
     @MessageMapping("/create-room")
     @SendTo("/topic/new-rooms")
     fun createRoom(createRoomDTO: CreateRoomDTO, principal: Principal): RoomChangeResponse {
+        println("zalupa ${principal.name}")
         val roomHandler = roomManager.createRoom(
             createRoomDTO.name,
             principal.name.toLong(),

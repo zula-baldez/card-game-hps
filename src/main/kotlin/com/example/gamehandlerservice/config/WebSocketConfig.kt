@@ -26,6 +26,7 @@ class WebSocketConfig(
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/game")
             .addInterceptors(userHandshakeInterceptor)
+        registry.addEndpoint("/rooms").setAllowedOrigins("*")
     }
 }
 
