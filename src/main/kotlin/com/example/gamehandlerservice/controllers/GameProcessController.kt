@@ -21,7 +21,6 @@ class GameProcessController : BaseController() {
     @HostOnly
     @MessageMapping("/start-game")
     fun startGame(roomHandler: RoomHandler, account: Account) {
-        println("game start")
         roomHandler.startGame()
     }
 

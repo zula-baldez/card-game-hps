@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class RoomInfoServiceImpl(private val roomManager: RoomManager) : RoomInfoService {
-    override fun getRoomInfo(roomId : Int, playerId: Long) : List<Account>? {
-        val players = roomManager.getRoom(roomId.toLong())?.getAllPlayers()?.toMutableList()
+    override fun getRoomInfo(roomId: Int, playerId: Long): List<Account>? {
+        val players = roomManager.getRoom(roomId.toLong())?.players?.toMutableList()
         //TODO ЧЗХ???
         val playerToMove = players?.find { it.id == playerId }
 
@@ -18,6 +18,6 @@ class RoomInfoServiceImpl(private val roomManager: RoomManager) : RoomInfoServic
     }
 }
 
- interface RoomInfoService {
-     fun getRoomInfo(roomId : Int, playerId: Long) : List<Account>?
+interface RoomInfoService {
+    fun getRoomInfo(roomId: Int, playerId: Long): List<Account>?
 }

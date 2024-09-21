@@ -70,13 +70,14 @@ class RoomHandlerImpl(
         if (result.valid) {
             cardHandler.moveCard(moveCardRequest)
         }
+        if (result.nextStage?.equals(stage))
     }
 
     override fun startGame() {
         stage = Stage.DISTRIBUTION
         playerIds = friendsManager.getInRoomAccounts().map { it.id }.toMutableList()
         playerIds.shuffle()
-        cardHandler.startGame(friendsManager.getInRoomAccounts())
+        cardHandler.giveUsersBasicCards(roomAccountHandler.getAccounts())
         changeTurn()
         restartTimer()
     }

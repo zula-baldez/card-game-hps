@@ -58,7 +58,7 @@ class DistributionDropStrategy : DropStrategy {
         roomHandler: RoomHandler
     ): CardDropValidationResult {
         require(cards.containsKey(request.toDropArea) && cards.containsKey(request.fromDropArea)) { throw PlayerNotFoundException() }
-        if (cards[tableId]!!.size == 1) {
+        if (cards[tableId]?.size == 1) {
             return CardDropValidationResult(
                 changeTurn = true,
                 valid = false,
@@ -66,10 +66,10 @@ class DistributionDropStrategy : DropStrategy {
                 nextStage = null
             )
         }
-        val lastEnemyCard = cards[request.toDropArea]!!.last()
+        val lastEnemyCard = cards[request.toDropArea]?.last()
         val card = request.card
-        if (lastEnemyCard.strenght == card.strenght - 1 ||
-            request.card.strenght == 2L && lastEnemyCard.strenght == maxStrength
+        if (lastEnemyCard?.strenght == card.strenght - 1 ||
+            request.card.strenght == 2L && lastEnemyCard?.strenght == maxStrength
         ) {
             return CardDropValidationResult(
                 changeTurn = false,

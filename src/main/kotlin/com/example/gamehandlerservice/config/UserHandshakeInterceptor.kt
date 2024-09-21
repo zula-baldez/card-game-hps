@@ -35,7 +35,7 @@ class UserHandshakeInterceptor(
             }
             account.active = true
             val roomHandler = roomManager.getRoom(roomId.toLong())
-            roomHandler?.addAccount(account)
+            roomHandler?.(account)
             attributes["room"] = roomManager.getRoom(roomId.toLong())
             attributes["account"] = account
         } catch (e: Exception) {
