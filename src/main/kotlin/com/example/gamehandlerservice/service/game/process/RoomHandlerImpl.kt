@@ -58,8 +58,7 @@ class RoomHandlerImpl(
     override fun moveCard(moveCardRequest: MoveCardRequest) {
         restartTimer() //todo aspect
         val strategy: DropStrategy = dropHandlers[stage]!!
-        val result = strategy.validateDrop(playerIds[turnIdIndex], moveCardRequest, cardHandler.cards)
-
+        val result = strategy.validateDrop(playerIds[turnIdIndex], moveCardRequest, cardHandler.cards, this)
         if (result.needsFine) {
             roomAccountHandler.addFine(playerIds[turnIdIndex])
         }

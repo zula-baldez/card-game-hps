@@ -22,7 +22,6 @@ class CardHandlerImpl(
     override val cards: MutableMap<Long, LinkedHashSet<Card>> = HashMap()
     private lateinit var trump: Suit
 
-
     private fun generateDeck(): MutableList<Card> {
         val cards: MutableList<Card> = ArrayList()
         Suit.values().forEach { suit ->
@@ -57,9 +56,8 @@ class CardHandlerImpl(
     override fun moveCard(moveCardRequest: MoveCardRequest) =
         moveCard(moveCardRequest.fromDropArea, moveCardRequest.toDropArea, moveCardRequest.card)
 
-
     override fun startGame(players: List<Account>) {
-        players.forEach{account -> cards[account.id] = LinkedHashSet()}
+        players.forEach { account -> cards[account.id] = LinkedHashSet() }
         cards[-1] = LinkedHashSet()
         val deck = generateDeck().toMutableList()
         players.forEach { account ->
@@ -68,7 +66,6 @@ class CardHandlerImpl(
                 lastCard.secret = true
                 cards[account.id]!!.add(lastCard)
                 sendCardMoveToDest(-2, account.id, lastCard)
-
             }
             val lastCard = deck.removeLast()
             cards[account.id]!!.add(lastCard)
