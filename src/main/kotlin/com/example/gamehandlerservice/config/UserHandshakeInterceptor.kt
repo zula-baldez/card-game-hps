@@ -30,7 +30,7 @@ class UserHandshakeInterceptor(
             val token = requireNotNull(extractJwtTokenFromRequest(request))
             val userId = requireNotNull(tokenParser.getIdFromToken(token))
             val account = accountRepo.findById(userId.toLong()).orElseGet {
-                val newAccount = Account(userId.toLong(),"", 0, true, 0, null)
+                val newAccount = Account("", 0, true, 0, userId.toLong())
                 accountRepo.save(newAccount)
             }
             account.active = true

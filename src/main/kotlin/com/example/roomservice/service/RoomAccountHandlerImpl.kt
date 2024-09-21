@@ -1,11 +1,10 @@
 package com.example.roomservice.service
 
-import com.example.gamehandlerservice.database.Account
-import com.example.gamehandlerservice.database.AccountRepo
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
-import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.gamehandlerservice.model.dto.RoomAccountsOperationResult
+import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountRepo
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,6 +32,14 @@ class RoomAccountHandlerImpl(
         this.capacity = capacity
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun sendAccountAction(accountAction: AccountAction, account: Account) {
+        GlobalScope.launch(Dispatchers.IO) {
+            simpMessagingTemplate.convertAndSend("/topic/accounts", AccountActionDTO(accountAction, account.id, account.name))
+        }
+    }
+
+
     override fun addAccount(account: Account): RoomAccountsOperationResult {
         if (players.size >= capacity) {
             return roomOverflow
@@ -43,33 +50,25 @@ class RoomAccountHandlerImpl(
     }
 
     override fun kickAccount(id: Long): RoomAccountsOperationResult {
-        return if (players.contains(id)) {
+        return if(players.contains(id)) {
             sendAccountAction(AccountAction.KICK, players[id]!!)
             players.remove(id)
             roomSuccess
         } else {
             notFound
         }
+
     }
 
     override fun banAccount(id: Long): RoomAccountsOperationResult {
-        TODO("Not yet implemented")
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun sendAddFine(id: Long) {
-        GlobalScope.launch(Dispatchers.IO) {
-            simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun sendAccountAction(accountAction: AccountAction, account: Account) {
-        GlobalScope.launch(Dispatchers.IO) {
-            simpMessagingTemplate.convertAndSend(
-                "/topic/accounts",
-                AccountActionDTO(accountAction, account.id, account.name)
-            )
+        return if(players.contains(id)) {
+            val curPlayer = players[id]
+            sendAccountAction(AccountAction.BAN,curPlayer!!)
+            players.remove(id)
+            accountRepo.delete(curPlayer)
+            roomSuccess
+        } else {
+            notFound
         }
     }
 }

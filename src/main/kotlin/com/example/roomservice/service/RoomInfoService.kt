@@ -8,7 +8,7 @@ class RoomInfoServiceImpl(private val roomManager: RoomManager) : RoomInfoServic
     override fun getRoomInfo(roomId: Int, playerId: Long): List<Account>? {
         val players = roomManager.getRoom(roomId.toLong())?.players?.toMutableList()
         //TODO ЧЗХ???
-        val playerToMove = players?.find { it == playerId }
+        val playerToMove = players?.find { it.id == playerId }
 
         if (playerToMove != null) {
             players.removeAt(players.indexOf(playerToMove))

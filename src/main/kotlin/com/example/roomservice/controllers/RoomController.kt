@@ -15,7 +15,7 @@ class RoomController(
 ) {
     @GetMapping("/get-rooms")
     fun getAvailableRooms(): List<RoomChangeResponse> {
-        return roomManager.getAllRooms().map { RoomChangeResponse(it.capacity, it.name, it.id, it.hostId, it.count) }
+        return roomManager.getAllRooms().map { RoomChangeResponse(it.capacity, it.name, it.id?:0, it.hostId, it.players.size) }
             .toList()
     }
 

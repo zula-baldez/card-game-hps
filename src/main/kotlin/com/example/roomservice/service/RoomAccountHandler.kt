@@ -1,7 +1,7 @@
 package com.example.roomservice.service
 
-import com.example.gamehandlerservice.database.Account
 import com.example.gamehandlerservice.model.dto.RoomAccountsOperationResult
+import com.example.personalaccount.database.Account
 
 interface RoomAccountHandler {
     fun addAccount(account: Account): RoomAccountsOperationResult

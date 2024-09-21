@@ -1,6 +1,6 @@
 package com.example.roomservice.repository
 
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
