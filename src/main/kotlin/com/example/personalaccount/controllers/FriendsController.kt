@@ -16,30 +16,18 @@ class FriendsController(
 
     @GetMapping("/get-friends")
     fun getFriends(auth: Principal): Set<Account>? {
-        val userId = getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
-            HttpStatus.UNAUTHORIZED,
-            "User non authorized"
-        )
-        return friendsManagerImpl.getAllFriends(userId)
+        return friendsManagerImpl.getAllFriends(getAuthenticatedUserId(auth))
     }
 
     @GetMapping("/allow-friend")
     fun allowFriendship(@RequestParam friendId: Long, auth: Principal): ResponseEntity<String> {
-        val userId = getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
-            HttpStatus.UNAUTHORIZED,
-            "User non authorized"
-        )
-        friendsManagerImpl.addFriend(userId, friendId)
+        friendsManagerImpl.addFriend(getAuthenticatedUserId(auth), friendId)
         return ResponseEntity.ok("Friendship with user ID $friendId has been allowed.")
     }
 
     @DeleteMapping("/deny-friend")
     fun denyFriendship(@RequestParam friendId: Long, auth: Principal): ResponseEntity<String> {
-        val userId = getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
-            HttpStatus.UNAUTHORIZED,
-            "User non authorized"
-        )
-        friendsManagerImpl.removeFriend(userId, friendId)
+        friendsManagerImpl.removeFriend(getAuthenticatedUserId(auth), friendId)
         return ResponseEntity.ok("Friendship with user ID $friendId has been denied.")
     }
 
@@ -58,5 +46,12 @@ class FriendsController(
 
     private fun getUserIdFromPrincipal(auth: Principal): Long? {
         return auth.name.toLong()
+    }
+
+    private fun getAuthenticatedUserId(auth: Principal): Long {
+        return getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
+            HttpStatus.UNAUTHORIZED,
+            "User non authorized"
+        )
     }
 }
