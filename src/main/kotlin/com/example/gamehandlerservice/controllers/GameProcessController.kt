@@ -4,7 +4,7 @@ import com.example.gamehandlerservice.aspects.HostOnly
 import com.example.gamehandlerservice.aspects.TrueTurnValidation
 import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
-import com.example.gamehandlerservice.service.game.process.RoomHandler
+import com.example.gamehandlerservice.service.game.game.GameHandler
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody
 class GameProcessController : BaseController() {
     @TrueTurnValidation
     @MessageMapping("/move-card")
-    fun moveCard(roomHandler: RoomHandler, account: Account, @RequestBody moveCardRequest: MoveCardRequest) {
-        roomHandler.moveCard(moveCardRequest)
+    fun moveCard(gameHandler: GameHandler, account: Account, @RequestBody moveCardRequest: MoveCardRequest) {
+        gameHandler.moveCard(moveCardRequest)
     }
 
     @HostOnly
     @MessageMapping("/start-game")
-    fun startGame(roomHandler: RoomHandler, account: Account) {
-        roomHandler.startGame()
+    fun startGame(gameHandler: GameHandler, account: Account) {
+        gameHandler.startGame()
     }
 
     @MessageMapping("/test")
-    fun test(roomHandler: RoomHandler, account: Account) {
+    fun test(gameHandler: GameHandler, account: Account) {
         print(account)
     }
 

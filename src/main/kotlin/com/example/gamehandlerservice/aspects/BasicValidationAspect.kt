@@ -1,18 +1,20 @@
 package com.example.gamehandlerservice.aspects
 
+import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.personalaccount.database.Account
-import com.example.gamehandlerservice.service.game.process.RoomHandler
+import com.example.roomservice.repository.Room
 import org.aspectj.lang.JoinPoint
 
 open class BasicValidationAspect {
     private inline fun <reified T> getInstanceFromJoinPoint(joinPoint: JoinPoint): T? {
         return joinPoint.args.find { it is T } as T?
     }
-    protected fun validateAccountAndRoomProps(joinPoint: JoinPoint, predicate: ThrowsPredicate) {
-        val room = requireNotNull(getInstanceFromJoinPoint<RoomHandler>(joinPoint))
+    protected fun validateGameProps(joinPoint: JoinPoint, predicate: ThrowsPredicate) {
+        val room = requireNotNull(getInstanceFromJoinPoint<Room>(joinPoint))
         val account = requireNotNull(getInstanceFromJoinPoint<Account>(joinPoint))
-        predicate(room, account)
+        val game = requireNotNull(getInstanceFromJoinPoint<GameHandler>(joinPoint))
+        predicate(room, account, game)
     }
 }
 
-typealias ThrowsPredicate = (RoomHandler, Account) -> Unit
+typealias ThrowsPredicate = (Room, Account, GameHandler) -> Unit

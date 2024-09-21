@@ -1,7 +1,11 @@
 package com.example.gamehandlerservice.config
 
+import com.example.gamehandlerservice.service.game.game.GameHandler
+import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.personalaccount.database.Account
-import com.example.gamehandlerservice.service.game.process.RoomHandler
+import com.example.personalaccount.database.AccountRepo
+import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomRepo
 import org.springframework.core.MethodParameter
 import org.springframework.messaging.Message
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver
@@ -10,17 +14,37 @@ import org.springframework.messaging.support.MessageHeaderAccessor
 import org.springframework.stereotype.Component
 
 @Component
-class AccountAndGameHandlerArgumentResolver : HandlerMethodArgumentResolver {
+class AccountAndGameHandlerArgumentResolver(
+    private val accountRepo: AccountRepo,
+    private val roomRepo: RoomRepo,
+    private val gameHandlerRegistry: GameHandlerRegistry
+
+) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
+        //TODO дто вместо энтити?
         return parameter.parameterType == Account::class.java ||
-                parameter.parameterType == RoomHandler::class.java
+                parameter.parameterType == GameHandler::class.java ||
+                parameter.parameterType == Room::class.java
     }
 
-    override fun resolveArgument(parameter: MethodParameter, message: Message<*>): Any {
+    override fun resolveArgument(parameter: MethodParameter, message: Message<*>): Any? {
         val accessor = MessageHeaderAccessor.getAccessor(message, SimpMessageHeaderAccessor::class.java)
-        return if (parameter.parameterType == RoomHandler::class.java)
-            accessor?.sessionAttributes?.get("room") as RoomHandler
-        else
-            return accessor?.sessionAttributes?.get("account") as Account
+        val sessionAttributes = accessor?.sessionAttributes ?: return null
+
+        return when (parameter.parameterType) {
+            GameHandler::class.java -> {
+                val gameId = sessionAttributes["gameId"] as? Long ?: throw IllegalArgumentException("No gameId found in session attributes")
+                gameHandlerRegistry.getGame(gameId)
+            }
+            Room::class.java -> {
+                val roomId = sessionAttributes["roomId"] as? Long ?: throw IllegalArgumentException("No roomId found in session attributes")
+                roomRepo.findById(roomId).orElse(null)
+            }
+            Account::class.java -> {
+                val accountId = sessionAttributes["accountId"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
+                accountRepo.findById(accountId).orElse(null)
+            }
+            else -> null
+        }
     }
 }

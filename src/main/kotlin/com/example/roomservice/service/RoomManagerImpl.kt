@@ -1,6 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.gamehandlerservice.service.game.process.RoomHandlerFactoryImpl
+import com.example.gamehandlerservice.service.game.game.GameHandlerFactory
 import com.example.roomservice.repository.Room
 import com.example.roomservice.repository.RoomRepo
 import org.springframework.stereotype.Component
@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component
 @Component
 class RoomManagerImpl(
     private val roomRepo: RoomRepo,
-    private val roomHandlerFactory: RoomHandlerFactoryImpl
+    private val gameHandlerFactory: GameHandlerFactory
 ) : RoomManager {
     override fun createRoom(name: String, hostId: Long, capacity: Int): Room {
-        val room = Room(null, name, hostId, capacity, listOf())
+        val room = Room(null, name, hostId, capacity, 0, listOf())
         roomRepo.save(room)
-        roomHandlerFactory.instantGameHandler(name, hostId, capacity) //TODO redis?
+        val game = gameHandlerFactory.instantGameHandler(name, room.id!!)
+        room.currentGameId = game.gameData.gameId
+        roomRepo.save(room)
         return room
     }
 

@@ -17,6 +17,7 @@ class Room(
     var name: String,
     var hostId: Long,
     var capacity: Int,
+    var currentGameId: Long,
     @OneToMany(mappedBy="currentRoomId", fetch = FetchType.LAZY)
-    var players: List<Account>
+    var players: List<Account> = ArrayList()
 )

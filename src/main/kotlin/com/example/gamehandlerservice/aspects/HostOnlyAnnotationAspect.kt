@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class HostOnlyAnnotationAspect : BasicValidationAspect() {
     @Before("@annotation(com.example.gamehandlerservice.aspects.HostOnly)")
     fun validateHostOnly(joinPoint: JoinPoint) {
-        validateAccountAndRoomProps(joinPoint) { room, account ->
+        validateGameProps(joinPoint) { room, account, _ ->
             require(account.id == room.hostId) { "Account is not the host." }
         }
     }

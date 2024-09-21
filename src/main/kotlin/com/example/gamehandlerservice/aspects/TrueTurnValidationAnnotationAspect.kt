@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 class TrueTurnValidationAnnotationAspect : BasicValidationAspect() {
     @Before("@annotation(com.example.gamehandlerservice.aspects.TrueTurnValidation)")
     fun validateTrueTurn(joinPoint: JoinPoint) {
-        validateAccountAndRoomProps(joinPoint) { room, account ->
-            require(room.turningPlayerId() == account.id) { "Not true time to turn." }
+        validateGameProps(joinPoint) { _, account, gameHandler ->
+            require(gameHandler.turningPlayer() == account) { "Not true time to turn." }
         }
     }
 }

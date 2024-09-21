@@ -1,26 +1,37 @@
 package com.example.gamehandlerservice.controllers
 
 import com.example.gamehandlerservice.aspects.HostOnly
-import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.model.dto.AccountActionRequest
-import com.example.gamehandlerservice.service.game.process.RoomHandler
+import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountRepo
+import com.example.roomservice.repository.Room
+import com.example.roomservice.service.RoomAccountHandler
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 
 @Controller
-class PlayersController : BaseController() {
+class PlayersController(
+    private val roomAccountHandler: RoomAccountHandler,
+    private val accountRepo: AccountRepo
+) : BaseController() {
     @HostOnly
     @MessageMapping("/kick")
     fun kickPlayer(
-        roomHandler: RoomHandler, account: Account, @RequestBody accountActionRequest: AccountActionRequest
+        room: Room, account: Account, @RequestBody accountActionRequest: AccountActionRequest
     ) {
-        roomHandler.kickAccount(accountActionRequest.accountId)
+        roomAccountHandler.kickAccount(
+            room.id ?: return,
+            accountRepo.findById(accountActionRequest.accountId).orElse(null) ?: return
+        )
     }
 
     @HostOnly
     @MessageMapping("/ban")
-    fun banPlayer(roomHandler: RoomHandler, account: Account, @RequestBody accountActionRequest: AccountActionRequest) {
-        roomHandler.banAccount(accountActionRequest.accountId)
+    fun banPlayer(room: Room, account: Account, @RequestBody accountActionRequest: AccountActionRequest) {
+        roomAccountHandler.banAccount(
+            room.id ?: return,
+            accountRepo.findById(accountActionRequest.accountId).orElse(null) ?: return
+        )
     }
 }
