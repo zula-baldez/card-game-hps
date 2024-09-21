@@ -1,13 +1,19 @@
 package com.example.gamehandlerservice.service.game.registry
 
 import com.example.gamehandlerservice.service.game.game.GameHandler
+import com.example.gamehandlerservice.service.game.game.GameHandlerFactory
+import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
 
+@Component
 class GameHandlerRegistryInMemoryImpl(
-    private val games: ConcurrentHashMap<Long, GameHandler> = ConcurrentHashMap(),
+    private val factory: GameHandlerFactory,
+    private val games: ConcurrentHashMap<Long, GameHandler> = ConcurrentHashMap()
 ) : GameHandlerRegistry {
-    override fun createGame(roomId: Long): GameHandler {
-        TODO("Not yet implemented")
+    override fun createGame(name: String, roomId: Long): GameHandler {
+        val game = factory.instantGameHandler(name, roomId)
+        games[game.gameData.gameId] = game
+        return game
     }
 
     override fun deleteGame(gameId: Long) {
