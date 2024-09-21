@@ -1,11 +1,10 @@
 package com.example.roomservice.controllers
 
-import com.example.roomservice.service.RoomManager
 import com.example.roomservice.dto.CreateRoomDTO
 import com.example.roomservice.dto.RoomChangeResponse
+import com.example.roomservice.service.RoomManager
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
@@ -16,7 +15,8 @@ class RoomController(
 ) {
     @GetMapping("/get-rooms")
     fun getAvailableRooms(): List<RoomChangeResponse> {
-        return ArrayList()
+        return roomManager.getAllRooms().map { RoomChangeResponse(it.capacity, it.name, it.id, it.hostId, it.count) }
+            .toList()
     }
 
     @MessageMapping("/create-room")
