@@ -77,7 +77,15 @@ class RoomAccountHandlerImpl(
     }
 
     override fun banAccount(id: Long): RoomAccountsOperationResult {
-        TODO("Not yet implemented")
+        return if(players.contains(id)) {
+            val curPlayer = players[id]
+            sendAccountAction(AccountAction.BAN,curPlayer!!)
+            players.remove(id)
+            accountRepo.delete(curPlayer)
+            roomSuccess
+        } else {
+            notFound
+        }
     }
 
 }
