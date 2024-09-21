@@ -3,7 +3,10 @@ package com.example.personalaccount.service
 import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.personalaccount.database.Account
 import com.example.personalaccount.database.AccountRepo
+import com.example.personalaccount.exceptions.AddFriendException
+import com.example.personalaccount.exceptions.DeleteFriendException
 import com.example.personalaccount.exceptions.FriendNotFoundException
+import com.example.personalaccount.model.FriendshipStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,7 +22,7 @@ class PersonalAccountManagerImpl(
     val simpMessagingTemplate: SimpMessagingTemplate
 ) : PersonalAccountManager {
 
-    override fun addFriend(userId: Long, friendId: Long) {
+    override fun addFriend(userId: Long, friendId: Long): FriendshipStatus {
         val userOpt: Optional<Account> = accountRepo.findById(userId)
         val friendOpt: Optional<Account> = accountRepo.findById(friendId)
 
@@ -30,10 +33,12 @@ class PersonalAccountManagerImpl(
             friend.friends.plus(user)
             accountRepo.save(user)
             accountRepo.save(friend)
+            return FriendshipStatus.ALLOWED
         }
+        throw AddFriendException("Failed to add friendship")
     }
 
-    override fun removeFriend(userId: Long, friendId: Long) {
+    override fun removeFriend(userId: Long, friendId: Long): FriendshipStatus {
         val userOpt: Optional<Account> = accountRepo.findById(userId)
         val friendOpt: Optional<Account> = accountRepo.findById(friendId)
 
@@ -44,7 +49,9 @@ class PersonalAccountManagerImpl(
             friend.friends.minus(user)
             accountRepo.save(user)
             accountRepo.save(friend)
+            return FriendshipStatus.DENIED
         }
+        throw DeleteFriendException("Failed to delete friendship")
     }
 
 

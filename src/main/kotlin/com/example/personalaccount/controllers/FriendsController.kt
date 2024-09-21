@@ -4,6 +4,7 @@ import com.example.personalaccount.database.Account
 import com.example.personalaccount.exceptions.FriendNotFoundException
 import com.example.personalaccount.service.PersonalAccountManagerImpl
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.security.Principal
@@ -23,13 +24,23 @@ class FriendsController(
     }
 
     @GetMapping("/allow-friend")
-    fun allowFriendship(@RequestParam friendId: Long, auth: Principal) {
-        getUserIdFromPrincipal(auth)?.let { friendsManagerImpl.addFriend(it, friendId) }
+    fun allowFriendship(@RequestParam friendId: Long, auth: Principal): ResponseEntity<String> {
+        val userId = getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
+            HttpStatus.UNAUTHORIZED,
+            "User non authorized"
+        )
+        friendsManagerImpl.addFriend(userId, friendId)
+        return ResponseEntity.ok("Friendship with user ID $friendId has been allowed.")
     }
 
     @DeleteMapping("/deny-friend")
-    fun denyFriendship(@RequestParam friendId: Long, auth: Principal) {
-        getUserIdFromPrincipal(auth)?.let { friendsManagerImpl.removeFriend(it, friendId) }
+    fun denyFriendship(@RequestParam friendId: Long, auth: Principal): ResponseEntity<String> {
+        val userId = getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
+            HttpStatus.UNAUTHORIZED,
+            "User non authorized"
+        )
+        friendsManagerImpl.removeFriend(userId, friendId)
+        return ResponseEntity.ok("Friendship with user ID $friendId has been denied.")
     }
 
     @ExceptionHandler(ResponseStatusException::class)
