@@ -30,12 +30,12 @@ class UserHandshakeInterceptor(
             val token = requireNotNull(extractJwtTokenFromRequest(request))
             val userId = requireNotNull(tokenParser.getIdFromToken(token))
             val account = accountRepo.findById(userId.toLong()).orElseGet {
-                val newAccount = Account("", 0, true, 0, userId.toLong())
+                val newAccount = Account(userId.toLong(),"", 0, true, 0, null)
                 accountRepo.save(newAccount)
             }
             account.active = true
             val roomHandler = roomManager.getRoom(roomId.toLong())
-            roomHandler?.addAccount(account)
+            roomHandler?.(account)
             attributes["room"] = roomManager.getRoom(roomId.toLong())
             attributes["account"] = account
         } catch (e: Exception) {

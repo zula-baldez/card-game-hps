@@ -16,5 +16,4 @@ class RoomHandlerFactoryImpl(
         roomHandler.configureGameHandler(name, Stage.WAITING, id, hostId, capacity)
         return roomHandler
     }
-
 }

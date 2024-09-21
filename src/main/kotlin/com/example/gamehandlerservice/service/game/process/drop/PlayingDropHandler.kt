@@ -14,7 +14,6 @@ class PlayingDropHandler() : DropStrategy {
         cards: Map<Long, LinkedHashSet<Card>>,
         roomHandler: RoomHandler
     ): CardDropValidationResult {
-        //if (cards[request.fromDropArea]?.first(card -> card == ) != null)
         return CardDropValidationResult(false, false, false, nextStage = null)
     }
 
@@ -24,7 +23,7 @@ class PlayingDropHandler() : DropStrategy {
         cards: Map<Long, LinkedHashSet<Card>>,
         roomHandler: RoomHandler
     ): CardDropValidationResult {
-        TODO("Not yet implemented")
+        return CardDropValidationResult(false, false, true, nextStage = null)
     }
 
     override fun onDropTable(
@@ -33,6 +32,6 @@ class PlayingDropHandler() : DropStrategy {
         cards: Map<Long, LinkedHashSet<Card>>,
         roomHandler: RoomHandler
     ): CardDropValidationResult {
-        TODO("Not yet implemented")
+        TODO()
     }
 }

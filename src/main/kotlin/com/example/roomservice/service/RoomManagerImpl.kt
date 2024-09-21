@@ -1,32 +1,31 @@
 package com.example.roomservice.service
 
-import com.example.gamehandlerservice.service.game.process.RoomHandler
-import com.example.gamehandlerservice.service.game.process.RoomHandlerFactory
+import com.example.gamehandlerservice.service.game.process.RoomHandlerFactoryImpl
+import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomRepo
 import org.springframework.stereotype.Component
-import java.util.concurrent.ConcurrentHashMap
-
 
 @Component
 class RoomManagerImpl(
-    private val roomHandlerFactory: RoomHandlerFactory
+    private val roomRepo: RoomRepo,
+    private val roomHandlerFactory: RoomHandlerFactoryImpl
 ) : RoomManager {
-    private val mp: MutableMap<Long, RoomHandler> = ConcurrentHashMap()
-
-    override fun createRoom(name: String, hostId: Long, capacity: Int) : RoomHandler {
-        val roomHandler: RoomHandler = roomHandlerFactory.instantGameHandler(name, hostId, capacity)
-        mp[roomHandler.id] = roomHandler
-        return roomHandler
+    override fun createRoom(name: String, hostId: Long, capacity: Int): Room {
+        val room = Room(null, name, hostId, capacity, listOf())
+        roomRepo.save(room)
+        roomHandlerFactory.instantGameHandler(name, hostId, capacity) //TODO redis?
+        return room
     }
 
     override fun deleteRoom(id: Long) {
-        mp.remove(id)
+        roomRepo.deleteById(id)
     }
 
-    override fun getRoom(id: Long): RoomHandler? {
-        return mp[id]
+    override fun getRoom(id: Long): Room? {
+        return roomRepo.findById(id).orElse(null)
     }
 
-    override fun getAllRooms(): List<RoomHandler> {
-        return mp.map { it.value }.toList()
+    override fun getAllRooms(): List<Room> {
+        return roomRepo.findAll() //TODO pagination
     }
 }

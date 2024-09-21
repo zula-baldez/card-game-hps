@@ -30,16 +30,17 @@ class RoomController(
         return RoomChangeResponse(
             roomHandler.capacity,
             roomHandler.name,
-            roomHandler.id,
+            roomHandler.id ?: 0,
             roomHandler.hostId,
-            roomHandler.count
+            roomHandler.players.size
         )
     }
 
     @MessageMapping("/all-rooms")
     @SendTo("/topic/all-rooms")
-    fun createRoom(): List<RoomChangeResponse> {
-        return roomManager.getAllRooms().map { RoomChangeResponse(it.capacity, it.name, it.id, it.hostId, it.count) }
+    fun getAllRooms(): List<RoomChangeResponse> {
+        return roomManager.getAllRooms()
+            .map { RoomChangeResponse(it.capacity, it.name, it.id ?: 0, it.hostId, it.players.size) }
             .toList()
     }
 }
