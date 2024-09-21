@@ -1,12 +1,13 @@
 package com.example.gamehandlerservice.service.game.process
 
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.RoomAccountsOperationResult
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.process.account.RoomAccountHandler
 import com.example.gamehandlerservice.service.game.process.cards.CardHandler
 import com.example.gamehandlerservice.service.game.process.drop.DropStrategy
+import com.example.personalaccount.service.PersonalAccountManager
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,6 +23,7 @@ import kotlin.properties.Delegates
 class RoomHandlerImpl(
     val roomAccountHandler: RoomAccountHandler,
     val cardHandler: CardHandler,
+    val friendsManager: PersonalAccountManager,
     dropHandlersList: List<DropStrategy>,
 ) : RoomHandler {
     private val dropHandlers: Map<Stage, DropStrategy> = dropHandlersList.associateBy { it.stage }
@@ -33,7 +35,7 @@ class RoomHandlerImpl(
     private lateinit var playerIds: MutableList<Long>
     override lateinit var name: String
     override val count: Long
-        get() = roomAccountHandler.getAccounts().size.toLong()
+        get() = friendsManager.getInRoomAccounts().size.toLong()
     override var capacity by Delegates.notNull<Int>()
 
     override fun configureGameHandler(name: String, stage: Stage, id: Long, hostId: Long, capacity: Int) {
@@ -47,7 +49,7 @@ class RoomHandlerImpl(
 
     override fun turningPlayerId(): Long = playerIds[turnIdIndex]
 
-    override fun getAllPlayers(): List<Account> = roomAccountHandler.getAccounts()
+    override fun getAllPlayers(): List<Account> = friendsManager.getInRoomAccounts() //TODO CRINGE
 
     override fun addAccount(account: Account): RoomAccountsOperationResult = roomAccountHandler.addAccount(account)
 
@@ -60,7 +62,7 @@ class RoomHandlerImpl(
         val strategy: DropStrategy = dropHandlers[stage]!!
         val result = strategy.validateDrop(playerIds[turnIdIndex], moveCardRequest, cardHandler.cards, this)
         if (result.needsFine) {
-            roomAccountHandler.addFine(playerIds[turnIdIndex])
+            friendsManager.addFine(playerIds[turnIdIndex])
         }
         if (result.changeTurn) {
             changeTurn()
@@ -72,9 +74,9 @@ class RoomHandlerImpl(
 
     override fun startGame() {
         stage = Stage.DISTRIBUTION
-        playerIds = roomAccountHandler.getAccounts().map { it.id }.toMutableList()
+        playerIds = friendsManager.getInRoomAccounts().map { it.id }.toMutableList()
         playerIds.shuffle()
-        cardHandler.startGame(roomAccountHandler.getAccounts())
+        cardHandler.startGame(friendsManager.getInRoomAccounts())
         changeTurn()
         restartTimer()
     }

@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.controllers
 
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import com.example.roomservice.service.RoomInfoService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam

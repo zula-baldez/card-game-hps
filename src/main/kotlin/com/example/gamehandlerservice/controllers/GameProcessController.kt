@@ -2,13 +2,12 @@ package com.example.gamehandlerservice.controllers
 
 import com.example.gamehandlerservice.aspects.HostOnly
 import com.example.gamehandlerservice.aspects.TrueTurnValidation
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.service.game.process.RoomHandler
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 
 
 @Controller

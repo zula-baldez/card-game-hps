@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.config
 
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.service.game.process.RoomHandler
 import org.springframework.core.MethodParameter
 import org.springframework.messaging.Message

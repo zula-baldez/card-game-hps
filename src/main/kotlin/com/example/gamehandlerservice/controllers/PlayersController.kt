@@ -1,7 +1,7 @@
 package com.example.gamehandlerservice.controllers
 
 import com.example.gamehandlerservice.aspects.HostOnly
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import com.example.gamehandlerservice.model.dto.AccountActionRequest
 import com.example.gamehandlerservice.service.game.process.RoomHandler
 import org.springframework.messaging.handler.annotation.MessageMapping

@@ -1,7 +1,7 @@
 package com.example.gamehandlerservice.service.game.process.account
 
-import com.example.gamehandlerservice.database.Account
-import com.example.gamehandlerservice.database.AccountRepo
+import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountRepo
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.gamehandlerservice.model.dto.FineDTO
@@ -34,26 +34,11 @@ class RoomAccountHandlerImpl(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun sendAddFine(id: Long) {
-        GlobalScope.launch(Dispatchers.IO) {
-            simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
-        }
-    }
-    @OptIn(DelicateCoroutinesApi::class)
     private fun sendAccountAction(accountAction: AccountAction, account: Account) {
         GlobalScope.launch(Dispatchers.IO) {
             simpMessagingTemplate.convertAndSend("/topic/accounts", AccountActionDTO(accountAction, account.id, account.name))
         }
     }
-
-    override fun addFine(id: Long) {
-        accountRepo.findById(id).ifPresent { account ->
-            account.fines++
-            sendAddFine(id)
-        }
-    }
-
-    override fun getAccounts(): List<Account> = players.values.toList()
 
 
     override fun addAccount(account: Account): RoomAccountsOperationResult {

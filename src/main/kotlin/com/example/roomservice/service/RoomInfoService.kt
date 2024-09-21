@@ -1,6 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.gamehandlerservice.database.Account
+import com.example.personalaccount.database.Account
 import org.springframework.stereotype.Component
 
 @Component

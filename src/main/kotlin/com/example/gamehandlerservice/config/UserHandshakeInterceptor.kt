@@ -1,7 +1,7 @@
 package com.example.gamehandlerservice.config
 
-import com.example.gamehandlerservice.database.Account
-import com.example.gamehandlerservice.database.AccountRepo
+import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountRepo
 import com.example.gamehandlerservice.security.TokenParser
 import com.example.roomservice.service.RoomManager
 import org.springframework.http.server.ServerHttpRequest
