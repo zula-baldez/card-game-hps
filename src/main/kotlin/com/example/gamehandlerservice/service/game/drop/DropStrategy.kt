@@ -2,7 +2,6 @@ package com.example.gamehandlerservice.service.game.drop
 
 import com.example.gamehandlerservice.model.dto.CardDropResult
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
-import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
