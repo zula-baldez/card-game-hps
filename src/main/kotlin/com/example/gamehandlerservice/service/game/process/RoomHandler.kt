@@ -25,6 +25,4 @@ interface RoomHandler {
     fun turningPlayerId() : Long
 
     fun getAllPlayers() : List<Account>
-
-    fun getFinesCounter():
 }
