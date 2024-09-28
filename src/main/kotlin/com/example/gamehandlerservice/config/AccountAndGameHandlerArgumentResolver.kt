@@ -3,9 +3,9 @@ package com.example.gamehandlerservice.config
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.personalaccount.database.Account
-import com.example.personalaccount.database.AccountRepo
+import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.Room
-import com.example.roomservice.repository.RoomRepo
+import com.example.roomservice.repository.RoomRepository
 import org.springframework.core.MethodParameter
 import org.springframework.messaging.Message
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class AccountAndGameHandlerArgumentResolver(
-    private val accountRepo: AccountRepo,
-    private val roomRepo: RoomRepo,
+    private val accountRepository: AccountRepository,
+    private val roomRepository: RoomRepository,
     private val gameHandlerRegistry: GameHandlerRegistry
 
 ) : HandlerMethodArgumentResolver {
@@ -38,11 +38,11 @@ class AccountAndGameHandlerArgumentResolver(
             }
             Room::class.java -> {
                 val roomId = sessionAttributes["roomId"] as? Long ?: throw IllegalArgumentException("No roomId found in session attributes")
-                roomRepo.findById(roomId).orElse(null)
+                roomRepository.findById(roomId).orElse(null)
             }
             Account::class.java -> {
                 val accountId = sessionAttributes["accountId"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
-                accountRepo.findById(accountId).orElse(null)
+                accountRepository.findById(accountId).orElse(null)
             }
             else -> null
         }

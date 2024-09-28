@@ -8,6 +8,7 @@ import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandle
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.personalaccount.database.Account
 import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +17,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import kotlin.jvm.optionals.getOrNull
 
 @Component
 @Scope("prototype")
 class GameHandlerImpl(
     val cardMovementHandler: CardMovementHandler,
     val roomManager: RoomManager,
+    val roomRepository: RoomRepository
 ) : GameHandler {
 
     override lateinit var gameData: GameData
@@ -29,7 +32,7 @@ class GameHandlerImpl(
     private lateinit var stateStageMachineHandler: StageStateMachineHandler
 
     val room: Room
-        get() = roomManager.getRoom(gameData.roomId) ?: throw IllegalArgumentException()
+        get() = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
 
     override fun configureGameHandler(
         name: String,

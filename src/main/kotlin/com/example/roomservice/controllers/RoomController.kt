@@ -1,47 +1,48 @@
 package com.example.roomservice.controllers
 
-import com.example.roomservice.dto.CreateRoomDTO
-import com.example.roomservice.dto.RoomChangeResponse
+import com.example.common.dto.api.ScrollPositionDto
+import com.example.roomservice.dto.CreateRoomRequest
+import com.example.common.dto.business.RoomDto
+import com.example.roomservice.dto.AddAccountRequest
+import com.example.roomservice.dto.RemoveAccountRequest
+import com.example.roomservice.dto.RoomAccountActionResult
+import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
-import org.springframework.messaging.handler.annotation.MessageMapping
-import org.springframework.messaging.handler.annotation.SendTo
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
 class RoomController(
-    private val roomManager: RoomManager
+    private val roomManager: RoomManager,
+    private val roomAccountManger: RoomAccountManager
 ) {
-    @GetMapping("/get-rooms")
-    fun getAvailableRooms(): List<RoomChangeResponse> {
-        return roomManager.getAllRooms().map { RoomChangeResponse(it.capacity, it.name, it.id?:0, it.hostId, it.players.size) }
-            .toList()
+    @GetMapping("/rooms")
+    fun getAvailableRooms(scrollPositionDto: ScrollPositionDto): List<RoomDto> {
+        return roomManager.getAllRooms(scrollPositionDto)
     }
 
-    @MessageMapping("/create-room")
-    @SendTo("/topic/new-rooms")
-    fun createRoom(createRoomDTO: CreateRoomDTO, principal: Principal): RoomChangeResponse {
-        println("zalupa ${principal.name}")
-        val roomHandler = roomManager.createRoom(
-            createRoomDTO.name,
+    @GetMapping("/rooms/{roomId}")
+    fun getRoomById(@PathVariable roomId: Long): RoomDto? {
+        return roomManager.getRoom(roomId)
+    }
+
+    @PostMapping("/rooms")
+    fun createRoom(@RequestBody createRoomRequest: CreateRoomRequest, principal: Principal): RoomDto {
+        return roomManager.createRoom(
+            createRoomRequest.name,
             principal.name.toLong(),
-            createRoomDTO.capacity
-        )
-        return RoomChangeResponse(
-            roomHandler.capacity,
-            roomHandler.name,
-            roomHandler.id ?: 0,
-            roomHandler.hostId,
-            roomHandler.players.size
+            createRoomRequest.capacity
         )
     }
 
-    @MessageMapping("/all-rooms")
-    @SendTo("/topic/all-rooms")
-    fun getAllRooms(): List<RoomChangeResponse> {
-        return roomManager.getAllRooms()
-            .map { RoomChangeResponse(it.capacity, it.name, it.id ?: 0, it.hostId, it.players.size) }
-            .toList()
+    @PostMapping("/rooms/{roomId}/players")
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody addAccountRequest: AddAccountRequest): RoomAccountActionResult {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }
+
+    @DeleteMapping("/rooms/{roomId}/players/{accountId}")
+    fun removePlayer(@PathVariable roomId: Long, @PathVariable accountId: Long, @RequestBody removeAccountRequest: RemoveAccountRequest): RoomAccountActionResult {
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
+    }
+
 }

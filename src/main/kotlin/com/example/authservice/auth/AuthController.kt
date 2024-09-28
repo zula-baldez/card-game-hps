@@ -19,8 +19,8 @@ class AuthController(
         return registerService.register(registerRequest.username, registerRequest.password)
     }
 
-    @GetMapping("/test")
-    fun register(auth: Principal): String {
+    @GetMapping("/me")
+    fun me(auth: Principal): String {
         return auth.name
     }
 }
