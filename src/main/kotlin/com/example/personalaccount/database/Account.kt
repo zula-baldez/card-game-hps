@@ -18,5 +18,5 @@ class Account(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "friend_id")]
     )
-    var friends: Set<Account> = HashSet()
+    var friends: MutableSet<Account> = HashSet()
 )

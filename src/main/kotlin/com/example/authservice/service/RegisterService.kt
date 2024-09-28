@@ -16,8 +16,8 @@ class RegisterService(
     fun register(username: String, password: String) : RegisterResponse {
         val pass = encoder.encode(password)
         val user = User(username, pass)
-        userRepo.save(user)
-        val token = tokenService.generateAccessToken(user)
-        return RegisterResponse(token, user.id)
+        val savedUser = userRepo.save(user)
+        val token = tokenService.generateAccessToken(savedUser)
+        return RegisterResponse(token, savedUser.id)
     }
 }

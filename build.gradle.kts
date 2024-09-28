@@ -66,6 +66,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     runtimeOnly("org.postgresql:postgresql")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    testImplementation("org.assertj:assertj-core:3.17.2")
+    testImplementation("org.mockito:mockito-core:3.5.13")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions {
