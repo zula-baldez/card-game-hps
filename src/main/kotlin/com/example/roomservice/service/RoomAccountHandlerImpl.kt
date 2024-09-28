@@ -30,6 +30,9 @@ class RoomAccountHandlerImpl(
             return roomOverflow
         }
         room?.players?.plus(account)
+        if (room != null) {
+            account.room = room
+        }
         return roomSuccess
     }
 

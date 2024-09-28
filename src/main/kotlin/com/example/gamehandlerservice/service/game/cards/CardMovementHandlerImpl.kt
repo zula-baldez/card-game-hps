@@ -40,7 +40,7 @@ class CardMovementHandlerImpl(
         val deck = generateDeck().toMutableList()
 
         players.forEach { account ->
-            repeat(account.additionalCards + 2) {
+            repeat(account.fines + 2) {
                 deck.removeLastOrNull()?.let { card ->
                     card.secret = true
                     cards[account.id]?.add(card)

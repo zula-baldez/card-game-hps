@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    enabled: true
   security:
     oauth2:
       client:
@@ -26,10 +28,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
-  sql:
-    init:
-      platform: postgres
+      ddl-auto: validate
 
 jwt:
   secret: classpath:certs/private.pem

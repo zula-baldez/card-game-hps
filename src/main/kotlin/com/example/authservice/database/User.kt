@@ -13,7 +13,8 @@ class User() {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+    @SequenceGenerator(name = "user_id_generator", sequenceName = "users_id_seq", allocationSize = 1)
     var id: Long? = null
 
     @Column(name = "name")
@@ -21,9 +22,6 @@ class User() {
 
     @Column(name = "password")
     var password: String? = null
-
-    @Column(name = "fines")
-    private var fines: Int? = null
 
     @ManyToMany(cascade = [CascadeType.MERGE], fetch = FetchType.EAGER)
     @JoinTable(

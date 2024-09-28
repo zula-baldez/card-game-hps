@@ -7,11 +7,21 @@ import com.example.personalaccount.exceptions.DeleteFriendException
 import com.example.personalaccount.exceptions.FriendNotFoundException
 import com.example.personalaccount.model.FriendshipStatus
 import com.example.personalaccount.service.PersonalAccountManagerImpl
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import java.util.Optional
 
@@ -32,14 +42,12 @@ internal class PersonalAccountManagerImplTest {
             name = "User1",
             fines = 0,
             active = true,
-            additionalCards = 1,
             id = userId
         )
         friend = Account(
             name = "User2",
             fines = 0,
             active = true,
-            additionalCards = 1,
             id = friendId
         )
         accountRepo = mock(AccountRepo::class.java)
@@ -177,10 +185,11 @@ internal class PersonalAccountManagerImplTest {
         assertEquals(mockAccounts, result)
         verify(accountRepo, times(1)).findAll()
     }
+
     @Test
     fun testAccountIdInitialization() {
         val accountId = 1L
-        val account = Account(name = "John Doe", fines = 0, additionalCards = 1, id = accountId)
+        val account = Account(name = "John Doe", fines = 0, id = accountId)
         assertNotNull(account.id)
         assertEquals(accountId, account.id)
     }

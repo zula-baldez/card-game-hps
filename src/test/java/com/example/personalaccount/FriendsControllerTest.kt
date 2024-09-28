@@ -31,14 +31,12 @@ internal class FriendsControllerTest {
             name = "User1",
             fines = 0,
             active = true,
-            additionalCards = 1,
             id = userId
         )
         friend = Account(
             name = "User2",
             fines = 0,
             active = true,
-            additionalCards = 1,
             id = friendId
         )
         friendsManagerImpl = mock(PersonalAccountManagerImpl::class.java)
