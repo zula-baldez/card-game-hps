@@ -29,8 +29,8 @@ class PersonalAccountManagerImpl(
         if (userOpt.isPresent && friendOpt.isPresent) {
             val user = userOpt.get()
             val friend = friendOpt.get()
-            user.friends.plus(friend)
-            friend.friends.plus(user)
+            user.friends.add(friend)
+            friend.friends.add(user)
             accountRepo.save(user)
             accountRepo.save(friend)
             return FriendshipStatus.ALLOWED
@@ -45,8 +45,8 @@ class PersonalAccountManagerImpl(
         if (userOpt.isPresent && friendOpt.isPresent) {
             val user = userOpt.get()
             val friend = friendOpt.get()
-            user.friends.minus(friend)
-            friend.friends.minus(user)
+            user.friends.remove(friend)
+            friend.friends.remove(user)
             accountRepo.save(user)
             accountRepo.save(friend)
             return FriendshipStatus.DENIED
@@ -55,12 +55,12 @@ class PersonalAccountManagerImpl(
     }
 
 
-    override fun getAllFriends(userId: Long): Set<Account>? {
+    override fun getAllFriends(userId: Long): Optional<MutableSet<Account>>? {
         val friends = accountRepo.findById(userId)
             .map { it.friends }
-            .orElse(emptySet())
-        if (friends.isEmpty()) {
+        if (friends.get().isEmpty()) {
             throw FriendNotFoundException("Friends not found for user with ID: $userId")
+
         }
         return friends
 

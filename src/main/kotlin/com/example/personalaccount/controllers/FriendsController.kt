@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.security.Principal
+import java.util.*
 
 @RestController
 class FriendsController(
@@ -15,7 +16,7 @@ class FriendsController(
 ) {
 
     @GetMapping("/get-friends")
-    fun getFriends(auth: Principal): Set<Account>? {
+    fun getFriends(auth: Principal): Optional<MutableSet<Account>>? {
         return friendsManagerImpl.getAllFriends(getAuthenticatedUserId(auth))
     }
 
@@ -44,14 +45,11 @@ class FriendsController(
     }
 
 
-    private fun getUserIdFromPrincipal(auth: Principal): Long? {
+    private fun getUserIdFromPrincipal(auth: Principal): Long {
         return auth.name.toLong()
     }
 
     private fun getAuthenticatedUserId(auth: Principal): Long {
-        return getUserIdFromPrincipal(auth) ?: throw ResponseStatusException(
-            HttpStatus.UNAUTHORIZED,
-            "User non authorized"
-        )
+        return getUserIdFromPrincipal(auth)
     }
 }
