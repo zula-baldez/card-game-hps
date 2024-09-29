@@ -1,9 +1,9 @@
 package com.example.roomservice
 
 import com.example.gamehandlerservice.model.dto.AccountAction
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
-import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManagerImpl
 import org.junit.jupiter.api.Assertions.*
@@ -20,13 +20,13 @@ class RoomAccountManagerTest {
     private lateinit var accountRepository: AccountRepository
     private lateinit var messagingTemplate: SimpMessagingTemplate
     private val accountId = 2L
-    private var user = Account(
+    private var user = AccountEntity(
         name = "User1",
         fines = 0,
         active = true,
         id = accountId
     )
-    private var room = Room(
+    private var room = RoomEntity(
         id = 0,
         name = "Комната для игры",
         hostId = 1L,
@@ -74,7 +74,7 @@ class RoomAccountManagerTest {
     @Test
     fun `addAccount should return roomOverflow if room is full`() {
         val roomId = 1L
-        val room = Room(
+        val room = RoomEntity(
             id = 0,
             name = "Комната для игры",
             hostId = 1L,

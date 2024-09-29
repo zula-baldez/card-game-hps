@@ -3,6 +3,7 @@ package com.example.personalaccount
 import com.example.personalaccount.controllers.FriendsController
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.exceptions.FriendNotFoundException
+import com.example.personalaccount.model.AddFriendRequest
 import com.example.personalaccount.service.PersonalAccountManagerImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -59,7 +60,8 @@ internal class FriendsControllerTest {
     @Test
     fun testAllowFriendship() {
         `when`(principal.name).thenReturn(userId.toString())
-        val response = friendsController.allowFriendship(friendId, principal)
+        val addFriendRequest = AddFriendRequest(friendId)
+        val response = friendsController.allowFriendship(addFriendRequest, principal)
         verify(friendsManagerImpl).addFriend(userId, friendId)
         assertEquals(ResponseEntity.ok("Friendship with user ID $friendId has been allowed."), response)
     }

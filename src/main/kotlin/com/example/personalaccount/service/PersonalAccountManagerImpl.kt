@@ -32,8 +32,7 @@ class PersonalAccountManagerImpl(
             friend.friends.add(user)
             accountRepository.save(user)
             accountRepository.save(friend)
-        }
-        throw AddFriendException("Failed to add friendship")
+        } else throw AddFriendException("Failed to add friendship")
     }
 
     override fun removeFriend(userId: Long, friendId: Long) {
@@ -47,8 +46,7 @@ class PersonalAccountManagerImpl(
             friend.friends.remove(user)
             accountRepository.save(user)
             accountRepository.save(friend)
-        }
-        throw DeleteFriendException("Failed to delete friendship")
+        }else throw DeleteFriendException("Failed to delete friendship")
     }
 
 
