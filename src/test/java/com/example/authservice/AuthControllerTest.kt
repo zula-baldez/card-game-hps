@@ -33,7 +33,7 @@ class AuthControllerTest {
     fun `should return username from Principal`() {
         val principal = mock(Principal::class.java)
         `when`(principal.name).thenReturn("testUser")
-        val result = authController.register(principal)
+        val result = authController.me(principal)
         assertEquals("testUser", result)
     }
 }

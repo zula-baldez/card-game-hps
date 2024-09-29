@@ -5,7 +5,6 @@ import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.DeleteFriendException
 import com.example.personalaccount.exceptions.FriendNotFoundException
-import com.example.personalaccount.model.FriendshipStatus
 import com.example.personalaccount.service.PersonalAccountManagerImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -59,9 +58,8 @@ internal class PersonalAccountManagerImplTest {
         doReturn(Optional.of(user)).`when`(accountRepository).findById(userId)
         doReturn(Optional.of(friend)).`when`(accountRepository).findById(friendId)
 
-        val status = personalAccountManagerImpl.addFriend(userId, friendId)
+        personalAccountManagerImpl.addFriend(userId, friendId)
 
-        assertEquals(status, FriendshipStatus.ALLOWED)
         assertTrue(user.friends.contains(friend))
         verify(accountRepository).save(user)
     }
@@ -112,7 +110,6 @@ internal class PersonalAccountManagerImplTest {
 
         val status = personalAccountManagerImpl.removeFriend(userId, friendId)
 
-        assertEquals(FriendshipStatus.DENIED, status)
         assertFalse(user.friends.contains(friend))
         assertFalse(friend.friends.contains(user))
         verify(accountRepository).save(user)
@@ -192,5 +189,15 @@ internal class PersonalAccountManagerImplTest {
         val accountEntity = AccountEntity(name = "John Doe", fines = 0, id = accountId)
         assertNotNull(accountEntity.id)
         assertEquals(accountId, accountEntity.id)
+        assertEquals("John Doe", accountEntity.name)
+    }
+
+    @Test
+    fun testToDtoConvert(){
+        val accountEntity = AccountEntity(name = "John Doe", fines = 0, id = 1L)
+        val dto = accountEntity.toDto()
+        assertEquals(accountEntity.id, dto.id)
+        assertEquals(accountEntity.name, dto.name)
+        assertEquals(accountEntity.fines, dto.fines)
     }
 }
