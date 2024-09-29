@@ -189,5 +189,15 @@ internal class PersonalAccountManagerImplTest {
         val accountEntity = AccountEntity(name = "John Doe", fines = 0, id = accountId)
         assertNotNull(accountEntity.id)
         assertEquals(accountId, accountEntity.id)
+        assertEquals("John Doe", accountEntity.name)
+    }
+
+    @Test
+    fun testToDtoConvert(){
+        val accountEntity = AccountEntity(name = "John Doe", fines = 0, id = 1L)
+        val dto = accountEntity.toDto()
+        assertEquals(accountEntity.id, dto.id)
+        assertEquals(accountEntity.name, dto.name)
+        assertEquals(accountEntity.fines, dto.fines)
     }
 }
