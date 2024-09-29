@@ -1,4 +1,4 @@
-package com.example.common
+package com.example.authservice
 
 import com.example.common.security.TokenParser
 import org.junit.jupiter.api.Assertions.assertNull

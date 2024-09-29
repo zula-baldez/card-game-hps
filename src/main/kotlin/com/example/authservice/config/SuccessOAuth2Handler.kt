@@ -25,7 +25,7 @@ class SuccessOAuth2Handler(val jwtTokenProvider: TokenService, private val userR
         if (authentication is OAuth2AuthenticationToken) {
             val name = authentication.principal.name
             val user: User = userRepo.findByName(name) ?: run {
-                val newUser = User(name, "vrebegdvsrtbvetbe") //todo generate password
+                val newUser = User(name = name, password = "vrebegdvsrtbvetbe") //todo generate password
                 userRepo.save(newUser)
                 newUser
             }

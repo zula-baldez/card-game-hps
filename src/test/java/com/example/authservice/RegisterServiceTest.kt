@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.springframework.security.crypto.password.PasswordEncoder
 
@@ -38,7 +40,7 @@ class RegisterServiceTest {
         val password = "testPassword"
         val encodedPassword = "encodedPassword"
         val userId = 1L
-        val user = User(username, encodedPassword).apply { id = userId }
+        val user = User(name = username, password = encodedPassword).apply { id = userId }
         val expectedToken = "generatedToken"
 
         `when`(encoder.encode(password)).thenReturn(encodedPassword)

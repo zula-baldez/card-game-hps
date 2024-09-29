@@ -14,5 +14,5 @@ data class RoomDto(
     val capacity: Int,
     val players: List<AccountDto>,
     val currentGameId: Long,
-    val bannedPlayers: List<AccountDto>
+    val bannedPlayers: List<AccountDto> = listOf()
 )

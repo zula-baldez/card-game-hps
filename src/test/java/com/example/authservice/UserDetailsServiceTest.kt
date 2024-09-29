@@ -3,10 +3,12 @@ package com.example.authservice
 import com.example.authservice.database.User
 import com.example.authservice.database.UserRepo
 import com.example.authservice.service.UserDetailsServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class UserDetailsServiceImplTest {
@@ -18,7 +20,7 @@ class UserDetailsServiceImplTest {
     fun `should load user by username successfully`() {
         val username = "testUser"
         val password = "testPass"
-        val userEntity = User(username, password)
+        val userEntity = User(name = username, password = password)
 
         `when`(userRepo.findByName(username)).thenReturn(userEntity)
 
