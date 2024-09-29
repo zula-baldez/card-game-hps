@@ -2,6 +2,7 @@ package com.example.common
 
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.api.ScrollPositionDto
+import com.example.common.dto.business.AccountDto
 import com.example.common.dto.business.RoomDto
 import com.example.gamehandlerservice.model.dto.*
 import com.example.gamehandlerservice.model.game.AfterDropCardResult
@@ -28,6 +29,10 @@ class DtoInitializationTests {
 
         val violations = validator.validate(dto)
         assertEquals(0, violations.size)
+        assertEquals(AccountAction.LEAVE, dto.accountAction)
+        assertEquals(1L, dto.id)
+        assertEquals("ActionName", dto.name)
+
     }
 
     @Test
@@ -64,12 +69,33 @@ class DtoInitializationTests {
     }
 
     @Test
+    fun `FineDto should be valid with proper values`() {
+        val dto = FineDTO(10)
+        val violations = validator.validate(dto)
+        assertEquals(0, violations.size)
+        assertEquals(10, dto.id)
+    }
+
+    @Test
     fun `AccountActionRequest should be valid with proper accountId`() {
         val request = AccountActionRequest(accountId = 1L)
 
         val violations = validator.validate(request)
         assertEquals(0, violations.size)
+        assertEquals(1L, request.accountId)
     }
+
+    @Test
+    fun `AccountDto should be valid with proper values`() {
+        val dto = AccountDto( 1L, "Test", 2,1L)
+        val violations = validator.validate(dto)
+        assertEquals(0, violations.size)
+        assertEquals(1L, dto.id)
+        assertEquals("Test", dto.name)
+        assertEquals(2, dto.fines)
+        assertEquals(1L, dto.roomId)
+    }
+
 
     @Test
     fun `MessageDTO should be valid with proper test value`() {
@@ -77,6 +103,7 @@ class DtoInitializationTests {
 
         val violations = validator.validate(dto)
         assertEquals(0, violations.size)
+        assertEquals("Test message", dto.test)
     }
 
 
@@ -86,6 +113,7 @@ class DtoInitializationTests {
         val request = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
         val violations = validator.validate(request)
         assertEquals(0, violations.size)
+        assertEquals(card, request.card)
     }
 
     @Test
