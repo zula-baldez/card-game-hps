@@ -4,6 +4,7 @@ import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
+import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
 import com.example.personalaccount.database.AccountEntity
 import kotlinx.coroutines.CoroutineScope
@@ -18,12 +19,10 @@ import org.springframework.stereotype.Component
 class CardMovementHandlerImpl(
     private val simpMessagingTemplate: SimpMessagingTemplate,
 ) : CardMovementHandler {
-    override val cards: MutableMap<Long, LinkedHashSet<Card>> = HashMap()
-    override lateinit var trump: Suit
 
-    override fun moveCard(moveCardRequest: MoveCardRequest) {
-        val sourceArea = cards[moveCardRequest.fromDropArea]
-        val destinationArea = cards[moveCardRequest.toDropArea]
+    override fun moveCard(moveCardRequest: MoveCardRequest, gameHandler: GameHandler) {
+        val sourceArea = gameHandler.gameData.userCards[moveCardRequest.fromDropArea]
+        val destinationArea = gameHandler.gameData.userCards[moveCardRequest.toDropArea]
 
         sourceArea?.let { source ->
             if (destinationArea != null && source.remove(moveCardRequest.card)) {
@@ -33,9 +32,9 @@ class CardMovementHandlerImpl(
         }
     }
 
-    override fun giveUsersBasicCards(players: List<AccountEntity>) {
-        players.forEach { account -> cards[account.id] = LinkedHashSet() }
-        cards[VirtualPlayers.TABLE.id] = LinkedHashSet()
+    override fun giveUsersBasicCards(players: List<AccountEntity>, gameHandler: GameHandler) {
+        players.forEach { account -> gameHandler.gameData.userCards[account.id] = LinkedHashSet() }
+        gameHandler.gameData.userCards[VirtualPlayers.TABLE.id] = LinkedHashSet()
 
         val deck = generateDeck().toMutableList()
 
@@ -43,20 +42,26 @@ class CardMovementHandlerImpl(
             repeat(account.fines + 2) {
                 deck.removeLastOrNull()?.let { card ->
                     card.secret = true
-                    cards[account.id]?.add(card)
+                    gameHandler.gameData.userCards[account.id]?.add(card)
                     sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card)
                 }
             }
             deck.removeLastOrNull()?.let { card ->
-                cards[account.id]?.add(card)
+                gameHandler.gameData.userCards[account.id]?.add(card)
                 sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card)
 
             }
         }
 
         deck.forEach {
-            cards[VirtualPlayers.TABLE.id]?.add(it)
+            gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.add(it)
             sendCardMoveToDest(VirtualPlayers.DECK.id, VirtualPlayers.TABLE.id, it)
+        }
+    }
+
+    override fun clearPlayerCards(playerId: Long, gameHandler: GameHandler) {
+        gameHandler.gameData.userCards[playerId]?.forEach { card ->
+            moveCard(MoveCardRequest(playerId, VirtualPlayers.DECK.id, card), gameHandler)
         }
     }
 
@@ -65,7 +70,7 @@ class CardMovementHandlerImpl(
             (2L..14L).map { strength -> Card(suit, strength, false) }
         }.toMutableList()
     }
-    
+
     private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
         CoroutineScope(Dispatchers.IO).launch {
             simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card))

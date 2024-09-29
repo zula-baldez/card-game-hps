@@ -32,7 +32,10 @@ class StageStateMachineHandlerImpl(
     private val eventHandlers: Map<Stage, StageEventHandler> = eventHandlersList.associateBy { it.stage }
 
     override fun processTurn(gameHandler: GameHandler, cardRequest: MoveCardRequest) {
-        val dropResult = dropHandlers[stage]?.validateDrop(cardRequest, gameHandler) ?: throw NotImplementedError()
+        val dropHandler = dropHandlers[stage] ?: throw NotImplementedError()
+        val eventHandler = eventHandlers[stage] ?: throw NotImplementedError()
+
+        val dropResult = dropHandler.validateDrop(cardRequest, gameHandler)
         if (dropResult.needsFine) {
             accountManager.addFine(gameHandler.gameData.playersTurnQueue.current().id)
         }
@@ -40,15 +43,16 @@ class StageStateMachineHandlerImpl(
             gameHandler.changeTurn()
         }
         if (dropResult.valid) {
-            cardHandler.moveCard(cardRequest)
+            cardHandler.moveCard(cardRequest, gameHandler)
         }
-        if (dropResult.nextStage != null) {
-            eventHandlers[stage]?.onStageEnd(gameHandler)
+        val afterDropResult = eventHandler.afterDropCard(gameHandler)
+        if (afterDropResult.nextStage) {
             nextStage(gameHandler)
         }
     }
 
     override fun nextStage(gameHandler: GameHandler) {
+        eventHandlers[stage]?.onStageEnd(gameHandler)
         stage = stateMachine.next()
         eventHandlers[stage]?.onStageStart(gameHandler)
     }

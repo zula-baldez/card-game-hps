@@ -4,6 +4,8 @@ class CyclicQueue<T>(items: List<T>) {
     private val items: MutableList<T> = items.toMutableList()
     private var currentIndex = 0
 
+    fun getSize(): Int = items.size
+
     fun getAll(): List<T> = items
 
     fun current(): T = items[currentIndex]

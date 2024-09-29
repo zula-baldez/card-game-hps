@@ -57,7 +57,6 @@ class RoomAccountManagerImpl(
         } else playerNotFound
     }
 
-    // TODO: думать
     @OptIn(DelicateCoroutinesApi::class)
     private fun sendAccountAction(accountAction: AccountAction, accountEntity: AccountEntity) {
         GlobalScope.launch(Dispatchers.IO) {
