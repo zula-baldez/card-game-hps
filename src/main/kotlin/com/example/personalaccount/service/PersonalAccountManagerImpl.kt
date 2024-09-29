@@ -30,6 +30,7 @@ class PersonalAccountManagerImpl(
     /**
      * Sends or accepts a friendship request
      */
+    @Transactional
     override fun addFriend(accountId: Long, friendId: Long) {
         require(accountId != friendId) { throw AddFriendException("Cannot add yourself as friend") }
         val user = accountService.findByIdOrThrow(accountId)
@@ -98,6 +99,7 @@ class PersonalAccountManagerImpl(
     /**
      * Deletes a friend or denies a friendship request
      */
+    @Transactional
     override fun removeFriend(accountId: Long, friendId: Long) {
         val user = accountService.findByIdOrThrow(accountId)
         val friend = accountService.findByIdOrThrow(friendId)
