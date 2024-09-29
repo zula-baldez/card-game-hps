@@ -1,10 +1,9 @@
 package com.example.common
 
 import com.example.authservice.service.UserService
-import com.example.gamehandlerservice.model.exception.TimeoutException
+import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -24,32 +23,28 @@ import org.springframework.web.socket.sockjs.client.Transport
 import org.springframework.web.socket.sockjs.client.WebSocketTransport
 import java.lang.reflect.Type
 import java.util.concurrent.BlockingQueue
-import java.util.concurrent.ExecutionException
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 
-class StopmIntegrationTestBase: E2EDbInit() {
+class StompIntegrationTestBase : E2EDbInit() {
     @Value("\${local.server.port}")
     private val port = 0
-
-    private lateinit var receivedMessages: BlockingQueue<String>
-
-    private lateinit var session: StompSession
+    private val stompSession = mutableListOf<StompSession>()
+    private lateinit var receivedMessages: MutableMap<Long, BlockingQueue<String>>
 
     @Autowired
     lateinit var messagingTemplate: SimpMessagingTemplate
+
     @Autowired
     lateinit var userService: UserService
-    @BeforeEach
-    @Throws(
-        InterruptedException::class,
-        ExecutionException::class,
-        TimeoutException::class
-    )
-    fun setup() {
-        val token = userService.register("name", "password").token
-        val URL = "ws://localhost:$port/app/game?roomId=123"
+
+    @Autowired
+    lateinit var roomManager: RoomManager
+
+
+    fun getClientStompSession(roomId: Long, userId: Long, token: String): StompSession {
+        val url = "ws://localhost:$port/app/game?roomId=$roomId"
         val transportList: List<Transport> = listOf(WebSocketTransport(StandardWebSocketClient()))
         val stompClient = WebSocketStompClient(SockJsClient(transportList))
         stompClient.messageConverter = StringMessageConverter()
@@ -57,29 +52,44 @@ class StopmIntegrationTestBase: E2EDbInit() {
         handshakeHeaders.add("Authorization", "Bearer $token")
         val connectHeaders = StompHeaders()
         connectHeaders.add("Authorization", "Bearer $token")
-        receivedMessages = LinkedBlockingDeque()
-        session = stompClient.connectAsync(URL, handshakeHeaders, connectHeaders, MySessionHandler())[5, SECONDS]
+        receivedMessages[userId] = LinkedBlockingDeque()
+        val session = stompClient.connectAsync(
+            url,
+            handshakeHeaders,
+            connectHeaders,
+            GameClientSessionHandler(userId)
+        )[5, SECONDS]
+        stompSession += session
+        return session
+    }
+
+    fun getMessage(userId: Long): String? {
+        return receivedMessages[userId]?.poll()
+    }
+
+    @AfterEach
+    fun closeSessions() {
+        receivedMessages.clear()
+        stompSession.forEach { stompSession -> stompSession.disconnect() }
     }
 
     @Test
     @Throws(Exception::class)
     fun stompTest() {
         val message = "myMessage"
-        messagingTemplate.convertAndSend(GAME_TOPIC, message)
-        val response = receivedMessages.poll(5, SECONDS)
+        val user = userService.register("name", "pass")
+        val room = roomManager.createRoom("room", user.id, 10)
+        var session = getClientStompSession(room.id, user.id, user.token)
+        messagingTemplate.convertAndSend(TEST_TOPIC, message)
+        val response = receivedMessages[user.id]?.poll(5, SECONDS)
         assertEquals(message, response)
     }
 
-    @AfterEach
-    @Throws(InterruptedException::class)
-    fun reset() {
-        session.disconnect()
-    }
-
-
-    private inner class MySessionHandler : StompSessionHandlerAdapter() {
+    private inner class GameClientSessionHandler(private val userId: Long) : StompSessionHandlerAdapter() {
         override fun afterConnected(session: StompSession, connectedHeaders: StompHeaders) {
-            session.subscribe(GAME_TOPIC, this)
+            session.subscribe(TEST_TOPIC, this)
+            session.subscribe(TEST_TOPIC, this)
+            session.subscribe(TEST_TOPIC, this)
         }
 
         override fun handleException(
@@ -104,7 +114,7 @@ class StopmIntegrationTestBase: E2EDbInit() {
         override fun handleFrame(stompHeaders: StompHeaders, o: Any?) {
             LOGGER.info("Handle Frame with payload {}", o)
             try {
-                receivedMessages.offer(o as String?, 500, MILLISECONDS)
+                receivedMessages[userId]?.offer(o as String?, 500, MILLISECONDS)
             } catch (e: InterruptedException) {
                 throw RuntimeException(e)
             }
@@ -112,7 +122,7 @@ class StopmIntegrationTestBase: E2EDbInit() {
     }
 
     companion object {
-        private const val GAME_TOPIC = "/topic/test"
-        private val LOGGER: Logger = LoggerFactory.getLogger(StopmIntegrationTestBase::class.java)
+        private const val TEST_TOPIC = "/topic/test"
+        private val LOGGER: Logger = LoggerFactory.getLogger(StompIntegrationTestBase::class.java)
     }
 }

@@ -29,5 +29,4 @@ class WaitingDropStrategy : DropStrategy {
     ): CardDropResult {
         return CardDropResult.missClick
     }
-
 }

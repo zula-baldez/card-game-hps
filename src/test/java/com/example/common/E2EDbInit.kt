@@ -25,13 +25,13 @@ class E2EDbInit {
 
     internal class Initializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
         override fun initialize(configurableApplicationContext: ConfigurableApplicationContext) {
-
+            println(postgresSQLContainer.host)
             TestPropertyValues.of(
-                "POSTGRES_HOST" + postgresSQLContainer.host,
-                "POSTGRES_PORT" + postgresSQLContainer.getMappedPort(POSTGRESQL_PORT),
-                "POSTGRES_USER" + postgresSQLContainer.username,
-                "POSTGRES_PASSWORD" + postgresSQLContainer.password,
-                "POSTGRES_DB" + postgresSQLContainer.databaseName,
+                "POSTGRES_HOST=" + postgresSQLContainer.host,
+                "POSTGRES_PORT=" + postgresSQLContainer.getMappedPort(POSTGRESQL_PORT),
+                "POSTGRES_USER=" + postgresSQLContainer.username,
+                "POSTGRES_PASSWORD=" + postgresSQLContainer.password,
+                "POSTGRES_DB=" + postgresSQLContainer.databaseName,
             ).applyTo(configurableApplicationContext.environment)
         }
     }

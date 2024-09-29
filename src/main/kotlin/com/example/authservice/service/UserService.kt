@@ -23,7 +23,7 @@ class UserService(
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser)
         accountService.createAccountForUser(savedUser)
-        return AuthenticationResponse(token, savedUser.id)
+        return AuthenticationResponse(token, savedUser.id!!)
     }
 
     fun login(username: String, password: String): AuthenticationResponse {
@@ -32,7 +32,7 @@ class UserService(
 
         if (user.password == pass) {
             val token = tokenService.generateAccessToken(user)
-            return AuthenticationResponse(token, user.id)
+            return AuthenticationResponse(token, user.id!!)
         } else throw BadCredentialsException("")
     }
 }

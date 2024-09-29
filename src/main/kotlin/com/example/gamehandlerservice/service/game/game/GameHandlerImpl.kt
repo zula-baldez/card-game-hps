@@ -7,7 +7,6 @@ import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.personalaccount.database.AccountEntity
-import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomManager
 import kotlinx.coroutines.CoroutineScope
@@ -31,22 +30,20 @@ class GameHandlerImpl(
     private var timerJob: Job? = null
     private lateinit var stateStageMachineHandler: StageStateMachineHandler
 
-    val roomEntity: RoomEntity
-        get() = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
-
     override fun configureGameHandler(
         name: String,
         id: Long,
         roomId: Long,
         stateStageMachineHandler: StageStateMachineHandler
     ) {
-        val players = CyclicQueue(roomEntity.players.shuffled())
+        val roomEntity = roomRepository.findById(roomId).getOrNull() ?: throw IllegalArgumentException()
         gameData = GameData(
             id,
             roomId,
             null,
-            players
+            CyclicQueue(roomEntity.players.shuffled())
         )
+
         this.stateStageMachineHandler = stateStageMachineHandler
     }
 
