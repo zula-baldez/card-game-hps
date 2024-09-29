@@ -7,5 +7,4 @@ data class MoveCardResponse(
     val idFrom: Long?, val idTo: Long,
     @NotNull
     val card: Card
-) {
-}
+)

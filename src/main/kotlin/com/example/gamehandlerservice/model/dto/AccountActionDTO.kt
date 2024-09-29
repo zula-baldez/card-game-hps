@@ -9,5 +9,4 @@ data class AccountActionDTO(
     val id: Long,
     @NotBlank
     val name: String
-) {
-}
+)
