@@ -1,7 +1,7 @@
-package com.example.roomservice.repository
+package com.example.personalaccount.database
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface RoomRepo : JpaRepository<Room, Long>
+interface AccountRepository : JpaRepository<Account, Long>
