@@ -1,3 +1,10 @@
 package com.example.authservice.dto
 
-data class CredentialsRequest(val username : String, val password : String)
+import jakarta.validation.constraints.NotBlank
+
+data class CredentialsRequest(
+    @NotBlank
+    val username : String,
+
+    @NotBlank
+    val password : String)

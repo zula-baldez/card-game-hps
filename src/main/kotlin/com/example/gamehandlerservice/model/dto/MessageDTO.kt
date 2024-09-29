@@ -1,4 +1,8 @@
 package com.example.gamehandlerservice.model.dto
 
-data class MessageDTO(var test: String) {
+import jakarta.validation.constraints.NotBlank
+
+data class MessageDTO(
+    @NotBlank
+    var test: String) {
 }

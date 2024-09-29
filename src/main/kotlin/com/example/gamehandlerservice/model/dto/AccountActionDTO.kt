@@ -1,4 +1,13 @@
 package com.example.gamehandlerservice.model.dto
 
-data class AccountActionDTO(val accountAction: AccountAction, val id : Long, val name : String) {
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+
+data class AccountActionDTO(
+    @NotBlank
+    val accountAction: AccountAction,
+    val id: Long,
+    @NotBlank
+    val name: String
+) {
 }

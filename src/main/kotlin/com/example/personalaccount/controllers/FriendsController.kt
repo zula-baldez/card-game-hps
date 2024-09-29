@@ -4,6 +4,7 @@ import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.exceptions.FriendNotFoundException
 import com.example.personalaccount.model.AddFriendRequest
 import com.example.personalaccount.service.PersonalAccountManagerImpl
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -22,7 +23,7 @@ class FriendsController(
     }
 
     @PostMapping("/friends")
-    fun allowFriendship(@RequestBody addFriendRequest: AddFriendRequest, auth: Principal): ResponseEntity<String> {
+    fun allowFriendship(@RequestBody @Valid addFriendRequest: AddFriendRequest, auth: Principal): ResponseEntity<String> {
         friendsManagerImpl.addFriend(auth.name.toLong(), addFriendRequest.friendId)
         return ResponseEntity.ok("Friendship with user ID ${addFriendRequest.friendId} has been allowed.")
     }

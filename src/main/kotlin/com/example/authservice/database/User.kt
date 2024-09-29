@@ -1,6 +1,7 @@
 package com.example.authservice.database
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
 
 
 @Table(name = "users")
@@ -18,9 +19,11 @@ class User() {
     var id: Long? = null
 
     @Column(name = "name")
+    @NotBlank
     var name: String? = null
 
     @Column(name = "password")
+    @NotBlank
     var password: String? = null
 
     @ManyToMany(cascade = [CascadeType.MERGE], fetch = FetchType.EAGER)

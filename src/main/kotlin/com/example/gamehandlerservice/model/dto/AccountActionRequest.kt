@@ -1,3 +1,8 @@
 package com.example.gamehandlerservice.model.dto
 
-data class AccountActionRequest(val accountId: Long)
+import jakarta.validation.constraints.NotNull
+
+data class AccountActionRequest(
+    @NotNull
+    val accountId: Long
+)

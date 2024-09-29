@@ -3,6 +3,7 @@ package com.example.authservice.auth
 import com.example.authservice.dto.CredentialsRequest
 import com.example.authservice.dto.AuthenticationResponse
 import com.example.authservice.service.UserService
+import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,12 +17,12 @@ class AuthController(
     val userService: UserService,
 ) {
     @PostMapping("/auth/register", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun register(@RequestBody credentialsRequest: CredentialsRequest): AuthenticationResponse {
+    fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.register(credentialsRequest.username, credentialsRequest.password)
     }
 
     @PostMapping("/auth/login", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun login(@RequestBody credentialsRequest: CredentialsRequest): AuthenticationResponse {
+    fun login(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.login(credentialsRequest.username, credentialsRequest.password)
     }
 
