@@ -8,8 +8,8 @@ import com.example.personalaccount.database.AccountEntity
 data class GameData(
     val gameId: Long,
     val roomId: Long,
-    val trump: Suit?,
+    var trump: Suit?,
     var playersTurnQueue: CyclicQueue<AccountEntity>,
-    val cards: Map<Long, LinkedHashSet<Card>> = mutableMapOf(),
+    val userCards: MutableMap<Long, LinkedHashSet<Card>> = mutableMapOf(),
     val finesCounter: MutableMap<Long, MutableMap<Long, Int>> = mutableMapOf() //to id from id n times
 )

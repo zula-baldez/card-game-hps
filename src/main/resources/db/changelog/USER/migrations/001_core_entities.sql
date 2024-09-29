@@ -49,6 +49,14 @@ CREATE TABLE IF NOT EXISTS  room
     capacity        INT,
     current_game_id BIGINT
 );
+
+CREATE TABLE IF NOT EXISTS  banned_users
+(
+    room_id              BIGINT,
+    user_id            BIGINT,
+    PRIMARY KEY (room_id, user_id)
+);
+
 CREATE SEQUENCE IF NOT EXISTS  roles_id_seq;
 CREATE SEQUENCE IF NOT EXISTS  room_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;

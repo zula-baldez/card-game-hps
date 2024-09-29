@@ -20,8 +20,8 @@ class RoomEntity(
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name="banned_players",
-        joinColumns = [JoinColumn(name = "id")],
-        inverseJoinColumns = [JoinColumn(name = "id")]
+        joinColumns = [JoinColumn(name = "room_id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
     var bannedPlayers: MutableList<AccountEntity> = ArrayList()
 ) {

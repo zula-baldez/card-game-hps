@@ -47,7 +47,6 @@ class GameHandlerImpl(
             null,
             players
         )
-        cardMovementHandler.giveUsersBasicCards(roomEntity.players)
         this.stateStageMachineHandler = stateStageMachineHandler
     }
 

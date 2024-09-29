@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.service.game.drop
 
-import com.example.gamehandlerservice.model.dto.CardDropResult
+import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.exception.PlayerNotFoundException
 import com.example.gamehandlerservice.model.game.Card
@@ -19,21 +19,21 @@ class DistributionDropStrategy : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        validatePlayers(request, gameHandler.gameData.cards)
-        return if (gameHandler.gameData.cards[VirtualPlayers.TABLE.id]?.size == 1) {
+        validatePlayers(request, gameHandler.gameData.userCards)
+        return if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == 1) {
+            gameHandler.gameData.trump = gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.first?.suit
             CardDropResult(
                 changeTurn = true,
                 valid = true,
-                needsFine = false,
-                nextStage = Stage.FINES
+                needsFine = false
             )
         } else {
-            gameHandler.gameData.cards.entries
+            gameHandler.gameData.userCards.entries
                 .filter { (playerId, _) -> playerId != request.toDropArea && playerId != VirtualPlayers.TABLE.id }
                 .firstOrNull { (_, playerCards) -> isDropPrior(request.card, playerCards.last()) }
                 ?.let {
                     CardDropResult.invalid
-                } ?: CardDropResult(changeTurn = true, valid = true, needsFine = false, nextStage = null)
+                } ?: CardDropResult(changeTurn = true, valid = true, needsFine = false)
         }
     }
 
@@ -41,12 +41,12 @@ class DistributionDropStrategy : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        return if (gameHandler.gameData.cards[VirtualPlayers.TABLE.id]?.size == 1) {
+        return if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == 1) {
             CardDropResult.invalid
         } else {
             if (isDropPrior(
                     request.card,
-                    gameHandler.gameData.cards[request.toDropArea]?.lastOrNull() ?: return CardDropResult.invalid
+                    gameHandler.gameData.userCards[request.toDropArea]?.lastOrNull() ?: return CardDropResult.invalid
                 )
             ) {
                 CardDropResult.valid
