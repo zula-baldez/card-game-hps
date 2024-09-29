@@ -4,11 +4,9 @@ import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.service.AccountServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.springframework.data.repository.findByIdOrNull
-import java.util.Optional
+import java.util.*
 
 class AccountServiceImplTest {
 
