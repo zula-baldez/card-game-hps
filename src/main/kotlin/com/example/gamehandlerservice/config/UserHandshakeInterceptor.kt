@@ -1,7 +1,6 @@
 package com.example.gamehandlerservice.config
 
-import com.example.gamehandlerservice.security.TokenParser
-import com.example.personalaccount.database.Account
+import com.example.common.security.TokenParser
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.service.RoomManager
 import org.springframework.http.server.ServerHttpRequest
@@ -33,6 +32,7 @@ class UserHandshakeInterceptor(
 
         val account = accountRepository.findById(userId.toLong()).getOrNull() ?: return false
 
+        // TODO: validate not banned
         attributes["roomId"] = roomId
         attributes["gameId"] = roomManager.getRoom(roomId)?.currentGameId
         attributes["accountId"] = account.id

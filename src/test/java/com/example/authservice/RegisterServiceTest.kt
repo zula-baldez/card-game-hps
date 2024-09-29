@@ -3,7 +3,7 @@ package com.example.authservice
 import com.example.authservice.database.User
 import com.example.authservice.database.UserRepo
 import com.example.authservice.jwt.TokenService
-import com.example.authservice.service.RegisterService
+import com.example.authservice.service.UserService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,7 +25,7 @@ class RegisterServiceTest {
     private lateinit var encoder: PasswordEncoder
 
     @InjectMocks
-    private lateinit var registerService: RegisterService
+    private lateinit var registerService: UserService
 
     @BeforeEach
     fun setUp() {

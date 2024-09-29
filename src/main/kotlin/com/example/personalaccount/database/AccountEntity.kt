@@ -1,12 +1,12 @@
 package com.example.personalaccount.database
 
 import com.example.common.dto.business.AccountDto
-import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomEntity
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "player")
-class Account(
+class AccountEntity(
     @Id
     var id: Long,
     @Column(name = "name")
@@ -17,7 +17,7 @@ class Account(
     var active: Boolean = false,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_room_id", referencedColumnName = "id")
-    var room: Room? = null,
+    var roomEntity: RoomEntity? = null,
 
     @ManyToMany
     @JoinTable(
@@ -25,7 +25,7 @@ class Account(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "friend_id")]
     )
-    var friends: MutableSet<Account> = HashSet()
+    var friends: MutableSet<AccountEntity> = HashSet()
 ) {
     fun toDto(): AccountDto {
         return AccountDto(
@@ -33,7 +33,7 @@ class Account(
             name,
             fines,
             active,
-            roomId = room?.id
+            roomId = roomEntity?.id
         )
     }
 }

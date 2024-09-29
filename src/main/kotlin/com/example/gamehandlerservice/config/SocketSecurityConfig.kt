@@ -1,3 +1,4 @@
+import com.example.authservice.util.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message
@@ -11,7 +12,7 @@ import org.springframework.security.messaging.access.intercept.MessageMatcherDel
 class SocketSecurityConfig {
     @Bean
     fun authorizationManager(messages: MessageMatcherDelegatingAuthorizationManager.Builder): AuthorizationManager<Message<*>?>? {
-        messages.simpDestMatchers("/admin").hasRole("ADMIN")
+        messages.simpDestMatchers("/admin").hasRole(Role.ADMIN.toString())
              .anyMessage().authenticated()
         return messages.build()
     }

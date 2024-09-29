@@ -1,6 +1,6 @@
 package com.example.personalaccount
 
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.DeleteFriendException
@@ -33,18 +33,18 @@ internal class PersonalAccountManagerImplTest {
         PersonalAccountManagerImpl(accountRepository, simpMessagingTemplate)
     private val userId = 1L
     private val friendId = 2L
-    private lateinit var user: Account
-    private lateinit var friend: Account
+    private lateinit var user: AccountEntity
+    private lateinit var friend: AccountEntity
 
     @BeforeEach
     fun setUp() {
-        user = Account(
+        user = AccountEntity(
             name = "User1",
             fines = 0,
             active = true,
             id = userId
         )
-        friend = Account(
+        friend = AccountEntity(
             name = "User2",
             fines = 0,
             active = true,
@@ -177,20 +177,20 @@ internal class PersonalAccountManagerImplTest {
 
     @Test
     fun `should return an empty list when no accounts found`() {
-        val mockAccounts: List<Account> = emptyList()
+        val mockAccountEntities: List<AccountEntity> = emptyList()
 
-        `when`(accountRepository.findAll()).thenReturn(mockAccounts)
+        `when`(accountRepository.findAll()).thenReturn(mockAccountEntities)
         val result = personalAccountManagerImpl.getInRoomAccounts()
 
-        assertEquals(mockAccounts, result)
+        assertEquals(mockAccountEntities, result)
         verify(accountRepository, times(1)).findAll()
     }
 
     @Test
     fun testAccountIdInitialization() {
         val accountId = 1L
-        val account = Account(name = "John Doe", fines = 0, id = accountId)
-        assertNotNull(account.id)
-        assertEquals(accountId, account.id)
+        val accountEntity = AccountEntity(name = "John Doe", fines = 0, id = accountId)
+        assertNotNull(accountEntity.id)
+        assertEquals(accountId, accountEntity.id)
     }
 }

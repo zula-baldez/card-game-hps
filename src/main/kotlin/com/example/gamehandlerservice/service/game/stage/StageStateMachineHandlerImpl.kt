@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 class StageStateMachineHandlerImpl(
     dropHandlersList: List<DropStrategy>,
     eventHandlersList: List<StageEventHandler>,
-    val friendsManager: PersonalAccountManager,
+    val accountManager: PersonalAccountManager,
     val cardHandler: CardMovementHandler
 ) : StageStateMachineHandler {
     override var stage: Stage = Stage.WAITING
@@ -34,7 +34,7 @@ class StageStateMachineHandlerImpl(
     override fun processTurn(gameHandler: GameHandler, cardRequest: MoveCardRequest) {
         val dropResult = dropHandlers[stage]?.validateDrop(cardRequest, gameHandler) ?: throw NotImplementedError()
         if (dropResult.needsFine) {
-            friendsManager.addFine(gameHandler.gameData.playersTurnQueue.current().id)
+            accountManager.addFine(gameHandler.gameData.playersTurnQueue.current().id)
         }
         if (dropResult.changeTurn) {
             gameHandler.changeTurn()

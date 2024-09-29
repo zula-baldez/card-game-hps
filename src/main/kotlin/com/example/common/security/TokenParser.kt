@@ -1,4 +1,4 @@
-package com.example.gamehandlerservice.security
+package com.example.common.security
 
 import com.nimbusds.jwt.SignedJWT
 import org.springframework.stereotype.Component

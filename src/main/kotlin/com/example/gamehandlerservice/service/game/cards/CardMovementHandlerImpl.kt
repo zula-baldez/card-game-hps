@@ -5,7 +5,7 @@ import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ class CardMovementHandlerImpl(
         }
     }
 
-    override fun giveUsersBasicCards(players: List<Account>) {
+    override fun giveUsersBasicCards(players: List<AccountEntity>) {
         players.forEach { account -> cards[account.id] = LinkedHashSet() }
         cards[VirtualPlayers.TABLE.id] = LinkedHashSet()
 
@@ -65,7 +65,7 @@ class CardMovementHandlerImpl(
             (2L..14L).map { strength -> Card(suit, strength, false) }
         }.toMutableList()
     }
-
+    
     private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
         CoroutineScope(Dispatchers.IO).launch {
             simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card))

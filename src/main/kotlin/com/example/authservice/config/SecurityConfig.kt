@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient
@@ -35,8 +36,8 @@ class SecurityConfig(
     val rsaKeyProperties: RsaKeyProperties,
 ) {
     @Bean
-    fun passwordEncoder(): BCryptPasswordEncoder {
-        return BCryptPasswordEncoder()
+    fun passwordEncoder(): PasswordEncoder {
+        return NoOpPasswordEncoder.getInstance()
     }
 
     @Bean
@@ -80,7 +81,8 @@ class SecurityConfig(
             .sessionManagement { i -> i.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { i ->
                 i.requestMatchers(
-                    AntPathRequestMatcher("/auth/register")
+                    AntPathRequestMatcher("/auth/register"),
+                    AntPathRequestMatcher("/auth/login")
                 ).permitAll()
                     .anyRequest().authenticated()
             }

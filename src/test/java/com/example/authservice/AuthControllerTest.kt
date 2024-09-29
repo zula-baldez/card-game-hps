@@ -1,8 +1,8 @@
 package com.example.authservice
 import com.example.authservice.auth.AuthController
-import com.example.authservice.dto.RegisterRequest
-import com.example.authservice.dto.RegisterResponse
-import com.example.authservice.service.RegisterService
+import com.example.authservice.dto.CredentialsRequest
+import com.example.authservice.dto.AuthenticationResponse
+import com.example.authservice.service.UserService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
@@ -10,20 +10,20 @@ import java.security.Principal
 
 class AuthControllerTest {
 
-    private val registerService: RegisterService = mock(RegisterService::class.java)
+    private val registerService: UserService = mock(UserService::class.java)
     private val authController = AuthController(registerService)
 
     @Test
     fun `should register user and return RegisterResponse`() {
-        val registerRequest = RegisterRequest("testUser", "testPass")
+        val credentialsRequest = CredentialsRequest("testUser", "testPass")
         val token = "tokenString"
         val userId = 1L
-        val registerResponse = RegisterResponse(token, userId)
+        val authenticationResponse = AuthenticationResponse(token, userId)
 
-        `when`(registerService.register(registerRequest.username, registerRequest.password))
-            .thenReturn(registerResponse)
+        `when`(registerService.register(credentialsRequest.username, credentialsRequest.password))
+            .thenReturn(authenticationResponse)
 
-        val response = authController.register(registerRequest)
+        val response = authController.register(credentialsRequest)
 
         assertEquals(token, response.token)
         assertEquals(userId, response.id)

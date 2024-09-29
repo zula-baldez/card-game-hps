@@ -1,12 +1,11 @@
 package com.example.personalaccount.service
 
 import com.example.gamehandlerservice.model.dto.FineDTO
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.DeleteFriendException
 import com.example.personalaccount.exceptions.FriendNotFoundException
-import com.example.personalaccount.model.FriendshipStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,9 +21,9 @@ class PersonalAccountManagerImpl(
     val simpMessagingTemplate: SimpMessagingTemplate
 ) : PersonalAccountManager {
 
-    override fun addFriend(userId: Long, friendId: Long): FriendshipStatus {
-        val userOpt: Optional<Account> = accountRepository.findById(userId)
-        val friendOpt: Optional<Account> = accountRepository.findById(friendId)
+    override fun addFriend(userId: Long, friendId: Long) {
+        val userOpt: Optional<AccountEntity> = accountRepository.findById(userId)
+        val friendOpt: Optional<AccountEntity> = accountRepository.findById(friendId)
 
         if (userOpt.isPresent && friendOpt.isPresent) {
             val user = userOpt.get()
@@ -33,14 +32,13 @@ class PersonalAccountManagerImpl(
             friend.friends.add(user)
             accountRepository.save(user)
             accountRepository.save(friend)
-            return FriendshipStatus.ALLOWED
         }
         throw AddFriendException("Failed to add friendship")
     }
 
-    override fun removeFriend(userId: Long, friendId: Long): FriendshipStatus {
-        val userOpt: Optional<Account> = accountRepository.findById(userId)
-        val friendOpt: Optional<Account> = accountRepository.findById(friendId)
+    override fun removeFriend(userId: Long, friendId: Long) {
+        val userOpt: Optional<AccountEntity> = accountRepository.findById(userId)
+        val friendOpt: Optional<AccountEntity> = accountRepository.findById(friendId)
 
         if (userOpt.isPresent && friendOpt.isPresent) {
             val user = userOpt.get()
@@ -49,13 +47,12 @@ class PersonalAccountManagerImpl(
             friend.friends.remove(user)
             accountRepository.save(user)
             accountRepository.save(friend)
-            return FriendshipStatus.DENIED
         }
         throw DeleteFriendException("Failed to delete friendship")
     }
 
 
-    override fun getAllFriends(userId: Long): Optional<MutableSet<Account>>? {
+    override fun getAllFriends(userId: Long): Optional<MutableSet<AccountEntity>>? {
         val friends = accountRepository.findById(userId)
             .map { it.friends }
         if (friends.get().isEmpty()) {
@@ -80,5 +77,5 @@ class PersonalAccountManagerImpl(
         }
     }
 
-    override fun getInRoomAccounts(): List<Account> = accountRepository.findAll().toList()
+    override fun getInRoomAccounts(): List<AccountEntity> = accountRepository.findAll().toList()
 }

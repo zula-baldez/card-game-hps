@@ -1,4 +1,4 @@
-package com.example.gamehandlerservice.aspects
+package com.example.common.aspects
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

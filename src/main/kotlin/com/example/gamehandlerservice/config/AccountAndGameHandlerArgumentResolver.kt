@@ -2,9 +2,9 @@ package com.example.gamehandlerservice.config
 
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
-import com.example.roomservice.repository.Room
+import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import org.springframework.core.MethodParameter
 import org.springframework.messaging.Message
@@ -22,9 +22,9 @@ class AccountAndGameHandlerArgumentResolver(
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         //TODO дто вместо энтити?
-        return parameter.parameterType == Account::class.java ||
+        return parameter.parameterType == AccountEntity::class.java ||
                 parameter.parameterType == GameHandler::class.java ||
-                parameter.parameterType == Room::class.java
+                parameter.parameterType == RoomEntity::class.java
     }
 
     override fun resolveArgument(parameter: MethodParameter, message: Message<*>): Any? {
@@ -36,11 +36,11 @@ class AccountAndGameHandlerArgumentResolver(
                 val gameId = sessionAttributes["gameId"] as? Long ?: throw IllegalArgumentException("No gameId found in session attributes")
                 gameHandlerRegistry.getGame(gameId)
             }
-            Room::class.java -> {
+            RoomEntity::class.java -> {
                 val roomId = sessionAttributes["roomId"] as? Long ?: throw IllegalArgumentException("No roomId found in session attributes")
                 roomRepository.findById(roomId).orElse(null)
             }
-            Account::class.java -> {
+            AccountEntity::class.java -> {
                 val accountId = sessionAttributes["accountId"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
                 accountRepository.findById(accountId).orElse(null)
             }

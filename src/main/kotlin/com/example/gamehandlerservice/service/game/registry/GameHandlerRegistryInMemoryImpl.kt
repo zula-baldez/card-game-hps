@@ -17,7 +17,7 @@ class GameHandlerRegistryInMemoryImpl(
     }
 
     override fun deleteGame(gameId: Long) {
-        games.minus(gameId)
+        games -= gameId
     }
 
     override fun getGame(gameId: Long): GameHandler? {

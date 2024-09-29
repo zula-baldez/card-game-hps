@@ -2,7 +2,7 @@ package com.example.roomservice.service
 
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.dto.RoomAccountActionResult
 import com.example.roomservice.repository.RoomRepository
@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
-import kotlin.jvm.optionals.getOrElse
 import kotlin.jvm.optionals.getOrNull
 
 @Component
@@ -58,11 +57,11 @@ class RoomAccountManagerImpl(
 
     // TODO: думать
     @OptIn(DelicateCoroutinesApi::class)
-    private fun sendAccountAction(accountAction: AccountAction, account: Account) {
+    private fun sendAccountAction(accountAction: AccountAction, accountEntity: AccountEntity) {
         GlobalScope.launch(Dispatchers.IO) {
             simpMessagingTemplate.convertAndSend(
                 "/topic/accounts",
-                AccountActionDTO(accountAction, account.id, account.name)
+                AccountActionDTO(accountAction, accountEntity.id, accountEntity.name)
             )
         }
     }

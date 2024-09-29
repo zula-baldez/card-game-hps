@@ -6,8 +6,8 @@ import com.example.gamehandlerservice.service.game.cards.CardMovementHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.Account
-import com.example.roomservice.repository.Room
+import com.example.personalaccount.database.AccountEntity
+import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomManager
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +31,7 @@ class GameHandlerImpl(
     private var timerJob: Job? = null
     private lateinit var stateStageMachineHandler: StageStateMachineHandler
 
-    val room: Room
+    val roomEntity: RoomEntity
         get() = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
 
     override fun configureGameHandler(
@@ -40,18 +40,18 @@ class GameHandlerImpl(
         roomId: Long,
         stateStageMachineHandler: StageStateMachineHandler
     ) {
-        val players = CyclicQueue(room.players.shuffled())
+        val players = CyclicQueue(roomEntity.players.shuffled())
         gameData = GameData(
             id,
             roomId,
             null,
             players
         )
-        cardMovementHandler.giveUsersBasicCards(room.players)
+        cardMovementHandler.giveUsersBasicCards(roomEntity.players)
         this.stateStageMachineHandler = stateStageMachineHandler
     }
 
-    override fun turningPlayer(): Account = gameData.playersTurnQueue.current()
+    override fun turningPlayer(): AccountEntity = gameData.playersTurnQueue.current()
 
     override fun changeTurn() {
         gameData.playersTurnQueue.next()

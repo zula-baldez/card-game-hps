@@ -1,7 +1,7 @@
 package com.example.personalaccount
 
 import com.example.personalaccount.controllers.FriendsController
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.exceptions.FriendNotFoundException
 import com.example.personalaccount.service.PersonalAccountManagerImpl
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -22,18 +22,18 @@ internal class FriendsControllerTest {
     private lateinit var principal: Principal
     private val userId = 1L
     private val friendId = 2L
-    private lateinit var user: Account
-    private lateinit var friend: Account
+    private lateinit var user: AccountEntity
+    private lateinit var friend: AccountEntity
 
     @BeforeEach
     fun setUp() {
-        user = Account(
+        user = AccountEntity(
             name = "User1",
             fines = 0,
             active = true,
             id = userId
         )
-        friend = Account(
+        friend = AccountEntity(
             name = "User2",
             fines = 0,
             active = true,

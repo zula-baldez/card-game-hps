@@ -4,7 +4,7 @@ import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
-import com.example.personalaccount.database.Account
+import com.example.personalaccount.database.AccountEntity
 
 interface GameHandler {
     var gameData: GameData
@@ -17,7 +17,7 @@ interface GameHandler {
         stateStageMachineHandler: StageStateMachineHandler
     )
 
-    fun turningPlayer(): Account?
+    fun turningPlayer(): AccountEntity?
     fun changeTurn()
     fun startGame()
     fun getStage(): Stage
