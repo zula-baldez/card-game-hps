@@ -267,7 +267,7 @@ internal class FriendsControllerTest {
     fun testAddFine() {
         friendsManagerImpl.addFine(userId)
         assertEquals(1, user.fines)
-        verify(messageTemplateMock).convertAndSend(eq("/topic/fines"), FineDTO(userId))
+        verify(messageTemplateMock).convertAndSend(eq("/topic/fines"), eq(FineDTO(userId)))
     }
 
 }
