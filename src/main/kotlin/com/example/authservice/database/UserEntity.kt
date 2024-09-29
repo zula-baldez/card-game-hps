@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank
 
 @Table(name = "users")
 @Entity
-class User(
+class UserEntity(
     @Column(name = "name")
     @NotBlank
     var name: String? = null,

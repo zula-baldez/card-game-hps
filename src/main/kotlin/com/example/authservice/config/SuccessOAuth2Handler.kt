@@ -1,6 +1,6 @@
 package com.example.authservice.config
 
-import com.example.authservice.database.User
+import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
 import com.example.authservice.jwt.TokenService
 import jakarta.servlet.ServletException
@@ -24,13 +24,13 @@ class SuccessOAuth2Handler(val jwtTokenProvider: TokenService, private val userR
     ) {
         if (authentication is OAuth2AuthenticationToken) {
             val name = authentication.principal.name
-            val user: User = userRepo.findByName(name) ?: run {
-                val newUser = User(name = name, password = "vrebegdvsrtbvetbe") //todo generate password
-                userRepo.save(newUser)
-                newUser
+            val userEntity: UserEntity = userRepo.findByName(name) ?: run {
+                val newUserEntity = UserEntity(name = name, password = "vrebegdvsrtbvetbe") //todo generate password
+                userRepo.save(newUserEntity)
+                newUserEntity
             }
             // Generate the JWT token
-            val jwtToken = jwtTokenProvider.generateAccessToken(user)
+            val jwtToken = jwtTokenProvider.generateAccessToken(userEntity)
             response.contentType = "application/json"
             response.writer.write("{ \"token\": \"$jwtToken\" }")
         }

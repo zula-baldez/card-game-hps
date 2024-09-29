@@ -1,6 +1,6 @@
 package com.example.authservice
 
-import com.example.authservice.database.User
+import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
 import com.example.authservice.jwt.TokenService
 import com.example.authservice.service.UserService
@@ -40,18 +40,18 @@ class RegisterServiceTest {
         val password = "testPassword"
         val encodedPassword = "encodedPassword"
         val userId = 1L
-        val user = User(name = username, password = encodedPassword).apply { id = userId }
+        val userEntity = UserEntity(name=username, password=encodedPassword).apply { id = userId }
         val expectedToken = "generatedToken"
 
         `when`(encoder.encode(password)).thenReturn(encodedPassword)
-        `when`(tokenService.generateAccessToken(user)).thenReturn(expectedToken)
-        `when`(userRepo.save(any(User::class.java))).thenReturn(user)
+        `when`(tokenService.generateAccessToken(userEntity)).thenReturn(expectedToken)
+        `when`(userRepo.save(any(UserEntity::class.java))).thenReturn(userEntity)
 
         val response = registerService.register(username, password)
         assertEquals(expectedToken, response.token)
         assertEquals(userId, response.id)
         verify(encoder).encode(password)
-        verify(userRepo).save(any(User::class.java))
-        verify(tokenService).generateAccessToken(user)
+        verify(userRepo).save(any(UserEntity::class.java))
+        verify(tokenService).generateAccessToken(userEntity)
     }
 }

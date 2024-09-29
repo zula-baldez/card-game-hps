@@ -11,7 +11,5 @@ data class AccountDto(
 
     @Min(0)
     val fines: Int,
-
-    val active: Boolean,
     val roomId: Long?
 )

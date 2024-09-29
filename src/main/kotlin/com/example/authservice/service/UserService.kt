@@ -1,11 +1,11 @@
 package com.example.authservice.service
 
-import com.example.authservice.database.User
+import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
 import com.example.authservice.dto.AuthenticationResponse
 import com.example.authservice.jwt.TokenService
+import com.example.personalaccount.service.AccountService
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -13,14 +13,16 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userRepo: UserRepo,
+    val accountService: AccountService,
     val encoder: PasswordEncoder,
     val tokenService: TokenService
 ) {
     fun register(username: String, password: String) : AuthenticationResponse {
         val pass = encoder.encode(password)
-        val user = User(username, pass)
-        val savedUser = userRepo.save(user)
+        val userEntity = UserEntity(username, pass)
+        val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser)
+        accountService.createAccountForUser(savedUser)
         return AuthenticationResponse(token, savedUser.id)
     }
 

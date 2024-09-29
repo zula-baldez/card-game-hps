@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 
 @Entity
-@Table(name = "player")
+@Table(name = "accounts")
 class AccountEntity(
     @Id
     var id: Long,
@@ -19,27 +19,19 @@ class AccountEntity(
     @Positive
     @Column(name = "fines")
     var fines: Int,
-
-    @Column(name = "active")
-    var active: Boolean = false,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_room_id", referencedColumnName = "id")
     var roomEntity: RoomEntity? = null,
-
-    @ManyToMany
-    @JoinTable(
-        name = "user_friends",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "friend_id")]
-    )
-    var friends: MutableSet<AccountEntity> = HashSet()
+    @OneToMany(mappedBy = "fromAccount", cascade = [CascadeType.PERSIST])
+    var friends: MutableSet<FriendshipEntity> = HashSet(),
+    @OneToMany(mappedBy = "toAccount", cascade = [CascadeType.PERSIST])
+    var incomingFriendRequests: MutableSet<FriendshipEntity> = HashSet()
 ) {
     fun toDto(): AccountDto {
         return AccountDto(
             id,
             name,
             fines,
-            active,
             roomId = roomEntity?.id
         )
     }
