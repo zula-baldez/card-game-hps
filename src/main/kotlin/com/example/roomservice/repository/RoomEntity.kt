@@ -16,7 +16,14 @@ class RoomEntity(
     var capacity: Int,
     var currentGameId: Long,
     @OneToMany(mappedBy = "roomEntity", fetch = FetchType.LAZY)
-    var players: MutableList<AccountEntity> = ArrayList()
+    var players: MutableList<AccountEntity> = ArrayList(),
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name="banned_players",
+        joinColumns = [JoinColumn(name = "id")],
+        inverseJoinColumns = [JoinColumn(name = "id")]
+    )
+    var bannedPlayers: MutableList<AccountEntity> = ArrayList()
 ) {
     fun toDto(): RoomDto {
         return RoomDto(
@@ -25,7 +32,8 @@ class RoomEntity(
             hostId,
             capacity,
             players.map { it.toDto() },
-            currentGameId
+            currentGameId,
+            bannedPlayers.map { it.toDto() }
         )
     }
 }

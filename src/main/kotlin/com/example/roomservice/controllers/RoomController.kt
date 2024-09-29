@@ -44,5 +44,4 @@ class RoomController(
     fun removePlayer(@PathVariable roomId: Long, @PathVariable accountId: Long, @RequestBody removeAccountRequest: RemoveAccountRequest): RoomAccountActionResult {
         return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
     }
-
 }

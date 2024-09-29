@@ -45,8 +45,10 @@ class RoomAccountManagerImpl(
         val room = roomRepository.findById(roomId).getOrNull() ?: return roomNotFound
         val account = accountRepository.findById(accountId).getOrNull() ?: return playerNotFound
 
-
         return if (room.players.contains(account)) {
+            if (reason == AccountAction.BAN) {
+                room.bannedPlayers += account
+            }
             sendAccountAction(reason, account)
             room.players.remove(account)
             if (room.players.isEmpty())

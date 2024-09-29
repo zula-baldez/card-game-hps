@@ -32,9 +32,12 @@ class UserHandshakeInterceptor(
 
         val account = accountRepository.findById(userId.toLong()).getOrNull() ?: return false
 
-        // TODO: validate not banned
+        val room = roomManager.getRoom(roomId) ?: return false
+        if (room.bannedPlayers.contains(account.toDto())) {
+            return false
+        }
         attributes["roomId"] = roomId
-        attributes["gameId"] = roomManager.getRoom(roomId)?.currentGameId
+        attributes["gameId"] = room.currentGameId
         attributes["accountId"] = account.id
         return true
     }
