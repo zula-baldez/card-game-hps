@@ -37,7 +37,7 @@ class RoomControllerTest {
     @Test
     fun `should return all available rooms`() {
         val scrollPositionDto = ScrollPositionDto(10)
-        val roomDtoList: List<RoomDto> = listOf(RoomDto(1L, "Room1", 10, 2, mutableListOf(), 1L))
+        val roomDtoList: List<RoomDto> = listOf(RoomDto(1L, "Room1", 10, 2, mutableListOf(), 1L, mutableListOf()))
 
         `when`(roomManager.getAllRooms(scrollPositionDto)).thenReturn(roomDtoList)
 
@@ -50,7 +50,7 @@ class RoomControllerTest {
     @Test
     fun `should return room by ID`() {
         val roomId = 1L
-        val roomDto = RoomDto(1L, "Room1", 10, 2, mutableListOf(), 1L)
+        val roomDto = RoomDto(1L, "Room1", 10, 2, mutableListOf(), 1L, mutableListOf())
 
         `when`(roomManager.getRoom(roomId)).thenReturn(roomDto)
 
@@ -62,10 +62,10 @@ class RoomControllerTest {
 
     @Test
     fun `should create room`() {
-        val createRoomRequest = CreateRoomRequest( 5, "New Room")
+        val createRoomRequest = CreateRoomRequest(5, "New Room")
         val principal: Principal = mock(Principal::class.java)
         `when`(principal.name).thenReturn("1")
-        val roomDto = RoomDto(1L, "Room1", 5, 2, mutableListOf(), 1L)
+        val roomDto = RoomDto(1L, "Room1", 5, 2, mutableListOf(), 1L, mutableListOf())
 
         `when`(roomManager.createRoom("New Room", 1L, 5)).thenReturn(roomDto)
 
