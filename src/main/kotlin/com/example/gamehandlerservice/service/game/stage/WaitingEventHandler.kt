@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class WaitingEventHandler : StageEventHandler {
     override var stage: Stage = Stage.WAITING
-    override fun afterDropCard(gameHandler: GameHandler): AfterDropCardResult = AfterDropCardResult.NO_CHANGES
+    override fun afterDropCard(gameHandler: GameHandler): AfterDropCardResult = AfterDropCardResult.noStageChanges
 
     override fun onStageEnd(gameHandler: GameHandler) {
         //pass

@@ -1,8 +1,8 @@
 package com.example.gamehandlerservice.service.game.stage
 
 import com.example.gamehandlerservice.model.game.AfterDropCardResult
-import com.example.gamehandlerservice.model.game.AfterDropCardResult.Constants.NEXT_STAGE
-import com.example.gamehandlerservice.model.game.AfterDropCardResult.Constants.NO_CHANGES
+import com.example.gamehandlerservice.model.game.AfterDropCardResult.Constants.nextStage
+import com.example.gamehandlerservice.model.game.AfterDropCardResult.Constants.noStageChanges
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import org.springframework.stereotype.Component
@@ -17,9 +17,9 @@ class FinesEventHandler : StageEventHandler {
         if (totalFines ==
             totalPlayerFines
         ) {
-            NEXT_STAGE
+            nextStage
         }
-        return NO_CHANGES
+        return noStageChanges
     }
 
     override fun onStageEnd(gameHandler: GameHandler) {

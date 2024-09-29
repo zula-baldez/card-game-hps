@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS  room
     current_game_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS  banned_users
+CREATE TABLE IF NOT EXISTS  banned_players
 (
     room_id              BIGINT,
     user_id            BIGINT,

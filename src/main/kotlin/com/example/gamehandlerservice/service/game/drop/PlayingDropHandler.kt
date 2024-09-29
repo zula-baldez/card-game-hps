@@ -15,7 +15,10 @@ class PlayingDropHandler : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        return CardDropResult.missClick
+        if (request.card == gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.last) {
+            return CardDropResult.valid
+        }
+        return CardDropResult.invalid
     }
 
     override fun onDropEnemy(

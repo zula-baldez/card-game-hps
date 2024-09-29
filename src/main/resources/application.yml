@@ -36,7 +36,7 @@ rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
 server:
-  port: 8080
+  port: 8081
 
 websocket:
   connect-url: /

@@ -23,9 +23,9 @@ class PlayingEventHandler(
             }
         }
         if (gameHandler.gameData.playersTurnQueue.getSize() == 1) {
-            return AfterDropCardResult.NEXT_STAGE
+            return AfterDropCardResult.nextStage
         }
-        return AfterDropCardResult.NO_CHANGES
+        return AfterDropCardResult.noStageChanges
     }
 
     override fun onStageEnd(gameHandler: GameHandler) {

@@ -4,8 +4,8 @@ data class AfterDropCardResult(
     val nextStage: Boolean
 ) {
     companion object Constants {
-        val NEXT_STAGE = AfterDropCardResult(true)
-        val NO_CHANGES = AfterDropCardResult(false)
+        val nextStage = AfterDropCardResult(true)
+        val noStageChanges = AfterDropCardResult(false)
     }
 
 }
