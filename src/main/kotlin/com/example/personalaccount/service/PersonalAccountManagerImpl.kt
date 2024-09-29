@@ -14,6 +14,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -144,7 +145,7 @@ class PersonalAccountManagerImpl(
     }
 
 
-    override fun getAllFriends(accountId: Long, pagination: Pagination): Set<FriendshipDto> {
+    override fun getAllFriends(accountId: Long, pagination: Pagination): Page<FriendshipDto> {
         val account = accountService.findByIdOrThrow(accountId)
 
         return friendshipRepository.findAllByToAccountAndStatusIn(
@@ -152,7 +153,7 @@ class PersonalAccountManagerImpl(
             listOf(FriendshipStatus.PENDING,
                 FriendshipStatus.ACCEPTED),
             pagination.toPageable()
-        ).map { it.toDto() }.toSet()
+        ).map { it.toDto() }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
