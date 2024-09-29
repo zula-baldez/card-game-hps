@@ -1,10 +1,13 @@
 package com.example.personalaccount
 
+import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.exceptions.AddFriendException
-import com.example.personalaccount.exceptions.DeleteFriendException
+import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.exceptions.FriendNotFoundException
+import com.example.personalaccount.model.FriendshipStatus
+import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.PersonalAccountManagerImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -26,10 +29,10 @@ import java.util.Optional
 
 internal class PersonalAccountManagerImplTest {
 
-    private var accountRepository: AccountRepository = mock(AccountRepository::class.java)
+    private var accountService: AccountService = mock(AccountService::class.java)
     private var simpMessagingTemplate: SimpMessagingTemplate = mock(SimpMessagingTemplate::class.java)
     private var personalAccountManagerImpl: PersonalAccountManagerImpl =
-        PersonalAccountManagerImpl(accountRepository, simpMessagingTemplate)
+        PersonalAccountManagerImpl(accountService, simpMessagingTemplate)
     private val userId = 1L
     private val friendId = 2L
     private lateinit var user: AccountEntity
@@ -40,23 +43,21 @@ internal class PersonalAccountManagerImplTest {
         user = AccountEntity(
             name = "User1",
             fines = 0,
-            active = true,
             id = userId
         )
         friend = AccountEntity(
             name = "User2",
             fines = 0,
-            active = true,
             id = friendId
         )
-        accountRepository = mock(AccountRepository::class.java)
-        personalAccountManagerImpl = PersonalAccountManagerImpl(accountRepository, simpMessagingTemplate)
+        accountService = mock(AccountService::class.java)
+        personalAccountManagerImpl = PersonalAccountManagerImpl(accountService, simpMessagingTemplate)
     }
 
     @Test
     fun `should allow adding a friend when both users exist`() {
-        doReturn(Optional.of(user)).`when`(accountRepository).findById(userId)
-        doReturn(Optional.of(friend)).`when`(accountRepository).findById(friendId)
+        doReturn(Optional.of(user)).`when`(accountService).findByIdOrThrow(userId)
+        doReturn(Optional.of(friend)).`when`(accountService).findByIdOrThrow(friendId)
 
         personalAccountManagerImpl.addFriend(userId, friendId)
 
@@ -66,38 +67,35 @@ internal class PersonalAccountManagerImplTest {
 
     @Test
     fun `should throw exception when user does not exist`() {
-        `when`(accountRepository.findById(userId)).thenReturn(Optional.empty())
-        `when`(accountRepository.findById(friendId)).thenReturn(Optional.of(friend))
+        `when`(accountService.findByIdOrThrow(userId)).thenThrow(AccountNotFoundException(userId))
+        `when`(accountService.findByIdOrThrow(friendId)).thenReturn(friend)
 
         val exception = assertThrows<AddFriendException> {
             personalAccountManagerImpl.addFriend(userId, friendId)
         }
         assertEquals("Failed to add friendship", exception.message)
-        verify(accountRepository, never()).save(any())
     }
 
     @Test
     fun `should throw exception when friend does not exist`() {
-        `when`(accountRepository.findById(userId)).thenReturn(Optional.of(user))
-        `when`(accountRepository.findById(friendId)).thenReturn(Optional.empty())
+        `when`(accountService.findByIdOrThrow(userId)).thenReturn(user)
+        `when`(accountService.findByIdOrThrow(friendId)).thenThrow(AccountNotFoundException(friendId))
 
         val exception = assertThrows<AddFriendException> {
             personalAccountManagerImpl.addFriend(userId, friendId)
         }
         assertEquals("Failed to add friendship", exception.message)
-        verify(accountRepository, never()).save(any())
     }
 
     @Test
     fun `should throw exception when both users do not exist`() {
-        `when`(accountRepository.findById(userId)).thenReturn(Optional.empty())
-        `when`(accountRepository.findById(friendId)).thenReturn(Optional.empty())
+        `when`(accountService.findByIdOrThrow(userId)).thenReturn(AccountNotFoundException(userId))
+        `when`(accountService.findByIdOrThrow(friendId)).thenReturn(AccountNotFoundException(userId))
 
         val exception = assertThrows<AddFriendException> {
             personalAccountManagerImpl.addFriend(userId, friendId)
         }
         assertEquals("Failed to add friendship", exception.message)
-        verify(accountRepository, never()).save(any())
     }
 
     @Test
@@ -120,7 +118,7 @@ internal class PersonalAccountManagerImplTest {
     fun `should throw DeleteFriendException for non-existing user`() {
         `when`(accountRepository.findById(userId)).thenReturn(Optional.empty())
 
-        val exception = assertThrows(DeleteFriendException::class.java) {
+        val exception = assertThrows(RemoveFriendException::class.java) {
             personalAccountManagerImpl.removeFriend(userId, friendId)
         }
 

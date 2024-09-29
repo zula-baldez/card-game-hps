@@ -23,22 +23,23 @@ CREATE TABLE IF NOT EXISTS  user_role
     CONSTRAINT fk_user_role_role FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS  player
+CREATE TABLE IF NOT EXISTS  accounts
 (
     id               BIGINT PRIMARY KEY,
     name             VARCHAR(255),
     fines            INT,
-    active           BOOLEAN,
     current_room_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS  user_friends
+CREATE TABLE IF NOT EXISTS  friendships
 (
-    user_id   BIGINT,
-    friend_id BIGINT,
-    PRIMARY KEY (user_id, friend_id),
-    CONSTRAINT fk_user_friends_user FOREIGN KEY (user_id) REFERENCES player (id) ON DELETE CASCADE,
-    CONSTRAINT fk_user_friends_friend FOREIGN KEY (friend_id) REFERENCES player (id) ON DELETE CASCADE
+    id BIGINT PRIMARY KEY,
+    from_account_id BIGINT,
+    to_account_id BIGINT,
+    status VARCHAR(255),
+    UNIQUE (from_account_id, to_account_id),
+    CONSTRAINT fk_friendships_from_account_id FOREIGN KEY (from_account_id) REFERENCES accounts (id) ON DELETE CASCADE,
+    CONSTRAINT fk_friendships_to_account_id FOREIGN KEY (to_account_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS  room
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS  banned_players
     PRIMARY KEY (room_id, user_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS  roles_id_seq;
-CREATE SEQUENCE IF NOT EXISTS  room_id_seq;
+CREATE SEQUENCE IF NOT EXISTS roles_id_seq;
+CREATE SEQUENCE IF NOT EXISTS room_id_seq;
 CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;

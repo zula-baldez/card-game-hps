@@ -1,6 +1,6 @@
 package com.example.authservice
 
-import com.example.authservice.database.User
+import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
 import com.example.authservice.service.UserDetailsServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -20,7 +20,7 @@ class UserDetailsServiceImplTest {
     fun `should load user by username successfully`() {
         val username = "testUser"
         val password = "testPass"
-        val userEntity = User(name = username, password = password)
+        val userEntity = UserEntity(name=username, password=password)
 
         `when`(userRepo.findByName(username)).thenReturn(userEntity)
 
