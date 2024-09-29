@@ -19,7 +19,6 @@ class AccountServiceImplTest {
         val expectedAccount = AccountEntity(
             name = "User1",
             fines = 0,
-            active = true,
             id = accountId
         )
 

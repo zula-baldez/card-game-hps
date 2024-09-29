@@ -37,7 +37,6 @@ class CardMovementHandlerImplTest {
                     AccountEntity(
                         name = "User1",
                         fines = 0,
-                        active = true,
                         id = 1L
                     )
                 )

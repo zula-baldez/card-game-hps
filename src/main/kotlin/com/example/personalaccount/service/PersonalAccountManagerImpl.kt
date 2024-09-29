@@ -130,8 +130,12 @@ class PersonalAccountManagerImpl(
             }
         } else if (outgoingRequest != null) {
             when (outgoingRequest.status) {
-                FriendshipStatus.PENDING ->
+                FriendshipStatus.PENDING -> {
                     friendshipRepository.delete(outgoingRequest)
+                    user.friends.remove(outgoingRequest)
+                    friend.incomingFriendRequests.remove(outgoingRequest)
+                    accountRepository.saveAll(listOf(user, friend))
+                }
                 FriendshipStatus.REJECTED ->
                     // Avoid spam requests
                     throw RemoveFriendException("Cannot delete already rejected request")

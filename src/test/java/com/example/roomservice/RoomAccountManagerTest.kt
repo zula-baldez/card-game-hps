@@ -23,7 +23,6 @@ class RoomAccountManagerTest {
     private var user = AccountEntity(
         name = "User1",
         fines = 0,
-        active = true,
         id = accountId
     )
     private var room = RoomEntity(

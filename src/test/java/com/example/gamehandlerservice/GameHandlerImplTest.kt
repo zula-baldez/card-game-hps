@@ -42,13 +42,11 @@ class GameHandlerImplTest {
         user = AccountEntity(
             name = "User1",
             fines = initialFines,
-            active = true,
             id = userId
         )
         friend = AccountEntity(
             name = "User2",
             fines = initialFines,
-            active = true,
             id = friendId
         )
         gameData = GameData(

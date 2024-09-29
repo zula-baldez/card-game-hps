@@ -44,7 +44,6 @@ class FinesCounterTest {
                     AccountEntity(
                         name = "User1",
                         fines = 0,
-                        active = true,
                         id = 1L
                     )
                 )
@@ -55,13 +54,11 @@ class FinesCounterTest {
         user = AccountEntity(
             name = "User1",
             fines = initialFines,
-            active = true,
             id = fromId
         )
         friend = AccountEntity(
             name = "User2",
             fines = initialFines,
-            active = true,
             id = toId
         )
 
