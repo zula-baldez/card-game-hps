@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 //card id is strength + suit
 //f.e. 10 diamonds is 101
-class Card(
+data class Card(
     @JsonProperty("suit")
     val suit: Suit,
     @JsonProperty("strenght")

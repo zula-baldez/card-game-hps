@@ -6,6 +6,7 @@ import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.roomservice.repository.RoomRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -58,6 +59,6 @@ class StartGameTest : StompIntegrationTestBase() {
     fun testStartGameNotHost() {
         val notHostId = userSessions.keys.first{i -> i != hostId}
         userSessions[notHostId]?.send("/app/start-game", "")
-        assertEquals(getMessage(notHostId), null)
+        assertNull(getMessage(notHostId))
     }
 }
