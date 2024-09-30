@@ -5,10 +5,10 @@ import jakarta.validation.constraints.NotNull
 
 data class MoveCardRequest(
     @NotNull
-    val fromDropArea: Long,
+    var fromDropArea: Long,
 
     @NotNull
-    val toDropArea: Long,
+    var toDropArea: Long,
 
     @NotNull
     val card: Card

@@ -139,5 +139,4 @@ class RoomAccountManagerTest {
 
         assertEquals("no such room", result.reason)
     }
-
 }
