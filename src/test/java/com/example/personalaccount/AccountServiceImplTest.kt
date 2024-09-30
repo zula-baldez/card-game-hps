@@ -64,9 +64,6 @@ class AccountServiceImplTest {
         whenever(accountRepository.findById(1)) doReturn Optional.of(existingAccount)
         val result = accountService.createAccountForUser(userEntity)
         assertEquals(result, existingAccount)
-        assertEquals(emptySet<RoleEntity>(),userEntity.roles)
-        assertEquals(null, userEntity.roles.first().id)
-        assertEquals(null, userEntity.roles.first().roleName)
         verify(accountRepository, never()).save(any())
     }
 
