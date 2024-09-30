@@ -1,7 +1,6 @@
 package com.example.gameserviceintegration
 
 import com.example.common.StompIntegrationTestBase
-import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.roomservice.repository.RoomRepository
@@ -51,7 +50,14 @@ class StartGameTest : StompIntegrationTestBase() {
     @Test
     fun testStartGame() {
         userSessions[hostId]?.send("/app/start-game", "")
-        val gameStarted: MoveCardResponse = getMessage(hostId) ?: throw IllegalArgumentException("No message received")
+        getMessage(hostId) ?: throw IllegalArgumentException("No message received")
         assertEquals(gameHandlerRegistry.getGame(gameId)?.getStage(), Stage.DISTRIBUTION)
+    }
+
+    @Test
+    fun testStartGameNotHost() {
+        val notHostId = userSessions.keys.first{i -> i != hostId}
+        userSessions[notHostId]?.send("/app/start-game", "")
+        assertEquals(getMessage(notHostId), null)
     }
 }
