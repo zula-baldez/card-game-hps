@@ -68,13 +68,17 @@ class StompIntegrationTestBase : E2EDbInit() {
     }
 
     fun getMessage(userId: Long): MoveCardResponse? {
-        return receivedMessages[userId]?.poll(10000, MILLISECONDS)
+        return receivedMessages[userId]?.poll(1000, MILLISECONDS)
     }
 
     @AfterEach
     fun closeSessions() {
         receivedMessages.clear()
-        stompSession.forEach { stompSession -> stompSession.disconnect() }
+        stompSession.forEach { stompSession ->
+            try {
+                stompSession.disconnect()
+            } catch (_: Exception) {}
+        }
     }
 
     private inner class GameClientSessionHandler(private val userId: Long) : StompSessionHandlerAdapter() {

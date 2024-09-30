@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.get
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import java.time.LocalDateTime
 
 @SpringBootTest
