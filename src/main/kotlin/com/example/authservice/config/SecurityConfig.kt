@@ -41,21 +41,6 @@ class SecurityConfig(
     }
 
     @Bean
-    fun accessTokenResponseClient(OAuth2TokenResponseConverter: OAuth2TokenResponseConverter): OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
-        val accessTokenResponseClient = DefaultAuthorizationCodeTokenResponseClient()
-        val tokenResponseHttpMessageConverter = OAuth2AccessTokenResponseHttpMessageConverter()
-        tokenResponseHttpMessageConverter.setAccessTokenResponseConverter(OAuth2TokenResponseConverter)
-        val restTemplate = RestTemplate(
-            listOf(
-                FormHttpMessageConverter(), tokenResponseHttpMessageConverter
-            )
-        )
-        restTemplate.errorHandler = OAuth2ErrorResponseErrorHandler()
-        accessTokenResponseClient.setRestOperations(restTemplate)
-        return accessTokenResponseClient
-    }
-
-    @Bean
     fun authenticationProvider(
         userDetailsServiceImpl: UserDetailsServiceImpl,
         passwordEncoder: PasswordEncoder
@@ -69,10 +54,7 @@ class SecurityConfig(
     @Bean
     @Throws(Exception::class)
     fun filterChain(
-        customService: VkOAuthUserService,
-        accessTokenResponseClient: OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest>,
         http: HttpSecurity,
-        oauth2SuccessHandler: SuccessOAuth2Handler,
         successLoginPasswordHandler: SuccessLoginPasswordHandler,
         authenticationProvider: AuthenticationProvider
     ): SecurityFilterChain {
@@ -92,11 +74,7 @@ class SecurityConfig(
                 }
             }
             .csrf { i -> i.disable() }
-            .oauth2Login { i ->
-                i.tokenEndpoint { j -> j.accessTokenResponseClient(accessTokenResponseClient) }
-                    .userInfoEndpoint { j -> j.userService(customService) }
-                    .successHandler(oauth2SuccessHandler)
-            }.formLogin { j ->
+            .formLogin { j ->
                 j.successHandler(successLoginPasswordHandler)
             }
             .authenticationProvider(authenticationProvider)
