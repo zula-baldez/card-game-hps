@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT
+import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
@@ -21,6 +22,7 @@ class E2EDbInit {
         val postgresSQLContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:16-alpine")
             .withReuse(true)
             .withDatabaseName("test-db")
+            .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 1))
     }
 
     internal class Initializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
