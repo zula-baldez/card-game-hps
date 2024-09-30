@@ -38,6 +38,7 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
 
     @Autowired
     private lateinit var accountRepository: AccountRepository
+
     @BeforeEach
     fun initData() {
         val host = userService.register("name1", "pass1")
@@ -54,10 +55,7 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
             userSessions[user.id] = session
             roomAccountManager.addAccount(roomId, user.id)
         }
-        game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
-            Card(Suit.Spades, 71, false),
-            Card(Suit.Spades, 101, false)
-        )
+
         game.stateMachine.stage = Stage.DISTRIBUTION
         game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map { accountRepository.findById(it).get() })
     }
@@ -71,6 +69,10 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
     fun checkDropEnemySuccess() {
         val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
         val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
+        game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
+            Card(Suit.Spades, 7, false),
+            Card(Suit.Spades, 10, false)
+        )
         game.gameData.userCards[turningPlayerId] = linkedSetOf(
             Card(Suit.Spades, 8, false),
             Card(Suit.Diamonds, 5, false)
@@ -81,21 +83,96 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
         game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
             Card(Suit.Spades, 4, false),
         )
+        val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
+            ?: throw IllegalArgumentException("No card on table")
+
         userSessions[turningPlayerId]?.send(
             "/app/move-card", MoveCardRequest(
                 VirtualPlayers.TABLE.id,
                 otherPlayers[0],
-                game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
-                    ?: throw IllegalArgumentException("No card on table")
+                lastCard
             )
         )
         assertEquals(
             getMessage(turningPlayerId), MoveCardResponse(
                 VirtualPlayers.TABLE.id,
                 otherPlayers[0],
-                game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
-                    ?: throw IllegalArgumentException("No card on table")
+                lastCard
             )
         )
+    }
+
+    @Test
+    fun checkDropSelfSuccess() {
+        val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
+        val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
+        game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
+            Card(Suit.Spades, 7, false),
+            Card(Suit.Spades, 10, false)
+        )
+        game.gameData.userCards[turningPlayerId] = linkedSetOf(
+            Card(Suit.Spades, 8, false),
+            Card(Suit.Diamonds, 5, false)
+        )
+        game.gameData.userCards[otherPlayers[0]] = linkedSetOf(
+            Card(Suit.Spades, 2, false),
+        )
+        game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
+            Card(Suit.Spades, 2, false),
+        )
+        val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
+            ?: throw IllegalArgumentException("No card on table")
+
+        userSessions[turningPlayerId]?.send(
+            "/app/move-card", MoveCardRequest(
+                VirtualPlayers.TABLE.id,
+                turningPlayerId,
+                lastCard
+            )
+        )
+        assertEquals(
+            getMessage(turningPlayerId), MoveCardResponse(
+                VirtualPlayers.TABLE.id,
+                turningPlayerId,
+                lastCard
+            )
+        )
+    }
+
+    @Test
+    fun checkDropLastCardFromTable() {
+        val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
+        val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
+        game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
+            Card(Suit.Spades, 7, false)
+        )
+        game.gameData.userCards[turningPlayerId] = linkedSetOf(
+            Card(Suit.Spades, 8, false),
+            Card(Suit.Diamonds, 5, false)
+        )
+        game.gameData.userCards[otherPlayers[0]] = linkedSetOf(
+            Card(Suit.Spades, 6, false),
+        )
+        game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
+            Card(Suit.Spades, 2, false),
+        )
+        val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
+            ?: throw IllegalArgumentException("No card on table")
+
+        userSessions[turningPlayerId]?.send(
+            "/app/move-card", MoveCardRequest(
+                VirtualPlayers.TABLE.id,
+                turningPlayerId,
+                lastCard
+            )
+        )
+        assertEquals(
+            getMessage(turningPlayerId), MoveCardResponse(
+                VirtualPlayers.TABLE.id,
+                turningPlayerId,
+                lastCard
+            )
+        )
+        assertEquals(game.stateMachine.stage, Stage.FINES)
     }
 }

@@ -19,7 +19,12 @@ class StageStateMachineHandlerImpl(
     val cardHandler: CardMovementHandler
 ) : StageStateMachineHandler {
     override var stage: Stage = Stage.WAITING
-
+        set(stage) {
+            while (stateMachine.current() != stage) {
+                stateMachine.next()
+            }
+            field = stage
+        }
     private val stateMachine: CyclicQueue<Stage> = CyclicQueue(
         listOf(
             Stage.WAITING,

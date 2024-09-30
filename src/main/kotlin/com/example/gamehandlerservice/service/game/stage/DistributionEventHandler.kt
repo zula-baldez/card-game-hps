@@ -16,7 +16,7 @@ class DistributionEventHandler(
     override var stage: Stage = Stage.DISTRIBUTION
     override fun afterDropCard(gameHandler: GameHandler): AfterDropCardResult {
         if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == 0) {
-            nextStage
+            return nextStage
         }
         return noStageChanges
     }
