@@ -35,4 +35,11 @@ class AccountEntity(
             roomId = roomEntity?.id
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is AccountEntity) {
+            return other.id == this.id
+        }
+        return false
+    }
 }

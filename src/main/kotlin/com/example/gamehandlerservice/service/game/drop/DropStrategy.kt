@@ -30,7 +30,7 @@ interface DropStrategy {
         ) {
             return CardDropResult.invalid
         }
-        if (request.fromDropArea == VirtualPlayers.TABLE.id) {
+        if (request.toDropArea == VirtualPlayers.TABLE.id) {
             return onDropTable(request, gameHandler)
         }
         if (gameHandler.gameData.playersTurnQueue.current().id == request.toDropArea) {

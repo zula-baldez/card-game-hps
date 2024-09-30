@@ -10,6 +10,6 @@ data class GameData(
     val roomId: Long,
     var trump: Suit?,
     var playersTurnQueue: CyclicQueue<AccountEntity>,
-    val userCards: MutableMap<Long, LinkedHashSet<Card>> = mutableMapOf(),
+    var userCards: MutableMap<Long, LinkedHashSet<Card>> = mutableMapOf(),
     val finesCounter: MutableMap<Long, MutableMap<Long, Int>> = mutableMapOf() //to id from id n times
 )
