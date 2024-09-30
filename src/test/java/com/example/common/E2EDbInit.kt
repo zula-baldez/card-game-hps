@@ -35,7 +35,7 @@ class E2EDbInit {
                 "POSTGRES_PASSWORD=" + postgresSQLContainer.password,
                 "POSTGRES_DB=" + postgresSQLContainer.databaseName
             ).applyTo(configurableApplicationContext.environment)
-            sleep(1000)
+            sleep(2000)
         }
     }
 }
