@@ -19,7 +19,7 @@ class AccountEntity(
     @Positive
     @Column(name = "fines")
     var fines: Int,
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "current_room_id", referencedColumnName = "id")
     var roomEntity: RoomEntity? = null,
     @OneToMany(mappedBy = "fromAccount", cascade = [CascadeType.PERSIST])

@@ -15,9 +15,9 @@ class RoomEntity(
     var hostId: Long,
     var capacity: Int,
     var currentGameId: Long,
-    @OneToMany(mappedBy = "roomEntity", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "roomEntity", fetch = FetchType.EAGER)
     var players: MutableList<AccountEntity> = ArrayList(),
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name="banned_players",
         joinColumns = [JoinColumn(name = "room_id")],

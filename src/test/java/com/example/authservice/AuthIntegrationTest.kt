@@ -74,7 +74,7 @@ class AuthIntegrationTest : E2EDbInit() {
         val response = result.andReturn().response.contentAsString
         val authResponse = objectMapper.readValue(response, AuthenticationResponse::class.java)
 
-        assertEquals(registerResponse.token, authResponse.token)
+            assertEquals(registerResponse.token, authResponse.token)
     }
 
     @Test

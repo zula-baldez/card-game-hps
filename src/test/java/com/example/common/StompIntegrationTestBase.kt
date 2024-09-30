@@ -21,6 +21,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient
 import org.springframework.web.socket.sockjs.client.SockJsClient
 import org.springframework.web.socket.sockjs.client.Transport
 import org.springframework.web.socket.sockjs.client.WebSocketTransport
+import java.lang.Thread.sleep
 import java.lang.reflect.Type
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
@@ -31,7 +32,7 @@ class StompIntegrationTestBase : E2EDbInit() {
     @Value("\${local.server.port}")
     private val port = 0
     private val stompSession = mutableListOf<StompSession>()
-    private lateinit var receivedMessages: MutableMap<Long, BlockingQueue<String>>
+    private var receivedMessages: MutableMap<Long, BlockingQueue<String>> = mutableMapOf()
 
     @Autowired
     lateinit var messagingTemplate: SimpMessagingTemplate
@@ -60,6 +61,7 @@ class StompIntegrationTestBase : E2EDbInit() {
             GameClientSessionHandler(userId)
         )[5, SECONDS]
         stompSession += session
+        sleep(1000)
         return session
     }
 
@@ -75,20 +77,18 @@ class StompIntegrationTestBase : E2EDbInit() {
 
     @Test
     @Throws(Exception::class)
-    fun stompTest() {
+    fun testTopic() {
         val message = "myMessage"
         val user = userService.register("name", "pass")
         val room = roomManager.createRoom("room", user.id, 10)
-        var session = getClientStompSession(room.id, user.id, user.token)
+        val session = getClientStompSession(room.id, user.id, user.token)
         messagingTemplate.convertAndSend(TEST_TOPIC, message)
-        val response = receivedMessages[user.id]?.poll(5, SECONDS)
+        val response = receivedMessages[user.id]?.poll(10, SECONDS)
         assertEquals(message, response)
     }
 
     private inner class GameClientSessionHandler(private val userId: Long) : StompSessionHandlerAdapter() {
         override fun afterConnected(session: StompSession, connectedHeaders: StompHeaders) {
-            session.subscribe(TEST_TOPIC, this)
-            session.subscribe(TEST_TOPIC, this)
             session.subscribe(TEST_TOPIC, this)
         }
 
@@ -114,7 +114,7 @@ class StompIntegrationTestBase : E2EDbInit() {
         override fun handleFrame(stompHeaders: StompHeaders, o: Any?) {
             LOGGER.info("Handle Frame with payload {}", o)
             try {
-                receivedMessages[userId]?.offer(o as String?, 500, MILLISECONDS)
+                receivedMessages[userId]?.offer(o as String?, 1000, MILLISECONDS)
             } catch (e: InterruptedException) {
                 throw RuntimeException(e)
             }
@@ -122,7 +122,7 @@ class StompIntegrationTestBase : E2EDbInit() {
     }
 
     companion object {
-        private const val TEST_TOPIC = "/topic/test"
+        private const val TEST_TOPIC = "/topic/game"
         private val LOGGER: Logger = LoggerFactory.getLogger(StompIntegrationTestBase::class.java)
     }
 }

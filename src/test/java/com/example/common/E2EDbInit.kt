@@ -19,21 +19,20 @@ import org.testcontainers.junit.jupiter.Testcontainers
 class E2EDbInit {
     companion object {
         @Container
-        val postgresSQLContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:16-alpine")
-            .withReuse(true)
-            .withDatabaseName("test-db")
+        val postgresSQLContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15")
+            .withReuse(false)
+            .withDatabaseName("testdb")
             .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 1))
     }
 
     internal class Initializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
         override fun initialize(configurableApplicationContext: ConfigurableApplicationContext) {
-            println(postgresSQLContainer.host)
             TestPropertyValues.of(
                 "POSTGRES_HOST=" + postgresSQLContainer.host,
                 "POSTGRES_PORT=" + postgresSQLContainer.getMappedPort(POSTGRESQL_PORT),
                 "POSTGRES_USER=" + postgresSQLContainer.username,
                 "POSTGRES_PASSWORD=" + postgresSQLContainer.password,
-                "POSTGRES_DB=" + postgresSQLContainer.databaseName,
+                "POSTGRES_DB=" + postgresSQLContainer.databaseName
             ).applyTo(configurableApplicationContext.environment)
         }
     }

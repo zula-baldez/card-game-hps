@@ -62,7 +62,7 @@ class GameHandlerImplTest {
             finesCounter = mutableMapOf()
         )
 
-        gameHandler = GameHandlerImpl(cardMovementHandler, roomManager, roomRepository)
+        gameHandler = GameHandlerImpl(roomRepository)
     }
 
     @Test

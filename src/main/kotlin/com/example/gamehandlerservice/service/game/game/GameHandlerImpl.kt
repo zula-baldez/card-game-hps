@@ -2,13 +2,11 @@ package com.example.gamehandlerservice.service.game.game
 
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Stage
-import com.example.gamehandlerservice.service.game.cards.CardMovementHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.personalaccount.database.AccountEntity
 import com.example.roomservice.repository.RoomRepository
-import com.example.roomservice.service.RoomManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,8 +19,6 @@ import kotlin.jvm.optionals.getOrNull
 @Component
 @Scope("prototype")
 class GameHandlerImpl(
-    val cardMovementHandler: CardMovementHandler,
-    val roomManager: RoomManager,
     val roomRepository: RoomRepository
 ) : GameHandler {
 
