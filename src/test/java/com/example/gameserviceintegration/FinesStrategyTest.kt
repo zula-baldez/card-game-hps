@@ -8,6 +8,7 @@ import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
+import com.example.gamehandlerservice.service.game.util.VirtualPlayers
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomRepository
 import net.bytebuddy.pool.TypePool.Resolution.Illegal
@@ -47,16 +48,14 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         roomAccountManager.addAccount(roomId, hostId)
         var session = getClientStompSession(roomDto.id, host.id, host.token)
         userSessions[hostId] = session
+        game.gameData.userCards[hostId] = linkedSetOf(commonCard)
 
-        for (i in 2..3) {
+        for (i in 2L..3L) {
             val user = userService.register("name$i", "pass$i")
             session = getClientStompSession(roomDto.id, user.id, user.token)
             userSessions[user.id] = session
             roomAccountManager.addAccount(roomId, user.id)
-        }
-
-        for (i in 1L..3L) {
-            game.gameData.userCards[i] = linkedSetOf(commonCard)
+            game.gameData.userCards[user.id] = linkedSetOf(commonCard)
         }
 
         game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map { accountRepository.findById(it).get() })
@@ -64,11 +63,13 @@ class FinesStrategyTest : StompIntegrationTestBase() {
 
     @AfterEach
     fun clear() {
+        roomManager.deleteRoom(roomId)
+        userSessions.keys.forEach { accountRepository.deleteById(it) }
         userSessions.clear()
     }
 
     private fun getTurningPlayer(): Long? {
-        return game?.turningPlayer()?.id
+        return game.turningPlayer()?.id
     }
 
     private fun getNotTurningPlayer(): Long {
@@ -98,12 +99,40 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         val notTurningPlayer = getNotTurningPlayer()
         val turningPlayer = getTurningPlayer()!!
         var finedAccount = accountRepository.findByIdOrNull(notTurningPlayer)!!
-        finedAccount.fines++
+        finedAccount.fines = 1
         accountRepository.save(finedAccount)
         userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, notTurningPlayer, commonCard))
         val response = getMessage(turningPlayer)
         assertEquals(commonCard, response?.card)
         assertEquals(notTurningPlayer, response?.idTo)
         assertEquals(turningPlayer, response?.idFrom)
+        finedAccount = accountRepository.findByIdOrNull(notTurningPlayer) ?: throw IllegalArgumentException("Player not found???")
+        assertEquals(0, finedAccount.fines)
+    }
+
+    @Test
+    fun dropOnEnemyWithNoFines() {
+        val notTurningPlayer = getNotTurningPlayer()
+        val turningPlayer = getTurningPlayer()!!
+        val finedAccount = accountRepository.findByIdOrNull(notTurningPlayer)!!
+        finedAccount.fines = 0
+        accountRepository.save(finedAccount)
+        userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, notTurningPlayer, commonCard))
+        val response = getMessage(turningPlayer)
+        assertNull(response)
+    }
+
+    @Test
+    fun fineOnDropTable() {
+        val turningPlayer = getTurningPlayer()!!
+        var finedAccount = accountRepository.findByIdOrNull(turningPlayer)!!
+        finedAccount.fines = 0
+        accountRepository.save(finedAccount)
+        userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, VirtualPlayers.TABLE.id, commonCard))
+        val response = getMessage(turningPlayer)
+        assertNull(response)
+
+        finedAccount = accountRepository.findByIdOrNull(turningPlayer)!!
+        assertEquals(1, finedAccount.fines)
     }
 }

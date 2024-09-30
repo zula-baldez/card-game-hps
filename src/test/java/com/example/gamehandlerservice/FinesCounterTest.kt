@@ -8,6 +8,7 @@ import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.gamehandlerservice.service.game.util.FinesCounter
 import com.example.personalaccount.database.AccountEntity
+import com.example.personalaccount.database.AccountRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,6 +22,8 @@ class FinesCounterTest {
 
     @Mock
     private lateinit var gameHandler: GameHandler
+
+    private lateinit var accountRepository: AccountRepository
 
 
     private val fromId = 1L
@@ -64,9 +67,10 @@ class FinesCounterTest {
 
         finesCounter = mock(FinesCounter::class.java)
         gameHandler = mock(GameHandler::class.java)
+        accountRepository = mock(AccountRepository::class.java)
 
         `when`(gameHandler.gameData).thenReturn(gameData)
-        finesCounter = FinesCounter()
+        finesCounter = FinesCounter(accountRepository)
     }
 
     @Test

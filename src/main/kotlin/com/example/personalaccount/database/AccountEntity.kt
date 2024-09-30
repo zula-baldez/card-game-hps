@@ -4,7 +4,7 @@ import com.example.common.dto.business.AccountDto
 import com.example.roomservice.repository.RoomEntity
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.PositiveOrZero
 
 @Entity
 @Table(name = "accounts")
@@ -16,7 +16,7 @@ class AccountEntity(
     @Column(name = "name")
     var name: String,
 
-    @Positive
+    @PositiveOrZero
     @Column(name = "fines")
     var fines: Int,
     @ManyToOne(fetch = FetchType.EAGER)

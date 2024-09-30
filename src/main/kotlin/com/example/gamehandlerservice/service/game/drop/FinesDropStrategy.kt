@@ -29,10 +29,13 @@ class FinesDropStrategy(
         if (request.fromDropArea != gameHandler.gameData.playersTurnQueue.current().id) {
             return CardDropResult.invalid
         }
+        val fromAccount = accountService.findByIdOrThrow(gameHandler.gameData.playersTurnQueue.current().id)
+        val toAccount = accountService.findByIdOrThrow(request.toDropArea)
+
         return finesCounter.giveFine(
             gameHandler,
-            accountService.findByIdOrThrow(gameHandler.gameData.playersTurnQueue.current().id),
-            accountService.findByIdOrThrow(request.toDropArea),
+            fromAccount,
+            toAccount,
             request.card
         )
     }

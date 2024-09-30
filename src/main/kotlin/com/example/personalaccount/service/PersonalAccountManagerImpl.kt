@@ -170,6 +170,7 @@ class PersonalAccountManagerImpl(
     override fun addFine(accountId: Long) {
         val account = accountService.findByIdOrThrow(accountId)
         account.fines++
+        accountRepository.save(account)
         sendAddFine(accountId)
     }
 }
