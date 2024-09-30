@@ -69,12 +69,13 @@ class GameHandlerImplTest {
     fun `configureGameHandler should initialize gameData correctly`() {
         val players = mutableListOf(user, friend)
         val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+
         gameHandler.gameData = gameData
+        gameHandler.configureGameHandler("TestGame", 1L, roomEntity.id, stateStageMachineHandler)
 
-        gameHandler.configureGameHandler("TestGame", 1L, 10L, stateStageMachineHandler)
-
-        assertEquals(10L, gameHandler.gameData.roomId)
+        assertEquals(roomEntity.id, gameHandler.gameData.roomId)
     }
 
     @Test
