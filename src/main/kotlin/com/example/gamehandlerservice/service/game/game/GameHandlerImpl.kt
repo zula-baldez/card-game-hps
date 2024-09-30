@@ -23,8 +23,8 @@ class GameHandlerImpl(
 ) : GameHandler {
 
     override lateinit var gameData: GameData
+    override lateinit var stateMachine: StageStateMachineHandler
     private var timerJob: Job? = null
-    private lateinit var stateStageMachineHandler: StageStateMachineHandler
 
     override fun configureGameHandler(
         name: String,
@@ -40,7 +40,7 @@ class GameHandlerImpl(
             CyclicQueue(roomEntity.players.shuffled())
         )
 
-        this.stateStageMachineHandler = stateStageMachineHandler
+        this.stateMachine = stateStageMachineHandler
     }
 
     override fun turningPlayer(): AccountEntity = gameData.playersTurnQueue.current()
@@ -51,18 +51,18 @@ class GameHandlerImpl(
 
     override fun moveCard(moveCardRequest: MoveCardRequest) {
         restartTimer()
-        stateStageMachineHandler.processTurn(this, moveCardRequest)
+        stateMachine.processTurn(this, moveCardRequest)
     }
 
     override fun startGame() {
         val roomEntity = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
         gameData.playersTurnQueue = CyclicQueue(roomEntity.players.shuffled())
-        stateStageMachineHandler.nextStage(this)
+        stateMachine.nextStage(this)
         changeTurn()
         restartTimer()
     }
 
-    override fun getStage(): Stage = stateStageMachineHandler.stage
+    override fun getStage(): Stage = stateMachine.stage
 
     private fun restartTimer() {
         timerJob?.cancel()

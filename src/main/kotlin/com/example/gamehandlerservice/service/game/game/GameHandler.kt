@@ -8,6 +8,7 @@ import com.example.personalaccount.database.AccountEntity
 
 interface GameHandler {
     var gameData: GameData
+    var stateMachine: StageStateMachineHandler
 
     fun moveCard(moveCardRequest: MoveCardRequest)
     fun configureGameHandler(
