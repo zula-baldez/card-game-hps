@@ -1,6 +1,7 @@
 package com.example.personalaccount
 
 import com.example.common.dto.api.Pagination
+import com.example.common.exceptions.AccountNotFoundException
 import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.personalaccount.controllers.FriendsController
 import com.example.personalaccount.database.AccountEntity
@@ -268,6 +269,24 @@ internal class FriendsControllerTest {
         friendsManagerImpl.addFine(userId)
         assertEquals(1, user.fines)
         verify(messageTemplateMock).convertAndSend(eq("/topic/fines"), eq(FineDTO(userId)))
+    }
+
+    @Test
+    fun testHandleAddFriendException() {
+        val exception = AddFriendException("test")
+        assertEquals("test", friendsController.handleAddFriendException(exception))
+    }
+
+    @Test
+    fun testHandleRemoveFriendException() {
+        val exception = RemoveFriendException("test")
+        assertEquals("test", friendsController.handleRemoveFriendException(exception))
+    }
+
+    @Test
+    fun testHandleAccountNotFoundException() {
+        val exception = AccountNotFoundException(1)
+        assertEquals("Account with id 1 not found", friendsController.handleFriendNotFound(exception))
     }
 
 }

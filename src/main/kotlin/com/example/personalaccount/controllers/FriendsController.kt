@@ -36,13 +36,13 @@ class FriendsController(
 
     @ExceptionHandler(AddFriendException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleUnauthorized(ex: AddFriendException): String {
+    fun handleAddFriendException(ex: AddFriendException): String {
         return ex.message ?: "Failed to add friend"
     }
 
     @ExceptionHandler(RemoveFriendException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleUnauthorized(ex: RemoveFriendException): String {
+    fun handleRemoveFriendException(ex: RemoveFriendException): String {
         return ex.message ?: "Failed to remove friend"
     }
 
