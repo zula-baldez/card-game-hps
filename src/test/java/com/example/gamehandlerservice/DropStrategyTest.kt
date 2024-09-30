@@ -1,7 +1,6 @@
 package com.example.gamehandlerservice
 
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
-import com.example.gamehandlerservice.model.exception.PlayerNotFoundException
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.game.Suit
