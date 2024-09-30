@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class PlayingEventHandler(
     private val cardMovementHandler: CardMovementHandler
 ) : StageEventHandler {
-    override var stage: Stage = Stage.DISTRIBUTION
+    override var stage: Stage = Stage.PLAYING
     override fun afterDropCard(gameHandler: GameHandler): AfterDropCardResult {
         if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == gameHandler.gameData.playersTurnQueue.getSize()) {
             cardMovementHandler.clearPlayerCards(VirtualPlayers.TABLE.id, gameHandler)

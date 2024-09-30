@@ -49,7 +49,6 @@ class CardMovementHandlerImpl(
             deck.removeLastOrNull()?.let { card ->
                 gameHandler.gameData.userCards[account.id]?.add(card)
                 sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card)
-
             }
         }
 

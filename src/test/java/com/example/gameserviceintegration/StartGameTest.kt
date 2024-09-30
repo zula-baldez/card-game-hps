@@ -1,6 +1,7 @@
 package com.example.gameserviceintegration
 
 import com.example.common.StompIntegrationTestBase
+import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.roomservice.repository.RoomRepository
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.stomp.StompSession
-import java.lang.Thread.sleep
 import kotlin.properties.Delegates
 
 class StartGameTest : StompIntegrationTestBase() {
@@ -29,9 +29,9 @@ class StartGameTest : StompIntegrationTestBase() {
     fun initData() {
         val host = userService.register("name1", "pass1")
         val roomDto = roomManager.createRoom("room", host.id, 10)
-
         roomId = roomDto.id
         hostId = host.id
+        roomAccountManager.addAccount(roomId, hostId)
         var session = getClientStompSession(roomDto.id, host.id, host.token)
         userSessions[hostId] = session
 
@@ -39,6 +39,7 @@ class StartGameTest : StompIntegrationTestBase() {
             val user = userService.register("name$i", "pass$i")
             session = getClientStompSession(roomDto.id, user.id, user.token)
             userSessions[user.id] = session
+            roomAccountManager.addAccount(roomId, user.id)
         }
     }
 
@@ -50,7 +51,7 @@ class StartGameTest : StompIntegrationTestBase() {
     @Test
     fun testStartGame() {
         userSessions[hostId]?.send("/app/start-game", "")
-        sleep(5000)
+        val gameStarted: MoveCardResponse = getMessage(hostId) ?: throw IllegalArgumentException("No message received")
         assertEquals(gameHandlerRegistry.getGame(gameId)?.getStage(), Stage.DISTRIBUTION)
     }
 }

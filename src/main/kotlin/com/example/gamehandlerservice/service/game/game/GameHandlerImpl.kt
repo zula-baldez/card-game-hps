@@ -55,6 +55,8 @@ class GameHandlerImpl(
     }
 
     override fun startGame() {
+        val roomEntity = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
+        gameData.playersTurnQueue = CyclicQueue(roomEntity.players.shuffled())
         stateStageMachineHandler.nextStage(this)
         changeTurn()
         restartTimer()
@@ -74,5 +76,4 @@ class GameHandlerImpl(
         changeTurn()
         restartTimer()
     }
-
 }

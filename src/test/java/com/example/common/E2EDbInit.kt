@@ -11,6 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.lang.Thread.sleep
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
@@ -34,6 +35,7 @@ class E2EDbInit {
                 "POSTGRES_PASSWORD=" + postgresSQLContainer.password,
                 "POSTGRES_DB=" + postgresSQLContainer.databaseName
             ).applyTo(configurableApplicationContext.environment)
+            sleep(1000)
         }
     }
 }

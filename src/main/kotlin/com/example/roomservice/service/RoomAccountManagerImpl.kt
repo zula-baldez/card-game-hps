@@ -31,12 +31,13 @@ class RoomAccountManagerImpl(
     override fun addAccount(roomId: Long, accountId: Long): RoomAccountActionResult {
         val room = roomRepository.findById(roomId).getOrNull() ?: return roomNotFound
         val account = accountRepository.findById(accountId).getOrNull() ?: return playerNotFound
-
-
         return if (room.players.size >= room.capacity)
             roomOverflow
         else {
+            account.roomEntity = room
             room.players.addLast(account)
+            roomRepository.save(room)
+            accountRepository.save(account)
             roomSuccess
         }
     }
