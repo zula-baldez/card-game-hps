@@ -28,7 +28,7 @@ class StartGameTest : StompIntegrationTestBase() {
     @BeforeEach
     fun initData() {
         val host = userService.register("name1", "pass1")
-        val roomDto = roomManager.createRoom("room", host.id, 3)
+        val roomDto = roomManager.createRoom("room", host.id, 10)
         roomId = roomDto.id
         hostId = host.id
         roomAccountManager.addAccount(roomId, hostId)

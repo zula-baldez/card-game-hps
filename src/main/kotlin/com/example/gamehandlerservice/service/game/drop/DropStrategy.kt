@@ -24,6 +24,11 @@ interface DropStrategy {
     fun validateDrop(
         request: MoveCardRequest, gameHandler: GameHandler
     ): CardDropResult {
+        if (!((request.fromDropArea == VirtualPlayers.DECK.id || gameHandler.gameData.userCards.containsKey(request.toDropArea)) &&
+                    (request.toDropArea == VirtualPlayers.DECK.id || gameHandler.gameData.userCards.containsKey(request.fromDropArea)))) {
+            return CardDropResult.missClick
+        }
+
         if (request.fromDropArea != VirtualPlayers.TABLE.id &&
             request.fromDropArea != VirtualPlayers.DECK.id &&
             request.fromDropArea != gameHandler.gameData.playersTurnQueue.current().id

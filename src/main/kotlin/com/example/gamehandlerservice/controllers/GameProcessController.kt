@@ -31,11 +31,4 @@ class GameProcessController {
     ) {
         gameHandler.startGame()
     }
-
-    @MessageMapping("/test")
-    fun test(
-        gameHandler: GameHandler, @Valid accountEntity: AccountEntity, @Valid roomEntity: RoomEntity,
-    ) {
-        print(accountEntity)
-    }
 }

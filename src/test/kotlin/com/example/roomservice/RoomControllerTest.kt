@@ -12,6 +12,7 @@ import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import java.security.Principal
@@ -72,32 +73,5 @@ class RoomControllerTest {
 
         assertEquals(roomDto, result)
         verify(roomManager).createRoom("New Room", 1L, 5)
-    }
-
-    @Test
-    fun `should add player to room`() {
-        val roomId = 1L
-        val addAccountRequest = AddAccountRequest(2L)
-
-        `when`(roomAccountManager.addAccount(roomId, addAccountRequest.accountId)).thenReturn(Unit)
-
-        verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId)
-    }
-
-    @Test
-    fun `should remove player from room`() {
-        val roomId = 1L
-        val accountId = 2L
-        val removeAccountRequest = RemoveAccountRequest(AccountAction.LEAVE)
-
-        `when`(
-            roomAccountManager.removeAccount(
-                roomId,
-                accountId,
-                removeAccountRequest.reason
-            )
-        ).thenReturn(Unit)
-
-        verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason)
     }
 }

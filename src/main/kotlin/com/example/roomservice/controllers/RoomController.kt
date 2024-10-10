@@ -69,7 +69,7 @@ class RoomController(
     }
 
     @ExceptionHandler(RoomOverflowException::class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleRoomOverflowException(ex: RoomOverflowException): String {
         return ex.message ?: "Room overflow exception"
     }

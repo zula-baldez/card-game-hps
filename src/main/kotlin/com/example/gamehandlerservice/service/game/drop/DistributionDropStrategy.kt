@@ -2,7 +2,6 @@ package com.example.gamehandlerservice.service.game.drop
 
 import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
-import com.example.gamehandlerservice.model.exception.PlayerNotFoundException
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.game.GameHandler
@@ -19,7 +18,6 @@ class DistributionDropStrategy : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        validatePlayers(request, gameHandler.gameData.userCards)
         return if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == 1) {
             gameHandler.gameData.trump = gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.first?.suit
             CardDropResult(
@@ -65,11 +63,5 @@ class DistributionDropStrategy : DropStrategy {
 
     private fun isDropPrior(card: Card, otherCard: Card): Boolean {
         return otherCard.strenght == card.strenght - 1 || (card.strenght == 2L && otherCard.strenght == maxStrength)
-    }
-
-    private fun validatePlayers(request: MoveCardRequest, cards: Map<Long, LinkedHashSet<Card>>) {
-        require(cards.containsKey(request.toDropArea) && cards.containsKey(request.fromDropArea)) {
-            throw PlayerNotFoundException()
-        }
     }
 }
