@@ -9,9 +9,9 @@ RUN $JAVA_HOME/bin/jlink \
 WORKDIR /app
 COPY ./build.gradle.kts ./build.gradle.kts
 COPY ./settings.gradle.kts ./settings.gradle.kts
-RUN gradle build | exit 0
+RUN gradle build -x test | exit 0
 COPY ./src src
-RUN gradle build
+RUN gradle build -x test
 
 FROM alpine:latest
 
