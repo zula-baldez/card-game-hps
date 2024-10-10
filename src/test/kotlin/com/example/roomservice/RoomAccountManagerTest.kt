@@ -85,8 +85,6 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        roomAccountManager.addAccount(roomId, 2L)
-
         assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, 2L) }
     }
 
