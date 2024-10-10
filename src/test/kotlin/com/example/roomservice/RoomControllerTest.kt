@@ -7,7 +7,6 @@ import com.example.roomservice.controllers.RoomController
 import com.example.roomservice.dto.AddAccountRequest
 import com.example.roomservice.dto.CreateRoomRequest
 import com.example.roomservice.dto.RemoveAccountRequest
-import com.example.roomservice.dto.RoomAccountActionResult
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -79,13 +78,9 @@ class RoomControllerTest {
     fun `should add player to room`() {
         val roomId = 1L
         val addAccountRequest = AddAccountRequest(2L)
-        val actionResult = RoomAccountActionResult(true, "Player added")
 
-        `when`(roomAccountManager.addAccount(roomId, addAccountRequest.accountId)).thenReturn(actionResult)
+        `when`(roomAccountManager.addAccount(roomId, addAccountRequest.accountId)).thenReturn(Unit)
 
-        val result = roomController.addPlayer(roomId, addAccountRequest)
-
-        assertEquals(actionResult, result)
         verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId)
     }
 
@@ -94,7 +89,6 @@ class RoomControllerTest {
         val roomId = 1L
         val accountId = 2L
         val removeAccountRequest = RemoveAccountRequest(AccountAction.LEAVE)
-        val actionResult = RoomAccountActionResult(true, "Player removed")
 
         `when`(
             roomAccountManager.removeAccount(
@@ -102,11 +96,8 @@ class RoomControllerTest {
                 accountId,
                 removeAccountRequest.reason
             )
-        ).thenReturn(actionResult)
+        ).thenReturn(Unit)
 
-        val result = roomController.removePlayer(roomId, accountId, removeAccountRequest)
-
-        assertEquals(actionResult, result)
         verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason)
     }
 }

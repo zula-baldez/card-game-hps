@@ -1,8 +1,9 @@
 package com.example.common.dto.business
 
-import jakarta.validation.constraints.*
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.NotBlank
 
-// TODO: make truncated version for storage in room service
+// TODO lab2: make truncated version for storage in room service
 data class AccountDto(
     val id: Long,
 

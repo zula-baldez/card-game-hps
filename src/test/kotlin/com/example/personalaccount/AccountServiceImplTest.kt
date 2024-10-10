@@ -1,5 +1,4 @@
 package com.example.personalaccount
-import com.example.authservice.database.RoleEntity
 import com.example.authservice.database.UserEntity
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
@@ -8,9 +7,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.kotlin.*
-import org.springframework.data.repository.findByIdOrNull
-import java.util.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import java.util.Optional
 
 class AccountServiceImplTest {
 

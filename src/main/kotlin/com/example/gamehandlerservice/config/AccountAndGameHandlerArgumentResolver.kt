@@ -21,7 +21,6 @@ class AccountAndGameHandlerArgumentResolver(
 
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        //TODO дто вместо энтити?
         return parameter.parameterType == AccountEntity::class.java ||
                 parameter.parameterType == GameHandler::class.java ||
                 parameter.parameterType == RoomEntity::class.java

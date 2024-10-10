@@ -15,5 +15,4 @@ class TokenParser {
         }
         return null
     }
-
 }

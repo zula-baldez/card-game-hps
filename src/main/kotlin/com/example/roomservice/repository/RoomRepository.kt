@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RoomRepository : JpaRepository<RoomEntity, Long> {
-    fun findFirst10ByOrderById(scrollPosition: ScrollPosition): Window<RoomEntity>
+    fun findFirst50ByOrderById(scrollPosition: ScrollPosition): Window<RoomEntity>
 }

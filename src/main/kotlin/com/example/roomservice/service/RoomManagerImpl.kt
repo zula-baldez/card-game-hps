@@ -33,7 +33,7 @@ class RoomManagerImpl(
 
     override fun getAllRooms(scrollPosition: ScrollPositionDto?): List<RoomDto> {
         return roomRepository
-            .findFirst10ByOrderById(ScrollPosition.offset(scrollPosition?.offset ?: 0))
+            .findFirst50ByOrderById(ScrollPosition.offset(scrollPosition?.offset ?: 0))
             .map { it.toDto() }
             .toList()
     }

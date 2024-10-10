@@ -1,17 +1,23 @@
 package com.example.roomservice
 
+import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.RoomNotFoundException
+import com.example.common.exceptions.RoomOverflowException
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManagerImpl
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyLong
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import java.util.*
+import java.util.Optional
 
 class RoomAccountManagerTest {
 
@@ -48,10 +54,7 @@ class RoomAccountManagerTest {
         val accountId = 1L
         `when`(roomRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        val result = roomAccountManager.addAccount(999L, accountId)
-
-        assertFalse(result.success)
-        assertEquals("no such room", result.reason)
+        assertThrows(RoomNotFoundException::class.java) { roomAccountManager.addAccount(999L, accountId) }
     }
 
     @Test
@@ -64,10 +67,7 @@ class RoomAccountManagerTest {
         )
         `when`(accountRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        val result = roomAccountManager.addAccount(roomId, 999L)
-
-        assertFalse(result.success)
-        assertEquals("no such player", result.reason)
+        assertThrows(AccountNotFoundException::class.java) { roomAccountManager.addAccount(roomId, 999L) }
     }
 
     @Test
@@ -85,9 +85,9 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        val result = roomAccountManager.addAccount(roomId, 2L)
-        assertFalse(result.success)
-        assertEquals("Room is full!", result.reason)
+        roomAccountManager.addAccount(roomId, 2L)
+
+        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, 2L) }
     }
 
     @Test
@@ -98,10 +98,8 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        val result = roomAccountManager.addAccount(roomId, accountId)
+        roomAccountManager.addAccount(roomId, accountId)
 
-        assertTrue(result.success)
-        assertNull(result.reason)
         assertTrue(room.players.contains(user))
     }
 
@@ -110,10 +108,13 @@ class RoomAccountManagerTest {
         val accountId = 1L
         `when`(roomRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        val result = roomAccountManager.removeAccount(999L, accountId, AccountAction.LEAVE)
-
-        assertFalse(result.success)
-        assertEquals("no such room", result.reason)
+        assertThrows(RoomNotFoundException::class.java) {
+            roomAccountManager.removeAccount(
+                999L,
+                accountId,
+                AccountAction.LEAVE
+            )
+        }
     }
 
     @Test
@@ -122,11 +123,15 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        val result = roomAccountManager.removeAccount(roomId, 999L, AccountAction.LEAVE)
-
-        assertFalse(result.success)
-        assertEquals("no such player", result.reason)
+        assertThrows(AccountNotFoundException::class.java) {
+            roomAccountManager.removeAccount(
+                roomId,
+                999L,
+                AccountAction.LEAVE
+            )
+        }
     }
+
     @Test
     fun `should return roomNotFound when room does not exist`() {
         val roomId = 1L
@@ -135,8 +140,8 @@ class RoomAccountManagerTest {
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.empty())
 
-        val result = roomAccountManager.removeAccount(roomId, accountId, reason)
-
-        assertEquals("no such room", result.reason)
+        assertThrows(RoomNotFoundException::class.java) {
+            roomAccountManager.removeAccount(roomId, accountId, reason)
+        }
     }
 }

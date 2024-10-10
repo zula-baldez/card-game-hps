@@ -1,5 +1,5 @@
 package com.example.authservice
-import com.example.authservice.auth.AuthController
+import com.example.authservice.controller.AuthController
 import com.example.authservice.dto.CredentialsRequest
 import com.example.authservice.dto.AuthenticationResponse
 import com.example.authservice.service.UserService
