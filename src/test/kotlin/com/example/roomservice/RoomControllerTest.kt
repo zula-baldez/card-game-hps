@@ -74,4 +74,19 @@ class RoomControllerTest {
         assertEquals(roomDto, result)
         verify(roomManager).createRoom("New Room", 1L, 5)
     }
+    @Test
+    fun `addPlayer should add player to the room`() {
+        val roomId = 1L
+        val addAccountRequest = AddAccountRequest(accountId = 123L)
+        roomController.addPlayer(roomId, addAccountRequest)
+        verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId)
+    }
+    @Test
+    fun `removePlayer should remove player from the room`() {
+        val roomId = 1L
+        val accountId = 123L
+        val removeAccountRequest = RemoveAccountRequest(reason = AccountAction.LEAVE)
+        roomController.removePlayer(roomId, accountId, removeAccountRequest)
+        verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason)
+    }
 }
