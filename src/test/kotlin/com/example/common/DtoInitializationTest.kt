@@ -14,6 +14,8 @@ import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.AfterDropCardResult
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
+import com.example.roomservice.dto.AddAccountRequest
+import com.example.roomservice.dto.RemoveAccountRequest
 import jakarta.validation.Validation.buildDefaultValidatorFactory
 import jakarta.validation.Validator
 import jakarta.validation.ValidatorFactory
@@ -39,6 +41,7 @@ class DtoInitializationTests {
         assertEquals("ActionName", dto.name)
 
     }
+
 
     @Test
     fun `RoomDTO should be valid with proper values`() {
@@ -134,5 +137,17 @@ class DtoInitializationTests {
     fun `AfterDropCardResult constants should have correct values`() {
         assertEquals(true, AfterDropCardResult.Constants.nextStage.nextStage)
         assertEquals(false, AfterDropCardResult.Constants.noStageChanges.nextStage)
+    }
+
+    @Test
+    fun `AddAccountRequest constants should have correct values`() {
+       val addAccReq = AddAccountRequest(1L);
+        assertEquals(1L, addAccReq.accountId)
+    }
+
+    @Test
+    fun `RemoveAccountRequest constants should have correct values`() {
+        val addAccReq = RemoveAccountRequest(AccountAction.KICK);
+        assertEquals(AccountAction.KICK, addAccReq.reason)
     }
 }

@@ -9,10 +9,10 @@ import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManagerImpl
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.anyLong
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
@@ -130,16 +130,42 @@ class RoomAccountManagerTest {
         }
     }
 
+
     @Test
-    fun `should return roomNotFound when room does not exist`() {
+    fun `should remove account from room and save changes`() {
         val roomId = 1L
-        val accountId = 1L
-        val reason = AccountAction.LEAVE
+        val accountId = 2L
+        val reason = AccountAction.BAN
+        val room = room.apply { players.add(user) }
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.empty())
+        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        assertThrows(RoomNotFoundException::class.java) {
+        roomAccountManager.removeAccount(roomId, accountId, reason)
+
+        assertFalse(room.players.contains(user))
+        assertTrue(room.bannedPlayers.contains(user))
+    }
+
+    @Test
+    fun `should throw AccountNotFoundException when account is not in room players`() {
+        val roomId = 1L
+        val accountId = 2L
+        val reason = AccountAction.BAN
+        val room = room.apply { players.add(user) }
+        val account = AccountEntity(
+            name = "User3",
+            fines = 0,
+            id = 3L
+        )
+
+        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(account))
+
+        val exception = assertThrows<AccountNotFoundException> {
             roomAccountManager.removeAccount(roomId, accountId, reason)
         }
+        assertEquals("Account with id $accountId not found", exception.message)
     }
+
 }

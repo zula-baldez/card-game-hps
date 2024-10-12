@@ -47,6 +47,7 @@ class RoomAccountManagerImpl(
             if (room.players.isEmpty()) {
                 roomRepository.deleteById(roomId)
             }
+            roomRepository.save(room)
         } else {
             throw AccountNotFoundException(accountId)
         }
