@@ -25,11 +25,13 @@ class FriendsController(
     }
 
     @PostMapping("/friends")
+    @ResponseStatus(HttpStatus.CREATED)
     fun sendOrAcceptRequest(@RequestBody @Valid addFriendRequest: AddFriendRequest, auth: Principal) {
         return accountsManager.addFriend(auth.name.toLong(), addFriendRequest.friendId)
     }
 
     @DeleteMapping("/friends/{friendId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun removeFriendOrRequest(@PathVariable friendId: Long, auth: Principal) {
         return accountsManager.removeFriend(auth.name.toLong(), friendId)
     }
