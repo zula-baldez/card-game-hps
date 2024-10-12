@@ -33,11 +33,12 @@ class RoomController(
     }
 
     @GetMapping("/rooms/{roomId}")
-    fun getRoomById(@PathVariable roomId: Long): RoomDto? {
-        return roomManager.getRoom(roomId)
+    fun getRoomById(@PathVariable roomId: Long): RoomDto {
+        return roomManager.getRoom(roomId) ?: throw RoomNotFoundException(roomId)
     }
 
     @PostMapping("/rooms")
+    @ResponseStatus(HttpStatus.CREATED)
     fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): RoomDto {
         return roomManager.createRoom(
             createRoomRequest.name,
@@ -47,11 +48,13 @@ class RoomController(
     }
 
     @PostMapping("/rooms/{roomId}/players")
+    @ResponseStatus(HttpStatus.CREATED)
     fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest) {
         return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun removePlayer(@PathVariable roomId: Long, @PathVariable accountId: Long, @RequestBody @Valid removeAccountRequest: RemoveAccountRequest) {
         return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
     }
