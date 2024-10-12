@@ -14,7 +14,7 @@ import org.testcontainers.containers.wait.strategy.Wait
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class E2EDbInit {
     companion object {
-        private val postgresSQLContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15")
+        private val postgresSQLContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15.2")
             .withReuse(false)
             .withDatabaseName("testdb")
             .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 1))
