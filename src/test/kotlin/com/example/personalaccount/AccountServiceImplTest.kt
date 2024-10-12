@@ -1,5 +1,5 @@
 package com.example.personalaccount
-import com.example.authservice.database.UserEntity
+import com.example.common.database.UserEntity
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.service.AccountServiceImpl

@@ -1,4 +1,4 @@
-package com.example.authservice.database
+package com.example.common.database
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

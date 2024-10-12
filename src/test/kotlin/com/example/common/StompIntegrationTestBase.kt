@@ -1,6 +1,6 @@
 package com.example.common
 
-import com.example.authservice.service.UserService
+import com.example.common.service.UserService
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
@@ -46,15 +46,15 @@ class StompIntegrationTestBase : E2EDbInit() {
     @Autowired
     lateinit var roomAccountManager: RoomAccountManager
 
-    fun getClientStompSession(roomId: Long, userId: Long, token: String): StompSession {
+    fun getClientStompSession(roomId: Long, userId: Long): StompSession {
         val url = "ws://localhost:$port/app/game?roomId=$roomId"
         val transportList: List<Transport> = listOf(WebSocketTransport(StandardWebSocketClient()))
         val stompClient = WebSocketStompClient(SockJsClient(transportList))
         stompClient.messageConverter = MappingJackson2MessageConverter()
         val handshakeHeaders = WebSocketHttpHeaders()
-        handshakeHeaders.add("Authorization", "Bearer $token")
+        handshakeHeaders.add("x-user-id", userId.toString())
         val connectHeaders = StompHeaders()
-        connectHeaders.add("Authorization", "Bearer $token")
+        connectHeaders.add("x-user-id", userId.toString())
         receivedMessages[userId] = LinkedBlockingDeque()
         val session = stompClient.connectAsync(
             url,

@@ -63,13 +63,11 @@ class RoomControllerTest {
     @Test
     fun `should create room`() {
         val createRoomRequest = CreateRoomRequest(5, "New Room")
-        val principal: Principal = mock(Principal::class.java)
-        `when`(principal.name).thenReturn("1")
         val roomDto = RoomDto(1L, "Room1", 5, 2, mutableListOf(), 1L, mutableListOf())
 
         `when`(roomManager.createRoom("New Room", 1L, 5)).thenReturn(roomDto)
 
-        val result = roomController.createRoom(createRoomRequest, principal)
+        val result = roomController.createRoom(createRoomRequest, 1)
 
         assertEquals(roomDto, result)
         verify(roomManager).createRoom("New Room", 1L, 5)

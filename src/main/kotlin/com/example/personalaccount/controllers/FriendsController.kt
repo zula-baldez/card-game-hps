@@ -11,29 +11,28 @@ import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 
 @RestController
 class FriendsController(
     val accountsManager: PersonalAccountManager
 ) {
     @GetMapping("/friends")
-    fun getFriends(pagination: Pagination, response: HttpServletResponse, auth: Principal): List<FriendshipDto> {
-        val result = accountsManager.getAllFriends(auth.name.toLong(), pagination) ?: throw AccountNotFoundException(auth.name.toLong())
+    fun getFriends(pagination: Pagination, response: HttpServletResponse, @RequestHeader("x-user-id") userId: Long): List<FriendshipDto> {
+        val result = accountsManager.getAllFriends(userId, pagination) ?: throw AccountNotFoundException(userId)
         response.setIntHeader("x-total-friends", result.totalElements.toInt())
         return result.toList()
     }
 
     @PostMapping("/friends")
     @ResponseStatus(HttpStatus.CREATED)
-    fun sendOrAcceptRequest(@RequestBody @Valid addFriendRequest: AddFriendRequest, auth: Principal) {
-        return accountsManager.addFriend(auth.name.toLong(), addFriendRequest.friendId)
+    fun sendOrAcceptRequest(@RequestBody @Valid addFriendRequest: AddFriendRequest, @RequestHeader("x-user-id") userId: Long) {
+        return accountsManager.addFriend(userId, addFriendRequest.friendId)
     }
 
     @DeleteMapping("/friends/{friendId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun removeFriendOrRequest(@PathVariable friendId: Long, auth: Principal) {
-        return accountsManager.removeFriend(auth.name.toLong(), friendId)
+    fun removeFriendOrRequest(@PathVariable friendId: Long, @RequestHeader("x-user-id") userId: Long) {
+        return accountsManager.removeFriend(userId, friendId)
     }
 
     @ExceptionHandler(AddFriendException::class)

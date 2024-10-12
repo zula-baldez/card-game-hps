@@ -1,6 +1,6 @@
 package com.example.personalaccount.service
 
-import com.example.authservice.database.UserEntity
+import com.example.common.database.UserEntity
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository

@@ -27,19 +27,18 @@ class StartGameTest : StompIntegrationTestBase() {
 
     @BeforeEach
     fun initData() {
-        val host = userService.register("name1", "pass1")
-        val roomDto = roomManager.createRoom("room", host.id, 10)
+        hostId = userService.createUser("name1")
+        val roomDto = roomManager.createRoom("room", hostId, 10)
         roomId = roomDto.id
-        hostId = host.id
         roomAccountManager.addAccount(roomId, hostId)
-        var session = getClientStompSession(roomDto.id, host.id, host.token)
+        var session = getClientStompSession(roomDto.id, hostId)
         userSessions[hostId] = session
 
         for (i in 2..10) {
-            val user = userService.register("name$i", "pass$i")
-            session = getClientStompSession(roomDto.id, user.id, user.token)
-            userSessions[user.id] = session
-            roomAccountManager.addAccount(roomId, user.id)
+            val user = userService.createUser("name$i")
+            session = getClientStompSession(roomDto.id, user)
+            userSessions[user] = session
+            roomAccountManager.addAccount(roomId, user)
         }
     }
 

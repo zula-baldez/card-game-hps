@@ -1,4 +1,4 @@
-package com.example.authservice.database
+package com.example.common.database
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank

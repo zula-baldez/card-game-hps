@@ -69,9 +69,6 @@ internal class FriendsControllerTest {
             messageTemplateMock
         )
         friendsController = FriendsController(friendsManagerImpl)
-        principal = mock<Principal> {
-            on { name } doReturn userId.toString()
-        }
     }
 
     @Test
@@ -81,7 +78,7 @@ internal class FriendsControllerTest {
         val friends = PageImpl(listOf(friendshipIncoming))
         whenever(friendshipRepositoryMock.findAllByToAccountAndStatusIn(eq(user), any(), any())).thenReturn(friends)
 
-        val result = friendsController.getFriends(Pagination(), servletResponse, principal)
+        val result = friendsController.getFriends(Pagination(), servletResponse, userId)
         verify(friendshipRepositoryMock).findAllByToAccountAndStatusIn(user, listOf(FriendshipStatus.PENDING, FriendshipStatus.ACCEPTED), Pagination().toPageable())
         verify(servletResponse).setIntHeader("x-total-friends", 1)
         assertEquals(result.size, 1)
@@ -101,7 +98,7 @@ internal class FriendsControllerTest {
         whenever(friendshipRepositoryMock.findAllByToAccountAndStatusIn(eq(user), any(), any())).thenReturn(friends)
 
         assertThrows<AddFriendException> {
-            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         }
 
         verifyNoInteractions(friendshipRepositoryMock)
@@ -109,7 +106,7 @@ internal class FriendsControllerTest {
 
     @Test
     fun testSendRequest() {
-        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         verify(friendshipRepositoryMock).save(FriendshipEntity(0, user, friend, FriendshipStatus.PENDING))
     }
 
@@ -119,7 +116,7 @@ internal class FriendsControllerTest {
         user.incomingFriendRequests.add(friendshipIncoming)
         friend.friends.add(friendshipIncoming)
 
-        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         assertEquals(FriendshipStatus.ACCEPTED, friendshipIncoming.status)
         verify(friendshipRepositoryMock).save(FriendshipEntity(0, user, friend, FriendshipStatus.ACCEPTED))
     }
@@ -130,7 +127,7 @@ internal class FriendsControllerTest {
         user.incomingFriendRequests.add(friendshipIncoming)
         friend.friends.add(friendshipIncoming)
 
-        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+        friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         assertTrue(user.incomingFriendRequests.isEmpty())
         assertTrue(friend.friends.isEmpty())
         verify(friendshipRepositoryMock).delete(friendshipIncoming)
@@ -144,7 +141,7 @@ internal class FriendsControllerTest {
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
         assertThrows<AddFriendException> {
-            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         }
         verifyNoInteractions(friendshipRepositoryMock)
     }
@@ -156,7 +153,7 @@ internal class FriendsControllerTest {
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
         assertThrows<AddFriendException> {
-            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         }
         verifyNoInteractions(friendshipRepositoryMock)
     }
@@ -168,7 +165,7 @@ internal class FriendsControllerTest {
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
         assertThrows<AddFriendException> {
-            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), principal)
+            friendsController.sendOrAcceptRequest(AddFriendRequest(friendId), userId)
         }
         verifyNoInteractions(friendshipRepositoryMock)
     }
@@ -176,7 +173,7 @@ internal class FriendsControllerTest {
     @Test
     fun testThrowWhenFriendingYourself() {
         assertThrows<AddFriendException> {
-            friendsController.sendOrAcceptRequest(AddFriendRequest(userId), principal)
+            friendsController.sendOrAcceptRequest(AddFriendRequest(userId), userId)
         }
     }
 
@@ -189,7 +186,7 @@ internal class FriendsControllerTest {
         friend.friends.add(friendshipIncoming)
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
-        friendsController.removeFriendOrRequest(friendId, principal)
+        friendsController.removeFriendOrRequest(friendId, userId)
 
         assertEquals(FriendshipStatus.REJECTED, friendshipIncoming.status)
         verify(friendshipRepositoryMock).delete(friendshipOutgoing)
@@ -201,7 +198,7 @@ internal class FriendsControllerTest {
         user.friends.add(friendshipOutgoing)
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
-        friendsController.removeFriendOrRequest(friendId, principal)
+        friendsController.removeFriendOrRequest(friendId, userId)
 
         verify(friendshipRepositoryMock).delete(friendshipOutgoing)
         assertTrue(user.friends.isEmpty())
@@ -214,7 +211,7 @@ internal class FriendsControllerTest {
         user.incomingFriendRequests.add(friendshipIncoming)
         friend.friends.add(friendshipIncoming)
 
-        friendsController.removeFriendOrRequest(friendId, principal)
+        friendsController.removeFriendOrRequest(friendId, userId)
 
         assertEquals(FriendshipStatus.REJECTED, friendshipIncoming.status)
     }
@@ -225,12 +222,12 @@ internal class FriendsControllerTest {
         user.incomingFriendRequests.add(friendshipIncoming)
         friend.friends.add(friendshipIncoming)
 
-        friendsController.removeFriendOrRequest(friendId, principal)
+        friendsController.removeFriendOrRequest(friendId, userId)
 
         assertEquals(FriendshipStatus.REJECTED, friendshipIncoming.status)
 
         assertThrows<RemoveFriendException> {
-            friendsController.removeFriendOrRequest(friendId, principal)
+            friendsController.removeFriendOrRequest(friendId, userId)
         }
     }
 
@@ -241,7 +238,7 @@ internal class FriendsControllerTest {
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
         assertThrows<RemoveFriendException> {
-            friendsController.removeFriendOrRequest(friendId, principal)
+            friendsController.removeFriendOrRequest(friendId, userId)
         }
     }
 
@@ -252,14 +249,14 @@ internal class FriendsControllerTest {
         friend.incomingFriendRequests.add(friendshipOutgoing)
 
         assertThrows<RemoveFriendException> {
-            friendsController.removeFriendOrRequest(friendId, principal)
+            friendsController.removeFriendOrRequest(friendId, userId)
         }
     }
 
     @Test
     fun testThrowWhenDeleteNonExistingFriendship() {
         assertThrows<RemoveFriendException> {
-            friendsController.removeFriendOrRequest(friendId, principal)
+            friendsController.removeFriendOrRequest(friendId, userId)
         }
     }
 

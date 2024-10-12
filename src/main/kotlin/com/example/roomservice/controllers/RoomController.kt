@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import java.security.Principal
 
 @RestController
 class RoomController(
@@ -39,10 +39,10 @@ class RoomController(
 
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): RoomDto {
+    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, @RequestHeader("x-user-id") userId: Long): RoomDto {
         return roomManager.createRoom(
             createRoomRequest.name,
-            principal.name.toLong(),
+            userId,
             createRoomRequest.capacity
         )
     }

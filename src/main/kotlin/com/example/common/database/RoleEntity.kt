@@ -1,6 +1,6 @@
-package com.example.authservice.database
+package com.example.common.database
 
-import com.example.authservice.util.Role
+import com.example.common.util.Role
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
