@@ -3,6 +3,7 @@ package com.example.roomservice.controllers
 import com.example.common.dto.api.ScrollPositionDto
 import com.example.common.dto.business.RoomDto
 import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.HostOnlyException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
 import com.example.roomservice.dto.AddAccountRequest
@@ -55,8 +56,13 @@ class RoomController(
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun removePlayer(@PathVariable roomId: Long, @PathVariable accountId: Long, @RequestBody @Valid removeAccountRequest: RemoveAccountRequest) {
-        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
+    fun removePlayer(
+        @PathVariable roomId: Long,
+        @PathVariable accountId: Long,
+        @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
+        @RequestHeader("x-user-id") requesterId: Long
+    ) {
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, requesterId)
     }
 
     @ExceptionHandler(RoomNotFoundException::class)
@@ -69,6 +75,12 @@ class RoomController(
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleAccountNotFoundException(ex: AccountNotFoundException): String {
         return ex.message ?: "Account not found"
+    }
+
+    @ExceptionHandler(HostOnlyException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleAccountNotFoundException(ex: HostOnlyException): String {
+        return ex.message ?: "This operation is host only"
     }
 
     @ExceptionHandler(RoomOverflowException::class)

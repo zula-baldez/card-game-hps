@@ -106,7 +106,7 @@ class GameHandlerImplTest {
 
     @Test
     fun `moveCard should call processTurn on stateStageMachineHandler`() {
-        val card = Card(Suit.Diamonds, 6L, false)
+        val card = Card(Suit.DIAMONDS, 6L, false)
         val moveCardRequest = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
         val players = mutableListOf(user, friend)
         val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)

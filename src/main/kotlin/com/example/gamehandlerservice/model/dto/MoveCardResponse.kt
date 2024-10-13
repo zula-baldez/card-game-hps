@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotNull
 
 data class MoveCardResponse(
-    @JsonProperty("idFrom")
+    @JsonProperty("id_from")
     val idFrom: Long?,
-    @JsonProperty("idTo")
+    @JsonProperty("id_to")
     val idTo: Long,
     @NotNull
     @JsonProperty("card")

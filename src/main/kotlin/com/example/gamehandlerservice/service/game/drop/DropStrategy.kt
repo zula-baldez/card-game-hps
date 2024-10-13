@@ -1,7 +1,7 @@
 package com.example.gamehandlerservice.service.game.drop
 
-import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
+import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
@@ -24,8 +24,11 @@ interface DropStrategy {
     fun validateDrop(
         request: MoveCardRequest, gameHandler: GameHandler
     ): CardDropResult {
-        if (!((request.fromDropArea == VirtualPlayers.DECK.id || gameHandler.gameData.userCards.containsKey(request.toDropArea)) &&
-                    (request.toDropArea == VirtualPlayers.DECK.id || gameHandler.gameData.userCards.containsKey(request.fromDropArea)))) {
+        if (request.fromDropArea == VirtualPlayers.DECK.id || request.toDropArea == VirtualPlayers.DECK.id ||
+            !gameHandler.gameData.userCards.containsKey(request.toDropArea) ||
+            !gameHandler.gameData.userCards.containsKey(request.fromDropArea) ||
+            gameHandler.gameData.userCards[request.fromDropArea]?.contains(request.card) != true
+        ) {
             return CardDropResult.missClick
         }
 

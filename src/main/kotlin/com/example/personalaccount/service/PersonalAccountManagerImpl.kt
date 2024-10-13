@@ -9,23 +9,23 @@ import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.model.FriendshipDto
 import com.example.personalaccount.model.FriendshipStatus
+import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.transaction.Transactional
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
-
 
 @Component
 class PersonalAccountManagerImpl(
     val accountRepository: AccountRepository,
     val friendshipRepository: FriendshipRepository,
     val accountService: AccountService,
-    val simpMessagingTemplate: SimpMessagingTemplate
+    val simpMessagingTemplate: SimpMessagingTemplate,
+    val objectMapper: ObjectMapper
 ) : PersonalAccountManager {
 
     /**
@@ -136,9 +136,11 @@ class PersonalAccountManagerImpl(
                     friend.incomingFriendRequests.remove(outgoingRequest)
                     accountRepository.saveAll(listOf(user, friend))
                 }
+
                 FriendshipStatus.REJECTED ->
                     // Avoid spam requests
                     throw RemoveFriendException("Cannot delete already rejected request")
+
                 FriendshipStatus.ACCEPTED ->
                     // incomingRequest should not be null if already friends
                     throw RemoveFriendException("Something went wrong")
@@ -148,14 +150,15 @@ class PersonalAccountManagerImpl(
         }
     }
 
-
     override fun getAllFriends(accountId: Long, pagination: Pagination): Page<FriendshipDto> {
         val account = accountService.findByIdOrThrow(accountId)
 
         return friendshipRepository.findAllByToAccountAndStatusIn(
             account,
-            listOf(FriendshipStatus.PENDING,
-                FriendshipStatus.ACCEPTED),
+            listOf(
+                FriendshipStatus.PENDING,
+                FriendshipStatus.ACCEPTED
+            ),
             pagination.toPageable()
         ).map { it.toDto() }
     }

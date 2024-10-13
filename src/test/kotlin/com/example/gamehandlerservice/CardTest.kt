@@ -51,8 +51,8 @@ class CardTest {
 
     @Test
     fun `compareTo should return MORE when first card has greater strength and same suit`() {
-        val card1 = Card(Suit.Diamonds, 10, false)
-        val card2 = Card(Suit.Diamonds, 5, false)
+        val card1 = Card(Suit.DIAMONDS, 10, false)
+        val card2 = Card(Suit.DIAMONDS, 5, false)
 
         val result = card1.compareTo(gameData, card2)
 
@@ -61,8 +61,8 @@ class CardTest {
 
     @Test
     fun `compareTo should return LESS when second card has greater strength and same suit`() {
-        val card1 = Card(Suit.Clubs, 5, false)
-        val card2 = Card(Suit.Clubs, 10, false)
+        val card1 = Card(Suit.CLUBS, 5, false)
+        val card2 = Card(Suit.CLUBS, 10, false)
 
         val result = card1.compareTo(gameData, card2)
 
@@ -71,8 +71,8 @@ class CardTest {
 
     @Test
     fun `compareTo should return NOT_COMPARABLE when cards have different suits and neither is trump`() {
-        val card1 = Card(Suit.Diamonds, 10, false)
-        val card2 = Card(Suit.Clubs, 5, false)
+        val card1 = Card(Suit.DIAMONDS, 10, false)
+        val card2 = Card(Suit.CLUBS, 5, false)
 
         val result = card1.compareTo(gameData, card2)
 
@@ -81,8 +81,8 @@ class CardTest {
 
     @Test
     fun `compareTo should return NOT_COMPARABLE when cards have same strength but different suits and neither is trump`() {
-        val card1 = Card(Suit.Spades, 10, false)
-        val card2 = Card(Suit.Clubs, 10, false)
+        val card1 = Card(Suit.SPADES, 10, false)
+        val card2 = Card(Suit.CLUBS, 10, false)
 
         val result = card1.compareTo(gameData, card2)
 

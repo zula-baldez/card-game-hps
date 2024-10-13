@@ -1,6 +1,7 @@
 package com.example.roomservice
 
 import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.HostOnlyException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
 import com.example.gamehandlerservice.model.dto.AccountAction
@@ -9,6 +10,7 @@ import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManagerImpl
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,7 +48,7 @@ class RoomAccountManagerTest {
         accountRepository = mock(AccountRepository::class.java)
         messagingTemplate = mock(SimpMessagingTemplate::class.java)
 
-        roomAccountManager = RoomAccountManagerImpl(roomRepository, accountRepository, messagingTemplate)
+        roomAccountManager = RoomAccountManagerImpl(roomRepository, accountRepository, messagingTemplate, ObjectMapper())
     }
 
     @Test
@@ -110,7 +112,8 @@ class RoomAccountManagerTest {
             roomAccountManager.removeAccount(
                 999L,
                 accountId,
-                AccountAction.LEAVE
+                AccountAction.LEAVE,
+                accountId
             )
         }
     }
@@ -125,7 +128,8 @@ class RoomAccountManagerTest {
             roomAccountManager.removeAccount(
                 roomId,
                 999L,
-                AccountAction.LEAVE
+                AccountAction.LEAVE,
+                accountId
             )
         }
     }
@@ -134,14 +138,14 @@ class RoomAccountManagerTest {
     @Test
     fun `should remove account from room and save changes`() {
         val roomId = 1L
-        val accountId = 2L
+        val accountId = 1L
         val reason = AccountAction.BAN
         val room = room.apply { players.add(user) }
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        roomAccountManager.removeAccount(roomId, accountId, reason)
+        roomAccountManager.removeAccount(roomId, accountId, reason, accountId)
 
         assertFalse(room.players.contains(user))
         assertTrue(room.bannedPlayers.contains(user))
@@ -150,7 +154,7 @@ class RoomAccountManagerTest {
     @Test
     fun `should throw AccountNotFoundException when account is not in room players`() {
         val roomId = 1L
-        val accountId = 2L
+        val accountId = 1L
         val reason = AccountAction.BAN
         val room = room.apply { players.add(user) }
         val account = AccountEntity(
@@ -163,9 +167,38 @@ class RoomAccountManagerTest {
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(account))
 
         val exception = assertThrows<AccountNotFoundException> {
-            roomAccountManager.removeAccount(roomId, accountId, reason)
+            roomAccountManager.removeAccount(roomId, accountId, reason, accountId)
         }
         assertEquals("Account with id $accountId not found", exception.message)
     }
 
+    @Test
+    fun `should throw when account is not host when remove player`() {
+        val roomId = 1L
+        val hostId = 1L
+        val userId = 3L
+
+        val reason = AccountAction.BAN
+        val room = room.apply { players.add(user) }
+        val hostAccount = AccountEntity(
+            name = "User1",
+            fines = 0,
+            id = 1L
+        )
+
+        val userAccount = AccountEntity(
+            name = "User3",
+            fines = 0,
+            id = 3L
+        )
+
+        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
+        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(hostAccount))
+        `when`(accountRepository.findById(userId)).thenReturn(Optional.of(userAccount))
+
+        val exception = assertThrows<HostOnlyException> {
+            roomAccountManager.removeAccount(roomId, hostId, reason, userId)
+        }
+        assertEquals("This operation is host only", exception.message)
+    }
 }

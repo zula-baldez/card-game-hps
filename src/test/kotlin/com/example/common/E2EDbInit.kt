@@ -7,7 +7,7 @@ import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.TestPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.wait.strategy.Wait
-
+import java.lang.Thread.sleep
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = ["spring.config.location=classpath:application.yml"])
@@ -21,6 +21,7 @@ class E2EDbInit {
 
         init {
             postgresSQLContainer.start()
+            sleep(5000)
         }
 
         @DynamicPropertySource

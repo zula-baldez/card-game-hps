@@ -1,7 +1,6 @@
 package com.example.personalaccount
 
 import com.example.common.dto.api.Pagination
-import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.database.FriendshipEntity
@@ -11,17 +10,18 @@ import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.model.FriendshipStatus
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.PersonalAccountManagerImpl
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.*
-import org.mockito.kotlin.argumentCaptor
+import org.mockito.Mockito.any
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.springframework.data.domain.PageImpl
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import java.util.*
-import kotlin.collections.HashSet
 
 class PersonalAccountManagerImplTest {
     private lateinit var accountRepository: AccountRepository
@@ -43,7 +43,8 @@ class PersonalAccountManagerImplTest {
             accountRepository,
             friendshipRepository,
             accountService,
-            simpMessagingTemplate
+            simpMessagingTemplate,
+            ObjectMapper()
         )
         user = AccountEntity(
             id = 1L,

@@ -117,7 +117,7 @@ class DtoInitializationTests {
 
     @Test
     fun `MoveCardRequest should be valid with proper values`() {
-        val card = Card(Suit.Hearts, 10, false)
+        val card = Card(Suit.HEARTS, 10, false)
         val request = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
         val violations = validator.validate(request)
         assertEquals(0, violations.size)
@@ -126,7 +126,7 @@ class DtoInitializationTests {
 
     @Test
     fun `MoveCardResponse should initialize properly`() {
-        val card = Card(Suit.Diamonds, 5, true)
+        val card = Card(Suit.DIAMONDS, 5, true)
         val response = MoveCardResponse(idFrom = 1L, idTo = 2L, card = card)
         assertEquals(1L, response.idFrom)
         assertEquals(2L, response.idTo)

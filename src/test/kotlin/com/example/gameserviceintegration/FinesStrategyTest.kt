@@ -35,26 +35,26 @@ class FinesStrategyTest : StompIntegrationTestBase() {
     @Autowired
     private lateinit var accountRepository: AccountRepository
 
-    private val commonCard = Card(Suit.Clubs, 1, false)
+    private val commonCard = Card(Suit.CLUBS, 1, false)
 
     @BeforeEach
     fun initData() {
-        val host = userService.register("name1", "pass1")
-        val roomDto = roomManager.createRoom("room", host.id, 3)
+        val hostId = userService.createUser("name1")
+        val roomDto = roomManager.createRoom("room", hostId, 3)
         roomId = roomDto.id
-        hostId = host.id
+        this.hostId = hostId
         game.stateMachine.stage = Stage.FINES
-        roomAccountManager.addAccount(roomId, hostId)
-        var session = getClientStompSession(roomDto.id, host.id, host.token)
-        userSessions[hostId] = session
-        game.gameData.userCards[hostId] = linkedSetOf(commonCard)
+        roomAccountManager.addAccount(roomId, this.hostId)
+        var session = getClientStompSession(roomDto.id, hostId)
+        userSessions[this.hostId] = session
+        game.gameData.userCards[this.hostId] = linkedSetOf(commonCard)
 
         for (i in 2L..3L) {
-            val user = userService.register("name$i", "pass$i")
-            session = getClientStompSession(roomDto.id, user.id, user.token)
-            userSessions[user.id] = session
-            roomAccountManager.addAccount(roomId, user.id)
-            game.gameData.userCards[user.id] = linkedSetOf(commonCard)
+            val userId = userService.createUser("name$i")
+            session = getClientStompSession(roomDto.id, userId)
+            userSessions[userId] = session
+            roomAccountManager.addAccount(roomId, userId)
+            game.gameData.userCards[userId] = linkedSetOf(commonCard)
         }
 
         game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map { accountRepository.findById(it).get() })

@@ -7,6 +7,7 @@ import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
 import com.example.personalaccount.database.AccountEntity
+import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component
 @Scope("prototype")
 class CardMovementHandlerImpl(
     private val simpMessagingTemplate: SimpMessagingTemplate,
+    private val objectMapper: ObjectMapper
 ) : CardMovementHandler {
 
     override fun moveCard(moveCardRequest: MoveCardRequest, gameHandler: GameHandler) {
@@ -71,6 +73,7 @@ class CardMovementHandlerImpl(
     }
 
     private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
+
         CoroutineScope(Dispatchers.IO).launch {
             simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card))
         }

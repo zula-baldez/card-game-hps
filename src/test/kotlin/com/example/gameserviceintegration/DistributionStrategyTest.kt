@@ -70,18 +70,18 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
         val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
         val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
         game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
-            Card(Suit.Spades, 7, false),
-            Card(Suit.Spades, 10, false)
+            Card(Suit.SPADES, 7, false),
+            Card(Suit.SPADES, 10, false)
         )
         game.gameData.userCards[turningPlayerId] = linkedSetOf(
-            Card(Suit.Spades, 8, false),
-            Card(Suit.Diamonds, 5, false)
+            Card(Suit.SPADES, 8, false),
+            Card(Suit.DIAMONDS, 5, false)
         )
         game.gameData.userCards[otherPlayers[0]] = linkedSetOf(
-            Card(Suit.Spades, 9, false),
+            Card(Suit.SPADES, 9, false),
         )
         game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
-            Card(Suit.Spades, 4, false),
+            Card(Suit.SPADES, 4, false),
         )
         val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
             ?: throw IllegalArgumentException("No card on table")
@@ -107,18 +107,18 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
         val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
         val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
         game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
-            Card(Suit.Spades, 7, false),
-            Card(Suit.Spades, 10, false)
+            Card(Suit.SPADES, 7, false),
+            Card(Suit.SPADES, 10, false)
         )
         game.gameData.userCards[turningPlayerId] = linkedSetOf(
-            Card(Suit.Spades, 8, false),
-            Card(Suit.Diamonds, 5, false)
+            Card(Suit.SPADES, 8, false),
+            Card(Suit.DIAMONDS, 5, false)
         )
         game.gameData.userCards[otherPlayers[0]] = linkedSetOf(
-            Card(Suit.Spades, 2, false),
+            Card(Suit.SPADES, 2, false),
         )
         game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
-            Card(Suit.Spades, 2, false),
+            Card(Suit.SPADES, 2, false),
         )
         val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
             ?: throw IllegalArgumentException("No card on table")
@@ -144,17 +144,17 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
         val turningPlayerId = game.turningPlayer()?.id ?: throw IllegalArgumentException("No data")
         val otherPlayers = userSessions.keys.filter { it != turningPlayerId }
         game.gameData.userCards[VirtualPlayers.TABLE.id] = linkedSetOf(
-            Card(Suit.Spades, 7, false)
+            Card(Suit.SPADES, 7, false)
         )
         game.gameData.userCards[turningPlayerId] = linkedSetOf(
-            Card(Suit.Spades, 8, false),
-            Card(Suit.Diamonds, 5, false)
+            Card(Suit.SPADES, 8, false),
+            Card(Suit.DIAMONDS, 5, false)
         )
         game.gameData.userCards[otherPlayers[0]] = linkedSetOf(
-            Card(Suit.Spades, 6, false),
+            Card(Suit.SPADES, 6, false),
         )
         game.gameData.userCards[otherPlayers[1]] = linkedSetOf(
-            Card(Suit.Spades, 2, false),
+            Card(Suit.SPADES, 2, false),
         )
         val lastCard = game.gameData.userCards[VirtualPlayers.TABLE.id]?.last
             ?: throw IllegalArgumentException("No card on table")

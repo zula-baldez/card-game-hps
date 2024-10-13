@@ -1,6 +1,7 @@
 package com.example.roomservice.service
 
 import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.HostOnlyException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
 import com.example.gamehandlerservice.model.dto.AccountAction
@@ -8,6 +9,7 @@ import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomRepository
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -18,7 +20,8 @@ import kotlin.jvm.optionals.getOrNull
 class RoomAccountManagerImpl(
     val roomRepository: RoomRepository,
     val accountRepository: AccountRepository,
-    val simpMessagingTemplate: SimpMessagingTemplate
+    val simpMessagingTemplate: SimpMessagingTemplate,
+    val objectMapper: ObjectMapper
 ) : RoomAccountManager {
 
     override fun addAccount(roomId: Long, accountId: Long) {
@@ -34,11 +37,13 @@ class RoomAccountManagerImpl(
         }
     }
 
-    override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction) {
+    override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction, requesterId: Long) {
         val room = roomRepository.findById(roomId).getOrNull() ?: throw RoomNotFoundException(roomId)
         val account = accountRepository.findById(accountId).getOrNull() ?: throw AccountNotFoundException(accountId)
-
-        if (room.players.contains(account)) {
+        if (!(room.hostId == requesterId || requesterId == accountId)) {
+            throw HostOnlyException()
+        }
+        if (room.players.contains(account) && (room.hostId == requesterId || requesterId == accountId)) {
             if (reason == AccountAction.BAN) {
                 room.bannedPlayers += account
             }

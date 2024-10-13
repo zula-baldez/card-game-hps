@@ -35,9 +35,10 @@ class UserHandshakeInterceptor(
         if (room.bannedPlayers.contains(account.toDto())) {
             return false
         }
-        attributes["roomId"] = roomId
-        attributes["gameId"] = room.currentGameId
-        attributes["accountId"] = account.id
+
+        attributes["x-room-id"] = roomId
+        attributes["x-game-id"] = room.currentGameId
+        attributes["x-user-id"] = account.id
         return true
     }
 

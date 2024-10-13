@@ -75,7 +75,7 @@ class FinesCounterTest {
 
     @Test
     fun `giveFine should return valid when fines are less than target fines`() {
-        val card = Card(Suit.Diamonds, 6L, false)
+        val card = Card(Suit.DIAMONDS, 6L, false)
         val result = finesCounter.giveFine(gameHandler, user, friend, card)
 
         assertEquals(CardDropResult.valid, result)
@@ -84,7 +84,7 @@ class FinesCounterTest {
 
     @Test
     fun `giveFine should return invalid when current fines reach target fines`() {
-        val card = Card(Suit.Diamonds, 6L, false)
+        val card = Card(Suit.DIAMONDS, 6L, false)
         friend.fines = 0
         val result = finesCounter.giveFine(gameHandler, user, friend, card)
 

@@ -12,10 +12,10 @@ import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.mockito.Mock
-import org.mockito.Mockito.*
-import java.security.Principal
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 
 class RoomControllerTest {
 
@@ -84,7 +84,7 @@ class RoomControllerTest {
         val roomId = 1L
         val accountId = 123L
         val removeAccountRequest = RemoveAccountRequest(reason = AccountAction.LEAVE)
-        roomController.removePlayer(roomId, accountId, removeAccountRequest)
-        verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason)
+        roomController.removePlayer(roomId, accountId, removeAccountRequest, accountId)
+        verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason, accountId)
     }
 }

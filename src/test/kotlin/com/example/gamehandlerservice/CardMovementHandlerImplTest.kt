@@ -8,6 +8,7 @@ import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.personalaccount.database.AccountEntity
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
@@ -26,7 +27,7 @@ class CardMovementHandlerImplTest {
     @BeforeEach
     fun setUp() {
         simpMessagingTemplate = mock(SimpMessagingTemplate::class.java)
-        handler = CardMovementHandlerImpl(simpMessagingTemplate)
+        handler = CardMovementHandlerImpl(simpMessagingTemplate, ObjectMapper())
         gameHandler = mock(GameHandler::class.java)
         gameData = GameData(
             gameId = gameId,
@@ -48,7 +49,7 @@ class CardMovementHandlerImplTest {
 
     @Test
     fun `moveCard should move card from source to destination if present`() {
-        val card = Card(Suit.Diamonds, 6L, false)
+        val card = Card(Suit.DIAMONDS, 6L, false)
         val moveCardRequest = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
 
         val sourceArea = LinkedHashSet<Card>().apply { add(card) }
@@ -63,7 +64,7 @@ class CardMovementHandlerImplTest {
     }
 
     @Test
-    fun `moveCard should not move card if source does not contain it`() { val card = Card(Suit.Diamonds, 6L, false)
+    fun `moveCard should not move card if source does not contain it`() { val card = Card(Suit.DIAMONDS, 6L, false)
         val moveCardRequest = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
         val destinationArea = LinkedHashSet<Card>()
         `when`(gameHandler.gameData).thenReturn(gameData)
