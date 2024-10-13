@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.stomp.StompSession
 import kotlin.properties.Delegates
 import org.springframework.data.repository.findByIdOrNull
+import java.util.LinkedHashSet
 
 class FinesStrategyTest : StompIntegrationTestBase() {
     private var userSessions: MutableMap<Long, StompSession> = mutableMapOf()
@@ -48,6 +49,7 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         var session = getClientStompSession(roomDto.id, hostId)
         userSessions[this.hostId] = session
         game.gameData.userCards[this.hostId] = linkedSetOf(commonCard)
+        game.gameData.userCards[VirtualPlayers.TABLE.id] = LinkedHashSet()
 
         for (i in 2L..3L) {
             val userId = userService.createUser("name$i")

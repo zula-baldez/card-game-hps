@@ -24,11 +24,15 @@ interface DropStrategy {
     fun validateDrop(
         request: MoveCardRequest, gameHandler: GameHandler
     ): CardDropResult {
-        if (request.fromDropArea == VirtualPlayers.DECK.id || request.toDropArea == VirtualPlayers.DECK.id ||
-            !gameHandler.gameData.userCards.containsKey(request.toDropArea) ||
-            !gameHandler.gameData.userCards.containsKey(request.fromDropArea) ||
-            gameHandler.gameData.userCards[request.fromDropArea]?.contains(request.card) != true
-        ) {
+        if (request.fromDropArea == VirtualPlayers.DECK.id || !gameHandler.gameData.userCards.containsKey(request.fromDropArea)) {
+            return CardDropResult.missClick
+        }
+
+        if (request.toDropArea == VirtualPlayers.DECK.id || !gameHandler.gameData.userCards.containsKey(request.toDropArea)) {
+            return CardDropResult.missClick
+        }
+
+        if (gameHandler.gameData.userCards[request.fromDropArea]?.contains(request.card) != true) {
             return CardDropResult.missClick
         }
 
