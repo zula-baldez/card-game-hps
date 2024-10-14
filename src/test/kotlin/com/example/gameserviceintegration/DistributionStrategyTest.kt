@@ -45,7 +45,7 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
         val roomDto = roomManager.createRoom("room", host, 3)
         roomId = roomDto.id
         hostId = host
-        roomAccountManager.addAccount(roomId, hostId)
+        roomAccountManager.addAccount(roomId, hostId,hostId)
         var session = getClientStompSession(roomDto.id, host)
         userSessions[hostId] = session
 
@@ -53,7 +53,7 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
             val user = accountService.createAccountForUser("name$i").id
             session = getClientStompSession(roomDto.id, user)
             userSessions[user] = session
-            roomAccountManager.addAccount(roomId, user)
+            roomAccountManager.addAccount(roomId, user,user)
         }
 
         game.stateMachine.stage = Stage.DISTRIBUTION

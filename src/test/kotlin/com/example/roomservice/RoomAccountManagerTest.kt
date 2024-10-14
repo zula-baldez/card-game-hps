@@ -1,16 +1,12 @@
 package com.example.roomservice
 
-import com.example.common.exceptions.AccountNotFoundException
-import com.example.common.exceptions.HostOnlyException
-import com.example.common.exceptions.RoomNotFoundException
-import com.example.common.exceptions.RoomOverflowException
+import com.example.common.exceptions.*
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManagerImpl
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -56,7 +52,7 @@ class RoomAccountManagerTest {
         val accountId = 1L
         `when`(roomRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        assertThrows(RoomNotFoundException::class.java) { roomAccountManager.addAccount(999L, accountId) }
+        assertThrows(RoomNotFoundException::class.java) { roomAccountManager.addAccount(999L, accountId, accountId) }
     }
 
     @Test
@@ -69,7 +65,7 @@ class RoomAccountManagerTest {
         )
         `when`(accountRepository.findById(anyLong())).thenReturn(Optional.empty())
 
-        assertThrows(AccountNotFoundException::class.java) { roomAccountManager.addAccount(roomId, 999L) }
+        assertThrows(AccountNotFoundException::class.java) { roomAccountManager.addAccount(roomId, 999L, 999L) }
     }
 
     @Test
@@ -87,7 +83,7 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, 2L) }
+        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, 2L, 2L) }
     }
 
     @Test
@@ -98,7 +94,7 @@ class RoomAccountManagerTest {
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
 
-        roomAccountManager.addAccount(roomId, accountId)
+        roomAccountManager.addAccount(roomId, accountId, accountId)
 
         assertTrue(room.players.contains(user))
     }
@@ -200,5 +196,19 @@ class RoomAccountManagerTest {
             roomAccountManager.removeAccount(roomId, hostId, reason, userId)
         }
         assertEquals("This operation is host only", exception.message)
+    }
+
+    @Test
+    fun `should throw ForbiddenOperationException when requesterId does not match accountId`() {
+        val roomId = 1L
+        val accountId = 2L
+        val requesterId = 3L
+
+        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
+
+       assertThrows<ForbiddenOperationException> {
+            roomAccountManager.addAccount(roomId, accountId, requesterId)
+        }
     }
 }

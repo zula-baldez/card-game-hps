@@ -26,7 +26,6 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.*
 import org.springframework.data.domain.PageImpl
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import java.security.Principal
 import java.util.*
 
 
@@ -37,7 +36,6 @@ internal class FriendsControllerTest {
     private lateinit var messageTemplateMock: SimpMessagingTemplate
     private lateinit var friendsManagerImpl: PersonalAccountManager
     private lateinit var friendsController: FriendsController
-    private lateinit var principal: Principal
     private val userId = 1L
     private val friendId = 2L
     private lateinit var user: AccountEntity

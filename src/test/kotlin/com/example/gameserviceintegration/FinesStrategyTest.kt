@@ -29,10 +29,13 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         get() = roomRepository.findById(roomId).get().currentGameId
     private val game: GameHandler
         get() = gameHandlerRegistry.getGame(gameId) ?: throw IllegalArgumentException("No game found")
+
     @Autowired
     private lateinit var gameHandlerRegistry: GameHandlerRegistry
+
     @Autowired
     private lateinit var roomRepository: RoomRepository
+
     @Autowired
     private lateinit var accountRepository: AccountRepository
 
@@ -45,7 +48,7 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         roomId = roomDto.id
         this.hostId = hostId
         game.stateMachine.stage = Stage.FINES
-        roomAccountManager.addAccount(roomId, this.hostId)
+        roomAccountManager.addAccount(roomId, this.hostId, this.hostId)
         var session = getClientStompSession(roomDto.id, hostId)
         userSessions[this.hostId] = session
         game.gameData.userCards[this.hostId] = linkedSetOf(commonCard)
@@ -55,7 +58,7 @@ class FinesStrategyTest : StompIntegrationTestBase() {
             val userId = accountService.createAccountForUser("name$i").id
             session = getClientStompSession(roomDto.id, userId)
             userSessions[userId] = session
-            roomAccountManager.addAccount(roomId, userId)
+            roomAccountManager.addAccount(roomId, userId, userId)
             game.gameData.userCards[userId] = linkedSetOf(commonCard)
         }
 
@@ -90,7 +93,10 @@ class FinesStrategyTest : StompIntegrationTestBase() {
     fun noDropOnEnemyWhenNotYourTurn() {
         val notTurningPlayer = getNotTurningPlayer()
         val turningPlayer = getTurningPlayer()!!
-        userSessions[notTurningPlayer]?.send("/app/move-card", MoveCardRequest(notTurningPlayer, turningPlayer, commonCard))
+        userSessions[notTurningPlayer]?.send(
+            "/app/move-card",
+            MoveCardRequest(notTurningPlayer, turningPlayer, commonCard)
+        )
         val response = getMessage(notTurningPlayer)
         assertNull(response)
     }
@@ -102,12 +108,16 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         var finedAccount = accountRepository.findByIdOrNull(notTurningPlayer)!!
         finedAccount.fines = 1
         accountRepository.save(finedAccount)
-        userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, notTurningPlayer, commonCard))
+        userSessions[turningPlayer]?.send(
+            "/app/move-card",
+            MoveCardRequest(turningPlayer, notTurningPlayer, commonCard)
+        )
         val response = getMessage(turningPlayer)
         assertEquals(commonCard, response?.card)
         assertEquals(notTurningPlayer, response?.idTo)
         assertEquals(turningPlayer, response?.idFrom)
-        finedAccount = accountRepository.findByIdOrNull(notTurningPlayer) ?: throw IllegalArgumentException("Player not found???")
+        finedAccount =
+            accountRepository.findByIdOrNull(notTurningPlayer) ?: throw IllegalArgumentException("Player not found???")
         assertEquals(0, finedAccount.fines)
     }
 
@@ -118,7 +128,10 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         val finedAccount = accountRepository.findByIdOrNull(notTurningPlayer)!!
         finedAccount.fines = 0
         accountRepository.save(finedAccount)
-        userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, notTurningPlayer, commonCard))
+        userSessions[turningPlayer]?.send(
+            "/app/move-card",
+            MoveCardRequest(turningPlayer, notTurningPlayer, commonCard)
+        )
         val response = getMessage(turningPlayer)
         assertNull(response)
     }
@@ -129,7 +142,10 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         var finedAccount = accountRepository.findByIdOrNull(turningPlayer)!!
         finedAccount.fines = 0
         accountRepository.save(finedAccount)
-        userSessions[turningPlayer]?.send("/app/move-card", MoveCardRequest(turningPlayer, VirtualPlayers.TABLE.id, commonCard))
+        userSessions[turningPlayer]?.send(
+            "/app/move-card",
+            MoveCardRequest(turningPlayer, VirtualPlayers.TABLE.id, commonCard)
+        )
         val response = getMessage(turningPlayer)
         assertNull(response)
 

@@ -76,8 +76,8 @@ class RoomControllerTest {
     fun `addPlayer should add player to the room`() {
         val roomId = 1L
         val addAccountRequest = AddAccountRequest(accountId = 123L)
-        roomController.addPlayer(roomId, addAccountRequest)
-        verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId)
+        roomController.addPlayer(roomId, addAccountRequest, addAccountRequest.accountId)
+        verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId, addAccountRequest.accountId)
     }
     @Test
     fun `removePlayer should remove player from the room`() {

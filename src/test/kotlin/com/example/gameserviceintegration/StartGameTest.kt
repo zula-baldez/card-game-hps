@@ -30,7 +30,7 @@ class StartGameTest : StompIntegrationTestBase() {
         hostId = accountService.createAccountForUser("name1").id
         val roomDto = roomManager.createRoom("room", hostId, 10)
         roomId = roomDto.id
-        roomAccountManager.addAccount(roomId, hostId)
+        roomAccountManager.addAccount(roomId, hostId, hostId)
         var session = getClientStompSession(roomDto.id, hostId)
         userSessions[hostId] = session
 
@@ -38,7 +38,7 @@ class StartGameTest : StompIntegrationTestBase() {
             val user = accountService.createAccountForUser("name$i").id
             session = getClientStompSession(roomDto.id, user)
             userSessions[user] = session
-            roomAccountManager.addAccount(roomId, user)
+            roomAccountManager.addAccount(roomId, user, user)
         }
     }
 
