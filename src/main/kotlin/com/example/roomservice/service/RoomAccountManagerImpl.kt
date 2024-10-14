@@ -23,7 +23,7 @@ class RoomAccountManagerImpl(
         val room = roomRepository.findById(roomId).getOrNull() ?: throw RoomNotFoundException(roomId)
         val account = accountRepository.findById(accountId).getOrNull() ?: throw AccountNotFoundException(accountId)
         
-        if (accountId != requesterId) {
+        if (accountId != requesterId || room.bannedPlayers.contains(account)) {
             throw ForbiddenOperationException()
         }
 
@@ -51,10 +51,16 @@ class RoomAccountManagerImpl(
             }
             sendAccountAction(reason, account)
             room.players.remove(account)
+            account.roomEntity = null
+            accountRepository.save(account)
             if (room.players.isEmpty()) {
                 roomRepository.deleteById(roomId)
+            } else {
+                if (account.id == room.hostId) {
+                    room.hostId = room.players.first().id
+                }
+                roomRepository.save(room)
             }
-            roomRepository.save(room)
         } else {
             throw AccountNotFoundException(accountId)
         }

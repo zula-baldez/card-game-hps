@@ -14,6 +14,7 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.anyLong
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
+import org.mockito.kotlin.verify
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import java.util.Optional
 
@@ -23,16 +24,22 @@ class RoomAccountManagerTest {
     private lateinit var roomRepository: RoomRepository
     private lateinit var accountRepository: AccountRepository
     private lateinit var messagingTemplate: SimpMessagingTemplate
-    private val accountId = 2L
-    private var user = AccountEntity(
+    private val hostId = 1L
+    private val playerId = 2L
+    private var host = AccountEntity(
         name = "User1",
         fines = 0,
-        id = accountId
+        id = hostId
+    )
+    private var player = AccountEntity(
+        name = "User2",
+        fines = 0,
+        id = playerId
     )
     private var room = RoomEntity(
         id = 0,
         name = "Комната для игры",
-        hostId = 1L,
+        hostId = hostId,
         capacity = 4,
         currentGameId = 0L,
         players = mutableListOf()
@@ -81,9 +88,9 @@ class RoomAccountManagerTest {
         )
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
+        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(host))
 
-        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, 2L, 2L) }
+        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, hostId, hostId) }
     }
 
     @Test
@@ -92,11 +99,11 @@ class RoomAccountManagerTest {
         val accountId = 2L
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
 
         roomAccountManager.addAccount(roomId, accountId, accountId)
 
-        assertTrue(room.players.contains(user))
+        assertTrue(room.players.contains(host))
     }
 
     @Test
@@ -125,7 +132,7 @@ class RoomAccountManagerTest {
                 roomId,
                 999L,
                 AccountAction.LEAVE,
-                accountId
+                hostId
             )
         }
     }
@@ -136,15 +143,15 @@ class RoomAccountManagerTest {
         val roomId = 1L
         val accountId = 1L
         val reason = AccountAction.BAN
-        val room = room.apply { players.add(user) }
+        val room = room.apply { players.add(host) }
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
 
         roomAccountManager.removeAccount(roomId, accountId, reason, accountId)
 
-        assertFalse(room.players.contains(user))
-        assertTrue(room.bannedPlayers.contains(user))
+        assertFalse(room.players.contains(host))
+        assertTrue(room.bannedPlayers.contains(host))
     }
 
     @Test
@@ -152,7 +159,7 @@ class RoomAccountManagerTest {
         val roomId = 1L
         val accountId = 1L
         val reason = AccountAction.BAN
-        val room = room.apply { players.add(user) }
+        val room = room.apply { players.add(host) }
         val account = AccountEntity(
             name = "User3",
             fines = 0,
@@ -175,7 +182,7 @@ class RoomAccountManagerTest {
         val userId = 3L
 
         val reason = AccountAction.BAN
-        val room = room.apply { players.add(user) }
+        val room = room.apply { players.add(host) }
         val hostAccount = AccountEntity(
             name = "User1",
             fines = 0,
@@ -205,10 +212,36 @@ class RoomAccountManagerTest {
         val requesterId = 3L
 
         `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(user))
+        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
 
        assertThrows<ForbiddenOperationException> {
             roomAccountManager.addAccount(roomId, accountId, requesterId)
         }
+    }
+
+    @Test
+    fun `should transfer host after host leaves`() {
+        val roomId = 1L
+
+        val initialRoom = RoomEntity(
+            id = roomId,
+            name = "Комната для игры",
+            hostId = hostId,
+            capacity = 4,
+            currentGameId = 0L,
+            players = mutableListOf(
+                host,
+                player
+            )
+        )
+
+        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(initialRoom))
+        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(host))
+        `when`(accountRepository.findById(playerId)).thenReturn(Optional.of(player))
+
+        roomAccountManager.removeAccount(roomId, hostId, AccountAction.LEAVE, hostId)
+
+        assertEquals(initialRoom.hostId, playerId)
+        assertFalse(initialRoom.players.contains(host))
     }
 }
