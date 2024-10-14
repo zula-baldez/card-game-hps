@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotBlank
 data class AccountDto(
     val id: Long,
 
-    @NotBlank
+    @get:NotBlank
     val name: String,
 
-    @Min(0)
+    @get:Min(0)
     val fines: Int,
     @JsonProperty("room_id")
     val roomId: Long?

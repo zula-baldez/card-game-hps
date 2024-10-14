@@ -41,3 +41,6 @@ CREATE SEQUENCE IF NOT EXISTS room_id_seq;
 CREATE SEQUENCE IF NOT EXISTS account_id_seq;
 CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
 
+INSERT INTO accounts VALUES
+(123, 'user1', 0, null),
+(321, 'user2', 0, null)

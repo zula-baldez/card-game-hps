@@ -48,7 +48,7 @@ class RoomAccountManagerTest {
         accountRepository = mock(AccountRepository::class.java)
         messagingTemplate = mock(SimpMessagingTemplate::class.java)
 
-        roomAccountManager = RoomAccountManagerImpl(roomRepository, accountRepository, messagingTemplate, ObjectMapper())
+        roomAccountManager = RoomAccountManagerImpl(roomRepository, accountRepository, messagingTemplate)
     }
 
     @Test

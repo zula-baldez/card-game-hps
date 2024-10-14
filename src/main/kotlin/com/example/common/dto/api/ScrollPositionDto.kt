@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive
 
 data class ScrollPositionDto(
 
-    @Positive
+    @get:Positive
     @JsonProperty("offset")
     var offset: Long?
 )

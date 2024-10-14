@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
 
 data class AccountActionDTO(
-    @NotBlank
+    @get:NotBlank
     @JsonProperty("account_action")
     val accountAction: AccountAction,
     val id: Long,
-    @NotBlank
+    @get:NotBlank
     val name: String
 )
