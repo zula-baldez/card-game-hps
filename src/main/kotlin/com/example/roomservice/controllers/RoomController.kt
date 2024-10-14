@@ -2,10 +2,7 @@ package com.example.roomservice.controllers
 
 import com.example.common.dto.api.ScrollPositionDto
 import com.example.common.dto.business.RoomDto
-import com.example.common.exceptions.AccountNotFoundException
-import com.example.common.exceptions.HostOnlyException
-import com.example.common.exceptions.RoomNotFoundException
-import com.example.common.exceptions.RoomOverflowException
+import com.example.common.exceptions.*
 import com.example.roomservice.dto.AddAccountRequest
 import com.example.roomservice.dto.CreateRoomRequest
 import com.example.roomservice.dto.RemoveAccountRequest
@@ -51,8 +48,8 @@ class RoomController(
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest) {
-        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, @RequestHeader("x-user-id") userId: Long) {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, userId)
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
@@ -88,5 +85,11 @@ class RoomController(
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleRoomOverflowException(ex: RoomOverflowException): String {
         return ex.message ?: "Room overflow exception"
+    }
+
+    @ExceptionHandler(ForbiddenOperationException::class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    fun handleForbiddenOperationException(ex: ForbiddenOperationException): String {
+        return ex.message ?: "Forbidden"
     }
 }

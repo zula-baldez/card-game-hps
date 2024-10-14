@@ -1,9 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.common.exceptions.AccountNotFoundException
-import com.example.common.exceptions.HostOnlyException
-import com.example.common.exceptions.RoomNotFoundException
-import com.example.common.exceptions.RoomOverflowException
+import com.example.common.exceptions.*
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.personalaccount.database.AccountEntity
@@ -22,12 +19,19 @@ class RoomAccountManagerImpl(
     val simpMessagingTemplate: SimpMessagingTemplate,
 ) : RoomAccountManager {
 
-    override fun addAccount(roomId: Long, accountId: Long) {
+    override fun addAccount(roomId: Long, accountId: Long, requesterId: Long) {
         val room = roomRepository.findById(roomId).getOrNull() ?: throw RoomNotFoundException(roomId)
         val account = accountRepository.findById(accountId).getOrNull() ?: throw AccountNotFoundException(accountId)
+        
+        if (accountId != requesterId) {
+            throw ForbiddenOperationException()
+        }
+
         if (room.players.size >= room.capacity)
             throw RoomOverflowException(roomId)
         else {
+            account.roomEntity?.players?.remove(account)
+            account.roomEntity?.let { roomRepository.save(it) }
             account.roomEntity = room
             room.players.addLast(account)
             roomRepository.save(room)
