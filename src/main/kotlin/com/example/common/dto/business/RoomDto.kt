@@ -7,13 +7,13 @@ import jakarta.validation.constraints.Positive
 data class RoomDto(
     val id: Long,
 
-    @get:NotBlank
+    @field:NotBlank
     val name: String,
 
     @JsonProperty("host_id")
     val hostId: Long,
 
-    @get:Positive
+    @field:Positive
     val capacity: Int,
     val players: List<AccountDto>,
     @JsonProperty("current_game_id")

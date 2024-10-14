@@ -14,11 +14,11 @@ class AccountEntity(
     @SequenceGenerator(name = "account_id_generator", sequenceName = "account_id_seq", allocationSize = 1)
     var id: Long = 0,
 
-    @get:NotBlank
+    @field:NotBlank
     @Column(name = "name")
     var name: String,
 
-    @get:PositiveOrZero
+    @field:PositiveOrZero
     @Column(name = "fines")
     var fines: Int,
     @ManyToOne(fetch = FetchType.EAGER)

@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Positive
 import kotlin.math.min
 
 data class Pagination(
-    @get:Positive
+    @field:Positive
     val page: Int = 0,
-    @get:Positive
+    @field:Positive
     @JsonProperty("page_size")
     val pageSize: Int = 10
 ) {
