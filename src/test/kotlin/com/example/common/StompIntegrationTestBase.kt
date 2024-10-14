@@ -1,7 +1,7 @@
 package com.example.common
 
-import com.example.common.service.UserService
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
+import com.example.personalaccount.service.AccountService
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -39,7 +39,7 @@ class StompIntegrationTestBase : E2EDbInit() {
     lateinit var messagingTemplate: SimpMessagingTemplate
 
     @Autowired
-    lateinit var userService: UserService
+    lateinit var accountService: AccountService
 
     @Autowired
     lateinit var roomManager: RoomManager

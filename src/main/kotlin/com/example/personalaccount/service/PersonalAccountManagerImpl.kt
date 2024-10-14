@@ -163,11 +163,8 @@ class PersonalAccountManagerImpl(
         ).map { it.toDto() }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun sendAddFine(id: Long) {
-        GlobalScope.launch(Dispatchers.IO) {
-            simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
-        }
+        simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
     }
 
     override fun addFine(accountId: Long) {

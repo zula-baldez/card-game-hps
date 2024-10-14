@@ -40,7 +40,7 @@ class FinesStrategyTest : StompIntegrationTestBase() {
 
     @BeforeEach
     fun initData() {
-        val hostId = userService.createUser("name1")
+        val hostId = accountService.createAccountForUser("name1").id
         val roomDto = roomManager.createRoom("room", hostId, 3)
         roomId = roomDto.id
         this.hostId = hostId
@@ -52,7 +52,7 @@ class FinesStrategyTest : StompIntegrationTestBase() {
         game.gameData.userCards[VirtualPlayers.TABLE.id] = LinkedHashSet()
 
         for (i in 2L..3L) {
-            val userId = userService.createUser("name$i")
+            val userId = accountService.createAccountForUser("name$i").id
             session = getClientStompSession(roomDto.id, userId)
             userSessions[userId] = session
             roomAccountManager.addAccount(roomId, userId)

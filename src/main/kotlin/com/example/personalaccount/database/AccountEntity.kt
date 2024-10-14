@@ -10,7 +10,9 @@ import jakarta.validation.constraints.PositiveOrZero
 @Table(name = "accounts")
 class AccountEntity(
     @Id
-    var id: Long,
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_generator")
+    @SequenceGenerator(name = "account_id_generator", sequenceName = "account_id_seq", allocationSize = 1)
+    var id: Long = 0,
 
     @NotBlank
     @Column(name = "name")
@@ -29,7 +31,7 @@ class AccountEntity(
 ) {
     fun toDto(): AccountDto {
         return AccountDto(
-            id,
+            id?: 0,
             name,
             fines,
             roomId = roomEntity?.id

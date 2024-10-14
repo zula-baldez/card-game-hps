@@ -1,28 +1,6 @@
 --liquibase formatted sql
 --changeset egorik:1
 
-CREATE TABLE IF NOT EXISTS users
-(
-    id       BIGSERIAL PRIMARY KEY,
-    name     VARCHAR(255),
-    password VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS roles
-(
-    id        BIGSERIAL PRIMARY KEY,
-    role_name VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS user_role
-(
-    user_id BIGINT,
-    role_id BIGINT,
-    PRIMARY KEY (user_id, role_id),
-    CONSTRAINT fk_user_role_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    CONSTRAINT fk_user_role_role FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS accounts
 (
     id              BIGINT PRIMARY KEY,
@@ -60,6 +38,6 @@ CREATE TABLE IF NOT EXISTS banned_players
 
 CREATE SEQUENCE IF NOT EXISTS roles_id_seq;
 CREATE SEQUENCE IF NOT EXISTS room_id_seq;
-CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+CREATE SEQUENCE IF NOT EXISTS account_id_seq;
 CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
 
