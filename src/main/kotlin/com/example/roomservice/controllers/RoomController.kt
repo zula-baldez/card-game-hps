@@ -49,7 +49,6 @@ class RoomController(
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    @ResponseStatus(HttpStatus.CREATED)
     fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest) {
         return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }

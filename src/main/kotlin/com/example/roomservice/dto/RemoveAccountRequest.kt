@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull
 
 data class RemoveAccountRequest(
 
-    @NotNull
+    @NotNull(message = "reason should not be null")
     val reason: AccountAction
 )

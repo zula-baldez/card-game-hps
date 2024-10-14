@@ -7,10 +7,10 @@ import jakarta.validation.constraints.Positive
 
 data class CreateRoomRequest(
 
-    @NotNull
-    @Positive
+    @NotNull(message = "capacity should not be null")
+    @Positive(message = "capacity should be greater than 0")
     val capacity: Int,
 
-    @NotBlank
+    @NotBlank(message = "name should not be blank")
     val name: String
 )

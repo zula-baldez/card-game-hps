@@ -9,7 +9,6 @@ import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
 import com.example.roomservice.repository.RoomRepository
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -21,7 +20,6 @@ class RoomAccountManagerImpl(
     val roomRepository: RoomRepository,
     val accountRepository: AccountRepository,
     val simpMessagingTemplate: SimpMessagingTemplate,
-    val objectMapper: ObjectMapper
 ) : RoomAccountManager {
 
     override fun addAccount(roomId: Long, accountId: Long) {
