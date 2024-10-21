@@ -16,6 +16,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import java.security.Principal
 
 class RoomControllerTest {
 
@@ -63,11 +64,13 @@ class RoomControllerTest {
     @Test
     fun `should create room`() {
         val createRoomRequest = CreateRoomRequest(5, "New Room")
+        val principal: Principal = mock(Principal::class.java)
+        `when`(principal.name).thenReturn("1")
         val roomDto = RoomDto(1L, "Room1", 5, 2, mutableListOf(), 1L, mutableListOf())
 
         `when`(roomManager.createRoom("New Room", 1L, 5)).thenReturn(roomDto)
 
-        val result = roomController.createRoom(createRoomRequest, 1)
+        val result = roomController.createRoom(createRoomRequest, principal)
 
         assertEquals(roomDto, result)
         verify(roomManager).createRoom("New Room", 1L, 5)
@@ -76,7 +79,10 @@ class RoomControllerTest {
     fun `addPlayer should add player to the room`() {
         val roomId = 1L
         val addAccountRequest = AddAccountRequest(accountId = 123L)
-        roomController.addPlayer(roomId, addAccountRequest, addAccountRequest.accountId)
+        val principal: Principal = mock(Principal::class.java)
+        `when`(principal.name).thenReturn("123")
+
+        roomController.addPlayer(roomId, addAccountRequest, principal)
         verify(roomAccountManager).addAccount(roomId, addAccountRequest.accountId, addAccountRequest.accountId)
     }
     @Test
@@ -84,7 +90,11 @@ class RoomControllerTest {
         val roomId = 1L
         val accountId = 123L
         val removeAccountRequest = RemoveAccountRequest(reason = AccountAction.LEAVE)
-        roomController.removePlayer(roomId, accountId, removeAccountRequest, accountId)
+        val principal: Principal = mock(Principal::class.java)
+        `when`(principal.name).thenReturn("123")
+
+        roomController.removePlayer(roomId, accountId, removeAccountRequest, principal)
+
         verify(roomAccountManager).removeAccount(roomId, accountId, removeAccountRequest.reason, accountId)
     }
 }

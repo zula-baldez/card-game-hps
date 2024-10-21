@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.security.Principal
 
 @RestController
 @Validated
@@ -39,17 +39,17 @@ class RoomController(
 
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, @RequestHeader("x-user-id") userId: Long): RoomDto {
+    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): RoomDto {
         return roomManager.createRoom(
             createRoomRequest.name,
-            userId,
+            principal.name.toLong(),
             createRoomRequest.capacity
         )
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, @RequestHeader("x-user-id") userId: Long) {
-        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, userId)
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, principal: Principal) {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, principal.name.toLong())
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
@@ -58,9 +58,9 @@ class RoomController(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
-        @RequestHeader("x-user-id") requesterId: Long
+        principal: Principal
     ) {
-        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, requesterId)
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, principal.name.toLong())
     }
 
     @ExceptionHandler(RoomNotFoundException::class)

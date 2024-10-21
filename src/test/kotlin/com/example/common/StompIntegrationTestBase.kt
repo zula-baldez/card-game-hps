@@ -1,10 +1,9 @@
 package com.example.common
 
+import com.example.authservice.service.UserService
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
-import com.example.personalaccount.service.AccountService
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.AfterEach
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -39,7 +38,7 @@ class StompIntegrationTestBase : E2EDbInit() {
     lateinit var messagingTemplate: SimpMessagingTemplate
 
     @Autowired
-    lateinit var accountService: AccountService
+    lateinit var userService: UserService
 
     @Autowired
     lateinit var roomManager: RoomManager
@@ -47,21 +46,15 @@ class StompIntegrationTestBase : E2EDbInit() {
     @Autowired
     lateinit var roomAccountManager: RoomAccountManager
 
-    @Autowired
-    lateinit var objectMapper: ObjectMapper
-
-    fun getClientStompSession(roomId: Long, userId: Long): StompSession {
+    fun getClientStompSession(roomId: Long, userId: Long, token: String): StompSession {
         val url = "ws://localhost:$port/app/game?roomId=$roomId"
         val transportList: List<Transport> = listOf(WebSocketTransport(StandardWebSocketClient()))
         val stompClient = WebSocketStompClient(SockJsClient(transportList))
-        val messageConverter = MappingJackson2MessageConverter()
-        messageConverter.objectMapper = objectMapper
-        stompClient.messageConverter = messageConverter
-
+        stompClient.messageConverter = MappingJackson2MessageConverter()
         val handshakeHeaders = WebSocketHttpHeaders()
-        handshakeHeaders.add("x-user-id", userId.toString())
+        handshakeHeaders.add("Authorization", "Bearer $token")
         val connectHeaders = StompHeaders()
-        connectHeaders.add("x-user-id", userId.toString())
+        connectHeaders.add("Authorization", "Bearer $token")
         receivedMessages[userId] = LinkedBlockingDeque()
         val session = stompClient.connectAsync(
             url,

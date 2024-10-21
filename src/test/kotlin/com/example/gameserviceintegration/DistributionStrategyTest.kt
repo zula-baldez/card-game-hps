@@ -41,19 +41,19 @@ class DistributionStrategyTest : StompIntegrationTestBase() {
 
     @BeforeEach
     fun initData() {
-        val host = accountService.createAccountForUser("name1").id
-        val roomDto = roomManager.createRoom("room", host, 3)
+        val host = userService.register("name1", "pass1")
+        val roomDto = roomManager.createRoom("room", host.id, 3)
         roomId = roomDto.id
-        hostId = host
-        roomAccountManager.addAccount(roomId, hostId,hostId)
-        var session = getClientStompSession(roomDto.id, host)
+        hostId = host.id
+        roomAccountManager.addAccount(roomId, hostId, hostId)
+        var session = getClientStompSession(roomDto.id, host.id, host.token)
         userSessions[hostId] = session
 
         for (i in 2..3) {
-            val user = accountService.createAccountForUser("name$i").id
-            session = getClientStompSession(roomDto.id, user)
-            userSessions[user] = session
-            roomAccountManager.addAccount(roomId, user,user)
+            val user = userService.register("name$i", "pass$i")
+            session = getClientStompSession(roomDto.id, user.id, user.token)
+            userSessions[user.id] = session
+            roomAccountManager.addAccount(roomId, user.id, user.id)
         }
 
         game.stateMachine.stage = Stage.DISTRIBUTION
