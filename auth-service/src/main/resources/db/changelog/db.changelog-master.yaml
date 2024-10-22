@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: egor
+  - include:
+      file: /USER/migrations/001_core_entities.sql
+      relativeToChangelogFile: true

@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/yatool.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sdkmanrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/authservice/TokenParserTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/authservice/UserDetailsServiceTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/common/DtoInitializationTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/common/E2EDbInit.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/common/StompIntegrationTestBase.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/CardMovementHandlerImplTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/CardTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/CyclicQueueTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/FinesCounterTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/GameHandlerFactoryImplTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/GameHandlerImplTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/GameHandlerRegistryInMemoryTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gamehandlerservice/NonDatabaseEntityIdGeneratorTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gameserviceintegration/DistributionStrategyTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gameserviceintegration/FinesStrategyTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/gameserviceintegration/StartGameTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/personalaccount/AccountServiceImplTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/personalaccount/FriendsControllerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/personalaccount/PersonalAccountManagerImplTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/roomservice/RoomAccountManagerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/example/roomservice/RoomManagerTest.kt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Kotlin Enum" />
+        <option value="Interface" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="without_security" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2m3LDlu0vCgilUr43mBREhGlQ8P" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.AuthControllerTest.executor": "Run",
+    "Gradle.AuthIntegrationTest.executor": "Run",
+    "Gradle.AuthIntegrationTest.test registration.executor": "Run",
+    "Gradle.BaseStompIntegrationTest.executor": "Run",
+    "Gradle.Build card-game-hps.executor": "Run",
+    "Gradle.DistributionStageTest.executor": "Debug",
+    "Gradle.DistributionStageTest.testStartGame.executor": "Run",
+    "Gradle.DistributionStrategyTest.checkDropEnemySuccess.executor": "Run",
+    "Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor": "Run",
+    "Gradle.DistributionStrategyTest.executor": "Run",
+    "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
+    "Gradle.StartGameTest.executor": "Run",
+    "Gradle.StompIntegrationTestBase.executor": "Debug",
+    "Gradle.StompIntegrationTestBase.stompTest.executor": "Debug",
+    "Gradle.StopmIntegrationTestBase.executor": "Run",
+    "Gradle.Tests in 'com.example'.executor": "Run",
+    "Gradle.card-game-hps [build].executor": "Run",
+    "Gradle.card-game-hps [classes].executor": "Run",
+    "Gradle.card-game-hps [clean].executor": "Run",
+    "Gradle.card-game-hps [jar].executor": "Run",
+    "Gradle.card-game-hps [kotlinSourcesJar].executor": "Run",
+    "Kotlin script (Beta).settings.gradle.kts.executor": "Run",
+    "Kotlin.AuthServiceApplicationKt.executor": "Run",
+    "Kotlin.PenkiApplicationKt.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps/room-service",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ],
+    "kotlin-gradle-user-dirs": [
+      "/Users/moyakkauntda/.gradle"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/room-service" />
+      <recent name="$PROJECT_DIR$/game-handler" />
+      <recent name="$PROJECT_DIR$/personal-account" />
+      <recent name="$PROJECT_DIR$/auth-service" />
+      <recent name="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common" />
+      <recent name="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.common" />
+      <recent name="com.example.gamehandlerservice.aspects" />
+      <recent name="com.example.authservice" />
+      <recent name="com.example.gamehandlerservice.model.game" />
+      <recent name="com.example.gamehandlerservice.service.game.factory" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.example.common.exceptions" />
+      <recent name="com.example.gamehandlerservice.service.game.process.game" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.card-game-hps [jar]">
+    <configuration name="card-game-hps [classes]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="classes" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="card-game-hps [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="card-game-hps [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="card-game-hps [kotlinSourcesJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="kotlinSourcesJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="settings.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="card-game-hps.main" />
+      <option name="filePath" value="$PROJECT_DIR$/settings.gradle.kts" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.card-game-hps [jar]" />
+        <item itemvalue="Gradle.card-game-hps [clean]" />
+        <item itemvalue="Gradle.card-game-hps [classes]" />
+        <item itemvalue="Gradle.card-game-hps [kotlinSourcesJar]" />
+        <item itemvalue="Kotlin script (Beta).settings.gradle.kts" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="" />
+      <created>1726300248794</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726300248794</updated>
+      <workItem from="1726300249959" duration="17305000" />
+      <workItem from="1726904338799" duration="39452000" />
+      <workItem from="1727001248174" duration="4335000" />
+      <workItem from="1727526435172" duration="37032000" />
+      <workItem from="1727715230489" duration="2332000" />
+      <workItem from="1727717605022" duration="15578000" />
+      <workItem from="1727790924310" duration="598000" />
+      <workItem from="1727955999971" duration="117000" />
+      <workItem from="1728587941433" duration="3466000" />
+      <workItem from="1728649842725" duration="1457000" />
+      <workItem from="1728809518424" duration="9605000" />
+      <workItem from="1728932738980" duration="2924000" />
+      <workItem from="1729535911421" duration="1381000" />
+      <workItem from="1729612101452" duration="5225000" />
+    </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1726327145192</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726327145192</updated>
+    </task>
+    <task id="LOCAL-00002" summary="init">
+      <option name="closed" value="true" />
+      <created>1726904477374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726904477374</updated>
+    </task>
+    <task id="LOCAL-00003" summary="init">
+      <option name="closed" value="true" />
+      <created>1726906151739</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726906151739</updated>
+    </task>
+    <task id="LOCAL-00004" summary="init">
+      <option name="closed" value="true" />
+      <created>1726925324552</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726925324552</updated>
+    </task>
+    <task id="LOCAL-00005" summary="init">
+      <option name="closed" value="true" />
+      <created>1726927470804</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726927470804</updated>
+    </task>
+    <task id="LOCAL-00006" summary="implemented logic">
+      <option name="closed" value="true" />
+      <created>1726955930204</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726955930204</updated>
+    </task>
+    <task id="LOCAL-00007" summary="implemented logic">
+      <option name="closed" value="true" />
+      <created>1726955966277</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726955966277</updated>
+    </task>
+    <task id="LOCAL-00008" summary="implemented logic">
+      <option name="closed" value="true" />
+      <created>1726956169322</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726956169322</updated>
+    </task>
+    <task id="LOCAL-00009" summary="migrations fixes">
+      <option name="closed" value="true" />
+      <created>1727553675120</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727553675120</updated>
+    </task>
+    <task id="LOCAL-00010" summary="ban">
+      <option name="closed" value="true" />
+      <created>1727608667534</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727608667534</updated>
+    </task>
+    <task id="LOCAL-00011" summary="ban">
+      <option name="closed" value="true" />
+      <created>1727612007162</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727612007162</updated>
+    </task>
+    <task id="LOCAL-00012" summary="logic end">
+      <option name="closed" value="true" />
+      <created>1727612511363</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727612511363</updated>
+    </task>
+    <task id="LOCAL-00013" summary="logic end">
+      <option name="closed" value="true" />
+      <created>1727622988070</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727622988070</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix env">
+      <option name="closed" value="true" />
+      <created>1727639980142</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1727639980142</updated>
+    </task>
+    <task id="LOCAL-00015" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727719788647</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727719788647</updated>
+    </task>
+    <task id="LOCAL-00016" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727725339052</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727725339052</updated>
+    </task>
+    <task id="LOCAL-00017" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727726065923</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727726065923</updated>
+    </task>
+    <task id="LOCAL-00018" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727726627190</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727726627190</updated>
+    </task>
+    <task id="LOCAL-00019" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727728751917</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1727728751917</updated>
+    </task>
+    <task id="LOCAL-00020" summary="e2e test init">
+      <option name="closed" value="true" />
+      <created>1727731154859</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1727731154859</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor">
+      <option name="closed" value="true" />
+      <created>1728590549404</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1728590549404</updated>
+    </task>
+    <task id="LOCAL-00022" summary="refactor">
+      <option name="closed" value="true" />
+      <created>1728590649858</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1728590649858</updated>
+    </task>
+    <task id="LOCAL-00023" summary="make json return camelCase + test fixes">
+      <option name="closed" value="true" />
+      <created>1728818467353</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1728818467353</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1">
+      <option name="closed" value="true" />
+      <created>1729536635534</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1729536635534</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <MESSAGE value="implemented logic" />
+    <MESSAGE value="migrations fixes" />
+    <MESSAGE value="ban" />
+    <MESSAGE value="logic end" />
+    <MESSAGE value="fix env" />
+    <MESSAGE value="e2e test init" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="make json return camelCase + test fixes" />
+    <MESSAGE value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/test/kotlin/com/example/common/StompIntegrationTestBase.kt</url>
+          <line>42</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt</url>
+          <line>30</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/DistributionEventHandler.kt</url>
+          <line>18</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageStateMachineHandlerImpl.kt</url>
+          <line>59</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/card_game_hps$StartGameTest.ic" NAME="StartGameTest Coverage Results" MODIFIED="1727722591244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__com_example_.ic" NAME="Tests in 'com.example' Coverage Results" MODIFIED="1728590449276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>
