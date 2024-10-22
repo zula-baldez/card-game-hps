@@ -5,5 +5,6 @@ include(
     "common",
     "personal-account",
     "room-service",
-    "game-handler"
+    "game-handler",
+    "eureka-server"
 )
