@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono
 @Component
 class RoomManagerImpl(
     private val roomRepository: RoomRepository,
-    private val roomAccountManager: RoomAccountManager
+    private val roomAccountManager: RoomAccountManager,
     // private val gameHandlerRegistry: GameHandlerRegistry
 ) : RoomManager {
     private fun makeRoomDto(roomEntity: RoomEntity): Mono<RoomDto> {

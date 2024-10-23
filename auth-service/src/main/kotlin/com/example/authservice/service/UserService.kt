@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userRepo: UserRepo,
-    //val accountService: AccountService,
     val encoder: PasswordEncoder,
     val tokenService: TokenService
 ) {
@@ -22,7 +21,6 @@ class UserService(
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser)
-        //accountService.createAccountForUser(savedUser) TODO accountServiceClient.create()!!!
         return AuthenticationResponse(token, savedUser.id!!)
     }
 
