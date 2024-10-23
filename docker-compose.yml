@@ -1,6 +1,13 @@
 version: "3.9"
 
 services:
+  eureka-server:
+    build: eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
   db:
     image: postgres:15.2
     volumes:

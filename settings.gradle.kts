@@ -1,3 +1,8 @@
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "1.8.21"
+    }
+}
 rootProject.name = "card-game-hps"
 
 include(

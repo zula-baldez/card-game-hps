@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="add eureka server">
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,11 +47,6 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -75,12 +68,15 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="without_security" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
@@ -126,14 +122,19 @@
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.EurekaServerApplication (1).executor": "Run",
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "eureka",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/isobolev/IdeaProjects/card-game-hps",
+    "last_opened_file_path": "/Users/isobolev/IdeaProjects/card-game-hps/eureka-server",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -155,11 +156,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eureka-server" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/room-service" />
       <recent name="$PROJECT_DIR$/game-handler" />
       <recent name="$PROJECT_DIR$/personal-account" />
-      <recent name="$PROJECT_DIR$/auth-service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common" />
@@ -186,7 +187,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GameHandlerApplication">
+  <component name="RunManager" selected="Spring Boot.EurekaServerApplication (1)">
     <configuration name="card-game-hps [classes]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -275,17 +276,30 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="settings.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <module name="card-game-hps.main" />
-      <option name="filePath" value="$PROJECT_DIR$/settings.gradle.kts" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.auth-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="card-game-hps.eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eurekaserver.EurekaServerApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eurekaserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="card-game-hps.eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="main.java.com.example.eurekaserver.EurekaServerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -316,11 +330,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.EurekaServerApplication (1)" />
         <item itemvalue="Gradle.card-game-hps [jar]" />
         <item itemvalue="Gradle.card-game-hps [clean]" />
         <item itemvalue="Gradle.card-game-hps [classes]" />
         <item itemvalue="Gradle.card-game-hps [kotlinSourcesJar]" />
-        <item itemvalue="Kotlin script (Beta).settings.gradle.kts" />
       </list>
     </recent_temporary>
   </component>
@@ -347,7 +361,7 @@
       <workItem from="1729535911421" duration="1381000" />
       <workItem from="1729612101452" duration="5225000" />
       <workItem from="1729625872284" duration="2044000" />
-      <workItem from="1729627938670" duration="1015000" />
+      <workItem from="1729627938670" duration="2152000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -541,7 +555,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729536635534</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add eureka server">
+      <option name="closed" value="true" />
+      <created>1729629506497</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1729629506498</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,7 +591,8 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="make json return camelCase + test fixes" />
     <MESSAGE value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
+    <MESSAGE value="add eureka server" />
+    <option name="LAST_COMMIT_MESSAGE" value="add eureka server" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -593,11 +616,6 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageStateMachineHandlerImpl.kt</url>
           <line>59</line>
           <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/eureka-server/src/Main.kt</url>
-          <line>11</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
