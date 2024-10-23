@@ -10,7 +10,6 @@ import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.model.FriendshipStatus
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.PersonalAccountManagerImpl
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
@@ -43,8 +42,7 @@ class PersonalAccountManagerImplTest {
             accountRepository,
             friendshipRepository,
             accountService,
-            simpMessagingTemplate,
-            ObjectMapper()
+            simpMessagingTemplate
         )
         user = AccountEntity(
             id = 1L,

@@ -1,8 +1,8 @@
 package com.example.personalaccount
 
 import com.example.common.dto.api.Pagination
+import com.example.common.dto.business.FineDTO
 import com.example.common.exceptions.AccountNotFoundException
-import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.personalaccount.controllers.FriendsController
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
@@ -16,7 +16,6 @@ import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AccountServiceImpl
 import com.example.personalaccount.service.PersonalAccountManager
 import com.example.personalaccount.service.PersonalAccountManagerImpl
-import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletResponse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -66,8 +65,7 @@ internal class FriendsControllerTest {
             accountRepositoryMock,
             friendshipRepositoryMock,
             accountServiceMock,
-            messageTemplateMock,
-            ObjectMapper()
+            messageTemplateMock
         )
         friendsController = FriendsController(friendsManagerImpl)
         principal = mock<Principal> {

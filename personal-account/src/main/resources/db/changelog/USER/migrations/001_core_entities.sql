@@ -1,46 +1,42 @@
 --liquibase formatted sql
 --changeset egorik:1
 
+
+CREATE SEQUENCE IF NOT EXISTS account_id_seq;
+CREATE SEQUENCE IF NOT EXISTS room_account_id_seq;
+CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+CREATE SEQUENCE IF NOT EXISTS room_account_id_seq;
+CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT PRIMARY KEY DEFAULT nextval('users_id_seq'),
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS room_account
+(
+    id   BIGINT PRIMARY KEY DEFAULT nextval ('room_account_id_seq'),
+    name VARCHAR(255) NOT NULL
+);
+
+
 CREATE TABLE IF NOT EXISTS accounts
 (
-    id              BIGINT PRIMARY KEY,
-    name            VARCHAR(255),
-    fines           INT,
-    current_room_id BIGINT
+    id              BIGINT PRIMARY KEY DEFAULT nextval ('account_id_seq'),
+    name            VARCHAR(255) NOT NULL,
+    fines           INT CHECK (fines >= 0),
+    current_room_id BIGINT,
+    FOREIGN KEY (current_room_id) REFERENCES room_account (id) ON DELETE SET NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS friendships
 (
-    id              BIGINT PRIMARY KEY,
-    from_account_id BIGINT,
-    to_account_id   BIGINT,
-    status          VARCHAR(255),
-    UNIQUE (from_account_id, to_account_id),
-    CONSTRAINT fk_friendships_from_account_id FOREIGN KEY (from_account_id) REFERENCES accounts (id) ON DELETE CASCADE,
-    CONSTRAINT fk_friendships_to_account_id FOREIGN KEY (to_account_id) REFERENCES accounts (id) ON DELETE CASCADE
+    id              BIGINT PRIMARY KEY DEFAULT nextval ('friendship_id_seq'),
+    from_account_id BIGINT       NOT NULL,
+    to_account_id   BIGINT       NOT NULL,
+    status          VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_from_account FOREIGN KEY (from_account_id) REFERENCES accounts (id) ON DELETE CASCADE,
+    CONSTRAINT fk_to_account FOREIGN KEY (to_account_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
-
-CREATE TABLE IF NOT EXISTS room
-(
-    id              BIGSERIAL PRIMARY KEY,
-    name            VARCHAR(255),
-    host_id         BIGINT,
-    capacity        INT,
-    current_game_id BIGINT
-);
-
-CREATE TABLE IF NOT EXISTS banned_players
-(
-    room_id BIGINT,
-    user_id BIGINT,
-    PRIMARY KEY (room_id, user_id)
-);
-
-CREATE SEQUENCE IF NOT EXISTS roles_id_seq;
-CREATE SEQUENCE IF NOT EXISTS room_id_seq;
-CREATE SEQUENCE IF NOT EXISTS account_id_seq;
-CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
-
-INSERT INTO accounts VALUES
-(123, 'user1', 0, null),
-(321, 'user2', 0, null)

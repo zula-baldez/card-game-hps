@@ -4,35 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1">
-      <change afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/config/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/api/Pagination.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/api/Pagination.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/api/ScrollPositionDto.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/business/RoomDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/business/RoomDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/certs/private.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/certs/public.pem" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/AccountAction.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/AccountActionDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/AccountActionDTO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/build.gradle.kts" afterDir="false" />
+    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="add eureka server">
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/dto/RemoveAccountRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/dto/RemoveAccountRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/repository/RoomEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/repository/RoomEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/repository/RoomRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/repository/RoomRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,11 +47,6 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -100,15 +68,15 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="without_security" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
@@ -160,15 +128,19 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.RoomServiceApplication.executor": "Run",
-    "git-widget-placeholder": "master",
+    "Spring Boot.EurekaServerApplication (1).executor": "Run",
+    "Spring Boot.GameHandlerApplication.executor": "Run",
+    "Spring Boot.PersonalAccountApplication.executor": "Run",
+    "git-widget-placeholder": "eureka",
+    "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps/room-service",
+    "last_opened_file_path": "/Users/isobolev/IdeaProjects/card-game-hps/eureka-server",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/Users/isobolev/IdeaProjects/card-game-hps/eureka-server/src/Main.kt",
     "run.configurations.included.in.services": "true",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
@@ -177,35 +149,29 @@
     "DatabaseDriversLRU": [
       "postgresql"
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
-      "PostgreSQL"
-    ],
     "kotlin-gradle-user-dirs": [
       "/Users/moyakkauntda/.gradle"
     ]
   }
 }]]></component>
-  <component name="ReactorSettings">
-    <option name="notificationShown" value="true" />
-  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eureka-server" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/room-service" />
       <recent name="$PROJECT_DIR$/game-handler" />
       <recent name="$PROJECT_DIR$/personal-account" />
-      <recent name="$PROJECT_DIR$/auth-service" />
-      <recent name="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common" />
       <recent name="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.example.common.dto.business" />
       <recent name="com.example.common" />
       <recent name="com.example.gamehandlerservice.aspects" />
       <recent name="com.example.authservice" />
       <recent name="com.example.gamehandlerservice.model.game" />
+      <recent name="com.example.gamehandlerservice.service.game.factory" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.example.common.exceptions" />
@@ -221,7 +187,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.RoomServiceApplication">
+  <component name="RunManager" selected="Spring Boot.EurekaServerApplication (1)">
     <configuration name="card-game-hps [classes]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -310,17 +276,30 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="settings.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <module name="card-game-hps.main" />
-      <option name="filePath" value="$PROJECT_DIR$/settings.gradle.kts" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.auth-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="card-game-hps.eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eurekaserver.EurekaServerApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eurekaserver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="card-game-hps.eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="main.java.com.example.eurekaserver.EurekaServerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -342,53 +321,22 @@
       </method>
     </configuration>
     <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.room-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.RoomServiceApplication" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Gradle.card-game-hps [classes]" />
-      <item itemvalue="Gradle.card-game-hps [clean]" />
-      <item itemvalue="Gradle.card-game-hps [jar]" />
-      <item itemvalue="Gradle.card-game-hps [kotlinSourcesJar]" />
-      <item itemvalue="Kotlin script (Beta).settings.gradle.kts" />
-      <item itemvalue="Spring Boot.AuthServiceApplication" />
-      <item itemvalue="Spring Boot.GameHandlerApplication" />
-      <item itemvalue="Spring Boot.PersonalAccountApplication" />
-      <item itemvalue="Spring Boot.RoomServiceApplication" />
-    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.EurekaServerApplication (1)" />
         <item itemvalue="Gradle.card-game-hps [jar]" />
         <item itemvalue="Gradle.card-game-hps [clean]" />
         <item itemvalue="Gradle.card-game-hps [classes]" />
         <item itemvalue="Gradle.card-game-hps [kotlinSourcesJar]" />
-        <item itemvalue="Kotlin script (Beta).settings.gradle.kts" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-995e55e7" />
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -412,9 +360,8 @@
       <workItem from="1728932738980" duration="2924000" />
       <workItem from="1729535911421" duration="1381000" />
       <workItem from="1729612101452" duration="5225000" />
-      <workItem from="1729669316535" duration="174000" />
-      <workItem from="1729671776851" duration="9000" />
-      <workItem from="1729696623925" duration="8875000" />
+      <workItem from="1729625872284" duration="2044000" />
+      <workItem from="1729627938670" duration="2152000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -608,7 +555,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729536635534</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add eureka server">
+      <option name="closed" value="true" />
+      <created>1729629506497</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1729629506498</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +591,8 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="make json return camelCase + test fixes" />
     <MESSAGE value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
+    <MESSAGE value="add eureka server" />
+    <option name="LAST_COMMIT_MESSAGE" value="add eureka server" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -663,11 +619,6 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="com.example.gamehandlerservice.model.dto.MoveCardRequest" memberName="toDropArea" />
-      </pinned-members>
-    </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/card_game_hps$StartGameTest.ic" NAME="StartGameTest Coverage Results" MODIFIED="1727722591244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />

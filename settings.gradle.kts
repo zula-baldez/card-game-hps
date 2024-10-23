@@ -1,3 +1,8 @@
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "1.8.21"
+    }
+}
 rootProject.name = "card-game-hps"
 
 include(
@@ -5,5 +10,6 @@ include(
     "common",
     "personal-account",
     "room-service",
-    "game-handler"
+    "game-handler",
+    "eureka-server"
 )

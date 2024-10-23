@@ -1,7 +1,6 @@
 package com.example.personalaccount.database
 
 import com.example.common.dto.business.AccountDto
-import com.example.roomservice.repository.RoomEntity
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.PositiveOrZero
@@ -23,7 +22,7 @@ class AccountEntity(
     var fines: Int,
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "current_room_id", referencedColumnName = "id")
-    var roomEntity: RoomEntity? = null,
+    var roomEntity: RoomForAccountEntity? = null,
     @OneToMany(mappedBy = "fromAccount", cascade = [CascadeType.PERSIST])
     var friends: MutableSet<FriendshipEntity> = HashSet(),
     @OneToMany(mappedBy = "toAccount", cascade = [CascadeType.PERSIST])
