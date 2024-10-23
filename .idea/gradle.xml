@@ -5,12 +5,15 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="" />
+        <option name="gradleJvm" value="openjdk-21" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/auth-service" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/game-handler" />
+            <option value="$PROJECT_DIR$/personal-account" />
+            <option value="$PROJECT_DIR$/room-service" />
           </set>
         </option>
       </GradleProjectSettings>

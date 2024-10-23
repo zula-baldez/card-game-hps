@@ -1,40 +1,55 @@
 package com.example.roomservice.service
 
-import com.example.common.dto.api.ScrollPositionDto
-import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
+import com.example.common.dto.api.Pagination
 import com.example.common.dto.business.RoomDto
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
-import org.springframework.data.domain.ScrollPosition
 import org.springframework.stereotype.Component
-import kotlin.jvm.optionals.getOrNull
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Component
 class RoomManagerImpl(
     private val roomRepository: RoomRepository,
-    private val gameHandlerRegistry: GameHandlerRegistry
+    private val roomAccountManager: RoomAccountManager
+    // private val gameHandlerRegistry: GameHandlerRegistry
 ) : RoomManager {
-    override fun createRoom(name: String, hostId: Long, capacity: Int): RoomDto {
-        val roomEntity = RoomEntity(0, name, hostId, capacity, 0, mutableListOf())
-        roomRepository.save(roomEntity)
-        val game = gameHandlerRegistry.createGame(name, roomEntity.id)
-        roomEntity.currentGameId = game.gameData.gameId
-        roomRepository.save(roomEntity)
-        return roomEntity.toDto()
+    private fun makeRoomDto(roomEntity: RoomEntity): Mono<RoomDto> {
+        return roomAccountManager.getAccountsInRoom(roomEntity.id).collectList()
+            .zipWith(roomAccountManager.getBannedAccountsInRoom(roomEntity.id).collectList())
+            .map { result ->
+                return@map RoomDto(
+                    id = roomEntity.id,
+                    hostId = roomEntity.hostId,
+                    name = roomEntity.name,
+                    capacity = roomEntity.capacity,
+                    currentGameId = roomEntity.currentGameId,
+                    players = result.t1,
+                    bannedPlayers = result.t2)
+            }
     }
 
-    override fun deleteRoom(id: Long) {
-        roomRepository.deleteById(id)
+    override fun createRoom(name: String, hostId: Long, capacity: Int): Mono<RoomDto> {
+        val roomEntity = RoomEntity(0, name, hostId, capacity, 0)
+        return roomRepository.save(roomEntity).flatMap{ makeRoomDto(it) }
+//        TODO: create game in game service
+//        val game = gameHandlerRegistry.createGame(name, roomEntity.id)
+//        roomEntity.currentGameId = game.gameData.gameId
+//        roomRepository.save(roomEntity)
+//        return roomEntity.toDto()
     }
 
-    override fun getRoom(id: Long): RoomDto? {
-        return roomRepository.findById(id).map { it.toDto() }.getOrNull()
+    override fun deleteRoom(id: Long): Mono<Void> {
+        return roomRepository.deleteById(id)
     }
 
-    override fun getAllRooms(scrollPosition: ScrollPositionDto?): List<RoomDto> {
+    override fun getRoom(id: Long): Mono<RoomDto> {
+        return roomRepository.findById(id).flatMap { makeRoomDto(it) }
+    }
+
+    override fun getRooms(page: Pagination): Flux<RoomDto> {
         return roomRepository
-            .findFirst50ByOrderById(ScrollPosition.offset(scrollPosition?.offset ?: 0))
-            .map { it.toDto() }
-            .toList()
+            .findAllByIdNotNull(page.toPageable())
+            .flatMap { makeRoomDto(it) }
     }
 }

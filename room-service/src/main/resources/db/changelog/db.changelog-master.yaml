@@ -3,5 +3,5 @@ databaseChangeLog:
       id: 1
       author: egor
   - include:
-      file: /USER/migrations/001_core_entities.sql
+      file: /USER/migrations/001_room_service_entities.sql
       relativeToChangelogFile: true

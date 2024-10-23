@@ -40,12 +40,12 @@ class RoomControllerTest {
         val scrollPositionDto = ScrollPositionDto(10)
         val roomDtoList: List<RoomDto> = listOf(RoomDto(1L, "Room1", 10, 2, mutableListOf(), 1L, mutableListOf()))
 
-        `when`(roomManager.getAllRooms(scrollPositionDto)).thenReturn(roomDtoList)
+        `when`(roomManager.getRooms(scrollPositionDto)).thenReturn(roomDtoList)
 
-        val result = roomController.getAvailableRooms(scrollPositionDto)
+        val result = roomController.getAvailableRooms()
 
         assertEquals(roomDtoList, result)
-        verify(roomManager).getAllRooms(scrollPositionDto)
+        verify(roomManager).getRooms(scrollPositionDto)
     }
 
     @Test
