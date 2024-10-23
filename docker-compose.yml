@@ -2,8 +2,9 @@ version: "3.9"
 
 services:
   eureka-server:
-    build: eureka-server
-    container_name: eureka-server
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
     ports:
       - "8761:8761"
     environment:
@@ -23,18 +24,37 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-  app:
-    ports:
-      - "8082:8082"
+
+  personal-account:
+    restart: always
+    container_name: personal-account
+    depends_on:
+      - db
+      - eureka-server
     environment:
       POSTGRES_DB: postgres
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_URL: http://eureka-server:8761/eureka
     build:
-      context: ./
-      dockerfile: ./Dockerfile
+          context: ./personal-account
+          dockerfile: ./Dockerfile
+          platforms:
+            - "linux/amd64"
+#  app:
+#    ports:
+#      - "8082:8082"
+#    environment:
+#      POSTGRES_DB: postgres
+#      POSTGRES_HOST: db
+#      POSTGRES_PORT: 5432
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: KfvYuJQ8
+#    build:
+#      context: ./
+#      dockerfile: ./Dockerfile
 #      platforms:
 #        - "linux/amd64"
 volumes:

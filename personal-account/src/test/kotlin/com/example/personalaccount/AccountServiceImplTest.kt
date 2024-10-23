@@ -1,7 +1,7 @@
 package com.example.personalaccount
-import com.example.authservice.database.UserEntity
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
+import com.example.personalaccount.database.UserEntity
 import com.example.personalaccount.service.AccountServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -38,7 +38,6 @@ class AccountServiceImplTest {
     fun `should create account when doesnt exist`() {
         val userEntity = UserEntity(
             "testUser",
-            "testPassword",
             1
         )
 
@@ -54,7 +53,6 @@ class AccountServiceImplTest {
     fun `should return existing account when available`() {
         val userEntity = UserEntity(
             "testUser",
-            "testPassword",
             1
         )
         val existingAccount = AccountEntity(

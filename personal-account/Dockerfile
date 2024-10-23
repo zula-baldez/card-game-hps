@@ -18,6 +18,6 @@ FROM alpine:latest
 ENV JAVA_HOME=/jre
 ENV PATH "${JAVA_HOME}/bin:${PATH}"
 COPY --from=builder /javaruntime $JAVA_HOME
-COPY --from=builder /app/build/libs/auth-service-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=builder /app/build/libs/personal-account-0.0.1-SNAPSHOT.jar /app.jar
 
 CMD ["java", "-jar", "/app.jar"]

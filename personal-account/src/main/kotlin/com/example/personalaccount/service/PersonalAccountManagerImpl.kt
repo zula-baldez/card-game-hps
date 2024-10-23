@@ -1,7 +1,7 @@
 package com.example.personalaccount.service
 
 import com.example.common.dto.api.Pagination
-import com.example.gamehandlerservice.model.dto.FineDTO
+import com.example.common.dto.business.FineDTO
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.database.FriendshipEntity
 import com.example.personalaccount.database.FriendshipRepository
@@ -9,12 +9,7 @@ import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.model.FriendshipDto
 import com.example.personalaccount.model.FriendshipStatus
-import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.transaction.Transactional
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.springframework.data.domain.Page
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -24,8 +19,7 @@ class PersonalAccountManagerImpl(
     val accountRepository: AccountRepository,
     val friendshipRepository: FriendshipRepository,
     val accountService: AccountService,
-    val simpMessagingTemplate: SimpMessagingTemplate,
-    val objectMapper: ObjectMapper
+    val simpMessagingTemplate: SimpMessagingTemplate
 ) : PersonalAccountManager {
 
     /**

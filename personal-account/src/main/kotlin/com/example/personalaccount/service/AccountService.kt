@@ -1,7 +1,7 @@
 package com.example.personalaccount.service
 
-import com.example.authservice.database.UserEntity
 import com.example.personalaccount.database.AccountEntity
+import com.example.personalaccount.database.UserEntity
 
 interface AccountService {
     fun findByIdOrThrow(id: Long): AccountEntity
