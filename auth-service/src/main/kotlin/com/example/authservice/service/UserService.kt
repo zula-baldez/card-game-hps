@@ -2,7 +2,7 @@ package com.example.authservice.service
 
 import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
-import com.example.authservice.dto.AuthenticationResponse
+import com.example.common.client.AuthenticationResponse
 import com.example.authservice.jwt.TokenService
 //import com.example.personalaccount.service.AccountService
 import org.springframework.security.authentication.BadCredentialsException
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userRepo: UserRepo,
-    //val accountService: AccountService,
     val encoder: PasswordEncoder,
     val tokenService: TokenService
 ) {
@@ -22,7 +21,6 @@ class UserService(
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser)
-        //accountService.createAccountForUser(savedUser) TODO accountServiceClient.create()!!!
         return AuthenticationResponse(token, savedUser.id!!)
     }
 

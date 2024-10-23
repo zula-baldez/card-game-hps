@@ -25,6 +25,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
     implementation ("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")

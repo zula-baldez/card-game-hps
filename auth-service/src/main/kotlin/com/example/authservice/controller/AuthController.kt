@@ -1,7 +1,7 @@
 package com.example.authservice.controller
 
-import com.example.authservice.dto.AuthenticationResponse
-import com.example.authservice.dto.CredentialsRequest
+import com.example.common.client.AuthenticationResponse
+import com.example.common.client.CredentialsRequest
 import com.example.authservice.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus

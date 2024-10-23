@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.0"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
     id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm") version "1.8.21"
@@ -23,7 +23,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
-    implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
+    implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc:")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc:")
@@ -31,6 +31,7 @@ dependencies {
     implementation("org.springframework.security:spring-security-web:")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.security:spring-security-config:6.2.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
     implementation("org.liquibase:liquibase-core:4.22.0")
