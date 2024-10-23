@@ -1,11 +1,12 @@
 package com.example.roomservice.repository
 
-import org.springframework.data.domain.ScrollPosition
-import org.springframework.data.domain.Window
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.data.repository.reactive.ReactiveSortingRepository
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
 
 @Repository
-interface RoomRepository : JpaRepository<RoomEntity, Long> {
-    fun findFirst50ByOrderById(scrollPosition: ScrollPosition): Window<RoomEntity>
+interface RoomRepository : ReactiveSortingRepository<RoomEntity, Long>, ReactiveCrudRepository<RoomEntity, Long> {
+    fun findAllByIdNotNull(pageable: Pageable): Flux<RoomEntity>
 }

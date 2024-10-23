@@ -1,6 +1,6 @@
 package com.example.roomservice.controllers
 
-import com.example.common.dto.api.ScrollPositionDto
+import com.example.common.dto.api.Pagination
 import com.example.common.dto.business.RoomDto
 import com.example.common.exceptions.*
 import com.example.roomservice.dto.AddAccountRequest
@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import java.security.Principal
 
 @RestController
@@ -28,28 +31,28 @@ class RoomController(
     private val roomAccountManger: RoomAccountManager
 ) {
     @GetMapping("/rooms")
-    fun getAvailableRooms(@Valid scrollPositionDto: ScrollPositionDto): List<RoomDto> {
-        return roomManager.getAllRooms(scrollPositionDto)
+    fun getAvailableRooms(@Valid page: Pagination?): Flux<RoomDto> {
+        return roomManager.getRooms(page ?: Pagination())
     }
 
     @GetMapping("/rooms/{roomId}")
-    fun getRoomById(@PathVariable roomId: Long): RoomDto {
-        return roomManager.getRoom(roomId) ?: throw RoomNotFoundException(roomId)
+    fun getRoomById(@PathVariable roomId: Long): Mono<RoomDto> {
+        return roomManager.getRoom(roomId).switchIfEmpty(Mono.error(RoomNotFoundException(roomId)))
     }
 
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): RoomDto {
+    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, @RequestHeader("x-user-id") userId: Long): Mono<RoomDto> {
         return roomManager.createRoom(
             createRoomRequest.name,
-            principal.name.toLong(),
+            userId,
             createRoomRequest.capacity
         )
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, principal: Principal) {
-        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, principal.name.toLong())
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, @RequestHeader("x-user-id") userId: Long): Mono<Void> {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, userId)
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
@@ -58,9 +61,9 @@ class RoomController(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
-        principal: Principal
-    ) {
-        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, principal.name.toLong())
+        @RequestHeader("x-user-id") userId: Long
+    ): Mono<Void> {
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, userId)
     }
 
     @ExceptionHandler(RoomNotFoundException::class)

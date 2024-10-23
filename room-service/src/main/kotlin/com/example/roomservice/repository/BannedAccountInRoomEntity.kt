@@ -3,12 +3,10 @@ package com.example.roomservice.repository
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
-@Table(name = "room")
-data class RoomEntity(
+@Table(name = "banned_accounts")
+class BannedAccountInRoomEntity(
     @Id
-    val id: Long,
-    val name: String,
-    val hostId: Long,
-    val capacity: Int,
-    val currentGameId: Long
+    var id: Long,
+    var accountId: Long,
+    var roomId: Long
 )

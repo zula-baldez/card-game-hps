@@ -6,18 +6,15 @@ import jakarta.validation.constraints.Positive
 
 data class RoomDto(
     val id: Long,
-
     @field:NotBlank
     val name: String,
-
     @JsonProperty("host_id")
     val hostId: Long,
-
     @field:Positive
     val capacity: Int,
-    val players: List<AccountDto>,
+    val players: List<Long>, // TODO: make AccountDto
     @JsonProperty("current_game_id")
     val currentGameId: Long,
     @JsonProperty("banned_players")
-    val bannedPlayers: List<AccountDto> = listOf()
+    val bannedPlayers: List<Long> = listOf() // TODO: make AccountDto
 )

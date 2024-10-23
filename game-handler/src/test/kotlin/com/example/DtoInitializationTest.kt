@@ -4,7 +4,7 @@ import com.example.common.dto.api.Pagination
 import com.example.common.dto.api.ScrollPositionDto
 import com.example.common.dto.business.AccountDto
 import com.example.common.dto.business.RoomDto
-import com.example.gamehandlerservice.model.dto.AccountAction
+import com.example.common.dto.business.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.gamehandlerservice.model.dto.AccountActionRequest
 import com.example.gamehandlerservice.model.dto.FineDTO

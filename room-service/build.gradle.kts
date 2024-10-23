@@ -25,14 +25,13 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc:")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
-    implementation("org.springframework.security:spring-security-core:6.3.0")
-    implementation("org.springframework.security:spring-security-oauth2-client:6.3.3")
+    implementation("org.springframework.security:spring-security-web:")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
     implementation("org.springframework.security:spring-security-config:6.2.0")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
     implementation("org.liquibase:liquibase-core:4.22.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -45,8 +44,6 @@ dependencies {
     implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-
     implementation("org.springframework.security:spring-security-messaging:6.1.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -57,7 +54,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.postgresql:r2dbc-postgresql:")
+    implementation("org.postgresql:postgresql:")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
     testImplementation("org.assertj:assertj-core:3.17.2")
