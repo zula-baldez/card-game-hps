@@ -109,11 +109,11 @@ class RoomAccountManagerImpl(
         return bannedAccountInRoomRepository.findAllByRoomId(roomId).map { it.accountId }
     }
 
-    // TODO
-//    private fun sendAccountAction(accountAction: AccountAction, accountEntity: AccountEntity) {
-//        simpMessagingTemplate.convertAndSend(
-//            "/topic/accounts",
-//            AccountActionDTO(accountAction, accountEntity.id, accountEntity.name)
-//        )
-//    }
+   //
+   // private fun sendAccountAction(accountAction: AccountAction, accountEntity: AccountEntity) {
+   //     simpMessagingTemplate.convertAndSend(
+   //         "/topic/accounts",
+   //         AccountActionDTO(accountAction, accountEntity.id, accountEntity.name)
+   //     )
+   // }
 }

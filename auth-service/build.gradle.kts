@@ -45,8 +45,6 @@ dependencies {
     implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-
     implementation("org.springframework.security:spring-security-messaging:6.1.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

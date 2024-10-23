@@ -1,7 +1,7 @@
 package com.example.authservice
 
-import com.example.authservice.dto.AuthenticationResponse
-import com.example.authservice.dto.CredentialsRequest
+import com.example.common.client.AuthenticationResponse
+import com.example.common.client.CredentialsRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

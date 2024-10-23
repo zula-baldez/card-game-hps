@@ -1,4 +1,4 @@
-package com.example.authservice.dto
+package com.example.common.client
 
 data class AuthenticationResponse(val token: String, val id: Long) {
 }
