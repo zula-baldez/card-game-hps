@@ -1,6 +1,6 @@
 package com.example.personalaccount.model
 
-import com.example.common.dto.business.AccountDto
+import com.example.common.dto.personalaccout.business.AccountDto
 
 data class FriendshipDto(
     val id: Long,

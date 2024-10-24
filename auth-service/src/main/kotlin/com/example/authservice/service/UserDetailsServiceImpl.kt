@@ -1,7 +1,7 @@
 package com.example.authservice.service
 
 import com.example.authservice.database.UserRepo
-import com.example.authservice.util.Role
+import com.example.common.util.Role
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails

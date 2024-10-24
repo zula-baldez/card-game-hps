@@ -1,4 +1,4 @@
-package com.example.common.dto.business
+package com.example.common.dto.personalaccout.business
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.Min
@@ -13,6 +13,6 @@ data class AccountDto(
 
     @field:Min(0)
     val fines: Int,
-    @JsonProperty("room_id")
-    val roomId: Long?
+//    @JsonProperty("room_id")
+//    val roomId: Long?
 )

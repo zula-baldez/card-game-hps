@@ -3,17 +3,16 @@
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id              BIGINT,
+    id              BIGSERIAL,
     name            VARCHAR(255),
     password        VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS roles
 (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     role_name VARCHAR(255)
 );
-
 
 CREATE TABLE IF NOT EXISTS user_role
 (
@@ -22,6 +21,16 @@ CREATE TABLE IF NOT EXISTS user_role
     PRIMARY KEY (user_id, role_id)
 );
 
+INSERT INTO roles (role_name)
+VALUES
+    ('ADMIN'),
+    ('USER'),
+    ('SERVICE');
 
-CREATE SEQUENCE IF NOT EXISTS roles_id_seq;
-CREATE SEQUENCE IF NOT EXISTS users_id_seq;
+
+INSERT INTO users (name, password)
+VALUES
+    ('room-service', '$2a$10$ItpNLjKo6WV5vwTeqJ.yh.GwjipMGzPI7MF865uWbP572L1RRi7vG'),
+    ('personal-account', '$2a$10$t33jE.yelsRFDxmiyjOKT.mk.DdM2xogDVrdTtyEselq2jcC7Rr06'),
+    ('game-handler', '$2a$10$yUdMQdaGJV/py9.tUKN83.Hn.1qb2Y4sPhj6AInn1fUm7MAZ3aaVC');
+

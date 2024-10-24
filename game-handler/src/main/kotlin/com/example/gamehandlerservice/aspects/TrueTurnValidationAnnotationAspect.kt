@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.aspects
 
-import com.example.common.dto.business.AccountDto
+import com.example.common.dto.personalaccout.business.AccountDto
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect

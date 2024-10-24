@@ -1,4 +1,4 @@
-package com.example.roomservice.dto
+package com.example.common.dto.roomservice
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotNull

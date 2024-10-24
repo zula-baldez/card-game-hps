@@ -1,15 +1,7 @@
 package com.example.authservice.database
 
-import com.example.authservice.util.Role
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.SequenceGenerator
-import jakarta.persistence.Table
+import com.example.common.util.Role
+import jakarta.persistence.*
 import lombok.Data
 
 @Table(name = "roles")
@@ -18,8 +10,7 @@ import lombok.Data
 class RoleEntity {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_generator")
-    @SequenceGenerator(name = "role_id_generator", sequenceName = "roles_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
 
     @Column(name = "role_name")

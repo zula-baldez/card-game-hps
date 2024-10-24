@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.google.protobuf.gradle.*
 
 plugins {
-    id("org.springframework.boot") version "3.1.0"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
     id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm") version "1.8.21"
@@ -24,7 +24,7 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
 
-    implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
+    implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")

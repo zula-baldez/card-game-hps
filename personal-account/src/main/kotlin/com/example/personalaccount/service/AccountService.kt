@@ -5,5 +5,5 @@ import com.example.personalaccount.database.UserEntity
 
 interface AccountService {
     fun findByIdOrThrow(id: Long): AccountEntity
-    fun createAccountForUser(userEntity: UserEntity): AccountEntity
+    fun createAccountForUser(id: Long, name: String): AccountEntity
 }

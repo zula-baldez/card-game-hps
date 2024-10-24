@@ -1,4 +1,4 @@
-package com.example.roomservice.dto
+package com.example.common.dto.roomservice
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

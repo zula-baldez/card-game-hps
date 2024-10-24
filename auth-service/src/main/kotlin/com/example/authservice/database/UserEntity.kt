@@ -17,8 +17,7 @@ class UserEntity(
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-    @SequenceGenerator(name = "user_id_generator", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
     @ManyToMany(cascade = [CascadeType.MERGE], fetch = FetchType.EAGER)

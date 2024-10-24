@@ -1,4 +1,4 @@
-package com.example.common.dto.business
+package com.example.common.dto.personalaccout.business
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank

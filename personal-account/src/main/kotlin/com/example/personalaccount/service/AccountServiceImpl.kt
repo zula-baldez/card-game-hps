@@ -15,13 +15,13 @@ class AccountServiceImpl(
         return accountRepository.findByIdOrNull(id) ?: throw AccountNotFoundException(id)
     }
 
-    override fun createAccountForUser(userEntity: UserEntity): AccountEntity {
-        var account = accountRepository.findByIdOrNull(userEntity.id)
+    override fun createAccountForUser(id: Long, name: String): AccountEntity {
+        var account = accountRepository.findByIdOrNull(id)
 
         if (account == null) {
             account = AccountEntity(
-                id = userEntity.id ?: throw IllegalArgumentException("No id in user"),
-                name = userEntity.name ?: throw IllegalArgumentException("No name in user"),
+                id = id,
+                name = name,
                 fines = 0
             )
 

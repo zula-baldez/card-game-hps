@@ -1,4 +1,4 @@
-package com.example.common.dto.api
+package com.example.common.dto.personalaccout
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.data.domain.Pageable

@@ -1,6 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.common.dto.business.AccountAction
+import com.example.common.dto.personalaccout.business.AccountAction
 import com.example.common.exceptions.*
 import com.example.roomservice.repository.*
 import org.springframework.context.annotation.Scope

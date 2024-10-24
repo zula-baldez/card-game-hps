@@ -1,5 +1,6 @@
 package com.example.personalaccount.service
 
+import com.example.common.dto.personalaccout.Pagination
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.business.FineDTO
 import com.example.personalaccount.database.AccountRepository
@@ -11,7 +12,6 @@ import com.example.personalaccount.model.FriendshipDto
 import com.example.personalaccount.model.FriendshipStatus
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
-import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,6 +20,7 @@ class PersonalAccountManagerImpl(
     val friendshipRepository: FriendshipRepository,
     val accountService: AccountService,
     val simpMessagingTemplate: SimpMessagingTemplate
+    val objectMapper: ObjectMapper
 ) : PersonalAccountManager {
 
     /**

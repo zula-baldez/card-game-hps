@@ -1,4 +1,4 @@
-import com.example.authservice.util.Role
+import com.example.common.util.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.Message

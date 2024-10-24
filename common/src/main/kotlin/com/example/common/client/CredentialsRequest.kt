@@ -7,4 +7,5 @@ data class CredentialsRequest(
     val username : String,
 
     @NotBlank
-    val password : String)
+    val password : String
+)

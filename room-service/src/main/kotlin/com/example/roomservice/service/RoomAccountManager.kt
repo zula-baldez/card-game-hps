@@ -1,6 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.common.dto.business.AccountAction
+import com.example.common.dto.personalaccout.business.AccountAction
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 

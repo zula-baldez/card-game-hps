@@ -11,8 +11,16 @@ spring:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:KfvYuJQ8}
 
+service:
+  robot:
+    username:
+      room-service
+    password:
+      qweqweqwe
+
+
 server:
-  port: 8082
+  port: 8084
 eureka:
   client:
     serviceUrl:

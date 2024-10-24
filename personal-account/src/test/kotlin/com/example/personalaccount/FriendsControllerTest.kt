@@ -2,6 +2,7 @@ package com.example.personalaccount
 
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.business.FineDTO
+import com.example.common.dto.personalaccout.Pagination
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.controllers.FriendsController
 import com.example.personalaccount.database.AccountEntity

@@ -1,12 +1,12 @@
 package com.example.roomservice
 
 import com.example.common.dto.api.ScrollPositionDto
-import com.example.common.dto.business.RoomDto
+import com.example.common.dto.personalaccout.business.RoomDto
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.roomservice.controllers.RoomController
-import com.example.roomservice.dto.AddAccountRequest
-import com.example.roomservice.dto.CreateRoomRequest
-import com.example.roomservice.dto.RemoveAccountRequest
+import com.example.common.dto.roomservice.AddAccountRequest
+import com.example.common.dto.roomservice.CreateRoomRequest
+import com.example.common.dto.roomservice.RemoveAccountRequest
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.Assertions.assertEquals

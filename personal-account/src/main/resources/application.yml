@@ -22,7 +22,14 @@ rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
 server:
-  port: 8090
+  port: 8083
+
+service:
+  robot:
+    username:
+      personal-account
+    password:
+      zxczxczxc
 
 websocket:
   connect-url: /
