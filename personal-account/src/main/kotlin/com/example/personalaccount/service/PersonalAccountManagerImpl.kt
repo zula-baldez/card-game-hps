@@ -19,7 +19,7 @@ class PersonalAccountManagerImpl(
     val accountRepository: AccountRepository,
     val friendshipRepository: FriendshipRepository,
     val accountService: AccountService,
-    val simpMessagingTemplate: SimpMessagingTemplate
+    //val simpMessagingTemplate: SimpMessagingTemplate,
     val objectMapper: ObjectMapper
 ) : PersonalAccountManager {
 
@@ -157,15 +157,15 @@ class PersonalAccountManagerImpl(
             pagination.toPageable()
         ).map { it.toDto() }
     }
-
-    private fun sendAddFine(id: Long) {
-        simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
-    }
+//
+//    private fun sendAddFine(id: Long) {
+//        simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
+//    }
 
     override fun addFine(accountId: Long) {
         val account = accountService.findByIdOrThrow(accountId)
         account.fines++
         accountRepository.save(account)
-        sendAddFine(accountId)
+        //sendAddFine(accountId)
     }
 }

@@ -12,9 +12,9 @@ data class RoomDto(
     val hostId: Long,
     @field:Positive
     val capacity: Int,
-    val players: List<Long>, // TODO: make AccountDto
+    val players: List<AccountDto>,
     @JsonProperty("current_game_id")
     val currentGameId: Long,
     @JsonProperty("banned_players")
-    val bannedPlayers: List<Long> = listOf() // TODO: make AccountDto
+    val bannedPlayers: List<AccountDto> = listOf()
 )

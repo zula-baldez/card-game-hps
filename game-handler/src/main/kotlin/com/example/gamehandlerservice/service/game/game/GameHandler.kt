@@ -1,10 +1,10 @@
 package com.example.gamehandlerservice.service.game.game
 
+import com.example.common.dto.personalaccout.business.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
-import com.example.personalaccount.database.AccountEntity
 
 interface GameHandler {
     var gameData: GameData
@@ -18,7 +18,7 @@ interface GameHandler {
         stateStageMachineHandler: StageStateMachineHandler
     )
 
-    fun turningPlayer(): AccountEntity?
+    fun turningPlayer(): AccountDto?
     fun changeTurn()
     fun startGame()
     fun getStage(): Stage

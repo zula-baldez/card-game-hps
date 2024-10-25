@@ -1,12 +1,12 @@
 package com.example.gamehandlerservice.service.game.cards
 
+import com.example.common.dto.personalaccout.business.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
-import com.example.personalaccount.database.AccountEntity
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +34,7 @@ class CardMovementHandlerImpl(
         }
     }
 
-    override fun giveUsersBasicCards(players: List<AccountEntity>, gameHandler: GameHandler) {
+    override fun giveUsersBasicCards(players: List<AccountDto>, gameHandler: GameHandler) {
         players.forEach { account -> gameHandler.gameData.userCards[account.id] = LinkedHashSet() }
         gameHandler.gameData.userCards[VirtualPlayers.TABLE.id] = LinkedHashSet()
 

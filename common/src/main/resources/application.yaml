@@ -4,16 +4,12 @@ feign:
       room-service:
         connectTimeout: 5000
         readTimeout: 5000
-        loggerLevel: basic
+        loggerLevel: debug
         requestInterceptors:
           - com.example.common.interceptor.AuthRequestInterceptor
-
-feign:
-  client:
-    config:
       personal-account:
         connectTimeout: 5000
         readTimeout: 5000
-        loggerLevel: basic
+        loggerLevel: debug
         requestInterceptors:
           - com.example.common.interceptor.AuthRequestInterceptor

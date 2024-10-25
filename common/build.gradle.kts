@@ -53,8 +53,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework:spring-websocket:6.0.10")
-    implementation("org.springframework:spring-messaging:6.0.10")
+    implementation("org.springframework:spring-websocket:6.1.14")
+    implementation("org.springframework:spring-messaging:6.1.14")
 
     api("io.grpc:grpc-kotlin-stub:1.2.1")
     api("io.grpc:grpc-stub:1.44.0")

@@ -1,12 +1,12 @@
 package com.example.gamehandlerservice.service.game.game
 
+import com.example.common.client.RoomServiceClient
+import com.example.common.dto.personalaccout.business.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.AccountEntity
-import com.example.roomservice.repository.RoomRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,12 +14,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
-import kotlin.jvm.optionals.getOrNull
 
 @Component
 @Scope("prototype")
 class GameHandlerImpl(
-    val roomRepository: RoomRepository
+    val roomServiceClient: RoomServiceClient
 ) : GameHandler {
 
     override lateinit var gameData: GameData
@@ -32,18 +31,18 @@ class GameHandlerImpl(
         roomId: Long,
         stateStageMachineHandler: StageStateMachineHandler
     ) {
-        val roomEntity = roomRepository.findById(roomId).getOrNull() ?: throw IllegalArgumentException()
+        val room = roomServiceClient.findById(roomId)
         gameData = GameData(
             id,
             roomId,
             null,
-            CyclicQueue(roomEntity.players.shuffled())
+            CyclicQueue(room.players.shuffled())
         )
 
         this.stateMachine = stateStageMachineHandler
     }
 
-    override fun turningPlayer(): AccountEntity = gameData.playersTurnQueue.current()
+    override fun turningPlayer(): AccountDto = gameData.playersTurnQueue.current()
 
     override fun changeTurn() {
         gameData.playersTurnQueue.next()
@@ -55,8 +54,8 @@ class GameHandlerImpl(
     }
 
     override fun startGame() {
-        val roomEntity = roomRepository.findById(gameData.roomId).getOrNull() ?: throw IllegalArgumentException()
-        gameData.playersTurnQueue = CyclicQueue(roomEntity.players.shuffled())
+        val room = roomServiceClient.findById(gameData.roomId)
+        gameData.playersTurnQueue = CyclicQueue(room.players.shuffled())
         stateMachine.nextStage(this)
         changeTurn()
         restartTimer()

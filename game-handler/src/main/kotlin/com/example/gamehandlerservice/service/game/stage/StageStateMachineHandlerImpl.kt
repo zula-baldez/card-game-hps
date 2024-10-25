@@ -1,12 +1,12 @@
 package com.example.gamehandlerservice.service.game.stage
 
+import com.example.common.client.PersonalAccountClient
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.cards.CardMovementHandler
 import com.example.gamehandlerservice.service.game.drop.DropStrategy
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.service.PersonalAccountManager
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 class StageStateMachineHandlerImpl(
     dropHandlersList: List<DropStrategy>,
     eventHandlersList: List<StageEventHandler>,
-    val accountManager: PersonalAccountManager,
+    val personalAccountClient: PersonalAccountClient,
     val cardHandler: CardMovementHandler
 ) : StageStateMachineHandler {
     override var stage: Stage = Stage.WAITING
@@ -42,7 +42,7 @@ class StageStateMachineHandlerImpl(
 
         val dropResult = dropHandler.validateDrop(cardRequest, gameHandler)
         if (dropResult.needsFine) {
-            accountManager.addFine(gameHandler.gameData.playersTurnQueue.current().id)
+            personalAccountClient.addFine(gameHandler.gameData.playersTurnQueue.current().id)
         }
         if (dropResult.changeTurn) {
             gameHandler.changeTurn()

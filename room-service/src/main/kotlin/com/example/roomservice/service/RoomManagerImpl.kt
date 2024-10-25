@@ -1,5 +1,6 @@
 package com.example.roomservice.service
 
+import com.example.common.client.PersonalAccountClient
 import com.example.common.dto.personalaccout.Pagination
 import com.example.common.dto.personalaccout.business.RoomDto
 import com.example.roomservice.repository.RoomEntity
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono
 class RoomManagerImpl(
     private val roomRepository: RoomRepository,
     private val roomAccountManager: RoomAccountManager,
+    private val personalAccountClient: PersonalAccountClient
     // private val gameHandlerRegistry: GameHandlerRegistry
 ) : RoomManager {
     private fun makeRoomDto(roomEntity: RoomEntity): Mono<RoomDto> {
@@ -24,8 +26,9 @@ class RoomManagerImpl(
                     name = roomEntity.name,
                     capacity = roomEntity.capacity,
                     currentGameId = roomEntity.currentGameId,
-                    players = result.t1,
-                    bannedPlayers = result.t2)
+                    players = result.t1.map { playerId -> personalAccountClient.getAccountById(playerId) },
+                    bannedPlayers = result.t2.map { playerId -> personalAccountClient.getAccountById(playerId) }
+                )
             }
     }
 

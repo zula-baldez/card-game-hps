@@ -9,15 +9,6 @@ interface PersonalAccountManager {
     fun addFriend(accountId: Long, friendId: Long)
     fun removeFriend(accountId: Long, friendId: Long)
     fun getAllFriends(accountId: Long, pagination: Pagination): Page<FriendshipDto>?
-    //fun addFine(accountId: Long)
+    fun addFine(accountId: Long)
 }
 
-data class AddFriendRequest(
-    val accountId: Long, val friendId: Long
-)
-
-data class RemoveFriendRequest(
-    val accountId: Long, val friendId: Long
-)
-
-data class AllFriendsRequest()
