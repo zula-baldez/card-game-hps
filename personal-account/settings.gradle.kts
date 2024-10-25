@@ -1,1 +1,1 @@
-rootProject.name = "personal-account"
+rootProject.name = "card-game-hps"

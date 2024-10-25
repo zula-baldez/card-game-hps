@@ -2,21 +2,41 @@ version: "3.9"
 
 services:
   eureka-server:
-    build:
-      context: ./eureka-server
-      dockerfile: Dockerfile
+    container_name: eureka-server
+    restart: always
+    build: ./eureka-server/
+    image: eureka-server
     ports:
       - "8761:8761"
     environment:
-      EUREKA_URL: http://eureka-server:8761/eureka
-  db:
+      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+
+  personal-account:
+    ports:
+      - "8090:8090"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-personal-account
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    depends_on:
+      - eureka-server
+      - db-personal-account
+    build:
+      context: ./personal-account
+      dockerfile: ./Dockerfile
+      platforms:
+        - "linux/amd64"
+
+  db-personal-account:
     image: postgres:15.2
     volumes:
       - dbvolume:/var/lib/postgresql
     ports:
-      - "5432:5432"
+      - "5433:5433"
     expose:
-      - 5432
+      - 5433
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
@@ -25,37 +45,5 @@ services:
       restart_policy:
         condition: on-failure
 
-  personal-account:
-    restart: always
-    container_name: personal-account
-    depends_on:
-      - db
-      - eureka-server
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: KfvYuJQ8
-      EUREKA_URL: http://eureka-server:8761/eureka
-    build:
-          context: ./personal-account
-          dockerfile: ./Dockerfile
-          platforms:
-            - "linux/amd64"
-#  app:
-#    ports:
-#      - "8082:8082"
-#    environment:
-#      POSTGRES_DB: postgres
-#      POSTGRES_HOST: db
-#      POSTGRES_PORT: 5432
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: KfvYuJQ8
-#    build:
-#      context: ./
-#      dockerfile: ./Dockerfile
-#      platforms:
-#        - "linux/amd64"
 volumes:
   dbvolume:

@@ -1,1 +1,1 @@
-rootProject.name = "room-service"
+rootProject.name = "card-game-hps"
