@@ -19,11 +19,14 @@ repositories {
     mavenCentral()
 }
 
+extra["springCloudVersion"] = "2023.0.0"
+
 dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc:")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc:")
@@ -69,6 +72,12 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.20.1")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions {
