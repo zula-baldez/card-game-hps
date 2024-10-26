@@ -1,4 +1,4 @@
-package com.example
+    package com.example
 
 import com.example.common.RsaKeyProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication

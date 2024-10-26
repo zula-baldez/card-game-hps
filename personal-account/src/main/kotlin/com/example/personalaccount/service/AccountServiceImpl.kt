@@ -3,7 +3,6 @@ package com.example.personalaccount.service
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
-import com.example.personalaccount.database.UserEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 

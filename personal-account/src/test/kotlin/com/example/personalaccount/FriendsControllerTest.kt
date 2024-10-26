@@ -1,6 +1,5 @@
 package com.example.personalaccount
 
-import com.example.common.dto.api.Pagination
 import com.example.common.dto.business.FineDTO
 import com.example.common.dto.personalaccout.Pagination
 import com.example.common.exceptions.AccountNotFoundException
@@ -65,8 +64,7 @@ internal class FriendsControllerTest {
         friendsManagerImpl = PersonalAccountManagerImpl(
             accountRepositoryMock,
             friendshipRepositoryMock,
-            accountServiceMock,
-            messageTemplateMock
+            accountServiceMock
         )
         friendsController = FriendsController(friendsManagerImpl)
         principal = mock<Principal> {

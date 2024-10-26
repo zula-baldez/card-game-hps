@@ -41,8 +41,7 @@ class PersonalAccountManagerImplTest {
         personalAccountManager = PersonalAccountManagerImpl(
             accountRepository,
             friendshipRepository,
-            accountService,
-            simpMessagingTemplate
+            accountService
         )
         user = AccountEntity(
             id = 1L,

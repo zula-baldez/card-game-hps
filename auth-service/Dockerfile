@@ -7,10 +7,14 @@ RUN $JAVA_HOME/bin/jlink \
 	 --compress=2 \
 	 --output /javaruntime
 WORKDIR /app
-COPY ./build.gradle.kts ./build.gradle.kts
+
 COPY ./settings.gradle.kts ./settings.gradle.kts
-RUN gradle build -x test | exit 0
-COPY ./src src
+COPY ./auth-service/build.gradle.kts ./auth-service/build.gradle.kts
+COPY ./auth-service/src ./auth-service/src
+COPY common ./common
+
+#RUN cd auth-service; gradle build -x test | exit 0
+
 RUN gradle build -x test
 
 FROM alpine:latest

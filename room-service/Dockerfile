@@ -8,7 +8,6 @@ RUN $JAVA_HOME/bin/jlink \
 	 --output /javaruntime
 WORKDIR /app
 COPY ./build.gradle.kts ./build.gradle.kts
-COPY ./settings.gradle.kts ./settings.gradle.kts
 RUN gradle build -x test | exit 0
 COPY ./src src
 RUN gradle build -x test

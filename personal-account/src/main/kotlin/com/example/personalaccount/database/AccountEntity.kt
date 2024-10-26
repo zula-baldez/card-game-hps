@@ -1,7 +1,6 @@
 package com.example.personalaccount.database
 
-import com.example.common.dto.business.AccountDto
-import com.example.roomservice.repository.RoomEntity
+import com.example.common.dto.personalaccout.business.AccountDto
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.PositiveOrZero
@@ -28,7 +27,7 @@ class AccountEntity(
 ) {
     fun toDto(): AccountDto {
         return AccountDto(
-            id?: 0,
+            id,
             name,
             fines
         )

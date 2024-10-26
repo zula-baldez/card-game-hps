@@ -11,7 +11,73 @@ services:
     environment:
       - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
 
-  db1:
+  personal-account:
+    ports:
+      - "8083:8083"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-personal-account
+      POSTGRES_PORT: 5434
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    depends_on:
+      - eureka-server
+      - db-personal-account
+    build:
+#      context: ./personal-account
+      dockerfile: ./personal-account/Dockerfile
+#      platforms:
+#        - "linux/amd64"
+
+  auth-service:
+    ports:
+      - "8081:8081"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-auth-service
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    depends_on:
+      - eureka-server
+      - db-personal-account
+    build:
+#      context: ./auth-service
+      dockerfile: ./auth-service/Dockerfile
+
+  game-handler:
+    ports:
+      - "8082:8082"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-game-handler
+      POSTGRES_PORT: 5433
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    depends_on:
+      - eureka-server
+      - db-game-handler
+    build:
+#      context: ./room-service
+      dockerfile: ./game-handler/Dockerfile
+
+  room-service:
+    ports:
+      - "8084:8084"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-room-service
+      POSTGRES_PORT: 5435
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+    depends_on:
+      - eureka-server
+      - db-room-service
+    build:
+#      context: ./room-service
+      dockerfile: ./room-service/Dockerfile
+
+  db-auth-service:
     image: postgres:15.2
     volumes:
       - dbvolume:/var/lib/postgresql
@@ -26,7 +92,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-  db2:
+
+  db-game-handler:
     image: postgres:15.2
     volumes:
       - dbvolume:/var/lib/postgresql
@@ -41,7 +108,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-  db3:
+  db-personal-account:
     image: postgres:15.2
     volumes:
       - dbvolume:/var/lib/postgresql
@@ -56,7 +123,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-  db4:
+  db-room-service:
     image: postgres:15.2
     volumes:
       - dbvolume:/var/lib/postgresql
@@ -72,56 +139,5 @@ services:
       restart_policy:
         condition: on-failure
 
-  personal-account:
-    ports:
-      - "8090:8090"
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_HOST: db-personal-account
-      POSTGRES_PORT: 5433
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: KfvYuJQ8
-    depends_on:
-      - eureka-server
-      - db-personal-account
-    build:
-      context: ./personal-account
-      dockerfile: ./Dockerfile
-      platforms:
-        - "linux/amd64"
-
-#personal-account:
-#  ports:
-#    - "8090:8090"
-#  environment:
-#    POSTGRES_DB: postgres
-#    POSTGRES_HOST: db-personal-account
-#    POSTGRES_PORT: 5433
-#    POSTGRES_USER: postgres
-#    POSTGRES_PASSWORD: KfvYuJQ8
-#  depends_on:
-#    - eureka-server
-#    - db-personal-account
-#  build:
-#    context: ./personal-account
-#    dockerfile: ./Dockerfile
-#    platforms:
-#      - "linux/amd64"
-
-
-#  app:
-#    ports:
-#      - "8082:8082"
-#    environment:
-#      POSTGRES_DB: postgres
-#      POSTGRES_HOST: db
-#      POSTGRES_PORT: 5432
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: KfvYuJQ8
-#    build:
-#      context: ./
-#      dockerfile: ./Dockerfile
-##      platforms:
-##        - "linux/amd64"
 volumes:
   dbvolume:

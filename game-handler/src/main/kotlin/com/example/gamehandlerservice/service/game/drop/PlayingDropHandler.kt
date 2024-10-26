@@ -15,7 +15,7 @@ class PlayingDropHandler : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        if (request.card == gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.last) {
+        if (request.card == gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.last()) {
             return CardDropResult.valid
         }
         return CardDropResult.invalid

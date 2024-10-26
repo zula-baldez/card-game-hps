@@ -1,6 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
+
 plugins {
+
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
     id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
@@ -79,4 +82,17 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+subprojects {
+    if (name != "auth-service") {
+        tasks.named("bootJar") {
+            enabled = false
+        }
+
+        tasks.named("jar") {
+            enabled = true
+        }
+    }
 }

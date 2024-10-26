@@ -1,5 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+import org.gradle.api.tasks.bundling.Jar
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+val jar: Jar by tasks
+val bootJar: BootJar by tasks
+
+bootJar.enabled = false
+jar.enabled = true
+
+
+
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"

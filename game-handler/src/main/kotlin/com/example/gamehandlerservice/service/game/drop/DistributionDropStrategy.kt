@@ -19,7 +19,7 @@ class DistributionDropStrategy : DropStrategy {
         gameHandler: GameHandler
     ): CardDropResult {
         return if (gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.size == 1) {
-            gameHandler.gameData.trump = gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.first?.suit
+            gameHandler.gameData.trump = gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.first()?.suit
             CardDropResult(
                 changeTurn = true,
                 valid = true,

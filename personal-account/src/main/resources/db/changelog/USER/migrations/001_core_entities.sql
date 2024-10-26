@@ -9,16 +9,6 @@ CREATE SEQUENCE IF NOT EXISTS room_account_id_seq;
 CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
 
 
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT PRIMARY KEY DEFAULT nextval('users_id_seq'),
-    name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS room_account
-(
-    id   BIGINT PRIMARY KEY DEFAULT nextval ('room_account_id_seq'),
-    name VARCHAR(255) NOT NULL
-);
 
 
 CREATE TABLE IF NOT EXISTS accounts
@@ -26,8 +16,7 @@ CREATE TABLE IF NOT EXISTS accounts
     id              BIGINT PRIMARY KEY DEFAULT nextval ('account_id_seq'),
     name            VARCHAR(255) NOT NULL,
     fines           INT CHECK (fines >= 0),
-    current_room_id BIGINT,
-    FOREIGN KEY (current_room_id) REFERENCES room_account (id) ON DELETE SET NULL
+    current_room_id BIGINT
 );
 
 
