@@ -17,7 +17,7 @@ services:
     environment:
       POSTGRES_DB: postgres
       POSTGRES_HOST: db-personal-account
-      POSTGRES_PORT: 5434
+      POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
     depends_on:
@@ -51,7 +51,7 @@ services:
     environment:
       POSTGRES_DB: postgres
       POSTGRES_HOST: db-game-handler
-      POSTGRES_PORT: 5433
+      POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
     depends_on:
@@ -67,7 +67,7 @@ services:
     environment:
       POSTGRES_DB: postgres
       POSTGRES_HOST: db-room-service
-      POSTGRES_PORT: 5435
+      POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
     depends_on:
