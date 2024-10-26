@@ -1,6 +1,23 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+subprojects {
+    if (name != "auth-service") {
+        tasks.named("bootJar") {
+            enabled = false
+        }
 
+        tasks.named("jar") {
+            enabled = true
+        }
+    }
+}
+tasks.named("bootJar") {
+    enabled = true
+}
+
+tasks.named("jar") {
+    enabled = false
+}
 
 plugins {
 
@@ -84,15 +101,3 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-
-subprojects {
-    if (name != "auth-service") {
-        tasks.named("bootJar") {
-            enabled = false
-        }
-
-        tasks.named("jar") {
-            enabled = true
-        }
-    }
-}

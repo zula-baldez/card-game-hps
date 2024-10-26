@@ -1,5 +1,25 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+subprojects {
+    if (name != "auth-service") {
+        tasks.named("bootJar") {
+            enabled = false
+        }
+
+        tasks.named("jar") {
+            enabled = true
+        }
+    }
+}
+tasks.named("bootJar") {
+    enabled = true
+}
+
+tasks.named("jar") {
+    enabled = false
+}
+
+
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"

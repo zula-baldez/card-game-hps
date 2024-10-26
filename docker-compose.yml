@@ -40,7 +40,7 @@ services:
       POSTGRES_PASSWORD: KfvYuJQ8
     depends_on:
       - eureka-server
-      - db-personal-account
+      - db-auth-service
     build:
 #      context: ./auth-service
       dockerfile: ./auth-service/Dockerfile
@@ -79,8 +79,8 @@ services:
 
   db-auth-service:
     image: postgres:15.2
-    volumes:
-      - dbvolume:/var/lib/postgresql
+#    volumes:
+#      - dbvolume-auth-service:/var/lib/postgresql
     ports:
       - "5432:5432"
     expose:
@@ -95,8 +95,8 @@ services:
 
   db-game-handler:
     image: postgres:15.2
-    volumes:
-      - dbvolume:/var/lib/postgresql
+#    volumes:
+#      - dbvolume-game-handler:/var/lib/postgresql
     ports:
       - "5433:5432"
     expose:
@@ -108,10 +108,11 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+
   db-personal-account:
     image: postgres:15.2
-    volumes:
-      - dbvolume:/var/lib/postgresql
+#    volumes:
+#      - dbvolume:/var/lib/postgresql
     ports:
       - "5434:5432"
     expose:
@@ -125,8 +126,8 @@ services:
         condition: on-failure
   db-room-service:
     image: postgres:15.2
-    volumes:
-      - dbvolume:/var/lib/postgresql
+#    volumes:
+#      - dbvolume:/var/lib/postgresql
     ports:
       - "5435:5432"
     expose:

@@ -7,10 +7,14 @@ RUN $JAVA_HOME/bin/jlink \
 	 --compress=2 \
 	 --output /javaruntime
 WORKDIR /app
-COPY ./build.gradle.kts ./build.gradle.kts
+
 COPY ./settings.gradle.kts ./settings.gradle.kts
-RUN gradle build -x test | exit 0
-COPY ./src src
+COPY ./game-handler/build.gradle.kts ./game-handler/build.gradle.kts
+COPY ./game-handler/src ./game-handler/src
+COPY common ./common
+
+#RUN cd game-handler; gradle build -x test | exit 0
+
 RUN gradle build -x test
 
 FROM alpine:latest
@@ -18,6 +22,6 @@ FROM alpine:latest
 ENV JAVA_HOME=/jre
 ENV PATH "${JAVA_HOME}/bin:${PATH}"
 COPY --from=builder /javaruntime $JAVA_HOME
-COPY --from=builder /app/build/libs/card-game-hps-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=builder /app/game-handler/build/libs/game-handler-0.0.1-SNAPSHOT.jar /app.jar
 
 CMD ["java", "-jar", "/app.jar"]
