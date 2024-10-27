@@ -20,6 +20,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
       - db-personal-account
@@ -38,6 +39,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
       - db-auth-service
@@ -54,6 +56,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
       - db-game-handler
@@ -70,12 +73,25 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     depends_on:
       - eureka-server
       - db-room-service
     build:
 #      context: ./room-service
       dockerfile: ./room-service/Dockerfile
+
+  gateway-server:
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+    build:
+      #      context: ./room-service
+      dockerfile: ./gateway-server/Dockerfile
+
 
   db-auth-service:
     image: postgres:15.2
@@ -124,6 +140,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+
   db-room-service:
     image: postgres:15.2
 #    volumes:
@@ -140,5 +157,5 @@ services:
       restart_policy:
         condition: on-failure
 
-volumes:
-  dbvolume:
+#volumes:
+#  dbvolume:

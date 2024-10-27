@@ -44,6 +44,8 @@ extra["springCloudVersion"] = "2023.0.0"
 dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
+
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation ("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")

@@ -11,5 +11,7 @@ include(
     "personal-account",
     "room-service",
     "game-handler",
-    "eureka-server"
+    "eureka-server",
+    "gateway-server"
+    
 )
