@@ -10,7 +10,7 @@ import org.testcontainers.containers.wait.strategy.Wait
 import java.lang.Thread.sleep
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = ["spring.config.location=classpath:application.yml"])
+@TestPropertySource(properties = ["spring.config.location=classpath:application.yaml"])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class E2EDbInit {
     companion object {

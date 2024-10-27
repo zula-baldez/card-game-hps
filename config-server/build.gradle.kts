@@ -16,8 +16,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
-
     implementation("org.springframework.cloud:spring-cloud-config-server:4.1.3")
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")

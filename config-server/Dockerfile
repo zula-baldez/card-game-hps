@@ -12,8 +12,6 @@ COPY ./settings.gradle.kts ./settings.gradle.kts
 COPY ./config-server/build.gradle.kts ./config-server/build.gradle.kts
 COPY ./config-server/src ./config-server/src
 
-#RUN cd config-server; gradle build -x test | exit 0
-
 RUN gradle build -x test
 
 FROM alpine:latest

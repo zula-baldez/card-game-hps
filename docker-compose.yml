@@ -6,10 +6,14 @@ services:
     restart: always
     build: ./eureka-server/
     image: eureka-server
+    depends_on:
+      - config-server
     ports:
       - "8761:8761"
     environment:
       - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+      - "CONFIG_SERVER_URL=http://config-server:8090"
+
 
   personal-account:
     ports:
@@ -21,11 +25,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
       - eureka-server
       - db-personal-account
+      - config-server
+
     build:
-#      context: ./personal-account
       dockerfile: ./personal-account/Dockerfile
 #      platforms:
 #        - "linux/amd64"
@@ -40,11 +46,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
       - eureka-server
       - db-auth-service
+      - config-server
     build:
-#      context: ./auth-service
       dockerfile: ./auth-service/Dockerfile
 
   game-handler:
@@ -57,11 +64,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
       - eureka-server
       - db-game-handler
+      - config-server
     build:
-#      context: ./room-service
       dockerfile: ./game-handler/Dockerfile
 
   room-service:
@@ -74,11 +82,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KfvYuJQ8
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
       - eureka-server
       - db-room-service
+      - config-server
     build:
-#      context: ./room-service
       dockerfile: ./room-service/Dockerfile
 
   gateway-server:
@@ -86,11 +95,19 @@ services:
       - "8085:8085"
     depends_on:
       - eureka-server
+      - config-server
     environment:
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     build:
-      #      context: ./room-service
       dockerfile: ./gateway-server/Dockerfile
+
+  config-server:
+    ports:
+      - "8090:8090"
+    build:
+      dockerfile: ./config-server/Dockerfile
+
 
 
   db-auth-service:

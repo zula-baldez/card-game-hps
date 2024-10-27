@@ -1,55 +1,5 @@
 spring:
-  liquibase:
-    enabled: true
-
   application:
     name: personal-account
-
-  datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5434}/${POSTGRES_DB:postgres}
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:KfvYuJQ8}
-    driverClassName: org.postgresql.Driver
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-
-  web:
-    resources:
-      add-mappings: false
-
-server:
-  port: 8083
-
-service:
-  robot:
-    username:
-      personal-account
-    password:
-      zxczxczxc
-
-feign:
-  client:
-    config:
-      room-service:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: debug
-        requestInterceptors:
-          - com.example.common.interceptor.AuthRequestInterceptor
-      personal-account:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: debug
-        requestInterceptors:
-          - com.example.common.interceptor.AuthRequestInterceptor
-
-rsa:
-  public-key: classpath:certs/public.pem
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  config:
+    import: configserver:${CONFIG_SERVER_URL:http://localhost:8090}/
