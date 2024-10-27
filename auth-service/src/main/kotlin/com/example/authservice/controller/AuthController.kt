@@ -7,6 +7,7 @@ import com.example.common.dto.authservice.GenerateServiceTokenRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,6 +32,7 @@ class AuthController(
     }
 
     @PostMapping("/auth/service-token", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PreAuthorize("hasAuthority('SCOPE_SERVICE') and @AuthUtils.jwtClaimEquals(principal, 'name', #serviceTokenRequest.component2())")
     fun generateTokenForService(@RequestBody @Valid serviceTokenRequest: GenerateServiceTokenRequest): AuthenticationResponse {
         return userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
     }
