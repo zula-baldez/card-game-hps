@@ -34,13 +34,12 @@ class UserService(
     }
 
     fun login(username: String, password: String): AuthenticationResponse {
-        val pass = encoder.encode(password)
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 
-        if (user.password == pass) {
+        if (encoder.matches(password, user.password)) {
             val token = tokenService.generateAccessToken(user, "user-token")
             return AuthenticationResponse(token, user.id!!)
-        } else throw BadCredentialsException("")
+        } else throw BadCredentialsException("Incorrect password")
     }
 
     fun generateServiceTokenForUser(userId: Long, service: String): AuthenticationResponse {

@@ -16,11 +16,13 @@ spring:
     hibernate:
       ddl-auto: validate
 
-jwt:
-  secret: classpath:certs/private.pem
+  web:
+    resources:
+      add-mappings: false
+
 rsa:
-  private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
 server:
   port: 8083
 

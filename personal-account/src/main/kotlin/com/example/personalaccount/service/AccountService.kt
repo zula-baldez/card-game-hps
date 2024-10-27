@@ -6,6 +6,5 @@ import com.example.personalaccount.database.AccountEntity
 interface AccountService {
     fun findByIdOrThrow(id: Long): AccountEntity
     fun createAccountForUser(createAccountDto: CreateAccountDto): AccountEntity
-
     fun updateAccountRoom(userId: Long, roomId: Long?): AccountEntity
 }

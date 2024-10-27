@@ -5,4 +5,4 @@ import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 
 @ConfigurationProperties("rsa")
-class RsaKeyProperties(val publicKey : RSAPublicKey, val privateKey: RSAPrivateKey)
+class RsaKeyProperties(val publicKey : RSAPublicKey, val privateKey: RSAPrivateKey?)

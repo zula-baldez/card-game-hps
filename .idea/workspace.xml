@@ -5,24 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/UpdateAccountRoomRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/security/SecurityConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/resources/certs/public.pem" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/aspects/HostOnlyAnnotationAspect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/aspects/HostOnlyAnnotationAspect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/RoomDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/roomservice/RoomDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/AccountAndGameHandlerStompArgumentResolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/AccountAndGameHandlerStompArgumentResolver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/AuthServiceSecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/certs/public.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RsaKeyProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RsaKeyProperties.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/SecurityConfig.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/certs/private.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/certs/public.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/config/SecurityConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/certs/private.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/certs/public.pem" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,8 +59,8 @@
         <option value="Interface" />
         <option value="Kotlin Interface" />
         <option value="Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -136,7 +134,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.AuthServiceApplication.executor": "Run",
     "Spring Boot.EurekaServerApplication.executor": "Run",
-    "Spring Boot.PersonalAccountApplication.executor": "Run",
+    "Spring Boot.PersonalAccountApplication.executor": "Debug",
     "Spring Boot.RoomServiceApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
@@ -180,16 +178,17 @@
       <recent name="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/common/src/main/resources" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common" />
       <recent name="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.common.security" />
       <recent name="com.example.common.dto.roomservice" />
       <recent name="com.example.common.dto.personalaccout" />
       <recent name="com.example.common.dto.api" />
       <recent name="com.example.common.dto.authservice" />
-      <recent name="com.example.common.dto" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.example.personalaccount.config" />

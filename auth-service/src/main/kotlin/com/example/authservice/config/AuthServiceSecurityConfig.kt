@@ -1,6 +1,5 @@
 package com.example.authservice.config
 
-import com.example.authservice.service.UserDetailsServiceImpl
 import com.example.common.RsaKeyProperties
 import com.nimbusds.jose.jwk.JWK
 import com.nimbusds.jose.jwk.JWKSet
@@ -9,23 +8,20 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet
 import com.nimbusds.jose.proc.SecurityContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.AuthenticationProvider
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
+class AuthServiceSecurityConfig(
     val rsaKeyProperties: RsaKeyProperties,
 ) {
     @Bean
@@ -34,22 +30,11 @@ class SecurityConfig(
     }
 
     @Bean
-    fun authenticationProvider(
-        userDetailsServiceImpl: UserDetailsServiceImpl,
-        passwordEncoder: PasswordEncoder
-    ): AuthenticationProvider {
-        val authProvider = DaoAuthenticationProvider()
-        authProvider.setUserDetailsService(userDetailsServiceImpl)
-        authProvider.setPasswordEncoder(passwordEncoder)
-        return authProvider
-    }
-
-    @Bean
+    @Order(0)
     @Throws(Exception::class)
-    fun filterChain(
+    fun authServiceFilterChain(
         http: HttpSecurity,
         successLoginPasswordHandler: SuccessLoginPasswordHandler,
-        authenticationProvider: AuthenticationProvider
     ): SecurityFilterChain {
 
         http
@@ -61,22 +46,9 @@ class SecurityConfig(
                 ).permitAll()
                     .anyRequest().authenticated()
             }
-            .oauth2ResourceServer { oauth2ResourceServer ->
-                oauth2ResourceServer.jwt { token ->
-                    token.decoder(jwtDecoder())
-                }
-            }
-            .csrf { i -> i.disable() }
-            .formLogin { j ->
-                j.successHandler(successLoginPasswordHandler)
-            }
-            .authenticationProvider(authenticationProvider)
+            .csrf { it.disable() }
+            .formLogin { it.disable()}
         return http.build()
-    }
-
-    @Bean
-    fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
     }
 
     @Bean
