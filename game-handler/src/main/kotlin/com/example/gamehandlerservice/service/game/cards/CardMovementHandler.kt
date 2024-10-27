@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.service.game.cards
 
-import com.example.common.dto.personalaccout.business.AccountDto
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.service.game.game.GameHandler
 

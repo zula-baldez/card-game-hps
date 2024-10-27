@@ -1,7 +1,7 @@
 package com.example.gamehandlerservice.service.game.util
 
 import com.example.common.client.PersonalAccountClient
-import com.example.common.dto.personalaccout.business.AccountDto
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.service.game.game.GameHandler

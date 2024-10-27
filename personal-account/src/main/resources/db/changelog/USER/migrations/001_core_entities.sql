@@ -3,13 +3,7 @@
 
 
 CREATE SEQUENCE IF NOT EXISTS account_id_seq;
-CREATE SEQUENCE IF NOT EXISTS room_account_id_seq;
-CREATE SEQUENCE IF NOT EXISTS users_id_seq;
-CREATE SEQUENCE IF NOT EXISTS room_account_id_seq;
 CREATE SEQUENCE IF NOT EXISTS friendship_id_seq;
-
-
-
 
 CREATE TABLE IF NOT EXISTS accounts
 (
@@ -18,7 +12,6 @@ CREATE TABLE IF NOT EXISTS accounts
     fines           INT CHECK (fines >= 0),
     current_room_id BIGINT
 );
-
 
 CREATE TABLE IF NOT EXISTS friendships
 (

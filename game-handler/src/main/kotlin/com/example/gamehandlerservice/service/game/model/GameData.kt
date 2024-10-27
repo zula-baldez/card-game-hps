@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.service.game.model
 
-import com.example.common.dto.personalaccout.business.AccountDto
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.util.CyclicQueue

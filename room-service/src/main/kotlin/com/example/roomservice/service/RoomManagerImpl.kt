@@ -1,8 +1,8 @@
 package com.example.roomservice.service
 
 import com.example.common.client.PersonalAccountClient
-import com.example.common.dto.personalaccout.Pagination
-import com.example.common.dto.personalaccout.business.RoomDto
+import com.example.common.dto.api.Pagination
+import com.example.common.dto.personalaccout.RoomDto
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import org.springframework.stereotype.Component

@@ -1,6 +1,6 @@
 package com.example.personalaccount.service
 
-import com.example.common.dto.personalaccout.Pagination
+import com.example.common.dto.api.Pagination
 import com.example.personalaccount.model.FriendshipDto
 import org.springframework.data.domain.Page
 

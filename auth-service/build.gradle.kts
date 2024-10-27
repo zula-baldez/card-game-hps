@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")

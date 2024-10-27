@@ -1,8 +1,8 @@
 package com.example.gamehandlerservice.config
 
 import com.example.common.client.RoomServiceClient
-import com.example.common.dto.personalaccout.business.AccountDto
-import com.example.common.dto.personalaccout.business.RoomDto
+import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.personalaccout.RoomDto
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import org.springframework.core.MethodParameter

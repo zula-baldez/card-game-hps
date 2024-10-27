@@ -1,6 +1,6 @@
 package com.example.personalaccount.database
 
-import com.example.common.dto.personalaccout.business.AccountDto
+import com.example.common.dto.personalaccout.AccountDto
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.PositiveOrZero
@@ -29,7 +29,8 @@ class AccountEntity(
         return AccountDto(
             id,
             name,
-            fines
+            fines,
+            roomId = null
         )
     }
 

@@ -1,6 +1,6 @@
 package com.example.gamehandlerservice.model.dto
 
-import com.example.common.dto.personalaccout.business.AccountAction
+import com.example.common.dto.roomservice.AccountAction
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

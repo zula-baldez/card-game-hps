@@ -1,5 +1,6 @@
 package com.example.personalaccount.service
 
+import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountEntity
 import com.example.personalaccount.database.AccountRepository
@@ -14,13 +15,13 @@ class AccountServiceImpl(
         return accountRepository.findByIdOrNull(id) ?: throw AccountNotFoundException(id)
     }
 
-    override fun createAccountForUser(id: Long, name: String): AccountEntity {
-        var account = accountRepository.findByIdOrNull(id)
+    override fun createAccountForUser(createAccountDto: CreateAccountDto): AccountEntity {
+        var account = accountRepository.findByIdOrNull(createAccountDto.id)
 
         if (account == null) {
             account = AccountEntity(
-                id = id,
-                name = name,
+                id = createAccountDto.id,
+                name = createAccountDto.username,
                 fines = 0
             )
 

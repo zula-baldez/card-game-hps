@@ -1,6 +1,6 @@
 package com.example.personalaccount.service
 
-import com.example.common.dto.personalaccout.Pagination
+import com.example.common.dto.api.Pagination
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.database.FriendshipEntity
 import com.example.personalaccount.database.FriendshipRepository

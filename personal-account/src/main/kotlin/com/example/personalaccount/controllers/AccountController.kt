@@ -1,6 +1,7 @@
 package com.example.personalaccount.controllers
 
-import com.example.common.dto.personalaccout.business.AccountDto
+import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.service.AccountService
@@ -13,20 +14,24 @@ import kotlin.jvm.optionals.getOrNull
 @RestController
 @RequestMapping("/accounts")
 class AccountController(
-    private val accountRepository: AccountRepository,
+    private val accountService: AccountService,
     private val personalAccountManager: PersonalAccountManager
 ) {
 
     @GetMapping("/{id}")
-    fun getAccountById(@PathVariable id: Long): ResponseEntity<AccountDto> {
-        val account = accountRepository.findById(id).getOrNull() ?: throw AccountNotFoundException(accountId = id)
-        return ResponseEntity.ok(account.toDto())
+    fun getAccountById(@PathVariable id: Long): AccountDto {
+        return accountService.findByIdOrThrow(id).toDto()
+    }
+
+
+    @PostMapping("/")
+    fun createAccount(createAccountDto: CreateAccountDto): AccountDto {
+        return accountService.createAccountForUser(createAccountDto).toDto()
     }
 
 
     @PostMapping("/{id}/fine")
     fun addFine(@PathVariable id: Long) {
-        val account = accountRepository.findById(id).getOrNull() ?: throw AccountNotFoundException(accountId = id)
         personalAccountManager.addFine(accountId = id)
     }
 

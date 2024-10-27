@@ -1,6 +1,6 @@
 package com.example.personalaccount.controllers
 
-import com.example.common.dto.personalaccout.Pagination
+import com.example.common.dto.api.Pagination
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.exceptions.AddFriendException
 import com.example.personalaccount.exceptions.RemoveFriendException
