@@ -1,6 +1,7 @@
 package com.example.roomservice.service
 
 import com.example.common.client.PersonalAccountClient
+import com.example.common.client.ReactivePersonalAccountClient
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.roomservice.RoomDto
 import com.example.roomservice.repository.RoomEntity
@@ -13,12 +14,16 @@ import reactor.core.publisher.Mono
 class RoomManagerImpl(
     private val roomRepository: RoomRepository,
     private val roomAccountManager: RoomAccountManager,
-    private val personalAccountClient: PersonalAccountClient
+    private val personalAccountClient: ReactivePersonalAccountClient
     // private val gameHandlerRegistry: GameHandlerRegistry
 ) : RoomManager {
     private fun makeRoomDto(roomEntity: RoomEntity): Mono<RoomDto> {
-        return roomAccountManager.getAccountsInRoom(roomEntity.id).collectList()
-            .zipWith(roomAccountManager.getBannedAccountsInRoom(roomEntity.id).collectList())
+        return roomAccountManager.getAccountsInRoom(roomEntity.id).flatMap { personalAccountClient.getAccountById(it) }
+            .collectList()
+            .zipWith(
+                roomAccountManager.getBannedAccountsInRoom(roomEntity.id)
+                    .flatMap { personalAccountClient.getAccountById(it) }.collectList()
+            )
             .map { result ->
                 return@map RoomDto(
                     id = roomEntity.id,
@@ -26,15 +31,15 @@ class RoomManagerImpl(
                     name = roomEntity.name,
                     capacity = roomEntity.capacity,
                     currentGameId = roomEntity.currentGameId,
-                    players = result.t1.map { playerId -> personalAccountClient.getAccountById(playerId) },
-                    bannedPlayers = result.t2.map { playerId -> personalAccountClient.getAccountById(playerId) }
+                    players = result.t1,
+                    bannedPlayers = result.t2
                 )
             }
     }
 
     override fun createRoom(name: String, hostId: Long, capacity: Int): Mono<RoomDto> {
         val roomEntity = RoomEntity(0, name, hostId, capacity, 0)
-        return roomRepository.save(roomEntity).flatMap{ makeRoomDto(it) }
+        return roomRepository.save(roomEntity).flatMap { makeRoomDto(it) }
 //        TODO: create game in game service
 //        val game = gameHandlerRegistry.createGame(name, roomEntity.id)
 //        roomEntity.currentGameId = game.gameData.gameId

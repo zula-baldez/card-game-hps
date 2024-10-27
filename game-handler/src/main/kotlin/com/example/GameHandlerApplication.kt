@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.common.RsaKeyProperties
+import com.example.common.config.RsaKeyProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication

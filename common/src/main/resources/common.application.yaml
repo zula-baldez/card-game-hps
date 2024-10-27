@@ -13,3 +13,13 @@ feign:
         loggerLevel: debug
         requestInterceptors:
           - com.example.common.interceptor.AuthRequestInterceptor
+
+rsa:
+  public-key: classpath:certs/public.pem
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+# TODO: make common

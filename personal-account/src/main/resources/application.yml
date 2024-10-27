@@ -20,9 +20,6 @@ spring:
     resources:
       add-mappings: false
 
-rsa:
-  public-key: classpath:certs/public.pem
-
 server:
   port: 8083
 
@@ -33,10 +30,24 @@ service:
     password:
       zxczxczxc
 
-websocket:
-  connect-url: /
-  app-prefix: /app
-  topic: /topic
+feign:
+  client:
+    config:
+      room-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: debug
+        requestInterceptors:
+          - com.example.common.interceptor.AuthRequestInterceptor
+      personal-account:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: debug
+        requestInterceptors:
+          - com.example.common.interceptor.AuthRequestInterceptor
+
+rsa:
+  public-key: classpath:certs/public.pem
 
 eureka:
   client:

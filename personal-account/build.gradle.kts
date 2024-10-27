@@ -45,6 +45,8 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
+    implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
+
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation ("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")

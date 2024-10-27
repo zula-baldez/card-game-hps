@@ -42,6 +42,9 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
+    implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
+
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")

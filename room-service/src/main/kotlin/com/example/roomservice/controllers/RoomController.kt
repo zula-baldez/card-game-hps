@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.security.Principal
 
 @RestController
 @Validated
@@ -33,17 +34,17 @@ class RoomController(
 
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, @RequestHeader("x-user-id") userId: Long): Mono<RoomDto> {
+    fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): Mono<RoomDto> {
         return roomManager.createRoom(
             createRoomRequest.name,
-            userId,
+            principal.name.toLong(),
             createRoomRequest.capacity
         )
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, @RequestHeader("x-user-id") userId: Long): Mono<Void> {
-        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, userId)
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, principal: Principal): Mono<Void> {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, principal.name.toLong())
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
@@ -52,9 +53,9 @@ class RoomController(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
-        @RequestHeader("x-user-id") userId: Long
+        principal: Principal
     ): Mono<Void> {
-        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, userId)
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, principal.name.toLong())
     }
 
     @ExceptionHandler(RoomNotFoundException::class)

@@ -13,14 +13,31 @@ spring:
 
 service:
   robot:
-    username:
-      room-service
-    password:
-      qweqweqwe
-
+    username: room-service
+    password: qweqweqwe
 
 server:
   port: 8084
+
+feign:
+  client:
+    config:
+      room-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: debug
+        requestInterceptors:
+          - com.example.common.interceptor.AuthRequestInterceptor
+      personal-account:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: debug
+        requestInterceptors:
+          - com.example.common.interceptor.AuthRequestInterceptor
+
+rsa:
+  public-key: classpath:certs/public.pem
+
 eureka:
   client:
     serviceUrl:

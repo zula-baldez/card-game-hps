@@ -20,7 +20,7 @@ class AccountController(
         return accountService.findByIdOrThrow(id).toDto()
     }
 
-    @PatchMapping("/{id}/room")
+    @PutMapping("/{id}/room")
     fun updateAccountRoom(@PathVariable id: Long, updateAccountRoomRequest: UpdateAccountRoomRequest): AccountDto {
         return accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
     }

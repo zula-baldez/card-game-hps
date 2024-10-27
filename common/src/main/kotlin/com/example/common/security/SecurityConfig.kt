@@ -1,6 +1,7 @@
 package com.example.common.security
 
-import com.example.common.RsaKeyProperties
+import com.example.common.config.RsaKeyProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -11,6 +12,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
+@EnableConfigurationProperties(RsaKeyProperties::class)
 @EnableWebSecurity
 class SecurityConfig(
     val rsaKeyProperties: RsaKeyProperties

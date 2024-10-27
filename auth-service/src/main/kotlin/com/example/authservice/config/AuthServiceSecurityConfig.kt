@@ -1,6 +1,6 @@
 package com.example.authservice.config
 
-import com.example.common.RsaKeyProperties
+import com.example.common.config.RsaKeyProperties
 import com.nimbusds.jose.jwk.JWK
 import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey
