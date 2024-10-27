@@ -2,7 +2,7 @@ package com.example.gamehandlerservice.controllers
 
 import com.example.common.aspects.HostOnly
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.aspects.TrueTurnValidation
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.service.game.game.GameHandler

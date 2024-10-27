@@ -22,12 +22,19 @@ class AccountServiceImpl(
             account = AccountEntity(
                 id = createAccountDto.id,
                 name = createAccountDto.username,
-                fines = 0
+                fines = 0,
+                currentRoomId = null
             )
 
             accountRepository.save(account)
         }
 
         return account
+    }
+
+    override fun updateAccountRoom(userId: Long, roomId: Long?): AccountEntity {
+        val account = accountRepository.findByIdOrNull(userId) ?: throw AccountNotFoundException(userId)
+        account.currentRoomId = roomId
+        return accountRepository.save(account)
     }
 }

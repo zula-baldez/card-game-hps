@@ -1,7 +1,7 @@
 package com.example.common.client
 
 import com.example.common.dto.api.Pagination
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.common.dto.roomservice.AddAccountRequest
 import com.example.common.dto.roomservice.CreateRoomRequest
 import org.springframework.cloud.openfeign.FeignClient

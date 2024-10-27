@@ -3,7 +3,7 @@ package com.example.common
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.api.ScrollPositionDto
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.common.dto.roomservice.AccountAction
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.gamehandlerservice.model.dto.AccountActionRequest

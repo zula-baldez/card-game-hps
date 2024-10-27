@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/UpdateAccountRoomRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/aspects/HostOnlyAnnotationAspect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/aspects/HostOnlyAnnotationAspect.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/RoomDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/roomservice/RoomDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/AccountAndGameHandlerStompArgumentResolver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/AccountAndGameHandlerStompArgumentResolver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/DtoInitializationTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/SecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomControllerTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +61,8 @@
         <option value="Interface" />
         <option value="Kotlin Interface" />
         <option value="Class" />
-        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>

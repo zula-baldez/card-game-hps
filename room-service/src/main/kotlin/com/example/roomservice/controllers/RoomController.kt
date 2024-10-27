@@ -1,7 +1,7 @@
 package com.example.roomservice.controllers
 
 import com.example.common.dto.api.Pagination
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.common.exceptions.*
 import com.example.common.dto.roomservice.AddAccountRequest
 import com.example.common.dto.roomservice.CreateRoomRequest

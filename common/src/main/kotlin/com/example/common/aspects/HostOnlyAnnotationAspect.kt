@@ -1,7 +1,7 @@
 package com.example.common.aspects
 
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before

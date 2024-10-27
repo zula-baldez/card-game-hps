@@ -1,7 +1,7 @@
 package com.example.roomservice
 
 import com.example.common.dto.api.ScrollPositionDto
-import com.example.common.dto.personalaccout.RoomDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.model.dto.AccountAction
 import com.example.roomservice.controllers.RoomController
 import com.example.common.dto.roomservice.AddAccountRequest

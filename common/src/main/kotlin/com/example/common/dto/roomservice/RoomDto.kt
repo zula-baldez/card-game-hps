@@ -1,5 +1,6 @@
-package com.example.common.dto.personalaccout
+package com.example.common.dto.roomservice
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive

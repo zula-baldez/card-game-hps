@@ -23,14 +23,17 @@ class AccountEntity(
     @OneToMany(mappedBy = "fromAccount", cascade = [CascadeType.PERSIST])
     var friends: MutableSet<FriendshipEntity> = HashSet(),
     @OneToMany(mappedBy = "toAccount", cascade = [CascadeType.PERSIST])
-    var incomingFriendRequests: MutableSet<FriendshipEntity> = HashSet()
+    var incomingFriendRequests: MutableSet<FriendshipEntity> = HashSet(),
+
+    @Column(name = "current_room_id")
+    var currentRoomId: Long?
 ) {
     fun toDto(): AccountDto {
         return AccountDto(
             id,
             name,
             fines,
-            roomId = null
+            currentRoomId
         )
     }
 

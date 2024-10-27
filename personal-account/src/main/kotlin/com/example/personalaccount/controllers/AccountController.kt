@@ -1,15 +1,12 @@
 package com.example.personalaccount.controllers
 
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.personalaccout.CreateAccountDto
+import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.exceptions.AccountNotFoundException
-import com.example.personalaccount.database.AccountRepository
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.PersonalAccountManager
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import kotlin.jvm.optionals.getOrNull
 
 @RestController
 @RequestMapping("/accounts")
@@ -23,12 +20,10 @@ class AccountController(
         return accountService.findByIdOrThrow(id).toDto()
     }
 
-
-    @PostMapping("/")
-    fun createAccount(createAccountDto: CreateAccountDto): AccountDto {
-        return accountService.createAccountForUser(createAccountDto).toDto()
+    @PatchMapping("/{id}/room")
+    fun updateAccountRoom(@PathVariable id: Long, updateAccountRoomRequest: UpdateAccountRoomRequest): AccountDto {
+        return accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
     }
-
 
     @PostMapping("/{id}/fine")
     fun addFine(@PathVariable id: Long) {
