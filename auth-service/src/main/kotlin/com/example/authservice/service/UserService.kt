@@ -2,7 +2,7 @@ package com.example.authservice.service
 
 import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepo
-import com.example.common.client.AuthenticationResponse
+import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.authservice.jwt.TokenService
 //import com.example.personalaccount.service.AccountService
 import org.springframework.security.authentication.BadCredentialsException
@@ -17,6 +17,10 @@ class UserService(
     val tokenService: TokenService
 ) {
     fun register(username: String, password: String) : AuthenticationResponse {
+        if (userRepo.findByName(username) != null) {
+            throw BadCredentialsException("username is taken")
+        }
+
         val pass = encoder.encode(password)
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)

@@ -1,4 +1,4 @@
-package com.example.common.client
+package com.example.common.dto.authservice
 
 import jakarta.validation.constraints.NotBlank
 

@@ -2,7 +2,7 @@ package com.example.common.interceptor
 
 import com.example.common.RobotCredentials
 import com.example.common.client.AuthServiceClient
-import com.example.common.client.CredentialsRequest
+import com.example.common.dto.authservice.CredentialsRequest
 import feign.RequestInterceptor
 import feign.RequestTemplate
 

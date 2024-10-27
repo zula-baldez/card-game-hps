@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id              BIGSERIAL,
-    name            VARCHAR(255),
+    name            VARCHAR(255) UNIQUE,
     password        VARCHAR(255)
 );
 

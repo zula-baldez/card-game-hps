@@ -1,7 +1,7 @@
 package com.example.authservice
 import com.example.authservice.controller.AuthController
-import com.example.common.client.CredentialsRequest
-import com.example.common.client.AuthenticationResponse
+import com.example.common.dto.authservice.CredentialsRequest
+import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.authservice.service.UserService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

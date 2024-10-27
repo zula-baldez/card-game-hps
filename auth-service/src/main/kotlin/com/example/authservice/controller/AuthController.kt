@@ -1,11 +1,12 @@
 package com.example.authservice.controller
 
-import com.example.common.client.AuthenticationResponse
-import com.example.common.client.CredentialsRequest
+import com.example.common.dto.authservice.AuthenticationResponse
+import com.example.common.dto.authservice.CredentialsRequest
 import com.example.authservice.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,6 +32,12 @@ class AuthController(
     @GetMapping("/me")
     fun me(auth: Principal): String {
         return auth.name
+    }
+
+    @ExceptionHandler(BadCredentialsException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handleBadCredentialsException(ex: BadCredentialsException): String {
+        return ex.message ?: "Bad credentials"
     }
 
     @ExceptionHandler(IllegalArgumentException::class)

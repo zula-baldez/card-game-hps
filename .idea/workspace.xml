@@ -6,17 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthenticationResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/AuthenticationResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/CredentialsRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/CredentialsRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,75 +101,76 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Gradle.AuthControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.AuthIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.AuthIntegrationTest.test registration.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BaseStompIntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build card-game-hps.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DistributionStageTest.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.DistributionStageTest.testStartGame.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DistributionStrategyTest.checkDropEnemySuccess.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DistributionStrategyTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.StartGameTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.StompIntegrationTestBase.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.StompIntegrationTestBase.stompTest.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.StopmIntegrationTestBase.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tests in 'com.example'.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.card-game-hps [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.card-game-hps [classes].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.card-game-hps [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.card-game-hps [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.card-game-hps [kotlinSourcesJar].executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin script (Beta).settings.gradle.kts.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.AuthServiceApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.EurekaServerApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.GameHandlerApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.PenkiApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.PersonalAccountApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.RoomServiceApplicationKt.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.RoomServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/moyakkauntda/IdeaProjects/card-game-hps&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Gradle.AuthControllerTest.executor": "Run",
+    "Gradle.AuthIntegrationTest.executor": "Run",
+    "Gradle.AuthIntegrationTest.test registration.executor": "Run",
+    "Gradle.BaseStompIntegrationTest.executor": "Run",
+    "Gradle.Build card-game-hps.executor": "Run",
+    "Gradle.DistributionStageTest.executor": "Debug",
+    "Gradle.DistributionStageTest.testStartGame.executor": "Run",
+    "Gradle.DistributionStrategyTest.checkDropEnemySuccess.executor": "Run",
+    "Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor": "Run",
+    "Gradle.DistributionStrategyTest.executor": "Run",
+    "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
+    "Gradle.StartGameTest.executor": "Run",
+    "Gradle.StompIntegrationTestBase.executor": "Debug",
+    "Gradle.StompIntegrationTestBase.stompTest.executor": "Debug",
+    "Gradle.StopmIntegrationTestBase.executor": "Run",
+    "Gradle.Tests in 'com.example'.executor": "Run",
+    "Gradle.card-game-hps [build].executor": "Run",
+    "Gradle.card-game-hps [classes].executor": "Run",
+    "Gradle.card-game-hps [clean].executor": "Run",
+    "Gradle.card-game-hps [jar].executor": "Run",
+    "Gradle.card-game-hps [kotlinSourcesJar].executor": "Run",
+    "Kotlin script (Beta).settings.gradle.kts.executor": "Run",
+    "Kotlin.AuthServiceApplicationKt.executor": "Run",
+    "Kotlin.EurekaServerApplicationKt.executor": "Run",
+    "Kotlin.GameHandlerApplicationKt.executor": "Run",
+    "Kotlin.PenkiApplicationKt.executor": "Run",
+    "Kotlin.PersonalAccountApplicationKt.executor": "Run",
+    "Kotlin.RoomServiceApplicationKt.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.AuthServiceApplication.executor": "Run",
+    "Spring Boot.RoomServiceApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
-      &quot;PostgreSQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
+      "PostgreSQL"
     ],
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;/Users/moyakkauntda/.gradle&quot;
+    "kotlin-gradle-user-dirs": [
+      "/Users/moyakkauntda/.gradle"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -189,11 +188,11 @@
       <recent name="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.common.dto.authservice" />
+      <recent name="com.example.common.dto" />
       <recent name="com.example.common.interceptor" />
       <recent name="com.example.common.dto.roomservice" />
-      <recent name="com.example.common.dto" />
       <recent name="com.example.common.client" />
-      <recent name="com.example.common.dto.business" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.example.common.client" />
@@ -269,6 +268,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="card-game-hps.eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eurekaserver.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GameHandlerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.game-handler.main" />
@@ -326,6 +332,11 @@
       <item itemvalue="Kotlin.EurekaServerApplicationKt" />
       <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
       <item itemvalue="Kotlin.GameHandlerApplicationKt" />
+      <item itemvalue="Spring Boot.AuthServiceApplication" />
+      <item itemvalue="Spring Boot.EurekaServerApplication" />
+      <item itemvalue="Spring Boot.GameHandlerApplication" />
+      <item itemvalue="Spring Boot.PersonalAccountApplication" />
+      <item itemvalue="Spring Boot.RoomServiceApplication" />
     </list>
     <recent_temporary>
       <list>
