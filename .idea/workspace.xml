@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthIntegrationTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthenticationResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/AuthenticationResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/CredentialsRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/CredentialsRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

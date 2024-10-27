@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestMethod
 @FeignClient(name = "auth-client", url = "http://localhost:8081")
 interface AuthServiceClient {
     @RequestMapping(method = [RequestMethod.POST], value = ["/auth/login"])
-    fun getToken(credentialsRequest: CredentialsRequest): AuthenticationResponse;
+    fun getToken(credentialsRequest: CredentialsRequest): AuthenticationResponse
 }
