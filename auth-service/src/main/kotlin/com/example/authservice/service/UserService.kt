@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UserService(
@@ -30,7 +31,7 @@ class UserService(
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)
         personalAccountClient.createAccount(CreateAccountDto(savedUser.id!!, savedUser.name!!))
-        val token = tokenService.generateAccessToken(savedUser)
+        val token = tokenService.generateAccessToken(savedUser, "anon")
         return AuthenticationResponse(token, savedUser.id!!)
     }
 
@@ -39,8 +40,18 @@ class UserService(
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 
         if (user.password == pass) {
-            val token = tokenService.generateAccessToken(user)
+            val token = tokenService.generateAccessToken(user, "anon")
             return AuthenticationResponse(token, user.id!!)
         } else throw BadCredentialsException("")
+    }
+
+    fun generateServiceTokenForUser(userId: Long, service: String): AuthenticationResponse {
+        val user = userRepo.findById(userId).getOrNull() ?: throw UsernameNotFoundException("user with id $userId not found")
+        val token = tokenService.generateAccessToken(user, service)
+
+        return AuthenticationResponse(
+            token,
+            user.id!!
+        )
     }
 }

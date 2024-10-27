@@ -14,7 +14,7 @@ import java.util.stream.Collectors
 class TokenService(private val encoder: JwtEncoder) {
     private val expireTimeMinutes = 100L;
 
-    fun generateAccessToken(userEntity: UserEntity): String {
+    fun generateAccessToken(userEntity: UserEntity, serviceName: String): String {
         val now = Instant.now()
         val scope: String = userEntity.roles.stream()
             .map { obj -> obj?.roleName.toString() }
@@ -26,6 +26,7 @@ class TokenService(private val encoder: JwtEncoder) {
             .subject(userEntity.id.toString())
             .claim("scope", scope)
             .claim("name", userEntity.name)
+            .claim("service", serviceName)
             .build()
         return encoder.encode(JwtEncoderParameters.from(claims)).tokenValue
     }

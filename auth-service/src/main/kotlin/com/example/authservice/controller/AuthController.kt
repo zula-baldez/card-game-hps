@@ -3,6 +3,7 @@ package com.example.authservice.controller
 import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.authservice.CredentialsRequest
 import com.example.authservice.service.UserService
+import com.example.common.dto.authservice.GenerateServiceTokenRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -27,6 +28,11 @@ class AuthController(
     @PostMapping("/auth/login", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun login(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.login(credentialsRequest.username, credentialsRequest.password)
+    }
+
+    @PostMapping("/auth/service-token", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun generateTokenForService(@RequestBody @Valid serviceTokenRequest: GenerateServiceTokenRequest): AuthenticationResponse {
+        return userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
     }
 
     @GetMapping("/me")
