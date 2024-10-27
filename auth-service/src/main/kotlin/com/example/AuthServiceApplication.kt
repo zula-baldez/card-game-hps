@@ -7,7 +7,6 @@ import reactivefeign.spring.config.EnableReactiveFeignClients
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableReactiveFeignClients
 class AuthServiceApplication
 
 fun main(args: Array<String>) {
