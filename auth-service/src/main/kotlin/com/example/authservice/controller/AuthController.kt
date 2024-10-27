@@ -21,18 +21,18 @@ import java.security.Principal
 class AuthController(
     val userService: UserService,
 ) {
-    @PostMapping("/auth/register", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/auth/register")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.register(credentialsRequest.username, credentialsRequest.password)
     }
 
-    @PostMapping("/auth/login", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/auth/login")
     fun login(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.login(credentialsRequest.username, credentialsRequest.password)
     }
 
-    @PostMapping("/auth/service-token", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/auth/service-token")
     @PreAuthorize("hasAuthority('SCOPE_SERVICE') and @AuthUtils.jwtClaimEquals(principal, 'name', #serviceTokenRequest.component2())")
     fun generateTokenForService(@RequestBody @Valid serviceTokenRequest: GenerateServiceTokenRequest): AuthenticationResponse {
         return userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
