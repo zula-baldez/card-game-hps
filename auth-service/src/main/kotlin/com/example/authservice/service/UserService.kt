@@ -20,29 +20,8 @@ import kotlin.jvm.optionals.getOrNull
 class UserService(
     val userRepo: UserRepository,
     val encoder: PasswordEncoder,
-    val tokenService: TokenService,
-    val roleRepository: RoleRepository,
-    val personalAccountClient: PersonalAccountClient
+    val tokenService: TokenService
 ) {
-    @Transactional
-    fun register(username: String, password: String) : AuthenticationResponse {
-        if (userRepo.findByName(username) != null) {
-            throw BadCredentialsException("username is taken")
-        }
-
-        val pass = encoder.encode(password)
-        val userEntity = UserEntity(username, pass)
-        val userRole = roleRepository.findFirstByRoleName(Role.USER)
-        userEntity.roles += userRole
-        val savedUser = userRepo.save(userEntity)
-        val token = tokenService.generateAccessToken(savedUser, "user-token")
-        personalAccountClient.createAccount(
-            CreateAccountDto(id = savedUser.id!!, username = username),
-            "Bearer $token"
-        )
-        return AuthenticationResponse(token, savedUser.id!!)
-    }
-
     fun login(username: String, password: String): AuthenticationResponse {
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 

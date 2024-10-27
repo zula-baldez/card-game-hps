@@ -6,8 +6,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import reactivefeign.spring.config.EnableReactiveFeignClients
 
 @SpringBootApplication
-@EnableFeignClients
-@EnableReactiveFeignClients
 class PersonalAccountApplication
 
 fun main(args: Array<String>) {

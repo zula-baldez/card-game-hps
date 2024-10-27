@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(name = "room-service")
+@FeignClient(name = "room-service", configuration = [UserTokenFeignClientConfiguration::class])
 interface RoomServiceClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/rooms"])
@@ -22,7 +22,6 @@ interface RoomServiceClient {
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/rooms"])
     fun createRoom(@RequestBody createRoomRequest: CreateRoomRequest): RoomDto
-
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/rooms/{roomId}/players"])
     fun addPlayer(@PathVariable("roomId") roomId: Long, @RequestBody addAccountRequest: AddAccountRequest): Void
