@@ -21,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class AuthServiceSecurityConfig(
+class SecurityConfig(
     val rsaKeyProperties: RsaKeyProperties,
 ) {
     @Bean
@@ -30,7 +30,6 @@ class AuthServiceSecurityConfig(
     }
 
     @Bean
-    @Order(0)
     @Throws(Exception::class)
     fun authServiceFilterChain(
         http: HttpSecurity,

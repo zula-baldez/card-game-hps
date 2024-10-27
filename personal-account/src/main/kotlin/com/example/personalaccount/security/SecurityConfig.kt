@@ -1,4 +1,4 @@
-package com.example.common.security
+package com.example.personalaccount.security
 
 import com.example.common.config.RsaKeyProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
