@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/GenerateServiceTokenRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/jwt/TokenService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/jwt/TokenService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SuccessLoginPasswordHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SuccessLoginPasswordHandler.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/AuthServiceClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RobotCredentials.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RobotCredentials.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +48,8 @@
         <option value="Interface" />
         <option value="Kotlin Interface" />
         <option value="Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -147,6 +146,9 @@
     ],
     "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
       "PostgreSQL"
+    ],
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
     ],
     "kotlin-gradle-user-dirs": [
       "/Users/moyakkauntda/.gradle"

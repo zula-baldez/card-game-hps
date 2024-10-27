@@ -19,7 +19,6 @@ class UserService(
     val userRepo: UserRepo,
     val encoder: PasswordEncoder,
     val tokenService: TokenService,
-    val personalAccountClient: PersonalAccountClient
 ) {
     @Transactional
     fun register(username: String, password: String) : AuthenticationResponse {
@@ -30,8 +29,7 @@ class UserService(
         val pass = encoder.encode(password)
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)
-        personalAccountClient.createAccount(CreateAccountDto(savedUser.id!!, savedUser.name!!))
-        val token = tokenService.generateAccessToken(savedUser, "anon")
+        val token = tokenService.generateAccessToken(savedUser, "user-token")
         return AuthenticationResponse(token, savedUser.id!!)
     }
 
@@ -40,7 +38,7 @@ class UserService(
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 
         if (user.password == pass) {
-            val token = tokenService.generateAccessToken(user, "anon")
+            val token = tokenService.generateAccessToken(user, "user-token")
             return AuthenticationResponse(token, user.id!!)
         } else throw BadCredentialsException("")
     }

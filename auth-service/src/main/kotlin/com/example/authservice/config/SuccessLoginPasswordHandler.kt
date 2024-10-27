@@ -16,7 +16,7 @@ class SuccessLoginPasswordHandler(
         request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication
     ) {
         authentication.name?.let { userRepo.findByName(it) }?.let {
-            jwtTokenProvider.generateAccessToken(userEntity = it)
+            jwtTokenProvider.generateAccessToken(userEntity = it, "auth")
         }?.let {
             response.contentType = "application/json"
             response.writer.write("{ \"token\": \"$it\" }")
