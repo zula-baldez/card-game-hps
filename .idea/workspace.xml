@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/security/RequestAuthorizeUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/security/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SuccessLoginPasswordHandler.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/GenerateServiceTokenRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/authservice/GenerateServiceTokenRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/util/Role.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/util/Role.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +81,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -423,7 +423,7 @@
       <workItem from="1730041938739" duration="2768000" />
       <workItem from="1730044718652" duration="25000" />
       <workItem from="1730044753507" duration="540000" />
-      <workItem from="1730045325186" duration="13520000" />
+      <workItem from="1730045325186" duration="13560000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />

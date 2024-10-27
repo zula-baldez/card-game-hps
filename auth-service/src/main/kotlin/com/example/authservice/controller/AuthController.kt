@@ -22,6 +22,7 @@ class AuthController(
     val userService: UserService,
 ) {
     @PostMapping("/auth/register", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return userService.register(credentialsRequest.username, credentialsRequest.password)
     }
