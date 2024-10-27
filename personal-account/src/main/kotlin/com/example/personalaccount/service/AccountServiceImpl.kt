@@ -26,7 +26,7 @@ class AccountServiceImpl(
                 currentRoomId = null
             )
 
-            accountRepository.save(account)
+            return accountRepository.save(account)
         }
 
         return account

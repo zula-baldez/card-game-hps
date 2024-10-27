@@ -5,62 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveAuthServiceClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactivePersonalAccountClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/config/RobotCredentialsProperties.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/config/ScanPropertiesConfiguration.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveAuthRequestInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/security/RoomServiceSecurityConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/kotlinc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/.idea/yatool.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/AuthServiceSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/AuthServiceSecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RobotCredentials.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/RsaKeyProperties.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/config/RsaKeyProperties.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/PersonalAccountClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/PersonalAccountClient.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/AuthRequestInterceptor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveAuthRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveAuthRequestInterceptor.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/security/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/security/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/common.application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/dbnavigator.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/personal-account/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/room-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/room-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,8 +80,8 @@
         <option value="Interface" />
         <option value="Kotlin Data Class" />
         <option value="Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -203,7 +161,7 @@
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
     "Spring Boot.RoomServiceApplication.executor": "Run",
-    "git-widget-placeholder": "Rebasing master",
+    "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps",
@@ -259,6 +217,7 @@
       <recent name="com.example.common.dto.api" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.example.roomservice.security" />
       <recent name="com.example.personalaccount.config" />
       <recent name="com.example.common.client" />
       <recent name="com.example.common.exceptions" />
@@ -348,6 +307,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="card-game-hps.gateway-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.GatewayServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PersonalAccountApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.personal-account.main" />
@@ -397,6 +363,7 @@
       <item itemvalue="Kotlin.EurekaServerApplicationKt" />
       <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
       <item itemvalue="Kotlin.GameHandlerApplicationKt" />
+      <item itemvalue="Spring Boot.GatewayServerApplication" />
       <item itemvalue="Spring Boot.AuthServiceApplication" />
       <item itemvalue="Spring Boot.EurekaServerApplication" />
       <item itemvalue="Spring Boot.GameHandlerApplication" />
@@ -462,7 +429,7 @@
       <workItem from="1730041938739" duration="2768000" />
       <workItem from="1730044718652" duration="25000" />
       <workItem from="1730044753507" duration="540000" />
-      <workItem from="1730045325186" duration="1584000" />
+      <workItem from="1730045325186" duration="8062000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -734,6 +701,11 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageStateMachineHandlerImpl.kt</url>
           <line>59</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt</url>
+          <line>36</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

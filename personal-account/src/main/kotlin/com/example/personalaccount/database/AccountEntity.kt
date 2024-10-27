@@ -9,8 +9,6 @@ import jakarta.validation.constraints.PositiveOrZero
 @Table(name = "accounts")
 class AccountEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_generator")
-    @SequenceGenerator(name = "account_id_generator", sequenceName = "account_id_seq", allocationSize = 1)
     var id: Long = 0,
 
     @field:NotBlank

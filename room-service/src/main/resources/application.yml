@@ -11,6 +11,10 @@ spring:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:KfvYuJQ8}
 
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+
 service:
   robot:
     username: room-service

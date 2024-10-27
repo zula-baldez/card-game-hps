@@ -42,7 +42,8 @@ class AuthServiceSecurityConfig(
             .authorizeHttpRequests { i ->
                 i.requestMatchers(
                     AntPathRequestMatcher("/auth/register"),
-                    AntPathRequestMatcher("/auth/login")
+                    AntPathRequestMatcher("/auth/login"),
+                    AntPathRequestMatcher("/auth/service-token") // TODO authenticate service credentials
                 ).permitAll()
                     .anyRequest().authenticated()
             }

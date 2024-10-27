@@ -25,7 +25,7 @@ class ReactiveAuthRequestInterceptor(
             .flatMap { getUserToken(it) }
             .switchIfEmpty(getServiceAccountToken())
             .map { token ->
-                request.headers()["Authorization"] = listOf("Bearer: $token")
+                request.headers()["Authorization"] = listOf("Bearer $token")
                 return@map request
             }
     }

@@ -48,7 +48,6 @@ dependencies {
     implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
 
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
-    implementation ("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
@@ -77,12 +76,9 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
-    implementation("org.springframework.security:spring-security-messaging:6.1.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework:spring-websocket:6.1.0")
-    implementation("org.springframework:spring-messaging:6.1.0")
 
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
@@ -93,8 +89,6 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.17.2")
     testImplementation("org.mockito:mockito-core:3.5.13")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-    testImplementation("org.webjars:sockjs-client:1.5.1")
-    testImplementation("org.webjars:stomp-websocket:2.3.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.2")
     testImplementation("org.testcontainers:postgresql:1.20.1")
     testImplementation("org.testcontainers:junit-jupiter:1.20.1")

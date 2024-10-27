@@ -59,9 +59,10 @@ class RoomAccountManagerImpl(
                     .flatMap { Mono.error<RoomEntity>(ForbiddenOperationException()) }
                     .switchIfEmpty(Mono.just(room))
             }
-            .flatMap { room ->
+            .flatMap<Void?> { room ->
                 return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true)).then(Mono.empty())
             }
+            .and(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)))
     }
 
     override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction, requesterId: Long): Mono<Void> {
@@ -109,6 +110,7 @@ class RoomAccountManagerImpl(
                         }
                     }
             }
+            .and(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(null)))
     }
 
     override fun getAccountRoom(accountId: Long): Mono<Long> {

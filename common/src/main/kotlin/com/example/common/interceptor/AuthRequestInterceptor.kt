@@ -21,6 +21,10 @@ class AuthRequestInterceptor(
 ) : RequestInterceptor {
 
     override fun apply(template: RequestTemplate) {
+        if (serviceName == "auth-service") {
+            return
+        }
+
         val authentication = SecurityContextHolder.getContext().authentication
 
         val token = if (authentication == null || !authentication.isAuthenticated) {
@@ -29,6 +33,7 @@ class AuthRequestInterceptor(
             val userId = authentication.name.toLong()
             authServiceClient.getServiceToken(GenerateServiceTokenRequest(userId = userId, serviceName = serviceName)).token
         }
+
         template.header("Authorization", "Bearer $token")
     }
 }

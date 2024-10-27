@@ -1,44 +1,46 @@
-package com.example.common.security
+package com.example.roomservice.security
 
 import com.example.common.config.RsaKeyProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder
-import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.server.SecurityWebFilterChain
 
 @Configuration
 @EnableConfigurationProperties(RsaKeyProperties::class)
-class SecurityConfig(
+@EnableWebFluxSecurity
+@EnableWebSecurity
+class RoomServiceSecurityConfig(
     val rsaKeyProperties: RsaKeyProperties
 ) {
     @Bean
     @Throws(Exception::class)
-    fun filterChain(
-        http: HttpSecurity,
-    ): SecurityFilterChain {
+    fun roomServiceFilterChain(
+        http: ServerHttpSecurity,
+    ): SecurityWebFilterChain {
         http
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests { it.anyRequest().authenticated() }
+            .authorizeExchange {
+                it.anyExchange().authenticated()
+            }
             .oauth2ResourceServer {
                 it.jwt { jwt ->
-                    jwt.decoder(jwtDecoder())
+                    jwt.jwtDecoder(reactiveJwtDecoder())
                 }
             }
             .csrf { it.disable() }
             .formLogin { it.disable() }
+            .logout { it.disable() }
         return http.build()
     }
 
     @Bean
-    fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
+    fun reactiveJwtDecoder(): ReactiveJwtDecoder {
+        return NimbusReactiveJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
     }
+
 }

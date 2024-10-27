@@ -19,6 +19,7 @@ class UserService(
     val userRepo: UserRepo,
     val encoder: PasswordEncoder,
     val tokenService: TokenService,
+    val personalAccountClient: PersonalAccountClient
 ) {
     @Transactional
     fun register(username: String, password: String) : AuthenticationResponse {
@@ -30,6 +31,10 @@ class UserService(
         val userEntity = UserEntity(username, pass)
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser, "user-token")
+        personalAccountClient.createAccount(
+            CreateAccountDto(id = savedUser.id!!, username = username),
+            "Bearer $token"
+        )
         return AuthenticationResponse(token, savedUser.id!!)
     }
 

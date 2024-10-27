@@ -1,6 +1,7 @@
 package com.example.personalaccount.controllers
 
 import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.service.AccountService
@@ -20,8 +21,13 @@ class AccountController(
         return accountService.findByIdOrThrow(id).toDto()
     }
 
+    @PostMapping("")
+    fun createAccount(@RequestBody createAccountDto: CreateAccountDto): AccountDto {
+        return accountService.createAccountForUser(createAccountDto).toDto()
+    }
+
     @PutMapping("/{id}/room")
-    fun updateAccountRoom(@PathVariable id: Long, updateAccountRoomRequest: UpdateAccountRoomRequest): AccountDto {
+    fun updateAccountRoom(@PathVariable id: Long, @RequestBody updateAccountRoomRequest: UpdateAccountRoomRequest): AccountDto {
         return accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
     }
 
