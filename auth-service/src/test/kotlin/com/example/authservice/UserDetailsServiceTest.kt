@@ -1,7 +1,7 @@
 package com.example.authservice
 
 import com.example.authservice.database.UserEntity
-import com.example.authservice.database.UserRepo
+import com.example.authservice.database.UserRepository
 import com.example.authservice.service.UserDetailsServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class UserDetailsServiceImplTest {
 
-    private val userRepo: UserRepo = mock(UserRepo::class.java)
+    private val userRepo: UserRepository = mock(UserRepository::class.java)
     private val userDetailsService = UserDetailsServiceImpl(userRepo)
 
     @Test

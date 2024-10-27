@@ -1,11 +1,13 @@
 package com.example.authservice.service
 
+import com.example.authservice.database.RoleRepository
 import com.example.authservice.database.UserEntity
-import com.example.authservice.database.UserRepo
+import com.example.authservice.database.UserRepository
 import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.authservice.jwt.TokenService
 import com.example.common.client.PersonalAccountClient
 import com.example.common.dto.personalaccout.CreateAccountDto
+import com.example.common.util.Role
 //import com.example.personalaccount.service.AccountService
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -16,9 +18,10 @@ import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UserService(
-    val userRepo: UserRepo,
+    val userRepo: UserRepository,
     val encoder: PasswordEncoder,
     val tokenService: TokenService,
+    val roleRepository: RoleRepository,
     val personalAccountClient: PersonalAccountClient
 ) {
     @Transactional
@@ -29,6 +32,8 @@ class UserService(
 
         val pass = encoder.encode(password)
         val userEntity = UserEntity(username, pass)
+        val userRole = roleRepository.findFirstByRoleName(Role.USER)
+        userEntity.roles += userRole
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser, "user-token")
         personalAccountClient.createAccount(

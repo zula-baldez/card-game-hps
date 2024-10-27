@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/database/RoleRepository.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/AuthServiceSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/security/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/security/SecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SuccessLoginPasswordHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/config/SuccessLoginPasswordHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/database/UserEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/database/UserEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/database/UserRepo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/database/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserDetailsServiceImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/UserDetailsServiceTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/UserDetailsServiceTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +74,8 @@
         <option value="Interface" />
         <option value="Kotlin Data Class" />
         <option value="Class" />
-        <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -147,6 +153,7 @@
     "Spring Boot.AuthServiceApplication.executor": "Run",
     "Spring Boot.EurekaServerApplication.executor": "Run",
     "Spring Boot.GameHandlerApplication.executor": "Run",
+    "Spring Boot.GatewayServerApplication.executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
     "Spring Boot.RoomServiceApplication.executor": "Run",
     "git-widget-placeholder": "master",
@@ -417,7 +424,7 @@
       <workItem from="1730041938739" duration="2768000" />
       <workItem from="1730044718652" duration="25000" />
       <workItem from="1730044753507" duration="540000" />
-      <workItem from="1730045325186" duration="8242000" />
+      <workItem from="1730045325186" duration="9841000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />

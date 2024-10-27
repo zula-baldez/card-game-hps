@@ -1,6 +1,6 @@
 package com.example.authservice.config
 
-import com.example.authservice.database.UserRepo
+import com.example.authservice.database.UserRepository
 import com.example.authservice.jwt.TokenService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class SuccessLoginPasswordHandler(
-    val jwtTokenProvider: TokenService, private val userRepo: UserRepo
+    val jwtTokenProvider: TokenService, private val userRepo: UserRepository
 ) : AuthenticationSuccessHandler {
     override fun onAuthenticationSuccess(
         request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication

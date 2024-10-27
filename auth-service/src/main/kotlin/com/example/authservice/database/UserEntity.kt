@@ -26,5 +26,5 @@ class UserEntity(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
-    var roles: Set<RoleEntity> = HashSet()
+    var roles: MutableSet<RoleEntity> = HashSet()
 )

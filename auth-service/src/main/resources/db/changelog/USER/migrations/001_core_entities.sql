@@ -34,3 +34,9 @@ VALUES
     ('personal-account', '$2a$10$t33jE.yelsRFDxmiyjOKT.mk.DdM2xogDVrdTtyEselq2jcC7Rr06'),
     ('game-handler', '$2a$10$yUdMQdaGJV/py9.tUKN83.Hn.1qb2Y4sPhj6AInn1fUm7MAZ3aaVC');
 
+INSERT INTO user_role
+(
+    SELECT users.id, service_role.id
+    FROM users CROSS JOIN (SELECT roles.id as id FROM roles WHERE roles.role_name = 'SERVICE') as service_role
+    WHERE name IN ('room-service', 'personal-account', 'game-handler')
+);
