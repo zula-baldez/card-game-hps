@@ -2,6 +2,9 @@ spring:
   liquibase:
     enabled: true
 
+  application:
+    name: auth-service
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:postgres}
     username: ${POSTGRES_USER:postgres}
@@ -25,3 +28,8 @@ websocket:
   connect-url: /
   app-prefix: /app
   topic: /topic
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

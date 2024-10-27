@@ -28,7 +28,6 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
     id ("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id("com.google.protobuf") version "0.8.19"
 }
 
 group = "com.example"
@@ -43,6 +42,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.3")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:")

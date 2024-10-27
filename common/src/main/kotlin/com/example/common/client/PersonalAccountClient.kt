@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(url = "http://localhost:8083", name = "personal-account")
+@FeignClient(name = "personal-account")
 interface PersonalAccountClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/accounts/{id}"])
