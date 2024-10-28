@@ -14,7 +14,9 @@ class ReactiveServiceTokenRequestInterceptor(
     override fun apply(request: ReactiveHttpRequest): Mono<ReactiveHttpRequest> {
         return getServiceAccountToken()
             .map { token ->
-                request.headers()["Authorization"] = listOf("Bearer $token")
+                if (!request.headers().containsKey("Authorization")) {
+                    request.headers()["Authorization"] = listOf("Bearer $token")
+                }
                 return@map request
             }
     }

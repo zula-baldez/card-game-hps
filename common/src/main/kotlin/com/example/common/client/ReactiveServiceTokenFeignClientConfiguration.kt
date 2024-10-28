@@ -5,8 +5,10 @@ import com.example.common.interceptor.ReactiveServiceTokenRequestInterceptor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import reactivefeign.client.ReactiveHttpRequestInterceptor
 
+@Configuration
 class ReactiveServiceTokenFeignClientConfiguration(
     @Autowired
     private val loginServiceClient: ReactiveLoginServiceClient,

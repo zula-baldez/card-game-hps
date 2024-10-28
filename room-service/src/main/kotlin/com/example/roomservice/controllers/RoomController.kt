@@ -45,14 +45,14 @@ class RoomController(
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    @PreAuthorize("hasAuthority('SCOPE_USER') and (authentication.name == #addAccountRequest.accountId or hasAuthority('SCOPE_ADMIN'))")
+    @PreAuthorize("hasAuthority('SCOPE_USER') and (authentication.name == #addAccountRequest.accountId.toString() or hasAuthority('SCOPE_ADMIN'))")
     fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest): Mono<Void> {
         return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('SCOPE_USER') and (hasAuthority('SCOPE_ADMIN') or #accountId == principal.name)")
+    @PreAuthorize("@roomSecurityUtils.canRemoveAccount(#roomId, authentication, #accountId)")
     fun removePlayer(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,
