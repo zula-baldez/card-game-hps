@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(name = "personal-account", configuration = [UserTokenFeignClientConfiguration::class])
+@FeignClient(primary = false, name = "personal-account", configuration = [UserTokenFeignClientConfiguration::class])
 interface PersonalAccountClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/accounts/{id}"])

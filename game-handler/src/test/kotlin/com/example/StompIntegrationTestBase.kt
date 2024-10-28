@@ -1,5 +1,6 @@
 package com.example.common
 
+import com.example.configuration.TestConfiguration
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.TestInstance
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.messaging.converter.MappingJackson2MessageConverter
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.messaging.simp.stomp.StompCommand
@@ -34,6 +36,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = ["spring.config.location=classpath:application.yaml"])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Import(TestConfiguration::class)
 class StompIntegrationTestBase {
     @Value("\${local.server.port}")
     private val port = 0

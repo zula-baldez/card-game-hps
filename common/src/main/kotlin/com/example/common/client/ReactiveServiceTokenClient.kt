@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import reactivefeign.spring.config.ReactiveFeignClient
 import reactor.core.publisher.Mono
 
-@ReactiveFeignClient("auth-service", qualifier = "service-token", configuration = [ReactiveServiceTokenFeignClientConfiguration::class])
+@ReactiveFeignClient("auth-service", qualifier = "service-token", configuration = [ReactiveServiceTokenFeignClientConfiguration::class], primary = false)
 interface ReactiveServiceTokenClient {
     @RequestMapping(method = [RequestMethod.POST], value=["/auth/service-token"])
     fun getServiceToken(serviceTokenRequest: GenerateServiceTokenRequest): Mono<AuthenticationResponse>

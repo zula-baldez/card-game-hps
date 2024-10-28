@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(name = "room-service", configuration = [UserTokenFeignClientConfiguration::class])
+@FeignClient(name = "room-service", configuration = [UserTokenFeignClientConfiguration::class], primary = false)
 interface RoomServiceClient {
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/rooms"])

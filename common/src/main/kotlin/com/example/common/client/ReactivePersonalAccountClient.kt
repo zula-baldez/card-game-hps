@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import reactivefeign.spring.config.ReactiveFeignClient
 import reactor.core.publisher.Mono
 
-@ReactiveFeignClient("personal-account", configuration = [ReactiveUserTokenFeignClientConfiguration::class])
+@ReactiveFeignClient("personal-account", configuration = [ReactiveUserTokenFeignClientConfiguration::class], primary = false)
 interface ReactivePersonalAccountClient {
     @RequestMapping(method = [RequestMethod.GET], value = ["/accounts/{id}"])
     fun getAccountById(@PathVariable id: Long): Mono<AccountDto>

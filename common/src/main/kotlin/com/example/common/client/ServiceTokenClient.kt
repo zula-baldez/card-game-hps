@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-@FeignClient(name = "auth-service", contextId = "service-token", configuration = [ServiceTokenFeignClientConfiguration::class])
+@FeignClient(name = "auth-service", contextId = "service-token", configuration = [ServiceTokenFeignClientConfiguration::class], primary = false)
 interface ServiceTokenClient {
     @RequestMapping(method = [RequestMethod.POST], value=["/auth/service-token"])
     fun getServiceToken(serviceTokenRequest: GenerateServiceTokenRequest): AuthenticationResponse

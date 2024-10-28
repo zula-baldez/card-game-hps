@@ -39,11 +39,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
 
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
-    implementation("org.springframework.security:spring-security-core:6.3.0")
-    implementation("org.springframework.security:spring-security-oauth2-client:6.3.3")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
-    implementation("org.springframework.security:spring-security-config:6.2.0")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
