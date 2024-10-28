@@ -7,15 +7,16 @@ import lombok.Data
 @Table(name = "roles")
 @Entity
 @Data
-class RoleEntity {
+class RoleEntity(
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Long? = null,
 
     @Column(name = "role_name")
     @Enumerated(EnumType.STRING)
     val roleName: Role? = null
-}
+)
+
 
 
