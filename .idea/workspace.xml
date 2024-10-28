@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/security/RoomSecurityUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveServiceTokenRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveServiceTokenRequestInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/resources/certs/private.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/resources/certs/public.pem" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +113,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker-compose.yml.auth-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.config-server: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.eureka-server: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.game-handler: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "Gradle.AuthControllerTest.executor": "Run",
@@ -234,53 +236,10 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.RoomServiceApplication">
-    <configuration name="card-game-hps [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.GameHandlerApplication">
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EurekaServerApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.eurekaserver.EurekaServerApplicationKt" />
-      <module name="card-game-hps.eureka-server.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameHandlerApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.GameHandlerApplicationKt" />
-      <module name="card-game-hps.game-handler.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PersonalAccountApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.PersonalAccountApplicationKt" />
-      <module name="card-game-hps.personal-account.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -364,13 +323,65 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.auth-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="auth-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.config-server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="config-server" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.eureka-server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="eureka-server" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.game-handler: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="game-handler" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.docker-compose.yml.auth-service: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.config-server: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.eureka-server: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-      <item itemvalue="Gradle.card-game-hps [jar]" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
-      <item itemvalue="Kotlin.EurekaServerApplicationKt" />
-      <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
-      <item itemvalue="Kotlin.GameHandlerApplicationKt" />
       <item itemvalue="Spring Boot.ConfigServerApplication" />
       <item itemvalue="Spring Boot.GatewayServerApplication" />
       <item itemvalue="Spring Boot.AuthServiceApplication" />
@@ -381,11 +392,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.config-server: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.auth-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.eureka-server: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Gradle.card-game-hps [jar]" />
-        <item itemvalue="Kotlin.EurekaServerApplicationKt" />
-        <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
-        <item itemvalue="Kotlin.GameHandlerApplicationKt" />
       </list>
     </recent_temporary>
   </component>
