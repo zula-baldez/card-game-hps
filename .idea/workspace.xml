@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice/AuthControllerTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/StompIntegrationTestBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/StompIntegrationTestBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/DistributionStrategyTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/DistributionStrategyTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/FinesStrategyTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/FinesStrategyTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/StartGameTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/StartGameTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,13 +49,14 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="room-service" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="room-service" type="2d1252cf:ModuleNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -233,7 +238,31 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GameHandlerApplication">
+  <component name="RunManager" selected="Gradle.DistributionStrategyTest">
+    <configuration name="DistributionStrategyTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":game-handler:test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.gameserviceintegration.DistributionStrategyTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />
@@ -312,14 +341,6 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="docker-compose.yml.auth-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -377,23 +398,16 @@
       <item itemvalue="Docker.docker-compose.yml.config-server: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml.eureka-server: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Gradle.DistributionStrategyTest" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
-      <item itemvalue="Spring Boot.ConfigServerApplication" />
-      <item itemvalue="Spring Boot.GatewayServerApplication" />
-      <item itemvalue="Spring Boot.AuthServiceApplication" />
-      <item itemvalue="Spring Boot.EurekaServerApplication" />
-      <item itemvalue="Spring Boot.GameHandlerApplication" />
-      <item itemvalue="Spring Boot.PersonalAccountApplication" />
-      <item itemvalue="Spring Boot.RoomServiceApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.DistributionStrategyTest" />
         <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.config-server: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.auth-service: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.eureka-server: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -664,7 +678,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729933653545</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="circuit breaker">
+      <option name="closed" value="true" />
+      <created>1730151392367</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1730151392367</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -694,7 +716,8 @@
     <MESSAGE value="Revert &quot;chore: Remove spring security usage&quot;&#10;&#10;This reverts commit 2f1b0cf1" />
     <MESSAGE value="auth service started" />
     <MESSAGE value="added init feigh client" />
-    <option name="LAST_COMMIT_MESSAGE" value="added init feigh client" />
+    <MESSAGE value="circuit breaker" />
+    <option name="LAST_COMMIT_MESSAGE" value="circuit breaker" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -737,7 +760,9 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_auth_service_test_.ic" NAME="Tests in 'card-game-hps.auth-service.test' Coverage Results" MODIFIED="1730133426569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/card_game_hps$StartGameTest.ic" NAME="StartGameTest Coverage Results" MODIFIED="1727722591244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/card_game_hps$RoomServiceApplicationKt.ic" NAME="RoomServiceApplicationKt Coverage Results" MODIFIED="1730143186610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__com_example_.ic" NAME="Tests in 'com.example' Coverage Results" MODIFIED="1728590449276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

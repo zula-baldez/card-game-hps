@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: game-server
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+rsa:
+  public-key: classpath:certs/public.pem
+
+service:
+  robot:
+    username:
+      game-handler
+    password:
+      kjhkjhkjh
+
+server:
+  port: 8082
+
+websocket:
+  connect-url: /
+  app-prefix: /app
+  topic: /topic

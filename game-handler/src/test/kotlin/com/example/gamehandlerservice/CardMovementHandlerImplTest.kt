@@ -8,7 +8,6 @@ import com.example.gamehandlerservice.service.game.cards.CardMovementHandlerImpl
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
@@ -27,7 +26,7 @@ class CardMovementHandlerImplTest {
     @BeforeEach
     fun setUp() {
         simpMessagingTemplate = mock(SimpMessagingTemplate::class.java)
-        handler = CardMovementHandlerImpl(simpMessagingTemplate, ObjectMapper())
+        handler = CardMovementHandlerImpl(simpMessagingTemplate)
         gameHandler = mock(GameHandler::class.java)
         gameData = GameData(
             gameId = gameId,

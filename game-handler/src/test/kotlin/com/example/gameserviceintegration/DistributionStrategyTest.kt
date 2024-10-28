@@ -1,6 +1,7 @@
 package com.example.gameserviceintegration
 
 import com.example.common.StompIntegrationTestBase
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Card
@@ -10,54 +11,45 @@ import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
-import com.example.personalaccount.database.AccountRepository
-import com.example.roomservice.repository.RoomRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.stomp.StompSession
-import kotlin.properties.Delegates
 
 class DistributionStrategyTest : StompIntegrationTestBase() {
     private var userSessions: MutableMap<Long, StompSession> = mutableMapOf()
-    private var hostId by Delegates.notNull<Long>()
-    private var roomId by Delegates.notNull<Long>()
+    private var hostId = 1L
 
-    private val gameId: Long
-        get() = roomRepository.findById(roomId).get().currentGameId
+    private val gameId = 1L
+    private val roomId = 1L
+
     private val game: GameHandler
         get() = gameHandlerRegistry.getGame(gameId) ?: throw IllegalArgumentException("No game found")
 
     @Autowired
     private lateinit var gameHandlerRegistry: GameHandlerRegistry
 
-    @Autowired
-    private lateinit var roomRepository: RoomRepository
-
-    @Autowired
-    private lateinit var accountRepository: AccountRepository
-
     @BeforeEach
     fun initData() {
-        val host = userService.register("name1", "pass1")
-        val roomDto = roomManager.createRoom("room", host.id, 3)
-        roomId = roomDto.id
-        hostId = host.id
-        roomAccountManager.addAccount(roomId, hostId, hostId)
-        var session = getClientStompSession(roomDto.id, host.id, host.token)
+        var session = getClientStompSession(1, 1, "Bearer token")
         userSessions[hostId] = session
 
-        for (i in 2..3) {
-            val user = userService.register("name$i", "pass$i")
-            session = getClientStompSession(roomDto.id, user.id, user.token)
-            userSessions[user.id] = session
-            roomAccountManager.addAccount(roomId, user.id, user.id)
+        for (i in 2L..3L) {
+            session = getClientStompSession(roomId, hostId, "Bearer token")
+            userSessions[i] = session
         }
 
         game.stateMachine.stage = Stage.DISTRIBUTION
-        game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map { accountRepository.findById(it).get() })
+        game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map {
+            AccountDto(
+                it,
+                "name$it",
+                0,
+                roomId
+            )
+        })
     }
 
     @AfterEach

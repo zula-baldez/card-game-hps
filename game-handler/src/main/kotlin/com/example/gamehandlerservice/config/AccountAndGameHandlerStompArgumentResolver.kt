@@ -1,5 +1,6 @@
 package com.example.gamehandlerservice.config
 
+import com.example.common.client.PersonalAccountClient
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.roomservice.RoomDto
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class AccountAndGameHandlerStompArgumentResolver(
-    //private val accountRepository: AccountRepository,
+    private val accountClient: PersonalAccountClient,
     private val roomServiceClient: RoomServiceClient,
     private val gameHandlerRegistry: GameHandlerRegistry
 
@@ -40,7 +41,7 @@ class AccountAndGameHandlerStompArgumentResolver(
             }
             AccountDto::class.java -> {
                 val accountId = sessionAttributes["x-user-id"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
-                //return accountRepository.findById(accountId).map { i -> i.toDto() }.orElse(null)
+                return accountClient.getAccountById(accountId)
             }
             else -> null
         }

@@ -1,20 +1,22 @@
 package com.example.common
 
-import com.example.authservice.service.UserService
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
-import com.example.roomservice.service.RoomAccountManager
-import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.junit.jupiter.MockitoExtension
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.messaging.converter.MappingJackson2MessageConverter
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.messaging.simp.stomp.StompCommand
 import org.springframework.messaging.simp.stomp.StompHeaders
 import org.springframework.messaging.simp.stomp.StompSession
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter
+import org.springframework.test.context.TestPropertySource
 import org.springframework.web.socket.WebSocketHttpHeaders
 import org.springframework.web.socket.client.standard.StandardWebSocketClient
 import org.springframework.web.socket.messaging.WebSocketStompClient
@@ -28,7 +30,11 @@ import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 
-class StompIntegrationTestBase : E2EDbInit() {
+@ExtendWith(MockitoExtension::class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = ["spring.config.location=classpath:application.yaml"])
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class StompIntegrationTestBase {
     @Value("\${local.server.port}")
     private val port = 0
     private val stompSession = mutableListOf<StompSession>()
@@ -37,14 +43,6 @@ class StompIntegrationTestBase : E2EDbInit() {
     @Autowired
     lateinit var messagingTemplate: SimpMessagingTemplate
 
-    @Autowired
-    lateinit var userService: UserService
-
-    @Autowired
-    lateinit var roomManager: RoomManager
-
-    @Autowired
-    lateinit var roomAccountManager: RoomAccountManager
 
     fun getClientStompSession(roomId: Long, userId: Long, token: String): StompSession {
         val url = "ws://localhost:$port/app/game?roomId=$roomId"

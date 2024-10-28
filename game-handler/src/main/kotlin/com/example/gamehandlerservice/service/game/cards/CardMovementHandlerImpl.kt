@@ -7,7 +7,6 @@ import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
-import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,8 +17,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("prototype")
 class CardMovementHandlerImpl(
-    private val simpMessagingTemplate: SimpMessagingTemplate,
-    private val objectMapper: ObjectMapper
+    private val simpMessagingTemplate: SimpMessagingTemplate
 ) : CardMovementHandler {
 
     override fun moveCard(moveCardRequest: MoveCardRequest, gameHandler: GameHandler) {
