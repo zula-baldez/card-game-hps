@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import reactor.core.publisher.Mono
 import kotlin.jvm.optionals.getOrNull
 
 @Service
@@ -22,22 +23,22 @@ class UserService(
     val encoder: PasswordEncoder,
     val tokenService: TokenService
 ) {
-    fun login(username: String, password: String): AuthenticationResponse {
+    fun login(username: String, password: String): Mono<AuthenticationResponse> {
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 
-        if (encoder.matches(password, user.password)) {
+        return if (encoder.matches(password, user.password)) {
             val token = tokenService.generateAccessToken(user, "user-token")
-            return AuthenticationResponse(token, user.id!!)
-        } else throw BadCredentialsException("Incorrect password")
+            Mono.just(AuthenticationResponse(token, user.id!!))
+        } else Mono.error(BadCredentialsException("Incorrect password"))
     }
 
-    fun generateServiceTokenForUser(userId: Long, service: String): AuthenticationResponse {
+    fun generateServiceTokenForUser(userId: Long, service: String): Mono<AuthenticationResponse> {
         val user = userRepo.findById(userId).getOrNull() ?: throw UsernameNotFoundException("user with id $userId not found")
         val token = tokenService.generateAccessToken(user, service)
 
-        return AuthenticationResponse(
+        return Mono.just(AuthenticationResponse(
             token,
             user.id!!
-        )
+        ))
     }
 }

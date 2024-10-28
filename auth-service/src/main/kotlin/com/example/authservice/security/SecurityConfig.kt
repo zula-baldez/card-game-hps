@@ -9,21 +9,22 @@ import com.nimbusds.jose.proc.SecurityContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.JwtEncoder
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
+import org.springframework.security.oauth2.jwt.*
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
-@EnableWebSecurity
-@EnableMethodSecurity
+@EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 class SecurityConfig(
     val rsaKeyProperties: RsaKeyProperties,
 ) {
@@ -34,27 +35,28 @@ class SecurityConfig(
 
     @Bean
     @Throws(Exception::class)
-    fun authServiceFilterChain(
-        http: HttpSecurity,
-    ): SecurityFilterChain {
-
+    fun filterChain(
+        http: ServerHttpSecurity,
+    ): SecurityWebFilterChain {
         http
-            .sessionManagement { i -> i.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests { i ->
-                i.requestMatchers(
-                    AntPathRequestMatcher("/auth/register"),
-                    AntPathRequestMatcher("/auth/login"),
-                ).permitAll()
-                    .anyRequest().authenticated()
+            .authorizeExchange {
+                it.pathMatchers("/auth/login").permitAll()
+                    .anyExchange().authenticated()
             }
             .oauth2ResourceServer {
                 it.jwt { jwt ->
-                    jwt.decoder(jwtDecoder())
+                    jwt.jwtDecoder(reactiveJwtDecoder())
                 }
             }
             .csrf { it.disable() }
-            .formLogin { it.disable()}
+            .formLogin { it.disable() }
+            .logout { it.disable() }
         return http.build()
+    }
+
+    @Bean
+    fun reactiveJwtDecoder(): ReactiveJwtDecoder {
+        return NimbusReactiveJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
     }
 
     @Bean

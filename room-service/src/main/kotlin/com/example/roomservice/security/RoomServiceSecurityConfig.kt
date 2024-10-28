@@ -14,7 +14,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain
 @Configuration
 @EnableConfigurationProperties(RsaKeyProperties::class)
 @EnableWebFluxSecurity
-@EnableWebSecurity
 class RoomServiceSecurityConfig(
     val rsaKeyProperties: RsaKeyProperties
 ) {

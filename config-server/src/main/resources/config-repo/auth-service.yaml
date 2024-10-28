@@ -21,6 +21,9 @@ spring:
       circuitbreaker:
         enabled: true
 
+  main:
+    web-application-type: reactive
+
 server:
   port: 8081
 
