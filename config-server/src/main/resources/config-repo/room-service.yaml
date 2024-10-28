@@ -14,6 +14,8 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+  main:
+    web-application-type: reactive
 
 service:
   robot:

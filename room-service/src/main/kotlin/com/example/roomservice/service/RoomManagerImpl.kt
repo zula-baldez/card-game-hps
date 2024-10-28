@@ -40,11 +40,6 @@ class RoomManagerImpl(
     override fun createRoom(name: String, hostId: Long, capacity: Int): Mono<RoomDto> {
         val roomEntity = RoomEntity(0, name, hostId, capacity, 0)
         return roomRepository.save(roomEntity).flatMap { makeRoomDto(it) }
-//        TODO: create game in game service
-//        val game = gameHandlerRegistry.createGame(name, roomEntity.id)
-//        roomEntity.currentGameId = game.gameData.gameId
-//        roomRepository.save(roomEntity)
-//        return roomEntity.toDto()
     }
 
     override fun deleteRoom(id: Long): Mono<Void> {

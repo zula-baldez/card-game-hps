@@ -33,8 +33,6 @@ services:
 
     build:
       dockerfile: ./personal-account/Dockerfile
-#      platforms:
-#        - "linux/amd64"
 
   auth-service:
     ports:
@@ -58,16 +56,10 @@ services:
     ports:
       - "8082:8082"
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_HOST: db-game-handler
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: KfvYuJQ8
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
       CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
       - eureka-server
-      - db-game-handler
       - config-server
     build:
       dockerfile: ./game-handler/Dockerfile
@@ -108,12 +100,8 @@ services:
     build:
       dockerfile: ./config-server/Dockerfile
 
-
-
   db-auth-service:
     image: postgres:15.2
-#    volumes:
-#      - dbvolume-auth-service:/var/lib/postgresql
     ports:
       - "5432:5432"
     expose:
@@ -126,26 +114,8 @@ services:
       restart_policy:
         condition: on-failure
 
-  db-game-handler:
-    image: postgres:15.2
-#    volumes:
-#      - dbvolume-game-handler:/var/lib/postgresql
-    ports:
-      - "5433:5432"
-    expose:
-      - 5433
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: KfvYuJQ8
-    deploy:
-      restart_policy:
-        condition: on-failure
-
   db-personal-account:
     image: postgres:15.2
-#    volumes:
-#      - dbvolume:/var/lib/postgresql
     ports:
       - "5434:5432"
     expose:
@@ -160,8 +130,6 @@ services:
 
   db-room-service:
     image: postgres:15.2
-#    volumes:
-#      - dbvolume:/var/lib/postgresql
     ports:
       - "5435:5432"
     expose:
@@ -173,6 +141,3 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-
-#volumes:
-#  dbvolume:
