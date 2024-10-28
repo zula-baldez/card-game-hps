@@ -1,11 +1,11 @@
 package com.example.gamehandlerservice
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.game.GameHandlerFactory
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistryInMemoryImpl
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.AccountEntity
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
@@ -40,10 +40,11 @@ class GameHandlerRegistryInMemoryTest {
             trump = null,
             playersTurnQueue = CyclicQueue(
                 listOf(
-                    AccountEntity(
+                    AccountDto(
                         name = "User1",
                         fines = 0,
-                        id = 1L
+                        id = 1L,
+                        roomId = 1L
                     )
                 )
             ),

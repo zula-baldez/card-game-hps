@@ -11,7 +11,7 @@ data class AccountDto(
     val name: String,
 
     @field:Min(0)
-    val fines: Int,
+    var fines: Int,
 
     @JsonProperty("room_id")
     val roomId: Long?

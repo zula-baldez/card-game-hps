@@ -1,39 +1,98 @@
 package com.example.authservice
+
 import com.example.authservice.controller.AuthController
-import com.example.common.dto.authservice.CredentialsRequest
-import com.example.common.dto.authservice.AuthenticationResponse
+import com.example.authservice.service.RegistrationService
 import com.example.authservice.service.UserService
-import org.junit.jupiter.api.Assertions.*
+import com.example.common.dto.authservice.AuthenticationResponse
+import com.example.common.dto.authservice.CredentialsRequest
+import com.example.common.dto.authservice.GenerateServiceTokenRequest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.kotlin.*
+import org.springframework.security.authentication.BadCredentialsException
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 import java.security.Principal
 
 class AuthControllerTest {
 
-    private val registerService: UserService = mock(UserService::class.java)
-    private val authController = AuthController(registerService)
+    private val userService: UserService = mock()
+    private val registrationService: RegistrationService = mock()
+    private val authController = AuthController(userService, registrationService)
 
     @Test
-    fun `should register user and return RegisterResponse`() {
-        val credentialsRequest = CredentialsRequest("testUser", "testPass")
-        val token = "tokenString"
-        val userId = 1L
-        val authenticationResponse = AuthenticationResponse(token, userId)
+    fun `register should return AuthenticationResponse when registration is successful`() {
+        val credentialsRequest = CredentialsRequest("username", "password")
+        val authResponse = AuthenticationResponse("token", 1)
 
-        `when`(registerService.register(credentialsRequest.username, credentialsRequest.password))
-            .thenReturn(authenticationResponse)
+        whenever(
+            registrationService.register(
+                credentialsRequest.username,
+                credentialsRequest.password
+            )
+        ).thenReturn(Mono.just(authResponse))
 
-        val response = authController.register(credentialsRequest)
-
-        assertEquals(token, response.token)
-        assertEquals(userId, response.id)
+        StepVerifier.create(authController.register(credentialsRequest))
+            .expectNext(authResponse)
+            .verifyComplete()
     }
 
     @Test
-    fun `should return username from Principal`() {
-        val principal = mock(Principal::class.java)
-        `when`(principal.name).thenReturn("testUser")
-        val result = authController.me(principal)
-        assertEquals("testUser", result)
+    fun `login should return AuthenticationResponse when login is successful`() {
+        val credentialsRequest = CredentialsRequest("username", "password")
+        val authResponse = AuthenticationResponse("token", 1)
+
+        whenever(userService.login(credentialsRequest.username, credentialsRequest.password)).thenReturn(
+            Mono.just(
+                authResponse
+            )
+        )
+
+        StepVerifier.create(authController.login(credentialsRequest))
+            .expectNext(authResponse)
+            .verifyComplete()
+    }
+
+    @Test
+    fun `generateTokenForService should return AuthenticationResponse when token generation is successful`() {
+        val serviceTokenRequest = GenerateServiceTokenRequest(1, "serviceName")
+        val authResponse = AuthenticationResponse("token", 1)
+
+        whenever(
+            userService.generateServiceTokenForUser(
+                serviceTokenRequest.userId,
+                serviceTokenRequest.serviceName
+            )
+        ).thenReturn(Mono.just(authResponse))
+
+        StepVerifier.create(authController.generateTokenForService(serviceTokenRequest))
+            .expectNext(authResponse)
+            .verifyComplete()
+    }
+
+    @Test
+    fun `me should return the name of the authenticated user`() {
+        val principal: Principal = mock { on { name } doReturn "username" }
+
+        StepVerifier.create(authController.me(principal))
+            .expectNext("username")
+            .verifyComplete()
+    }
+
+    @Test
+    fun `handleBadCredentialsException should return unauthorized response`() {
+        val exception = BadCredentialsException("Invalid credentials")
+        val response = authController.handleBadCredentialsException(exception)
+
+        assertEquals("Invalid credentials", response)
+    }
+
+    @Test
+    fun `handleIllegalArgumentException should return bad request response`() {
+        val exception = IllegalArgumentException("Failed to authenticate")
+
+        val response = authController.handleIllegalArgumentException(exception)
+
+        assertEquals("Failed to authenticate", response)
     }
 }

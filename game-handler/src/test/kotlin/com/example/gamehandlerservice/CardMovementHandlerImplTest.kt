@@ -1,5 +1,6 @@
 package com.example.gamehandlerservice
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
@@ -7,7 +8,6 @@ import com.example.gamehandlerservice.service.game.cards.CardMovementHandlerImpl
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.AccountEntity
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,10 +35,11 @@ class CardMovementHandlerImplTest {
             trump = null,
             playersTurnQueue = CyclicQueue(
                 listOf(
-                    AccountEntity(
+                    AccountDto(
                         name = "User1",
                         fines = 0,
-                        id = 1L
+                        id = 1L,
+                        roomId = 1L
                     )
                 )
             ),

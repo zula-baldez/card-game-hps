@@ -1,11 +1,11 @@
 package com.example.gamehandlerservice
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardCompareResult
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.AccountEntity
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,8 +15,8 @@ class CardTest {
     private val userId = 1L
     private val friendId = 2L
     private val initialFines = 2
-    private lateinit var user: AccountEntity
-    private lateinit var friend: AccountEntity
+    private lateinit var user: AccountDto
+    private lateinit var friend: AccountDto
     private lateinit var gameData: GameData
     private val gameId: Long = 100L
     private val roomId = 1L
@@ -24,15 +24,17 @@ class CardTest {
 
     @BeforeEach
     fun setUp() {
-        user = AccountEntity(
+        user = AccountDto(
             name = "User1",
             fines = initialFines,
-            id = userId
+            id = userId,
+            roomId = 1L
         )
-        friend = AccountEntity(
+        friend = AccountDto(
             name = "User2",
             fines = initialFines,
-            id = friendId
+            id = friendId,
+            roomId = 1L
         )
         gameData = GameData(
             gameId = gameId,

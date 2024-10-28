@@ -1,28 +1,26 @@
-package com.example.common
+package com.example
 
 import com.example.common.dto.api.Pagination
-import com.example.common.dto.api.ScrollPositionDto
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.roomservice.RoomDto
 import com.example.common.dto.roomservice.AccountAction
+import com.example.common.dto.roomservice.AddAccountRequest
+import com.example.common.dto.roomservice.RemoveAccountRequest
 import com.example.gamehandlerservice.model.dto.AccountActionDTO
 import com.example.gamehandlerservice.model.dto.AccountActionRequest
-import com.example.gamehandlerservice.model.dto.FineDTO
 import com.example.gamehandlerservice.model.dto.MessageDTO
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.AfterDropCardResult
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
-import com.example.roomservice.dto.AddAccountRequest
-import com.example.roomservice.dto.RemoveAccountRequest
 import jakarta.validation.Validation.buildDefaultValidatorFactory
 import jakarta.validation.Validator
 import jakarta.validation.ValidatorFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class DtoInitializationTests {
+class DtoInitializationTest {
     private val validator: Validator
 
     init {
@@ -68,21 +66,6 @@ class DtoInitializationTests {
         assertEquals(10,dto.pageSize)
     }
 
-    @Test
-    fun `ScrollPositionDto should be valid with proper values`() {
-        val dto = ScrollPositionDto(10)
-        val violations = validator.validate(dto)
-        assertEquals(0, violations.size)
-        assertEquals(10, dto.offset)
-    }
-
-    @Test
-    fun `FineDto should be valid with proper values`() {
-        val dto = FineDTO(10)
-        val violations = validator.validate(dto)
-        assertEquals(0, violations.size)
-        assertEquals(10, dto.id)
-    }
 
     @Test
     fun `AccountActionRequest should be valid with proper accountId`() {

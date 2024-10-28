@@ -1,5 +1,6 @@
 package com.example.gamehandlerservice
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardDropResult
 import com.example.gamehandlerservice.model.game.Suit
@@ -7,8 +8,6 @@ import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.gamehandlerservice.service.game.util.FinesCounter
-import com.example.personalaccount.database.AccountEntity
-import com.example.personalaccount.database.AccountRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,14 +22,13 @@ class FinesCounterTest {
     @Mock
     private lateinit var gameHandler: GameHandler
 
-    private lateinit var accountRepository: AccountRepository
 
 
     private val fromId = 1L
     private val toId = 2L
     private val initialFines = 2
-    private lateinit var user: AccountEntity
-    private lateinit var friend: AccountEntity
+    private lateinit var user: AccountDto
+    private lateinit var friend: AccountDto
     private lateinit var gameData: GameData
     private val roomId: Long = 1L
     private val gameId: Long = 100L
@@ -44,33 +42,34 @@ class FinesCounterTest {
             trump = null,
             playersTurnQueue = CyclicQueue(
                 listOf(
-                    AccountEntity(
+                    AccountDto(
                         name = "User1",
                         fines = 0,
-                        id = 1L
+                        id = 1L,
+                        roomId =1L
                     )
                 )
             ),
             userCards = mutableMapOf(),
             finesCounter = mutableMapOf()
         )
-        user = AccountEntity(
+        user = AccountDto(
             name = "User1",
             fines = initialFines,
-            id = fromId
+            id = fromId,
+            roomId = 1L
         )
-        friend = AccountEntity(
+        friend = AccountDto(
             name = "User2",
             fines = initialFines,
-            id = toId
+            id = toId,
+            roomId = 1L
         )
 
         finesCounter = mock(FinesCounter::class.java)
         gameHandler = mock(GameHandler::class.java)
-        accountRepository = mock(AccountRepository::class.java)
 
         `when`(gameHandler.gameData).thenReturn(gameData)
-        finesCounter = FinesCounter(accountRepository)
     }
 
     @Test

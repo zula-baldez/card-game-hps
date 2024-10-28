@@ -1,247 +1,148 @@
 package com.example.roomservice
 
-import com.example.common.exceptions.*
-import com.example.gamehandlerservice.model.dto.AccountAction
-import com.example.personalaccount.database.AccountEntity
-import com.example.personalaccount.database.AccountRepository
-import com.example.roomservice.repository.RoomEntity
-import com.example.roomservice.repository.RoomRepository
+import com.example.common.client.ReactivePersonalAccountClient
+import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
+import com.example.common.dto.roomservice.AccountAction
+import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.ForbiddenOperationException
+import com.example.common.exceptions.RoomNotFoundException
+import com.example.roomservice.repository.*
 import com.example.roomservice.service.RoomAccountManagerImpl
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.anyLong
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.kotlin.verify
-import org.springframework.messaging.simp.SimpMessagingTemplate
-import java.util.Optional
+import org.mockito.kotlin.*
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 
 class RoomAccountManagerTest {
 
-    private lateinit var roomAccountManager: RoomAccountManagerImpl
-    private lateinit var roomRepository: RoomRepository
-    private lateinit var accountRepository: AccountRepository
-    private lateinit var messagingTemplate: SimpMessagingTemplate
-    private val hostId = 1L
-    private val playerId = 2L
-    private var host = AccountEntity(
-        name = "User1",
-        fines = 0,
-        id = hostId
-    )
-    private var player = AccountEntity(
-        name = "User2",
-        fines = 0,
-        id = playerId
-    )
-    private var room = RoomEntity(
-        id = 0,
-        name = "Комната для игры",
-        hostId = hostId,
-        capacity = 4,
-        currentGameId = 0L,
-        players = mutableListOf()
+    private val roomRepository: RoomRepository = mock()
+    private val accountInRoomRepository: AccountInRoomRepository = mock()
+    private val bannedAccountInRoomRepository: BannedAccountInRoomRepository = mock()
+    private val personalAccountClient: ReactivePersonalAccountClient = mock()
+    private val roomAccountManager = RoomAccountManagerImpl(
+        roomRepository,
+        accountInRoomRepository,
+        bannedAccountInRoomRepository,
+        personalAccountClient
     )
 
-    @BeforeEach
-    fun setUp() {
-        roomRepository = mock(RoomRepository::class.java)
-        accountRepository = mock(AccountRepository::class.java)
-        messagingTemplate = mock(SimpMessagingTemplate::class.java)
-
-        roomAccountManager = RoomAccountManagerImpl(roomRepository, accountRepository, messagingTemplate)
-    }
-
     @Test
-    fun `addAccount should return roomNotFound if room does not exist`() {
-        val accountId = 1L
-        `when`(roomRepository.findById(anyLong())).thenReturn(Optional.empty())
-
-        assertThrows(RoomNotFoundException::class.java) { roomAccountManager.addAccount(999L, accountId, accountId) }
-    }
-
-    @Test
-    fun `addAccount should return playerNotFound if account does not exist`() {
-        val roomId = 1L
-        `when`(roomRepository.findById(roomId)).thenReturn(
-            Optional.of(
-                room
-            )
-        )
-        `when`(accountRepository.findById(anyLong())).thenReturn(Optional.empty())
-
-        assertThrows(AccountNotFoundException::class.java) { roomAccountManager.addAccount(roomId, 999L, 999L) }
-    }
-
-    @Test
-    fun `addAccount should return roomOverflow if room is full`() {
-        val roomId = 1L
-        val room = RoomEntity(
-            id = 0,
-            name = "Комната для игры",
-            hostId = 1L,
-            capacity = 0,
-            currentGameId = 0L,
-            players = mutableListOf()
-        )
-
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(host))
-
-        assertThrows(RoomOverflowException::class.java) { roomAccountManager.addAccount(roomId, hostId, hostId) }
-    }
-
-    @Test
-    fun `addAccount should add account successfully when room has space`() {
+    fun `addAccount should add account to room when conditions are met`() {
         val roomId = 1L
         val accountId = 2L
+        val room = RoomEntity(roomId, "Test Room", 1L, 5, 0)
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
-
-        roomAccountManager.addAccount(roomId, accountId, accountId)
-
-        assertTrue(room.players.contains(host))
-    }
-
-    @Test
-    fun `removeAccount should return roomNotFound if room does not exist`() {
-        val accountId = 1L
-        `when`(roomRepository.findById(anyLong())).thenReturn(Optional.empty())
-
-        assertThrows(RoomNotFoundException::class.java) {
-            roomAccountManager.removeAccount(
-                999L,
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.just(room))
+        whenever(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
+        whenever(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
+        whenever(accountInRoomRepository.save(any())).thenReturn(Mono.just(AccountInRoomEntity(accountId, roomId)))
+        whenever(
+            personalAccountClient.updateAccountRoom(
                 accountId,
-                AccountAction.LEAVE,
-                accountId
+                UpdateAccountRoomRequest(roomId)
             )
-        }
+        ).thenReturn(Mono.empty())
+
+        StepVerifier.create(roomAccountManager.addAccount(roomId, accountId))
+            .expectComplete()
+            .verify()
+
+        verify(accountInRoomRepository).save(AccountInRoomEntity(accountId, roomId, true))
+        verify(personalAccountClient).updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId))
     }
 
     @Test
-    fun `removeAccount should return playerNotFound if account does not exist`() {
-        val roomId = 1L
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(anyLong())).thenReturn(Optional.empty())
-
-        assertThrows(AccountNotFoundException::class.java) {
-            roomAccountManager.removeAccount(
-                roomId,
-                999L,
-                AccountAction.LEAVE,
-                hostId
-            )
-        }
-    }
-
-
-    @Test
-    fun `should remove account from room and save changes`() {
-        val roomId = 1L
-        val accountId = 1L
-        val reason = AccountAction.BAN
-        val room = room.apply { players.add(host) }
-
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
-
-        roomAccountManager.removeAccount(roomId, accountId, reason, accountId)
-
-        assertFalse(room.players.contains(host))
-        assertTrue(room.bannedPlayers.contains(host))
-    }
-
-    @Test
-    fun `should throw AccountNotFoundException when account is not in room players`() {
-        val roomId = 1L
-        val accountId = 1L
-        val reason = AccountAction.BAN
-        val room = room.apply { players.add(host) }
-        val account = AccountEntity(
-            name = "User3",
-            fines = 0,
-            id = 3L
-        )
-
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(account))
-
-        val exception = assertThrows<AccountNotFoundException> {
-            roomAccountManager.removeAccount(roomId, accountId, reason, accountId)
-        }
-        assertEquals("Account with id $accountId not found", exception.message)
-    }
-
-    @Test
-    fun `should throw when account is not host when remove player`() {
-        val roomId = 1L
-        val hostId = 1L
-        val userId = 3L
-
-        val reason = AccountAction.BAN
-        val room = room.apply { players.add(host) }
-        val hostAccount = AccountEntity(
-            name = "User1",
-            fines = 0,
-            id = 1L
-        )
-
-        val userAccount = AccountEntity(
-            name = "User3",
-            fines = 0,
-            id = 3L
-        )
-
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(hostAccount))
-        `when`(accountRepository.findById(userId)).thenReturn(Optional.of(userAccount))
-
-        val exception = assertThrows<HostOnlyException> {
-            roomAccountManager.removeAccount(roomId, hostId, reason, userId)
-        }
-        assertEquals("This operation is host only", exception.message)
-    }
-
-    @Test
-    fun `should throw ForbiddenOperationException when requesterId does not match accountId`() {
+    fun `addAccount should return error when account is not requester`() {
         val roomId = 1L
         val accountId = 2L
-        val requesterId = 3L
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(room))
-        `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(host))
-
-       assertThrows<ForbiddenOperationException> {
-            roomAccountManager.addAccount(roomId, accountId, requesterId)
-        }
+        StepVerifier.create(roomAccountManager.addAccount(roomId, accountId))
+            .expectError(ForbiddenOperationException::class.java)
+            .verify()
     }
 
     @Test
-    fun `should transfer host after host leaves`() {
+    fun `addAccount should return error when room not found`() {
         val roomId = 1L
+        val accountId = 2L
 
-        val initialRoom = RoomEntity(
-            id = roomId,
-            name = "Комната для игры",
-            hostId = hostId,
-            capacity = 4,
-            currentGameId = 0L,
-            players = mutableListOf(
-                host,
-                player
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.empty())
+
+        StepVerifier.create(roomAccountManager.addAccount(roomId, accountId))
+            .expectError(RoomNotFoundException::class.java)
+            .verify()
+    }
+
+    @Test
+    fun `addAccount should return error when account is banned`() {
+        val roomId = 1L
+        val accountId = 2L
+        val room = RoomEntity(roomId, "Test Room", 1L, 5, 0)
+
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.just(room))
+        whenever(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(
+            Flux.just(
+                BannedAccountInRoomEntity(
+                    1,
+                    accountId,
+                    roomId
+                )
             )
         )
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(initialRoom))
-        `when`(accountRepository.findById(hostId)).thenReturn(Optional.of(host))
-        `when`(accountRepository.findById(playerId)).thenReturn(Optional.of(player))
+        StepVerifier.create(roomAccountManager.addAccount(roomId, accountId))
+            .expectError(ForbiddenOperationException::class.java)
+            .verify()
+    }
 
-        roomAccountManager.removeAccount(roomId, hostId, AccountAction.LEAVE, hostId)
+    @Test
+    fun `removeAccount should remove account from room when conditions are met`() {
+        val roomId = 1L
+        val accountId = 2L
+        val requesterId = 1L
+        val room = RoomEntity(roomId, "Test Room", requesterId, 5, 0)
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.just(room))
+        whenever(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(
+            Flux.just(
+                AccountInRoomEntity(
+                    accountId,
+                    roomId
+                )
+            )
+        )
 
-        assertEquals(initialRoom.hostId, playerId)
-        assertFalse(initialRoom.players.contains(host))
+        StepVerifier.create(roomAccountManager.removeAccount(roomId, accountId, AccountAction.KICK))
+            .expectComplete()
+            .verify()
+
+        verify(accountInRoomRepository).findAllByRoomId(roomId)
+    }
+
+    @Test
+    fun `removeAccount should return error when room not found`() {
+        val roomId = 1L
+        val accountId = 2L
+
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.empty())
+
+        StepVerifier.create(roomAccountManager.removeAccount(roomId, accountId, AccountAction.KICK))
+            .expectError(RoomNotFoundException::class.java)
+            .verify()
+    }
+
+    @Test
+    fun `removeAccount should return error when account not found in room`() {
+        val roomId = 1L
+        val accountId = 2L
+        val requesterId = 1L
+        val room = RoomEntity(roomId, "Test Room", requesterId, 5, 0)
+
+        whenever(roomRepository.findById(roomId)).thenReturn(Mono.just(room))
+        whenever(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
+
+        StepVerifier.create(roomAccountManager.removeAccount(roomId, accountId, AccountAction.KICK))
+            .expectError(AccountNotFoundException::class.java)
+            .verify()
     }
 }

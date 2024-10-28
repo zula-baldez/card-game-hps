@@ -1,5 +1,8 @@
 package com.example.gamehandlerservice
 
+import com.example.common.client.RoomServiceClient
+import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
@@ -8,10 +11,6 @@ import com.example.gamehandlerservice.service.game.game.GameHandlerImpl
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import com.example.personalaccount.database.AccountEntity
-import com.example.roomservice.repository.RoomEntity
-import com.example.roomservice.repository.RoomRepository
-import com.example.roomservice.service.RoomManager
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,15 +22,15 @@ class GameHandlerImplTest {
 
     private lateinit var gameHandler: GameHandlerImpl
     private val cardMovementHandler: CardMovementHandler = mock(CardMovementHandler::class.java)
-    private val roomManager: RoomManager = mock(RoomManager::class.java)
-    private val roomRepository: RoomRepository = mock(RoomRepository::class.java)
+
+    private val roomRepository: RoomServiceClient = mock(RoomServiceClient::class.java)
     private val stateStageMachineHandler: StageStateMachineHandler = mock(StageStateMachineHandler::class.java)
 
     private val userId = 1L
     private val friendId = 2L
     private val initialFines = 2
-    private lateinit var user: AccountEntity
-    private lateinit var friend: AccountEntity
+    private lateinit var user: AccountDto
+    private lateinit var friend: AccountDto
     private lateinit var gameData: GameData
     private val gameId: Long = 100L
     private val roomId = 1L
@@ -39,15 +38,15 @@ class GameHandlerImplTest {
 
     @BeforeEach
     fun setUp() {
-        user = AccountEntity(
+        user = AccountDto(
             name = "User1",
             fines = initialFines,
-            id = userId
+            id = userId, roomId = 1
         )
-        friend = AccountEntity(
+        friend = AccountDto(
             name = "User2",
             fines = initialFines,
-            id = friendId
+            id = friendId, roomId = 1
         )
         gameData = GameData(
             gameId = gameId,
@@ -55,7 +54,7 @@ class GameHandlerImplTest {
             trump = null,
             playersTurnQueue = CyclicQueue(
                 listOf(
-                    user,friend
+                    user, friend
                 )
             ),
             userCards = mutableMapOf(),
@@ -68,9 +67,9 @@ class GameHandlerImplTest {
     @Test
     fun `configureGameHandler should initialize gameData correctly`() {
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
 
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomEntity.id, stateStageMachineHandler)
@@ -81,9 +80,9 @@ class GameHandlerImplTest {
     @Test
     fun `turningPlayer should return the current player in turn`() {
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomId, stateStageMachineHandler)
         val shuffledPlayers = gameHandler.gameData.playersTurnQueue.getAll()
@@ -93,9 +92,9 @@ class GameHandlerImplTest {
     @Test
     fun `changeTurn should change the current player in turn`() {
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomId, stateStageMachineHandler)
 
@@ -109,9 +108,9 @@ class GameHandlerImplTest {
         val card = Card(Suit.DIAMONDS, 6L, false)
         val moveCardRequest = MoveCardRequest(fromDropArea = 1L, toDropArea = 2L, card = card)
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomId, stateStageMachineHandler)
 
@@ -123,9 +122,9 @@ class GameHandlerImplTest {
     @Test
     fun `startGame should initialize the game and change turn`() {
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomId, stateStageMachineHandler)
 
@@ -137,15 +136,15 @@ class GameHandlerImplTest {
     }
 
     @Test
-    fun testGetStage(){
+    fun testGetStage() {
         val players = mutableListOf(user, friend)
-        val roomEntity = RoomEntity(roomId, "Test Room", 1L, 10, 0, players)
+        val roomEntity = RoomDto(roomId, "Test Room", 1L, 10, players, 1L, listOf())
 
-        `when`(roomRepository.findById(roomId)).thenReturn(Optional.of(roomEntity))
+        `when`(roomRepository.findById(roomId)).thenReturn(roomEntity)
         gameHandler.gameData = gameData
         gameHandler.configureGameHandler("TestGame", 1L, roomId, stateStageMachineHandler)
 
-        assertEquals(stateStageMachineHandler.stage,gameHandler.getStage())
+        assertEquals(stateStageMachineHandler.stage, gameHandler.getStage())
     }
 
 }
