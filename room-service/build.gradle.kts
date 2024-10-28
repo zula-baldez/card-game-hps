@@ -1,25 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-subprojects {
-    if (name != "auth-service") {
-        tasks.named("bootJar") {
-            enabled = false
-        }
-
-        tasks.named("jar") {
-            enabled = true
-        }
-    }
-}
-tasks.named("bootJar") {
-    enabled = true
-}
-
-tasks.named("jar") {
-    enabled = false
-}
-
-
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
@@ -28,7 +8,6 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
     id ("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id("com.google.protobuf") version "0.8.19"
 }
 
 group = "com.example"
@@ -66,7 +45,6 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
     implementation("org.liquibase:liquibase-core:4.22.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("com.google.code.gson:gson:2.10.1")
     compileOnly("org.projectlombok:lombok:1.18.26")
     developmentOnly("org.springframework.boot:spring-boot-devtools:3.0.4")
     annotationProcessor("org.projectlombok:lombok:1.18.26")

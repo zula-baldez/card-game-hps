@@ -1,24 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-subprojects {
-    if (name != "auth-service") {
-        tasks.named("bootJar") {
-            enabled = false
-        }
-
-        tasks.named("jar") {
-            enabled = true
-        }
-    }
-}
-tasks.named("bootJar") {
-    enabled = true
-}
-
-tasks.named("jar") {
-    enabled = false
-}
-
 
 plugins {
     id("org.springframework.boot") version "3.2.1"
@@ -28,7 +9,6 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id("com.google.protobuf") version "0.8.19"
 }
 
 group = "com.example"
@@ -51,7 +31,6 @@ dependencies {
 
     implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
 
-    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.1.0")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
@@ -61,7 +40,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
     implementation("org.springframework.security:spring-security-core:6.3.0")
-    implementation("org.springframework.security:spring-security-oauth2-client:6.3.3")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
     implementation("org.springframework.security:spring-security-config:6.2.0")
@@ -75,7 +53,6 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.26")
     implementation("org.postgresql:postgresql:42.7.4")
 
-    implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
