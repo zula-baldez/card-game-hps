@@ -79,4 +79,42 @@ class RoomAccountManagerTest {
         verify(bannedAccountInRoomRepository).findAllByRoomId(roomId)
     }
 
+    @Test
+    fun `should initialize AccountInRoomEntity with given parameters`() {
+        val accountId = 1L
+        val roomId = 101L
+
+        val accountInRoom = AccountInRoomEntity(accountId, roomId)
+
+        assertEquals(accountId, accountInRoom.accountId)
+        assertEquals(roomId, accountInRoom.roomId)
+        assertEquals(false, accountInRoom.isNewAccount)
+    }
+
+    @Test
+    fun `should initialize AccountInRoomEntity as new account`() {
+        val accountId = 2L
+        val roomId = 202L
+        val isNewAccount = true
+
+        val accountInRoom = AccountInRoomEntity(accountId, roomId, isNewAccount)
+
+        assertEquals(accountId, accountInRoom.accountId)
+        assertEquals(roomId, accountInRoom.roomId)
+        assertEquals(isNewAccount, accountInRoom.isNewAccount)
+    }
+    @Test
+    fun `should initialize BannedAccountInRoomEntity with given parameters`() {
+        val id = 1L
+        val accountId = 2L
+        val roomId = 3L
+
+        val bannedAccountInRoom = BannedAccountInRoomEntity(id, accountId, roomId)
+
+        assertEquals(id, bannedAccountInRoom.id)
+        assertEquals(accountId, bannedAccountInRoom.accountId)
+        assertEquals(roomId, bannedAccountInRoom.roomId)
+    }
+
+
 }
