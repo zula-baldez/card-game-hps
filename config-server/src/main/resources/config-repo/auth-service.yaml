@@ -16,6 +16,11 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 server:
   port: 8081
 

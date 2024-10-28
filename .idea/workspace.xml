@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveUserTokenFeignClientConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveUserTokenFeignClientConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/UserTokenRequestInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/UserTokenRequestInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/resources/common.application.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/gateway-server.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/gateway-server.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

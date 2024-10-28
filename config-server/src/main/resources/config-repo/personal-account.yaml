@@ -20,6 +20,11 @@ spring:
     resources:
       add-mappings: false
 
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 server:
   port: 8083
 
