@@ -10,6 +10,7 @@ import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
@@ -34,6 +35,7 @@ class RoomController(
 
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): Mono<RoomDto> {
         return roomManager.createRoom(
             createRoomRequest.name,
@@ -43,19 +45,21 @@ class RoomController(
     }
 
     @PostMapping("/rooms/{roomId}/players")
-    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest, principal: Principal): Mono<Void> {
-        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId, principal.name.toLong())
+    @PreAuthorize("hasAuthority('SCOPE_USER') and (authentication.name == #addAccountRequest.accountId or hasAuthority('SCOPE_ADMIN'))")
+    fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest): Mono<Void> {
+        return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }
 
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('SCOPE_USER') and (hasAuthority('SCOPE_ADMIN') or #accountId == principal.name)")
     fun removePlayer(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
         principal: Principal
     ): Mono<Void> {
-        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason, principal.name.toLong())
+        return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
     }
 
     @ExceptionHandler(RoomNotFoundException::class)
