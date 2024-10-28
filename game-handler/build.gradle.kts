@@ -46,6 +46,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
 
     implementation("org.springframework.security:spring-security-messaging:6.1.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
