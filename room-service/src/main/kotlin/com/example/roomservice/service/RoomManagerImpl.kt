@@ -2,10 +2,12 @@ package com.example.roomservice.service
 
 import com.example.common.client.PersonalAccountClient
 import com.example.common.client.ReactivePersonalAccountClient
+import com.example.common.client.ReactiveServiceTokenClient
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.roomservice.RoomDto
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -14,8 +16,7 @@ import reactor.core.publisher.Mono
 class RoomManagerImpl(
     private val roomRepository: RoomRepository,
     private val roomAccountManager: RoomAccountManager,
-    private val personalAccountClient: ReactivePersonalAccountClient
-    // private val gameHandlerRegistry: GameHandlerRegistry
+    private val personalAccountClient: ReactivePersonalAccountClient,
 ) : RoomManager {
     private fun makeRoomDto(roomEntity: RoomEntity): Mono<RoomDto> {
         return roomAccountManager.getAccountsInRoom(roomEntity.id).flatMap { personalAccountClient.getAccountById(it) }

@@ -2,6 +2,7 @@ package com.example.common.client
 
 import com.example.common.interceptor.ReactiveUserTokenRequestInterceptor
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import reactivefeign.client.ReactiveHttpRequestInterceptor
@@ -13,7 +14,8 @@ class ReactiveUserTokenFeignClientConfiguration(
     private val serviceName: String
 ) {
     @Bean
-    fun interceptor(): ReactiveHttpRequestInterceptor {
+    @Qualifier("user-token-interceptor")
+    fun userTokenInterceptor(): ReactiveHttpRequestInterceptor {
         return ReactiveUserTokenRequestInterceptor(serviceTokenClient, serviceName)
     }
 }

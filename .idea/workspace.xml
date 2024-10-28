@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="added init feigh client">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/client/LocalServiceTokenClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/client/LocalServiceTokenClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/controller/AuthController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/security/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/security/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/UserService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenFeignClientConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveUserTokenFeignClientConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveUserTokenFeignClientConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/controllers/RoomController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/security/RoomServiceSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/security/RoomServiceSecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomManagerImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +163,7 @@
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.GatewayServerApplication.executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
-    "Spring Boot.RoomServiceApplication.executor": "Run",
+    "Spring Boot.RoomServiceApplication.executor": "Debug",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",

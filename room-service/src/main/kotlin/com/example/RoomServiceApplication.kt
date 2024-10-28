@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import reactivefeign.spring.config.EnableReactiveFeignClients
 
 @SpringBootApplication
-@EnableReactiveFeignClients
+@EnableReactiveFeignClients(basePackages = ["com.example.common"])
 class RoomServiceApplication
 
 fun main(args: Array<String>) {

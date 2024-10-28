@@ -22,11 +22,7 @@ class RoomAccountManagerImpl(
     val personalAccountClient: ReactivePersonalAccountClient
 ) : RoomAccountManager {
     @Transactional
-    override fun addAccount(roomId: Long, accountId: Long, requesterId: Long): Mono<Void> {
-        if (accountId != requesterId) {
-            return Mono.error(ForbiddenOperationException())
-        }
-
+    override fun addAccount(roomId: Long, accountId: Long): Mono<Void> {
         return roomRepository
             .findById(roomId)
             .switchIfEmpty(Mono.error { RoomNotFoundException(roomId) })
@@ -65,15 +61,11 @@ class RoomAccountManagerImpl(
             .and(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)))
     }
 
-    override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction, requesterId: Long): Mono<Void> {
+    override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction): Mono<Void> {
         return roomRepository
             .findById(roomId)
             .switchIfEmpty(Mono.error(RoomNotFoundException(roomId)))
             .flatMap { room ->
-                if (!(room.hostId == requesterId || requesterId == accountId)) {
-                    return@flatMap Mono.error<Void> { HostOnlyException() }
-                }
-
                 return@flatMap accountInRoomRepository.findAllByRoomId(room.id)
                     .collectList()
                     .flatMap { accounts ->
