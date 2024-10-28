@@ -44,9 +44,13 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
+    implementation("org.springframework.security:spring-security-oauth2-client:6.3.3")
     implementation("org.springframework.security:spring-security-messaging:6.1.1")
+    implementation ("org.aspectj:aspectjrt:1.9.7")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
