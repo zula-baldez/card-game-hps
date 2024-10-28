@@ -1,6 +1,5 @@
 package com.example.personalaccount
 
-import com.example.common.dto.business.FineDTO
 import com.example.common.dto.api.Pagination
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.controllers.FriendsController
@@ -24,7 +23,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.*
 import org.springframework.data.domain.PageImpl
-import org.springframework.messaging.simp.SimpMessagingTemplate
 import java.security.Principal
 import java.util.*
 
@@ -33,7 +31,6 @@ internal class FriendsControllerTest {
     private lateinit var accountRepositoryMock: AccountRepository
     private lateinit var friendshipRepositoryMock: FriendshipRepository
     private lateinit var accountServiceMock: AccountService
-    private lateinit var messageTemplateMock: SimpMessagingTemplate
     private lateinit var friendsManagerImpl: PersonalAccountManager
     private lateinit var friendsController: FriendsController
     private val userId = 1L
@@ -43,16 +40,9 @@ internal class FriendsControllerTest {
     private lateinit var principal: Principal
     @BeforeEach
     fun setUp() {
-        user = AccountEntity(
-            name = "User1",
-            fines = 0,
-            id = userId
-        )
-        friend = AccountEntity(
-            name = "User2",
-            fines = 0,
-            id = friendId
-        )
+        user =  AccountEntity(id = userId, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+
+        friend = AccountEntity(id = friendId, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
 
         accountRepositoryMock = mock<AccountRepository> {
             on { findById(userId) } doReturn Optional.of(user)
@@ -60,7 +50,6 @@ internal class FriendsControllerTest {
         }
         friendshipRepositoryMock = mock<FriendshipRepository>()
         accountServiceMock = AccountServiceImpl(accountRepositoryMock)
-        messageTemplateMock = mock<SimpMessagingTemplate>()
         friendsManagerImpl = PersonalAccountManagerImpl(
             accountRepositoryMock,
             friendshipRepositoryMock,
@@ -261,13 +250,6 @@ internal class FriendsControllerTest {
         }
     }
 
-
-    @Test
-    fun testAddFine() {
-        friendsManagerImpl.addFine(userId)
-        assertEquals(1, user.fines)
-        verify(messageTemplateMock).convertAndSend(eq("/topic/fines"), eq(FineDTO(userId)))
-    }
 
     @Test
     fun testHandleAddFriendException() {

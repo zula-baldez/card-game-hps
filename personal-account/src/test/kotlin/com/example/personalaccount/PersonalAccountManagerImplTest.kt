@@ -20,13 +20,11 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.springframework.data.domain.PageImpl
-import org.springframework.messaging.simp.SimpMessagingTemplate
 
 class PersonalAccountManagerImplTest {
     private lateinit var accountRepository: AccountRepository
     private lateinit var friendshipRepository: FriendshipRepository
     private lateinit var accountService: AccountService
-    private lateinit var simpMessagingTemplate: SimpMessagingTemplate
     private lateinit var personalAccountManager: PersonalAccountManagerImpl
     private lateinit var user: AccountEntity
     private lateinit var friend: AccountEntity
@@ -36,30 +34,15 @@ class PersonalAccountManagerImplTest {
         accountRepository = mock(AccountRepository::class.java)
         friendshipRepository = mock(FriendshipRepository::class.java)
         accountService = mock(AccountService::class.java)
-        simpMessagingTemplate = mock(SimpMessagingTemplate::class.java)
 
         personalAccountManager = PersonalAccountManagerImpl(
             accountRepository,
             friendshipRepository,
             accountService
         )
-        user = AccountEntity(
-            id = 1L,
-            name = "John Doe",
-            fines = 0,
-            roomEntity = null,
-            friends = HashSet(),
-            incomingFriendRequests = HashSet()
-        )
+        user = AccountEntity(id = 1L, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
 
-        friend = AccountEntity(
-            id = 2L,
-            name = "Jane Smith",
-            fines = 0,
-            roomEntity = null,
-            friends = HashSet(),
-            incomingFriendRequests = HashSet()
-        )
+        friend = AccountEntity(id = 2L, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
     }
 
     @Test
@@ -290,8 +273,8 @@ class PersonalAccountManagerImplTest {
     fun `getAllFriends returns friends list for valid accountId`() {
         val accountId = 1L
         val pagination = Pagination(0, 10)
-        val mockAccount = AccountEntity(name = "User1", fines = 0, id = 1L)
-        val mockAccount2 = AccountEntity(name = "User2", fines = 0, id = 2L)
+        val mockAccount  = AccountEntity(id = 1L, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        val mockAccount2 = AccountEntity(id = 2L, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
         val friendships = listOf(
             FriendshipEntity(fromAccount = mockAccount2, toAccount = mockAccount, status = FriendshipStatus.ACCEPTED),
         )
@@ -327,7 +310,7 @@ class PersonalAccountManagerImplTest {
     @Test
     fun `addFine increases fines and sends fine notification`() {
         val accountId = 1L
-        val mockAccount = AccountEntity(name = "User1", fines = 0, id = 1L)
+        val mockAccount = AccountEntity(id = 1, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
 
         `when`(accountService.findByIdOrThrow(accountId)).thenReturn(mockAccount)
         `when`(accountRepository.save(mockAccount)).thenReturn(mockAccount)
