@@ -29,8 +29,6 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
     implementation("org.springframework.security:spring-security-core:6.3.0")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
