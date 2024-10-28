@@ -25,6 +25,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config:4.1.3")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4")
 
+
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway:4.1.5")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

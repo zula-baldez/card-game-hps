@@ -13,7 +13,11 @@ feign:
         loggerLevel: debug
         requestInterceptors:
           - com.example.common.interceptor.AuthRequestInterceptor
-
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 rsa:
   public-key: classpath:certs/public.pem
 

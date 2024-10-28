@@ -45,7 +45,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
-
+    implementation("io.github.resilience4j:resilience4j-circuitbreaker:2.2.0")
     implementation("org.springframework.cloud:spring-cloud-starter-config:4.1.3")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4")
 
