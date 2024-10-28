@@ -13,7 +13,7 @@ class UserTokenRequestInterceptor(
 
     override fun apply(template: RequestTemplate) {
         val authentication = SecurityContextHolder.getContext().authentication
-        val token = serviceTokenClient.getServiceToken(GenerateServiceTokenRequest(authentication.name.toLong(), serviceName))
+        val token = serviceTokenClient.getServiceToken(GenerateServiceTokenRequest(authentication.name.toLong(), serviceName)).token
         template.header("Authorization", "Bearer $token")
     }
 }

@@ -23,6 +23,7 @@ class AuthController(
     val registrationService: RegistrationService
 ) {
     @PostMapping("/auth/register")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): AuthenticationResponse {
         return registrationService.register(credentialsRequest.username, credentialsRequest.password)
     }

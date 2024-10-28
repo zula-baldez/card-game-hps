@@ -9,7 +9,10 @@ import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.util.Role
 import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.jwt.JwtDecoder
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +22,8 @@ class RegistrationService(
     private val roleRepository: RoleRepository,
     private val encoder: PasswordEncoder,
     private val tokenService: TokenService,
-    private val personalAccountClient: PersonalAccountClient
+    private val personalAccountClient: PersonalAccountClient,
+    private val jwtDecoder: JwtDecoder
 ) {
     @Transactional
     fun register(username: String, password: String) : AuthenticationResponse {
@@ -33,6 +37,7 @@ class RegistrationService(
         userEntity.roles += userRole
         val savedUser = userRepo.save(userEntity)
         val token = tokenService.generateAccessToken(savedUser, "user-token")
+        SecurityContextHolder.getContext().authentication = JwtAuthenticationToken(jwtDecoder.decode(token))
         personalAccountClient.createAccount(CreateAccountDto(id = savedUser.id!!, username = username),)
         return AuthenticationResponse(token, savedUser.id!!)
     }
