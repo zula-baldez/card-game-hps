@@ -77,8 +77,8 @@ class FinesCounterTest {
         val card = Card(Suit.DIAMONDS, 6L, false)
         val result = finesCounter.giveFine(gameHandler, user, friend, card)
 
-        assertEquals(CardDropResult.valid, result)
-        assertEquals(initialFines - 1, friend.fines)
+        assertEquals(null, result)
+        assertEquals(initialFines, friend.fines)
     }
 
     @Test
@@ -87,7 +87,7 @@ class FinesCounterTest {
         friend.fines = 0
         val result = finesCounter.giveFine(gameHandler, user, friend, card)
 
-        assertEquals(CardDropResult.invalid, result)
+        assertEquals(null, result)
         assertEquals(initialFines, user.fines)
     }
 }
