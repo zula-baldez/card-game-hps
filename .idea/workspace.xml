@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/configuration/TestConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/AuthServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/LoginServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/LoginServiceClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/PersonalAccountClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/PersonalAccountClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveLoginServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveLoginServiceClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactivePersonalAccountClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactivePersonalAccountClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ReactiveServiceTokenClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/RoomServiceClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ServiceTokenClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/client/ServiceTokenClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/SocketSecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/SocketSecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/UserHandshakeInterceptor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/UserHandshakeInterceptor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/StompIntegrationTestBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/StompIntegrationTestBase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/configuration/ClientConfiguration.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/DistributionStrategyTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gameserviceintegration/DistributionStrategyTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/auth-service.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +42,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="card-game-hps" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="application" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -131,6 +110,9 @@
     "Docker.docker-compose.yml.config-server: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.eureka-server: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.game-handler: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.gateway-server: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.personal-account: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.room-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "Gradle.AuthControllerTest.executor": "Run",
@@ -155,7 +137,7 @@
     "Gradle.card-game-hps [jar].executor": "Run",
     "Gradle.card-game-hps [kotlinSourcesJar].executor": "Run",
     "Kotlin script (Beta).settings.gradle.kts.executor": "Run",
-    "Kotlin.AuthServiceApplicationKt.executor": "Run",
+    "Kotlin.AuthServiceApplicationKt.executor": "Debug",
     "Kotlin.ConfigServerApplicationKt.executor": "Run",
     "Kotlin.EurekaServerApplicationKt.executor": "Run",
     "Kotlin.GameHandlerApplicationKt.executor": "Run",
@@ -251,62 +233,10 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.DistributionStrategyTest">
-    <configuration name="DistributionStrategyTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":game-handler:test" />
-            <option value="--tests" />
-            <option value="&quot;com.example.gameserviceintegration.DistributionStrategyTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Kotlin.AuthServiceApplicationKt">
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ConfigServerApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.ConfigServerApplicationKt" />
-      <module name="card-game-hps.config-server.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EurekaServerApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.eurekaserver.EurekaServerApplicationKt" />
-      <module name="card-game-hps.eureka-server.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PersonalAccountApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.PersonalAccountApplicationKt" />
-      <module name="card-game-hps.personal-account.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RoomServiceApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.RoomServiceApplicationKt" />
-      <module name="card-game-hps.room-service.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -382,21 +312,93 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.auth-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="auth-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.game-handler: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="game-handler" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.gateway-server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="gateway-server" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.personal-account: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="personal-account" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.room-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="room-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Gradle.DistributionStrategyTest" />
+      <item itemvalue="Docker.docker-compose.yml.auth-service: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.gateway-server: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.personal-account: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.room-service: Compose Deployment" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
-      <item itemvalue="Kotlin.ConfigServerApplicationKt" />
-      <item itemvalue="Kotlin.EurekaServerApplicationKt" />
-      <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
-      <item itemvalue="Kotlin.RoomServiceApplicationKt" />
+      <item itemvalue="Spring Boot.AuthServiceApplication" />
+      <item itemvalue="Spring Boot.ConfigServerApplication" />
+      <item itemvalue="Spring Boot.EurekaServerApplication" />
+      <item itemvalue="Spring Boot.GameHandlerApplication" />
+      <item itemvalue="Spring Boot.GatewayServerApplication" />
+      <item itemvalue="Spring Boot.PersonalAccountApplication" />
+      <item itemvalue="Spring Boot.RoomServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.DistributionStrategyTest" />
-        <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
-        <item itemvalue="Kotlin.RoomServiceApplicationKt" />
-        <item itemvalue="Kotlin.EurekaServerApplicationKt" />
-        <item itemvalue="Kotlin.ConfigServerApplicationKt" />
+        <item itemvalue="Docker.docker-compose.yml.gateway-server: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.room-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.game-handler: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.auth-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.personal-account: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -758,6 +760,11 @@
           <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/UserHandshakeInterceptor.kt</url>
           <line>25</line>
           <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveServiceTokenRequestInterceptor.kt</url>
+          <line>25</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

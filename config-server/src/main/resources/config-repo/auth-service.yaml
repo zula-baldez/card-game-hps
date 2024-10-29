@@ -27,6 +27,14 @@ spring:
 server:
   port: 8081
 
+service:
+  robot:
+    username:
+      auth-service
+    password:
+      auth-service
+
+
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
