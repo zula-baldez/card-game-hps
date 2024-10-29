@@ -15,7 +15,17 @@ class TestConfiguration {
     @Bean
     @Primary
     fun personalAccountClient(): PersonalAccountClient {
-        return mock(PersonalAccountClient::class.java)
+        val mock = mock(PersonalAccountClient::class.java)
+        lenient().`when`(mock.getAccountById(6)).thenReturn(
+            AccountDto(6, "name", 0, 6)
+        )
+        lenient().`when`(mock.getAccountById(7)).thenReturn(
+            AccountDto(7, "name", 0, 7)
+        )
+        lenient().`when`(mock.getAccountById(8)).thenReturn(
+            AccountDto(8, "name", 0, 8)
+        )
+        return mock
 
     }
 
