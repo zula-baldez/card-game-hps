@@ -54,13 +54,13 @@ class StompIntegrationTestBase {
         stompClient.messageConverter = MappingJackson2MessageConverter()
         val handshakeHeaders = WebSocketHttpHeaders()
         handshakeHeaders.add("Authorization", "Bearer $token")
-        val connectHeaders = StompHeaders()
-        connectHeaders.add("Authorization", "Bearer $token")
+        // val connectHeaders = StompHeaders()
+        // connectHeaders.add("Authorization", "Bearer $token")
         receivedMessages[userId] = LinkedBlockingDeque()
         val session = stompClient.connectAsync(
             url,
             handshakeHeaders,
-            connectHeaders,
+            StompHeaders(),
             GameClientSessionHandler(userId)
         )[5, SECONDS]
         stompSession += session

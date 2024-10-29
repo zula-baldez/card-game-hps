@@ -42,7 +42,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
-    implementation("org.springframework.security:spring-security-messaging:6.1.1")
     implementation ("org.aspectj:aspectjrt:1.9.7")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
