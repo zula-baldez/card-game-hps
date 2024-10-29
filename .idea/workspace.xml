@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/Card.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/Card.kt" afterDir="false" />

@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 //card id is strength + suit
 //f.e. 10 diamonds is 101
 data class Card(
-    val suit: Suit,
-    val strenght: Long,
-    var secret: Boolean
+    var suit: Suit = Suit.SPADES,
+    var strenght: Long = 0,
+    var secret: Boolean = false
 ) {
     @JsonIgnore
     val id: Long = strenght * 10 + suit.id
