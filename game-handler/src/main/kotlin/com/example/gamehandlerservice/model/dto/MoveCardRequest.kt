@@ -6,11 +6,9 @@ import jakarta.validation.constraints.NotNull
 
 data class MoveCardRequest(
     @NotNull
-    @JsonProperty("from_drop_area")
     var fromDropArea: Long,
 
     @NotNull
-    @JsonProperty("to_drop_area")
     var toDropArea: Long,
 
     @NotNull
