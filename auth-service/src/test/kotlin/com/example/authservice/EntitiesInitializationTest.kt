@@ -12,8 +12,8 @@ class EntitiesInitializationTest {
     fun `should initialize RoleEntity correctly`() {
         val roleName = Role.ADMIN
         val roleEntity = RoleEntity( 1, Role.ADMIN )
-
         assertEquals(roleEntity.roleName, roleName)
+        assertEquals(1, roleEntity.id)
     }
     @Test
     fun `should initialize UserEntity correctly`() {
