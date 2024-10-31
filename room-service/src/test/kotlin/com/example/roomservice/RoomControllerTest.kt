@@ -2,7 +2,7 @@ package com.example.roomservice
 
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.roomservice.*
-import com.example.common.exceptions.RoomNotFoundException
+import com.example.common.exceptions.*
 import com.example.roomservice.controllers.RoomController
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import org.springframework.http.HttpStatus
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.security.Principal
@@ -136,5 +137,58 @@ class RoomControllerTest {
         val result = roomController.removePlayer(roomId, accountId, removeAccountRequest, principal).block()
 
         assertEquals(null, result)
+    }
+
+    @Test
+    fun `should return NOT FOUND status when RoomNotFoundException is thrown`() {
+        val exception = RoomNotFoundException(1)
+        val response = roomController.handleRoomNotFoundException(exception)
+
+        assertEquals("Room with id 1 not found", response)
+        assertEquals(HttpStatus.NOT_FOUND, getHttpStatus(RoomNotFoundException::class.java))
+    }
+
+    @Test
+    fun `should return NOT FOUND status when AccountNotFoundException is thrown`() {
+        val exception = AccountNotFoundException(1)
+        val response = roomController.handleAccountNotFoundException(exception)
+
+        assertEquals("Account with id 1 not found", response)
+        assertEquals(HttpStatus.NOT_FOUND, getHttpStatus(AccountNotFoundException::class.java))
+    }
+
+    @Test
+    fun `should return BAD REQUEST status when HostOnlyException is thrown`() {
+        val exception = HostOnlyException()
+        val response = roomController.handleAccountNotFoundException(exception)
+
+        assertEquals("This operation is host only", response)
+        assertEquals(HttpStatus.BAD_REQUEST, getHttpStatus(HostOnlyException::class.java))
+    }
+
+    @Test
+    fun `should return BAD REQUEST status when RoomOverflowException is thrown`() {
+        val exception = RoomOverflowException(1)
+        val response = roomController.handleRoomOverflowException(exception)
+
+        assertEquals("Room with id 1 is overflow", response)
+        assertEquals(HttpStatus.BAD_REQUEST, getHttpStatus(RoomOverflowException::class.java))
+    }
+
+    @Test
+    fun `should return FORBIDDEN status when ForbiddenOperationException is thrown`() {
+        val exception = ForbiddenOperationException()
+        val response = roomController.handleForbiddenOperationException(exception)
+
+        assertEquals("Access denied", response)
+        assertEquals(HttpStatus.FORBIDDEN, getHttpStatus(ForbiddenOperationException::class.java))
+    }
+    private fun getHttpStatus(exceptionClass: Class<out Exception>): HttpStatus {
+        return when (exceptionClass) {
+            RoomNotFoundException::class.java, AccountNotFoundException::class.java -> HttpStatus.NOT_FOUND
+            HostOnlyException::class.java, RoomOverflowException::class.java -> HttpStatus.BAD_REQUEST
+            ForbiddenOperationException::class.java -> HttpStatus.FORBIDDEN
+            else -> HttpStatus.INTERNAL_SERVER_ERROR
+        }
     }
 }
