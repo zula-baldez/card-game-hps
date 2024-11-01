@@ -11,13 +11,13 @@ import com.example.gamehandlerservice.model.dto.AccountActionRequest
 import com.example.gamehandlerservice.model.dto.MessageDTO
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
-import com.example.gamehandlerservice.model.game.AfterDropCardResult
-import com.example.gamehandlerservice.model.game.Card
-import com.example.gamehandlerservice.model.game.Suit
+import com.example.gamehandlerservice.model.game.*
+import com.example.gamehandlerservice.service.game.util.VirtualPlayers
 import jakarta.validation.Validation.buildDefaultValidatorFactory
 import jakarta.validation.Validator
 import jakarta.validation.ValidatorFactory
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class DtoInitializationTest {
@@ -133,4 +133,57 @@ class DtoInitializationTest {
         val addAccReq = RemoveAccountRequest(AccountAction.KICK);
         assertEquals(AccountAction.KICK, addAccReq.reason)
     }
+
+    @Test
+    fun `test CardDropResult initialization`() {
+        val dropResult1 = CardDropResult(changeTurn = true, valid = false, needsFine = true)
+        assertEquals(true, dropResult1.changeTurn)
+        assertEquals(false, dropResult1.valid)
+        assertEquals(true, dropResult1.needsFine)
+
+        val dropResult2 = CardDropResult(changeTurn = true, valid = true, needsFine = false)
+        assertEquals(true, dropResult2.changeTurn)
+        assertEquals(true, dropResult2.valid)
+        assertEquals(false, dropResult2.needsFine)
+
+        val dropResult3 = CardDropResult(changeTurn = false, valid = false, needsFine = false)
+        assertEquals(false, dropResult3.changeTurn)
+        assertEquals(false, dropResult3.valid)
+        assertEquals(false, dropResult3.needsFine)
+    }
+
+    @Test
+    fun `test CardDropResult companion object constants`() {
+        val invalidResult = CardDropResult.invalid
+        assertEquals(true, invalidResult.changeTurn)
+        assertEquals(false, invalidResult.valid)
+        assertEquals(true, invalidResult.needsFine)
+
+        val validResult = CardDropResult.valid
+        assertEquals(true, validResult.changeTurn)
+        assertEquals(true, validResult.valid)
+        assertEquals(false, validResult.needsFine)
+
+        val missClickResult = CardDropResult.missClick
+        assertEquals(false, missClickResult.changeTurn)
+        assertEquals(false, missClickResult.valid)
+        assertEquals(false, missClickResult.needsFine)
+    }
+
+    @Test
+    fun `test Stage enum values`() {
+        val stages = Stage.values()
+
+        assertEquals(4, stages.size)
+        assertTrue(stages.contains(Stage.WAITING))
+        assertTrue(stages.contains(Stage.DISTRIBUTION))
+        assertTrue(stages.contains(Stage.FINES))
+        assertTrue(stages.contains(Stage.PLAYING))
+    }
+    @Test
+    fun testEnumValues() {
+        assertEquals(VirtualPlayers.DECK, VirtualPlayers.values()[0])
+        assertEquals(VirtualPlayers.TABLE, VirtualPlayers.values()[1])
+    }
+
 }
