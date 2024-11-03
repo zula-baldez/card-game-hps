@@ -80,4 +80,26 @@ class RoomSecurityUtilsTest {
 
         assertEquals(false, result)
     }
+
+    @Test
+    fun `should return true if room host equals auth name`() {
+        val room = RoomDto(
+            id = 1,
+            name = "Room1",
+            hostId = 1L,
+            capacity = 10,
+            players = listOf(),
+            currentGameId = 1L,
+            bannedPlayers = emptyList()
+        )
+        val authentication = mock(Authentication::class.java)
+        val otherAuthority: GrantedAuthority = SimpleGrantedAuthority("SCOPE_USER")
+        `when`(authentication.name).thenReturn("1")
+        `when`(authentication.authorities).thenReturn(listOf(otherAuthority))
+        `when`(roomManager.getRoom(1L)).thenReturn(Mono.just(room))
+
+        val result = roomSecurityUtils.canRemoveAccount(1L, authentication, 2L).block()
+        assertEquals(true, result)
+    }
+
 }
