@@ -33,7 +33,6 @@ dependencies {
     implementation("org.aspectj:aspectjrt:1.9.7")
     implementation("org.springframework.data:spring-data-jpa:3.3.5")
     implementation("org.springframework.data:spring-data-commons:3.3.5")
-    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:3.1.2")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")

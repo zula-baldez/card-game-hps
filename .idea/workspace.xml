@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +137,7 @@
     "Gradle.RoomAccountManagerTest.removeAccount should remove account from room.executor": "Run",
     "Gradle.RoomAccountManagerTest.removeAccount with band should add account to banned accounts.executor": "Run",
     "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
-    "Gradle.Run all tests.executor": "Coverage",
+    "Gradle.Run all tests.executor": "Debug",
     "Gradle.StartGameTest.executor": "Run",
     "Gradle.StompIntegrationTestBase.executor": "Debug",
     "Gradle.StompIntegrationTestBase.stompTest.executor": "Debug",
@@ -864,11 +865,6 @@
           <url>file://$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt</url>
           <line>36</line>
           <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/common/src/main/kotlin/com/example/common/interceptor/ReactiveServiceTokenRequestInterceptor.kt</url>
-          <line>25</line>
-          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/cards/CardMovementHandlerImpl.kt</url>
