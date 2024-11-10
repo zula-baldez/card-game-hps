@@ -1,17 +1,23 @@
 package com.example.roomservice.service
 
-import com.example.common.client.PersonalAccountClient
 import com.example.common.client.ReactivePersonalAccountClient
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.dto.roomservice.AccountAction
-import com.example.common.exceptions.*
-import com.example.roomservice.repository.*
+import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.ForbiddenOperationException
+import com.example.common.exceptions.RoomNotFoundException
+import com.example.common.exceptions.RoomOverflowException
+import com.example.roomservice.repository.AccountInRoomEntity
+import com.example.roomservice.repository.AccountInRoomRepository
+import com.example.roomservice.repository.BannedAccountInRoomEntity
+import com.example.roomservice.repository.BannedAccountInRoomRepository
+import com.example.roomservice.repository.RoomEntity
+import com.example.roomservice.repository.RoomRepository
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.core.scheduler.Schedulers
 
 @Component
 @Scope("prototype")
@@ -116,12 +122,4 @@ class RoomAccountManagerImpl(
     override fun getBannedAccountsInRoom(roomId: Long): Flux<Long> {
         return bannedAccountInRoomRepository.findAllByRoomId(roomId).map { it.accountId }
     }
-
-   //
-   // private fun sendAccountAction(accountAction: AccountAction, accountEntity: AccountEntity) {
-   //     simpMessagingTemplate.convertAndSend(
-   //         "/topic/accounts",
-   //         AccountActionDTO(accountAction, accountEntity.id, accountEntity.name)
-   //     )
-   // }
 }
