@@ -1,6 +1,6 @@
 // package com.example.gameserviceintegration
 //
-// import com.example.common.StompIntegrationTestBase
+// import com.example.StompIntegrationTestBase
 // import com.example.gamehandlerservice.model.dto.MoveCardRequest
 // import com.example.gamehandlerservice.model.game.Card
 // import com.example.gamehandlerservice.model.game.Stage

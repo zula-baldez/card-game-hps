@@ -1,4 +1,4 @@
-package com.example.common
+package com.example
 
 import com.example.configuration.TestConfiguration
 import com.example.gamehandlerservice.model.dto.MoveCardResponse

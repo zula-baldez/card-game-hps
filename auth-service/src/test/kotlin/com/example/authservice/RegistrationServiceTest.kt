@@ -5,20 +5,21 @@ import com.example.authservice.database.RoleRepository
 import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepository
 import com.example.authservice.jwt.TokenService
-import org.mockito.kotlin.any
 import com.example.authservice.service.RegistrationService
 import com.example.common.client.ReactivePersonalAccountClient
-import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.util.Role
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
@@ -66,4 +67,39 @@ class RegistrationServiceTest {
         verify(userRepo).findByName(username)
         verifyNoMoreInteractions(userRepo)
     }
+
+    @Test
+    fun `register should create a new user, generate token, and return AuthenticationResponse`() {
+        val username = "newUser"
+        val password = "password123"
+        val encodedPassword = "encodedPassword123"
+        val generatedToken = "jwtToken"
+        val userId = 1L
+
+        val userRole = RoleEntity(id = 1, roleName = Role.USER)
+        val userEntity = UserEntity(id = userId, name = username, password = encodedPassword, roles = mutableSetOf(userRole))
+
+        `when`(userRepo.findByName(username)).thenReturn(null)
+        `when`(encoder.encode(password)).thenReturn(encodedPassword)
+        `when`(roleRepository.findFirstByRoleName(Role.USER)).thenReturn(userRole)
+        `when`(userRepo.save(any<UserEntity>())).thenReturn(userEntity)
+        `when`(tokenService.generateAccessToken(any(), any())).thenReturn(generatedToken)
+        `when`(jwtDecoder.decode(generatedToken)).thenReturn(mock(Jwt::class.java)) // Decoding token returns a mock Jwt
+        `when`(personalAccountClient.createAccount(any())).thenReturn(Mono.empty()) // Account creation returns empty
+
+        val result = registrationService.register(username, password)
+
+        // Assert using StepVerifier to check the returned Mono
+        StepVerifier.create(result)
+            .expectNextMatches { response ->
+                response.token == generatedToken && response.id == userId
+            }
+            .verifyComplete()
+
+        verify(userRepo).findByName(username)
+        verify(encoder).encode(password)
+        verify(roleRepository).findFirstByRoleName(Role.USER)
+        verify(tokenService).generateAccessToken(userEntity, "user-token")
+    }
+
 }

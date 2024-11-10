@@ -1,10 +1,9 @@
 package com.example.gameserviceintegration
 
-import com.example.common.StompIntegrationTestBase
+import com.example.StompIntegrationTestBase
 import com.example.common.client.PersonalAccountClient
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.dto.MoveCardResponse
 import com.example.gamehandlerservice.model.game.Card
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.lenient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.stomp.StompSession
 

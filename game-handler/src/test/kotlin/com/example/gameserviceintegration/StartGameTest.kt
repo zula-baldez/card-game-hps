@@ -1,6 +1,6 @@
 // package com.example.gameserviceintegration
 //
-// import com.example.common.StompIntegrationTestBase
+// import com.example.StompIntegrationTestBase
 // import com.example.gamehandlerservice.model.game.Stage
 // import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 // import com.example.roomservice.repository.RoomRepository
