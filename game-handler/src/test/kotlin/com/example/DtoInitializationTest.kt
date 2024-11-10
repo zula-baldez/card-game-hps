@@ -2,6 +2,7 @@ package com.example
 
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.dto.roomservice.RoomDto
 import com.example.common.dto.roomservice.AccountAction
 import com.example.common.dto.roomservice.AddAccountRequest
@@ -54,16 +55,16 @@ class DtoInitializationTest {
         val violations = validator.validate(dto)
         assertEquals(0, violations.size)
         assertEquals("Комната для игры", dto.name)
-        assertEquals(4,dto.capacity)
+        assertEquals(4, dto.capacity)
     }
 
     @Test
     fun `Pagination should be valid with proper values`() {
-        val dto = Pagination(10,10)
+        val dto = Pagination(10, 10)
         val violations = validator.validate(dto)
         assertEquals(0, violations.size)
-        assertEquals(10,dto.page)
-        assertEquals(10,dto.pageSize)
+        assertEquals(10, dto.page)
+        assertEquals(10, dto.pageSize)
     }
 
 
@@ -78,7 +79,7 @@ class DtoInitializationTest {
 
     @Test
     fun `AccountDto should be valid with proper values`() {
-        val dto = AccountDto( 1L, "Test", 2,1L)
+        val dto = AccountDto(1L, "Test", 2, 1L)
         val violations = validator.validate(dto)
         assertEquals(0, violations.size)
         assertEquals(1L, dto.id)
@@ -124,7 +125,7 @@ class DtoInitializationTest {
 
     @Test
     fun `AddAccountRequest constants should have correct values`() {
-       val addAccReq = AddAccountRequest(1L);
+        val addAccReq = AddAccountRequest(1L);
         assertEquals(1L, addAccReq.accountId)
     }
 
@@ -180,10 +181,35 @@ class DtoInitializationTest {
         assertTrue(stages.contains(Stage.FINES))
         assertTrue(stages.contains(Stage.PLAYING))
     }
+
     @Test
     fun testEnumValues() {
         assertEquals(VirtualPlayers.DECK, VirtualPlayers.values()[0])
         assertEquals(VirtualPlayers.TABLE, VirtualPlayers.values()[1])
     }
 
+    @Test
+    fun `RoomDTO constants should have correct values`() {
+        val roomDto = RoomDto(
+            id = 0,
+            name = "Комната для игры",
+            hostId = 1L,
+            capacity = 4,
+            currentGameId = 0L,
+            players = mutableListOf(), bannedPlayers = mutableListOf()
+        )
+        assertEquals(1L, roomDto.hostId)
+        assertEquals(4, roomDto.capacity)
+        assertEquals("Комната для игры", roomDto.name)
+        assertEquals(0L, roomDto.currentGameId)
+    }
+
+    @Test
+    fun `UpdateAccountRoomRequest constants should have correct values`() {
+        val updateAccountRoomRequest = UpdateAccountRoomRequest(
+            roomId = 1L
+        )
+        assertEquals(1L, updateAccountRoomRequest.roomId)
+
+    }
 }
