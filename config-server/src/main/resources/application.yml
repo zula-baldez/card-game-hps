@@ -9,6 +9,9 @@ spring:
         native:
           search-locations:
             - classpath:/config-repo/
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 server:
   port: 8090

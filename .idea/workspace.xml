@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomAccountManagerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomAccountManagerTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/kotlin/com/example/authservice/service/RegistrationService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,10 +136,12 @@
     "Gradle.RoomAccountManagerTest.removeAccount should remove account from room.executor": "Run",
     "Gradle.RoomAccountManagerTest.removeAccount with band should add account to banned accounts.executor": "Run",
     "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
+    "Gradle.Run all tests.executor": "Coverage",
     "Gradle.StartGameTest.executor": "Run",
     "Gradle.StompIntegrationTestBase.executor": "Debug",
     "Gradle.StompIntegrationTestBase.stompTest.executor": "Debug",
     "Gradle.StopmIntegrationTestBase.executor": "Run",
+    "Gradle.Tests in 'card-game-hps.auth-service'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.auth-service.test'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.game-handler'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.personal-account'.executor": "Coverage",
@@ -251,79 +253,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves">
-    <configuration name="RoomAccountManagerTest.addAccount should throw error capacity" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":room-service:test" />
-            <option value="--tests" />
-            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw error capacity&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="RoomAccountManagerTest.addAccount should throw when account in another room" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":room-service:test" />
-            <option value="--tests" />
-            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw when account in another room&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="RoomAccountManagerTest.addAccount should throw when join twice" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":room-service:test" />
-            <option value="--tests" />
-            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw when join twice&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.Run all tests">
     <configuration name="RoomAccountManagerTest.removeAccount should delete room when last player leaves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -348,6 +278,112 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Run all tests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":auth-service:test" />
+            <option value=":game-handler:test" />
+            <option value=":personal-account:test" />
+            <option value=":room-service:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+        <extension name="coverage" runner="jacoco" />
+        <extension name="net.ashald.envfile">
+          <option name="IS_ENABLED" value="false" />
+          <option name="IS_SUBST" value="false" />
+          <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+          <option name="IS_IGNORE_MISSING_FILES" value="false" />
+          <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+          <ENTRIES>
+            <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          </ENTRIES>
+        </extension>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'card-game-hps.game-handler'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":game-handler:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+        <extension name="net.ashald.envfile">
+          <option name="IS_ENABLED" value="false" />
+          <option name="IS_SUBST" value="false" />
+          <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+          <option name="IS_IGNORE_MISSING_FILES" value="false" />
+          <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+          <ENTRIES>
+            <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          </ENTRIES>
+        </extension>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'card-game-hps.personal-account'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":personal-account:test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+        <extension name="net.ashald.envfile">
+          <option name="IS_ENABLED" value="false" />
+          <option name="IS_SUBST" value="false" />
+          <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+          <option name="IS_IGNORE_MISSING_FILES" value="false" />
+          <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+          <ENTRIES>
+            <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          </ENTRIES>
+        </extension>
+      </EXTENSION>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="Tests in 'card-game-hps.room-service'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -366,6 +402,18 @@
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
+        <extension name="net.ashald.envfile">
+          <option name="IS_ENABLED" value="false" />
+          <option name="IS_SUBST" value="false" />
+          <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+          <option name="IS_IGNORE_MISSING_FILES" value="false" />
+          <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+          <ENTRIES>
+            <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          </ENTRIES>
+        </extension>
+      </EXTENSION>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
       <method v="2" />
@@ -449,9 +497,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw error capacity" />
-      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when account in another room" />
-      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when join twice" />
+      <item itemvalue="Gradle.Run all tests" />
+      <item itemvalue="Gradle.Tests in 'card-game-hps.game-handler'" />
+      <item itemvalue="Gradle.Tests in 'card-game-hps.personal-account'" />
       <item itemvalue="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves" />
       <item itemvalue="Gradle.Tests in 'card-game-hps.room-service'" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
@@ -465,11 +513,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Run all tests" />
+        <item itemvalue="Gradle.Tests in 'card-game-hps.game-handler'" />
+        <item itemvalue="Gradle.Tests in 'card-game-hps.personal-account'" />
         <item itemvalue="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves" />
         <item itemvalue="Gradle.Tests in 'card-game-hps.room-service'" />
-        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when account in another room" />
-        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when join twice" />
-        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw error capacity" />
       </list>
     </recent_temporary>
   </component>
@@ -853,16 +901,18 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_personal_account_.ic" NAME="Tests in 'card-game-hps.personal-account' Coverage Results" MODIFIED="1731243064164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_personal_account_.ic" NAME="Tests in 'card-game-hps.personal-account' Coverage Results" MODIFIED="1731251902168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$All_in_card_game_hps__1_.ic" NAME="All in card-game-hps (1) Coverage Results" MODIFIED="1730209039325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_auth_service_test_.ic" NAME="Tests in 'card-game-hps.auth-service.test' Coverage Results" MODIFIED="1731242922179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Whole_project.ic" NAME="Whole project Coverage Results" MODIFIED="1730209053584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_game_handler_.ic" NAME="Tests in 'card-game-hps.game-handler' Coverage Results" MODIFIED="1731243148193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_auth_service_.ic" NAME="Tests in 'card-game-hps.auth-service' Coverage Results" MODIFIED="1731251865030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_game_handler_.ic" NAME="Tests in 'card-game-hps.game-handler' Coverage Results" MODIFIED="1731251921835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$All_in_card_game_hps.ic" NAME="All in card-game-hps Coverage Results" MODIFIED="1731245834902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$RoomServiceApplicationKt.ic" NAME="RoomServiceApplicationKt Coverage Results" MODIFIED="1730143186610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_.ic" NAME="Tests in 'card-game-hps.room-service' Coverage Results" MODIFIED="1731251771872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Whole_project.ic" NAME="Whole project Coverage Results" MODIFIED="1730209053584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Run_all_tests.exec" NAME="Run all tests Coverage Results" MODIFIED="1731252189476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_test_.ic" NAME="Tests in 'card-game-hps.room-service.test' Coverage Results" MODIFIED="1731250891071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$StartGameTest.ic" NAME="StartGameTest Coverage Results" MODIFIED="1727722591244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__com_example_.ic" NAME="Tests in 'com.example' Coverage Results" MODIFIED="1728590449276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_.ic" NAME="Tests in 'card-game-hps.room-service' Coverage Results" MODIFIED="1731251709871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

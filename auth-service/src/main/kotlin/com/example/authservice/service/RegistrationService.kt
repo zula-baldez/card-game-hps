@@ -35,6 +35,7 @@ class RegistrationService(
 
         val pass = encoder.encode(password)
         val userEntity = UserEntity(username, pass)
+
         val userRole = roleRepository.findFirstByRoleName(Role.USER)
         userEntity.roles += userRole
         val savedUser = userRepo.save(userEntity)
@@ -43,6 +44,9 @@ class RegistrationService(
 
         return personalAccountClient
             .createAccount(CreateAccountDto(id = savedUser.id!!, username = username))
+            .doOnError {
+                userRepo.delete(savedUser)
+            }
             .then(Mono.fromCallable { AuthenticationResponse(token, savedUser.id!!) })
     }
 }
