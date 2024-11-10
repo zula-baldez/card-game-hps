@@ -47,16 +47,17 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     runtimeOnly("org.postgresql:postgresql")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("org.assertj:assertj-core:3.17.2")
     testImplementation("org.mockito:mockito-core:3.5.13")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.2")
-    testImplementation("org.testcontainers:postgresql:1.20.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.1")
+    testImplementation("org.testcontainers:postgresql:1.20.2")
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.testcontainers:junit-jupiter:1.20.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation("org.testcontainers:junit-jupiter:1.20.2")
+    testImplementation("org.springframework.security:spring-security-test:6.3.4")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
 
 tasks.withType<KotlinCompile> {
