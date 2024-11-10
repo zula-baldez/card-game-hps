@@ -61,10 +61,10 @@ class RoomAccountManagerImpl(
                     .flatMap { Mono.error<RoomEntity>(ForbiddenOperationException()) }
                     .switchIfEmpty(Mono.just(room))
             }
-            .flatMap<Void?> { room ->
-                return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true)).then(Mono.empty())
+            .flatMap { room ->
+                return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true)).then<Void?>(Mono.empty())
+                    .then(updateAccountRoom(accountId, roomId))
             }
-            .and(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)))
     }
 
     override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction): Mono<Void> {
@@ -74,25 +74,26 @@ class RoomAccountManagerImpl(
             .flatMap { room ->
                 return@flatMap accountInRoomRepository.findAllByRoomId(room.id)
                     .collectList()
-                    .flatMap { accounts ->
-                        val accountToRemove =
-                            accounts.find { it.accountId == accountId } ?: return@flatMap Mono.error<Void>(
-                                AccountNotFoundException(accountId)
-                            )
+                    .flatMap withAccounts@{ accounts ->
+                        val accountToRemove = accounts.find { it.accountId == accountId }
+                        if (accountToRemove == null) {
+                            return@withAccounts Mono.error(AccountNotFoundException(accountId))
+                        }
 
                         if (accounts.size <= 1) {
-                            return@flatMap roomRepository.delete(room)
+                            return@withAccounts roomRepository.delete(room)
+                                .then(updateAccountRoom(accountId, roomId))
                         } else {
-                            return@flatMap accountInRoomRepository.delete(accountToRemove)
-                                .and(
+                            return@withAccounts accountInRoomRepository.delete(accountToRemove)
+                                .then(
                                     if (accountId == room.hostId) {
                                         accounts.remove(accountToRemove)
-                                        roomRepository.save(room.copy(hostId = accounts.first().accountId))
+                                        roomRepository.save(room.copy(hostId = accounts.first().accountId)).then()
                                     } else {
                                         Mono.empty()
                                     }
                                 )
-                                .and(
+                                .then(
                                     if (reason == AccountAction.BAN) {
                                         bannedAccountInRoomRepository.save(
                                             BannedAccountInRoomEntity(
@@ -100,15 +101,19 @@ class RoomAccountManagerImpl(
                                                 accountId,
                                                 roomId
                                             )
-                                        )
+                                        ).then()
                                     } else {
                                         Mono.empty()
                                     }
                                 )
+                                .then(updateAccountRoom(accountId, roomId))
                         }
                     }
             }
-            .and(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(null)))
+    }
+
+    private fun updateAccountRoom(accountId: Long, roomId: Long): Mono<Void> {
+        return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)).then()
     }
 
     override fun getAccountRoom(accountId: Long): Mono<Long> {

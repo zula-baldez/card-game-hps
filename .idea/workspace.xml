@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/FinesCounterTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/FinesCounterTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomAccountManagerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/test/kotlin/com/example/roomservice/RoomAccountManagerTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,6 +126,15 @@
     "Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor": "Run",
     "Gradle.DistributionStrategyTest.executor": "Run",
     "Gradle.FinesCounterTest.giveFine should return invalid when current fines reach target fines.executor": "Debug",
+    "Gradle.RoomAccountManagerTest.addAccount should throw error capacity.executor": "Run",
+    "Gradle.RoomAccountManagerTest.addAccount should throw error on banned account.executor": "Run",
+    "Gradle.RoomAccountManagerTest.addAccount should throw when account in another room.executor": "Run",
+    "Gradle.RoomAccountManagerTest.addAccount should throw when join twice.executor": "Run",
+    "Gradle.RoomAccountManagerTest.removeAccount for host should transfer host.executor": "Debug",
+    "Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves.executor": "Run",
+    "Gradle.RoomAccountManagerTest.removeAccount should fail on unknown account.executor": "Run",
+    "Gradle.RoomAccountManagerTest.removeAccount should remove account from room.executor": "Run",
+    "Gradle.RoomAccountManagerTest.removeAccount with band should add account to banned accounts.executor": "Run",
     "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
     "Gradle.StartGameTest.executor": "Run",
     "Gradle.StompIntegrationTestBase.executor": "Debug",
@@ -133,6 +143,7 @@
     "Gradle.Tests in 'card-game-hps.auth-service.test'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.game-handler'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.personal-account'.executor": "Coverage",
+    "Gradle.Tests in 'card-game-hps.room-service'.executor": "Coverage",
     "Gradle.Tests in 'card-game-hps.room-service.test'.executor": "Coverage",
     "Gradle.Tests in 'com.example'.executor": "Run",
     "Gradle.card-game-hps [build].executor": "Run",
@@ -167,7 +178,7 @@
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.GatewayServerApplication.executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
-    "Spring Boot.RoomServiceApplication.executor": "Debug",
+    "Spring Boot.RoomServiceApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
@@ -181,7 +192,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "coverage",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -240,8 +251,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'card-game-hps.auth-service.test'">
-    <configuration name="Tests in 'card-game-hps.auth-service.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves">
+    <configuration name="RoomAccountManagerTest.addAccount should throw error capacity" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -252,7 +263,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":auth-service:test" />
+            <option value=":room-service:test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw error capacity&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -263,7 +276,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'card-game-hps.game-handler'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RoomAccountManagerTest.addAccount should throw when account in another room" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -274,7 +287,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":game-handler:test" />
+            <option value=":room-service:test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw when account in another room&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -285,7 +300,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'card-game-hps.personal-account'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RoomAccountManagerTest.addAccount should throw when join twice" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -296,7 +311,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":personal-account:test" />
+            <option value=":room-service:test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.addAccount should throw when join twice&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -307,7 +324,31 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'card-game-hps.room-service.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RoomAccountManagerTest.removeAccount should delete room when last player leaves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":room-service:test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.roomservice.RoomAccountManagerTest.removeAccount should delete room when last player leaves&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'card-game-hps.room-service'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -328,16 +369,6 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
       <method v="2" />
-    </configuration>
-    <configuration name="Whole project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
@@ -418,11 +449,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Gradle.Tests in 'card-game-hps.auth-service.test'" />
-      <item itemvalue="Gradle.Tests in 'card-game-hps.game-handler'" />
-      <item itemvalue="Gradle.Tests in 'card-game-hps.personal-account'" />
-      <item itemvalue="Gradle.Tests in 'card-game-hps.room-service.test'" />
-      <item itemvalue="JUnit.Whole project" />
+      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw error capacity" />
+      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when account in another room" />
+      <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when join twice" />
+      <item itemvalue="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves" />
+      <item itemvalue="Gradle.Tests in 'card-game-hps.room-service'" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
       <item itemvalue="Spring Boot.AuthServiceApplication" />
       <item itemvalue="Spring Boot.ConfigServerApplication" />
@@ -434,11 +465,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'card-game-hps.auth-service.test'" />
-        <item itemvalue="Gradle.Tests in 'card-game-hps.game-handler'" />
-        <item itemvalue="Gradle.Tests in 'card-game-hps.personal-account'" />
-        <item itemvalue="Gradle.Tests in 'card-game-hps.room-service.test'" />
-        <item itemvalue="JUnit.Whole project" />
+        <item itemvalue="Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves" />
+        <item itemvalue="Gradle.Tests in 'card-game-hps.room-service'" />
+        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when account in another room" />
+        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw when join twice" />
+        <item itemvalue="Gradle.RoomAccountManagerTest.addAccount should throw error capacity" />
       </list>
     </recent_temporary>
   </component>
@@ -822,15 +853,16 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_personal_account_.ic" NAME="Tests in 'card-game-hps.personal-account' Coverage Results" MODIFIED="1730209101956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_personal_account_.ic" NAME="Tests in 'card-game-hps.personal-account' Coverage Results" MODIFIED="1731243064164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$All_in_card_game_hps__1_.ic" NAME="All in card-game-hps (1) Coverage Results" MODIFIED="1730209039325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_auth_service_test_.ic" NAME="Tests in 'card-game-hps.auth-service.test' Coverage Results" MODIFIED="1730209262432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_auth_service_test_.ic" NAME="Tests in 'card-game-hps.auth-service.test' Coverage Results" MODIFIED="1731242922179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$Whole_project.ic" NAME="Whole project Coverage Results" MODIFIED="1730209053584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_game_handler_.ic" NAME="Tests in 'card-game-hps.game-handler' Coverage Results" MODIFIED="1730209229227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/card_game_hps$All_in_card_game_hps.ic" NAME="All in card-game-hps Coverage Results" MODIFIED="1730209033046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_game_handler_.ic" NAME="Tests in 'card-game-hps.game-handler' Coverage Results" MODIFIED="1731243148193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$All_in_card_game_hps.ic" NAME="All in card-game-hps Coverage Results" MODIFIED="1731245834902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$RoomServiceApplicationKt.ic" NAME="RoomServiceApplicationKt Coverage Results" MODIFIED="1730143186610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_test_.ic" NAME="Tests in 'card-game-hps.room-service.test' Coverage Results" MODIFIED="1730209065473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_test_.ic" NAME="Tests in 'card-game-hps.room-service.test' Coverage Results" MODIFIED="1731250891071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/card_game_hps$StartGameTest.ic" NAME="StartGameTest Coverage Results" MODIFIED="1727722591244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__com_example_.ic" NAME="Tests in 'com.example' Coverage Results" MODIFIED="1728590449276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/card_game_hps$Tests_in__card_game_hps_room_service_.ic" NAME="Tests in 'card-game-hps.room-service' Coverage Results" MODIFIED="1731251709871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
