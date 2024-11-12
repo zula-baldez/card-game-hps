@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import java.util.*
 
 
@@ -61,7 +62,7 @@ class GameHandlerImplTest {
             finesCounter = mutableMapOf()
         )
 
-        gameHandler = GameHandlerImpl(roomRepository)
+        gameHandler = GameHandlerImpl(roomRepository, mock(SimpMessagingTemplate::class.java))
     }
 
     @Test

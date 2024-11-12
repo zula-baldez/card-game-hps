@@ -4,7 +4,6 @@ import com.example.StompIntegrationTestBase
 import com.example.common.client.PersonalAccountClient
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.game.GameHandler
@@ -12,16 +11,15 @@ import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import com.example.gamehandlerservice.service.game.util.VirtualPlayers
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.kotlin.clearInvocations
-import org.mockito.kotlin.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.stomp.StompSession
 
-class FineStrategyTest : StompIntegrationTestBase() {
+class StartGamesTest : StompIntegrationTestBase() {
     private var userSessions: MutableMap<Long, StompSession> = mutableMapOf()
     private var hostId = 6L
 
@@ -72,7 +70,7 @@ class FineStrategyTest : StompIntegrationTestBase() {
         userSessions[7] = session
 
 
-        game.stateMachine.stage = Stage.DISTRIBUTION
+        game.stateMachine.stage = Stage.WAITING
         game.gameData.playersTurnQueue = CyclicQueue(userSessions.keys.map {
             AccountDto(
                 it,
@@ -108,56 +106,9 @@ class FineStrategyTest : StompIntegrationTestBase() {
     }
 
     @Test
-    fun noDropOnEnemyWhenNotYourTurn() {
-        val notTurningPlayer = getNotTurningPlayer()
-        val turningPlayer = getTurningPlayer()!!
-        userSessions[notTurningPlayer]?.send(
-            "/app/move-card",
-            MoveCardRequest(notTurningPlayer, turningPlayer, Card())
-        )
-        val response = getMessage(notTurningPlayer)
-        assertNull(response)
-    }
-
-    @Test
-    fun dropOnEnemyWithFines() {
-        val notTurningPlayer = getNotTurningPlayer()
-        val turningPlayer = getTurningPlayer()!!
-        var finedAccount = personalAccountClient.getAccountById(notTurningPlayer)
-        finedAccount.fines = 1
-        userSessions[turningPlayer]?.send(
-            "/app/move-card",
-            MoveCardRequest(turningPlayer, notTurningPlayer, Card())
-        )
-        getMessage(turningPlayer)
-        verify(personalAccountClient).addFine(anyLong())
-    }
-
-    @Test
-    fun dropOnEnemyWithNoFines() {
-        val notTurningPlayer = getNotTurningPlayer()
-        val turningPlayer = getTurningPlayer()!!
-        val finedAccount = personalAccountClient.getAccountById(notTurningPlayer)
-        finedAccount.fines = 0
-        userSessions[turningPlayer]?.send(
-            "/app/move-card",
-            MoveCardRequest(turningPlayer, notTurningPlayer, Card())
-        )
-        val response = getMessage(turningPlayer)
-        assertNull(response)
-    }
-
-    @Test
-    fun fineOnDropTable() {
-        val turningPlayer = getTurningPlayer()!!
-        val finedAccount = personalAccountClient.getAccountById(turningPlayer)
-        finedAccount.fines = 0
-        userSessions[turningPlayer]?.send(
-            "/app/move-card",
-            MoveCardRequest(turningPlayer, VirtualPlayers.TABLE.id, Card())
-        )
-        val response = getMessage(turningPlayer)
-        assertNull(response)
-        verify(personalAccountClient).addFine(anyLong())
+    fun testStartGame() {
+        userSessions[hostId]?.send("/app/start-game", "")
+        getMessage(hostId) ?: throw IllegalArgumentException("No message received")
+        assertEquals(gameHandlerRegistry.getGame(gameId)?.getStage(), Stage.DISTRIBUTION)
     }
 }

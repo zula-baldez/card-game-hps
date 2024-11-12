@@ -3,6 +3,8 @@ package com.example.gamehandlerservice.service.game.game
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
+import com.example.gamehandlerservice.model.dto.MoveCardResponse
+import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Stage
 import com.example.gamehandlerservice.service.game.model.GameData
 import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
@@ -13,16 +15,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
 
 @Component
 @Scope("prototype")
 class GameHandlerImpl(
-    val roomServiceClient: RoomServiceClient
+    val roomServiceClient: RoomServiceClient,
+    val simpMessagingTemplate: SimpMessagingTemplate
 ) : GameHandler {
 
     override lateinit var gameData: GameData
     override lateinit var stateMachine: StageStateMachineHandler
+
     private var timerJob: Job? = null
 
     override fun configureGameHandler(
@@ -59,6 +64,7 @@ class GameHandlerImpl(
         stateMachine.nextStage(this)
         changeTurn()
         restartTimer()
+        sendStartGame()
     }
 
     override fun getStage(): Stage = stateMachine.stage
@@ -75,4 +81,11 @@ class GameHandlerImpl(
         changeTurn()
         restartTimer()
     }
+
+    private fun sendStartGame() {
+        CoroutineScope(Dispatchers.IO).launch {
+            simpMessagingTemplate.convertAndSend("/topic/start-game", MoveCardResponse(-1, -1, Card()))
+        }
+    }
+
 }

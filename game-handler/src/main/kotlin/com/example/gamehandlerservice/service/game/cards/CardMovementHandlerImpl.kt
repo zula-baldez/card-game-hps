@@ -71,7 +71,6 @@ class CardMovementHandlerImpl(
     }
 
     private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
-
         CoroutineScope(Dispatchers.IO).launch {
             simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card))
         }

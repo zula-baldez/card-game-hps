@@ -58,7 +58,7 @@ class DistributionDropStrategy : DropStrategy {
         request: MoveCardRequest,
         gameHandler: GameHandler
     ): CardDropResult {
-        return CardDropResult.missClick
+        return CardDropResult.invalid
     }
 
     private fun isDropPrior(card: Card, otherCard: Card): Boolean {
