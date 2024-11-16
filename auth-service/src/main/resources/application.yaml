@@ -12,3 +12,7 @@ resilience4j.circuitbreaker:
       minimum-number-of-calls: 5
       failure-rate-threshold: 50
       wait-duration-in-open-state: 5s
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs

@@ -26,7 +26,8 @@ class RoomServiceSecurityConfig(
     ): SecurityWebFilterChain {
         http
             .authorizeExchange {
-                it.anyExchange().authenticated()
+                it.pathMatchers("/v3/api-docs*/**").permitAll()
+                    .anyExchange().authenticated()
             }
             .oauth2ResourceServer {
                 it.jwt { jwt ->

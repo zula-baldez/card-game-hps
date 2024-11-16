@@ -33,7 +33,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc:")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc:")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
@@ -55,6 +55,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0")
+
 
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")

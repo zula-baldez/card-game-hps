@@ -13,6 +13,7 @@ plugins {
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+extra["springCloudVersion"] = "2023.0.0"
 
 repositories {
     mavenCentral()
@@ -40,7 +41,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.26")
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
     implementation ("org.aspectj:aspectjrt:1.9.7")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
@@ -61,6 +66,12 @@ dependencies {
     testImplementation("org.webjars:stomp-websocket:2.3.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.2")
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions {

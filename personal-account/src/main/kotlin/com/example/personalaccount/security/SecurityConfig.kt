@@ -26,7 +26,8 @@ class SecurityConfig(
     ): SecurityFilterChain {
         http
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests { it.anyRequest().authenticated() }
+            .authorizeHttpRequests { it.requestMatchers( "/v3/api-docs*/**").permitAll()
+                .anyRequest().authenticated() }
             .oauth2ResourceServer {
                 it.jwt { jwt ->
                     jwt.decoder(jwtDecoder())

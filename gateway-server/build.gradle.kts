@@ -25,11 +25,12 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config:4.1.3")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4")
 
-
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway:4.1.5")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0")
+
 }
 
 dependencyManagement {

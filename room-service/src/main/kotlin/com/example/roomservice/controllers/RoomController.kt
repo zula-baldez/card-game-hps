@@ -8,6 +8,7 @@ import com.example.common.dto.roomservice.CreateRoomRequest
 import com.example.common.dto.roomservice.RemoveAccountRequest
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
@@ -19,6 +20,7 @@ import java.security.Principal
 
 @RestController
 @Validated
+@Tag(name = "room_controller", description = "Rest API for room service")
 class RoomController(
     private val roomManager: RoomManager,
     private val roomAccountManger: RoomAccountManager

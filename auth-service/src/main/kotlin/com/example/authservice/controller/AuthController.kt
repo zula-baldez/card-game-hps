@@ -5,6 +5,7 @@ import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.authservice.CredentialsRequest
 import com.example.authservice.service.UserService
 import com.example.common.dto.authservice.GenerateServiceTokenRequest
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono
 import java.security.Principal
 
 @RestController
+@Tag(name = "auth_controller", description = "Rest API for authentication")
 class AuthController(
     val userService: UserService,
     val registrationService: RegistrationService

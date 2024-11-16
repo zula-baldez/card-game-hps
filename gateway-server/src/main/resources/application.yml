@@ -3,3 +3,18 @@ spring:
     name: gateway-server
   config:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:8090}/
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    urls:
+      - url: /auth-service/v3/api-docs
+        name: Auth Service
+      - url: /room-service/v3/api-docs
+        name: Room Service
+      - url: /game-handler/v3/api-docs
+        name: Game Server
+      - url: /personal-account/v3/api-docs
+        name: Personal Account

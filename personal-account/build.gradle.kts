@@ -36,7 +36,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
     implementation("org.springframework.security:spring-security-core:6.3.0")
@@ -56,6 +56,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

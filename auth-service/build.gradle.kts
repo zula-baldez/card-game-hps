@@ -31,7 +31,7 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.3")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest:")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.3.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
     implementation("org.springframework.security:spring-security-core:6.3.0")
@@ -44,6 +44,8 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")

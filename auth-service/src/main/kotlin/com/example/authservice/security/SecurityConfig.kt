@@ -8,19 +8,15 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet
 import com.nimbusds.jose.proc.SecurityContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.*
-import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebFluxSecurity
@@ -40,9 +36,10 @@ class SecurityConfig(
     ): SecurityWebFilterChain {
         http
             .authorizeExchange {
-                it.pathMatchers("/auth/login").permitAll()
+                it.pathMatchers("/auth/login", "/v3/api-docs*/**").permitAll()
                     .anyExchange().authenticated()
             }
+
             .oauth2ResourceServer {
                 it.jwt { jwt ->
                     jwt.jwtDecoder(reactiveJwtDecoder())
@@ -69,5 +66,12 @@ class SecurityConfig(
     @Bean
     fun jwtDecoder(): JwtDecoder {
         return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
+    }
+    @Bean
+    fun webSecurityCustomizer(): WebSecurityCustomizer {
+        return WebSecurityCustomizer { web: WebSecurity ->
+            web.ignoring()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs*/**")
+        }
     }
 }
