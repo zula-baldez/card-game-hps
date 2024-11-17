@@ -1,8 +1,10 @@
 package com.example.roomservice.config
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
+import io.swagger.v3.oas.annotations.security.SecurityScheme
 
 @OpenAPIDefinition(
     info = Info(
@@ -14,5 +16,11 @@ import io.swagger.v3.oas.annotations.info.Info
             email = "penki@niuitmo.ru"
         )
     )
+)
+@SecurityScheme(
+    name = "Bearer Authentication",
+    type = SecuritySchemeType.HTTP,
+    bearerFormat = "JWT",
+    scheme = "bearer"
 )
 class OpenApiConfig

@@ -9,6 +9,7 @@ import com.example.common.exceptions.*
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -21,6 +22,7 @@ import java.security.Principal
 
 @RestController
 @Validated
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "room_controller", description = "Rest API for room service")
 class RoomController(
     private val roomManager: RoomManager,

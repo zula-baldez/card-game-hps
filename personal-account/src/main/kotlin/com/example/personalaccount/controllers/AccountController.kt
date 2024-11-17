@@ -7,11 +7,13 @@ import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.PersonalAccountManager
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/accounts")
 @Tag(name = "account_controller", description = "Rest API for accounts")
 class AccountController(

@@ -8,6 +8,7 @@ import com.example.personalaccount.model.AddFriendRequest
 import com.example.personalaccount.model.FriendshipDto
 import com.example.personalaccount.service.PersonalAccountManager
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
@@ -18,6 +19,7 @@ import java.security.Principal
 
 @RestController
 @Validated
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "friend_controller", description = "Rest API for friends")
 class FriendsController(
     val accountsManager: PersonalAccountManager

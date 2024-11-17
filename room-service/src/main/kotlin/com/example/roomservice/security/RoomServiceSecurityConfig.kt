@@ -5,12 +5,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder
 import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+
+
 
 @Configuration
 @EnableConfigurationProperties(RsaKeyProperties::class)
@@ -26,7 +29,9 @@ class RoomServiceSecurityConfig(
     ): SecurityWebFilterChain {
         http
             .authorizeExchange {
-                it.pathMatchers("/v3/api-docs*/**").permitAll()
+                it.pathMatchers(
+                    "/v3/api-docs*/**", "/swagger-ui/**"
+                ).permitAll()
                     .anyExchange().authenticated()
             }
             .oauth2ResourceServer {
