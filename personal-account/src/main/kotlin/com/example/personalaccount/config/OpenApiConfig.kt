@@ -9,7 +9,8 @@ import io.swagger.v3.oas.annotations.info.Info
         description = "Card Game Penki",
         version = "1.0.0",
         contact = Contact(
-            name = "Vereschagin Egor, Tsyu Tyanshen, Sobolev Ivan"
+            name = "Vereschagin Egor, Tsyu Tyanshen, Sobolev Ivan",
+            email = "penki@niuitmo.ru"
         )
     )
 )

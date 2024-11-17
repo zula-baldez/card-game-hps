@@ -1,13 +1,14 @@
 package com.example.roomservice.controllers
 
 import com.example.common.dto.api.Pagination
-import com.example.common.dto.roomservice.RoomDto
-import com.example.common.exceptions.*
 import com.example.common.dto.roomservice.AddAccountRequest
 import com.example.common.dto.roomservice.CreateRoomRequest
 import com.example.common.dto.roomservice.RemoveAccountRequest
+import com.example.common.dto.roomservice.RoomDto
+import com.example.common.exceptions.*
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -26,11 +27,13 @@ class RoomController(
     private val roomAccountManger: RoomAccountManager
 ) {
     @GetMapping("/rooms")
+    @Operation(summary = "Get all rooms")
     fun getAvailableRooms(@Valid page: Pagination?): Flux<RoomDto> {
         return roomManager.getRooms(page ?: Pagination())
     }
 
     @GetMapping("/rooms/{roomId}")
+    @Operation(summary = "Get room by id")
     fun getRoomById(@PathVariable roomId: Long): Mono<RoomDto> {
         return roomManager.getRoom(roomId).switchIfEmpty(Mono.error(RoomNotFoundException(roomId)))
     }
@@ -38,6 +41,7 @@ class RoomController(
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('SCOPE_USER')")
+    @Operation(summary = "Create room")
     fun createRoom(@RequestBody @Valid createRoomRequest: CreateRoomRequest, principal: Principal): Mono<RoomDto> {
         return roomManager.createRoom(
             createRoomRequest.name,
@@ -48,6 +52,7 @@ class RoomController(
 
     @PostMapping("/rooms/{roomId}/players")
     @PreAuthorize("hasAuthority('SCOPE_USER') and (authentication.name == #addAccountRequest.accountId.toString() or hasAuthority('SCOPE_ADMIN'))")
+    @Operation(summary = "Add player to room")
     fun addPlayer(@PathVariable roomId: Long, @RequestBody @Valid addAccountRequest: AddAccountRequest): Mono<Void> {
         return roomAccountManger.addAccount(roomId, addAccountRequest.accountId)
     }
@@ -55,6 +60,7 @@ class RoomController(
     @DeleteMapping("/rooms/{roomId}/players/{accountId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@roomSecurityUtils.canRemoveAccount(#roomId, authentication, #accountId)")
+    @Operation(summary = "Remove player from room")
     fun removePlayer(
         @PathVariable roomId: Long,
         @PathVariable accountId: Long,

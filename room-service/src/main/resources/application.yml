@@ -3,7 +3,3 @@ spring:
     name: room-service
   config:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:8090}/
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs

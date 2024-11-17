@@ -6,6 +6,7 @@ import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.aspects.TrueTurnValidation
 import com.example.gamehandlerservice.model.dto.MoveCardRequest
 import com.example.gamehandlerservice.service.game.game.GameHandler
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller

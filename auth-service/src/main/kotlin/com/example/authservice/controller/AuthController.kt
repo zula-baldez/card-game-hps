@@ -1,21 +1,19 @@
 package com.example.authservice.controller
 
 import com.example.authservice.service.RegistrationService
+import com.example.authservice.service.UserService
 import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.authservice.CredentialsRequest
-import com.example.authservice.service.UserService
 import com.example.common.dto.authservice.GenerateServiceTokenRequest
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import java.security.Principal
 
@@ -27,6 +25,11 @@ class AuthController(
 ) {
     @PostMapping("/auth/register")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @Operation(summary = "Register user")
+    @ApiResponses(
+        value = [ApiResponse(responseCode = "200", description = "Successful registration"),
+            ApiResponse(responseCode = "401", description = "Username is taken")]
+    )
     fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<AuthenticationResponse> {
         return registrationService.register(credentialsRequest.username, credentialsRequest.password)
     }
