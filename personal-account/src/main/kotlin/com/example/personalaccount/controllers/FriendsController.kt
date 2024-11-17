@@ -7,6 +7,8 @@ import com.example.personalaccount.exceptions.RemoveFriendException
 import com.example.personalaccount.model.AddFriendRequest
 import com.example.personalaccount.model.FriendshipDto
 import com.example.personalaccount.service.PersonalAccountManager
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -16,10 +18,12 @@ import java.security.Principal
 
 @RestController
 @Validated
+@Tag(name = "friend_controller", description = "Rest API for friends")
 class FriendsController(
     val accountsManager: PersonalAccountManager
 ) {
     @GetMapping("/friends")
+    @Operation(summary = "Get friends")
     fun getFriends(pagination: Pagination, response: HttpServletResponse, auth: Principal): List<FriendshipDto> {
         val result = accountsManager.getAllFriends(auth.name.toLong(), pagination) ?: throw AccountNotFoundException(auth.name.toLong())
         response.setIntHeader("x-total-friends", result.totalElements.toInt())
@@ -27,6 +31,7 @@ class FriendsController(
     }
 
     @PostMapping("/friends")
+    @Operation(summary = "Send or accept friendship")
     @ResponseStatus(HttpStatus.CREATED)
     fun sendOrAcceptRequest(@RequestBody @Valid addFriendRequest: AddFriendRequest, auth: Principal) {
         return accountsManager.addFriend(auth.name.toLong(), addFriendRequest.friendId)
@@ -34,6 +39,7 @@ class FriendsController(
 
     @DeleteMapping("/friends/{friendId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Remove friend")
     fun removeFriendOrRequest(@PathVariable friendId: Long, auth: Principal) {
         return accountsManager.removeFriend(auth.name.toLong(), friendId)
     }

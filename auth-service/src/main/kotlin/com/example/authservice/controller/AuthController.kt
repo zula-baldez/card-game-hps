@@ -26,26 +26,25 @@ class AuthController(
     @PostMapping("/auth/register")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Operation(summary = "Register user")
-    @ApiResponses(
-        value = [ApiResponse(responseCode = "200", description = "Successful registration"),
-            ApiResponse(responseCode = "401", description = "Username is taken")]
-    )
     fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<AuthenticationResponse> {
         return registrationService.register(credentialsRequest.username, credentialsRequest.password)
     }
 
     @PostMapping("/auth/login")
+    @Operation(summary = "Login")
     fun login(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<AuthenticationResponse> {
         return userService.login(credentialsRequest.username, credentialsRequest.password)
     }
 
     @PostMapping("/auth/service-token")
     @PreAuthorize("hasAuthority('SCOPE_SERVICE') and @AuthUtils.jwtClaimEquals(principal, 'name', #serviceTokenRequest.component2())")
+    @Operation(summary = "Generate token for service")
     fun generateTokenForService(@RequestBody @Valid serviceTokenRequest: GenerateServiceTokenRequest): Mono<AuthenticationResponse> {
         return userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
     }
 
     @GetMapping("/me")
+    @Operation(summary = "Return auth name")
     fun me(auth: Principal): Mono<String> {
         return Mono.just(auth.name)
     }
