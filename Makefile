@@ -4,11 +4,18 @@ tasks = $(filter-out $@,$(MAKECMDGOALS))
 internalize = $(foreach wrd, $(1),$(wrd)-component)
 action = COMPONENT="$@" $(MAKE) $(call internalize, $(call tasks))
 
+VERSION = $(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
+
+
 push-component:
 	docker compose build $(COMPONENT)
-	docker tag $(PREFIX)-$(COMPONENT) $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
-	docker push $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
-	@echo Pushed image $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
+	docker tag $(PREFIX)-$(COMPONENT) $(REGISTRY)/$(COMPONENT):$(VERSION)
+	docker push $(REGISTRY)/$(COMPONENT):$(VERSION)
+	@echo Pushed image $(REGISTRY)/$(COMPONENT):$(VERSION)
+
+	@if [ ! -z $(GITHUB_OUTPUT) ]; then\
+		echo $(subst -,_,$(COMPONENT))_version=$(VERSION) >> $(GITHUB_OUTPUT);\
+	fi
 
 deploy:
 	./envsub .env deploy.docker-compose.yml > deploy.docker-compose.temp.yml
