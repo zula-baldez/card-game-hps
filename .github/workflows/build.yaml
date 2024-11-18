@@ -58,4 +58,11 @@ jobs:
           AUTH_SERVICE_VERSION: 20241118.191959-runner
           PERSONAL_ACCOUNT_VERSION: 20241118.192002-runner
           ROOM_SERVICE_VERSION: 20241118.192000-runner
-        run: ./envsub .env deploy.docker-compose.yml
+        run: ./envsub .env deploy.docker-compose.yml | tee temp.deploy.docker-compose.yml
+      - name: Run deploy
+        uses: yc-actions/yc-coi-deploy@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: b1go5br6klup6p2kbvom
+          vm-name: compute-vm-2-2-20-hdd-1731957589204
+          docker-compose-file: temp.deploy.docker-compose.yml
