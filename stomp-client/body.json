@@ -1,0 +1,9 @@
+{
+  "fromDropArea": -1,
+  "toDropArea": 1,
+  "card": {
+    "suit": "SPADES",
+    "strenght": 2,
+    "secret": false
+  }
+}

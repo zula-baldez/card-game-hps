@@ -56,6 +56,8 @@ dependencies {
     implementation("org.springframework:spring-messaging:6.1.14")
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
+    implementation("org.springframework.security:spring-security-messaging:6.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-security:3.3.5")
 
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")

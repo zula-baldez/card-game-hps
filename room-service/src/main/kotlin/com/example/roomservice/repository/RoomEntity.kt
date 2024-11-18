@@ -10,5 +10,5 @@ data class RoomEntity(
     val name: String,
     val hostId: Long,
     val capacity: Int,
-    val currentGameId: Long
+    var currentGameId: Long
 )

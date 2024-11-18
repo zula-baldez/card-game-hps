@@ -11,7 +11,11 @@ import org.springframework.messaging.Message
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor
 import org.springframework.messaging.support.MessageHeaderAccessor
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
+import javax.security.sasl.AuthenticationException
 
 @Component
 class AccountAndGameHandlerStompArgumentResolver(
@@ -41,9 +45,25 @@ class AccountAndGameHandlerStompArgumentResolver(
             }
             AccountDto::class.java -> {
                 val accountId = sessionAttributes["x-user-id"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
+                val user: UsernamePasswordAuthenticationToken =
+                    getUsernamePasswordAuthenticationToken(accountId)
+
+                SecurityContextHolder.getContext().authentication = user
+
                 return accountClient.getAccountById(accountId)
             }
             else -> null
         }
+    }
+
+    @Throws(AuthenticationException::class)
+    fun getUsernamePasswordAuthenticationToken(uid: Long): UsernamePasswordAuthenticationToken {
+
+        // null credentials, we do not pass the password along
+        return UsernamePasswordAuthenticationToken(
+            uid,
+            null,
+            listOf(GrantedAuthority { "USER" }) // MUST provide at least one role
+        )
     }
 }

@@ -9,8 +9,8 @@ import reactivefeign.spring.config.EnableReactiveFeignClients
 
 @SpringBootApplication
 @EnableConfigurationProperties(RsaKeyProperties::class)
-@EnableFeignClients
 @EnableReactiveFeignClients
+@EnableFeignClients
 class GameHandlerApplication
 
 fun main(args: Array<String>) {
