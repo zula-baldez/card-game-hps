@@ -64,5 +64,6 @@ jobs:
           folder-id: b1go5br6klup6p2kbvom
           vm-subnet-id: e2l1nqusb386r5s1mafj
           vm-name: compute-vm-2-2-20-hdd-1731957589204
+          vm-service-account-name: cardgame-bot
           docker-compose-path: ./deploy.docker-compose.yml
           user-data-path: ./user-data.yml
