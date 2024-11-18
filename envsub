@@ -5,9 +5,8 @@
 env=$1
 template=$2
 
-sh -c "
-. \"$env\"
+. $env
 
 cat <<EOF
 $(cat "$template")
-EOF"
+EOF

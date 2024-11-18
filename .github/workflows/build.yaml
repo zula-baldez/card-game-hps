@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v4
       - name: test
         run: |
-          bash -c "
+          sh -c "
           . .env
           echo $POSTGRES_USER"
       - name: Generate appropriate docker-compose file
