@@ -51,4 +51,4 @@ jobs:
           AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
           PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
           ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
-        run: ./envsub .env .deploy.docker-compose.yml
+        run: ./envsub .env deploy.docker-compose.yml
