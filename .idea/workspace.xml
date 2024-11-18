@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/tests.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/tests.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sdkmanrc" beforeDir="false" afterPath="$PROJECT_DIR$/.sdkmanrc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +42,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="card-game-hps" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="card-game-hps" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -105,114 +98,114 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.auth-service: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.config-server: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.eureka-server: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.game-handler: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.gateway-server: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.personal-account: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.room-service: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Gradle.AuthControllerTest.executor": "Run",
-    "Gradle.AuthIntegrationTest.executor": "Run",
-    "Gradle.AuthIntegrationTest.test registration.executor": "Run",
-    "Gradle.BaseStompIntegrationTest.executor": "Run",
-    "Gradle.Build card-game-hps.executor": "Run",
-    "Gradle.DistributionStageTest.executor": "Debug",
-    "Gradle.DistributionStageTest.testStartGame.executor": "Run",
-    "Gradle.DistributionStrategyTest.checkDropEnemySuccess.executor": "Run",
-    "Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor": "Run",
-    "Gradle.DistributionStrategyTest.executor": "Run",
-    "Gradle.FinesCounterTest.giveFine should return invalid when current fines reach target fines.executor": "Debug",
-    "Gradle.RoomAccountManagerTest.addAccount should throw error capacity.executor": "Run",
-    "Gradle.RoomAccountManagerTest.addAccount should throw error on banned account.executor": "Run",
-    "Gradle.RoomAccountManagerTest.addAccount should throw when account in another room.executor": "Run",
-    "Gradle.RoomAccountManagerTest.addAccount should throw when join twice.executor": "Run",
-    "Gradle.RoomAccountManagerTest.removeAccount for host should transfer host.executor": "Debug",
-    "Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves.executor": "Run",
-    "Gradle.RoomAccountManagerTest.removeAccount should fail on unknown account.executor": "Run",
-    "Gradle.RoomAccountManagerTest.removeAccount should remove account from room.executor": "Run",
-    "Gradle.RoomAccountManagerTest.removeAccount with band should add account to banned accounts.executor": "Run",
-    "Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor": "Run",
-    "Gradle.Run all tests.executor": "Debug",
-    "Gradle.StartGameTest.executor": "Run",
-    "Gradle.StompIntegrationTestBase.executor": "Debug",
-    "Gradle.StompIntegrationTestBase.stompTest.executor": "Debug",
-    "Gradle.StopmIntegrationTestBase.executor": "Run",
-    "Gradle.Tests in 'card-game-hps.auth-service'.executor": "Coverage",
-    "Gradle.Tests in 'card-game-hps.auth-service.test'.executor": "Coverage",
-    "Gradle.Tests in 'card-game-hps.game-handler'.executor": "Coverage",
-    "Gradle.Tests in 'card-game-hps.personal-account'.executor": "Coverage",
-    "Gradle.Tests in 'card-game-hps.room-service'.executor": "Coverage",
-    "Gradle.Tests in 'card-game-hps.room-service.test'.executor": "Coverage",
-    "Gradle.Tests in 'com.example'.executor": "Run",
-    "Gradle.card-game-hps [build].executor": "Run",
-    "Gradle.card-game-hps [classes].executor": "Run",
-    "Gradle.card-game-hps [clean].executor": "Run",
-    "Gradle.card-game-hps [jar].executor": "Run",
-    "Gradle.card-game-hps [kotlinSourcesJar].executor": "Run",
-    "JUnit.All in card-game-hps (1).executor": "Coverage",
-    "JUnit.All in card-game-hps.executor": "Coverage",
-    "JUnit.Whole project.executor": "Coverage",
-    "Kotlin script (Beta).settings.gradle.kts.executor": "Run",
-    "Kotlin.AuthServiceApplicationKt.executor": "Debug",
-    "Kotlin.ConfigServerApplicationKt.executor": "Run",
-    "Kotlin.EurekaServerApplicationKt.executor": "Run",
-    "Kotlin.GameHandlerApplicationKt.executor": "Run",
-    "Kotlin.PenkiApplicationKt.executor": "Run",
-    "Kotlin.PersonalAccountApplicationKt.executor": "Run",
-    "Kotlin.RoomServiceApplicationKt.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AuthServiceApplication.executor": "Run",
-    "Spring Boot.ConfigServerApplication.executor": "Run",
-    "Spring Boot.EurekaServerApplication.executor": "Run",
-    "Spring Boot.GameHandlerApplication.executor": "Run",
-    "Spring Boot.GatewayServerApplication.executor": "Run",
-    "Spring Boot.PersonalAccountApplication.executor": "Run",
-    "Spring Boot.RoomServiceApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "coverage",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.auth-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.config-server: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.eureka-server: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.game-handler: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.gateway-server: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.personal-account: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.room-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Gradle.AuthControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AuthIntegrationTest.test registration.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.BaseStompIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build card-game-hps.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DistributionStageTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.DistributionStageTest.testStartGame.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DistributionStrategyTest.checkDropEnemySuccess.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DistributionStrategyTest.checkDropSelfSuccess.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DistributionStrategyTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.FinesCounterTest.giveFine should return invalid when current fines reach target fines.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.RoomAccountManagerTest.addAccount should throw error capacity.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.addAccount should throw error on banned account.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.addAccount should throw when account in another room.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.addAccount should throw when join twice.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.removeAccount for host should transfer host.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.RoomAccountManagerTest.removeAccount should delete room when last player leaves.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.removeAccount should fail on unknown account.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.removeAccount should remove account from room.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.removeAccount with band should add account to banned accounts.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RoomAccountManagerTest.should throw when account is not host when remove player.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Run all tests.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.StartGameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.StompIntegrationTestBase.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.StompIntegrationTestBase.stompTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.StopmIntegrationTestBase.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.auth-service'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.auth-service.test'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.game-handler'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.personal-account'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.room-service'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'card-game-hps.room-service.test'.executor&quot;: &quot;Coverage&quot;,
+    &quot;Gradle.Tests in 'com.example'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.card-game-hps [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.card-game-hps [classes].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.card-game-hps [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.card-game-hps [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.card-game-hps [kotlinSourcesJar].executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in card-game-hps (1).executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.All in card-game-hps.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.Whole project.executor&quot;: &quot;Coverage&quot;,
+    &quot;Kotlin script (Beta).settings.gradle.kts.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.AuthServiceApplicationKt.executor&quot;: &quot;Debug&quot;,
+    &quot;Kotlin.ConfigServerApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.EurekaServerApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.GameHandlerApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.PenkiApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.PersonalAccountApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.RoomServiceApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ConfigServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GameHandlerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GatewayServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PersonalAccountApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RoomServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/moyakkauntda/IdeaProjects/card-game-hps&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;coverage&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
-      "PostgreSQL"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
+      &quot;PostgreSQL&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ],
-    "kotlin-gradle-user-dirs": [
-      "/Users/moyakkauntda/.gradle"
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/moyakkauntda/.gradle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
