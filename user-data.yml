@@ -1,0 +1,8 @@
+postgres:
+  db: postgres
+  user: postgres
+  password: postgres
+
+docker:
+  registry: cr.yandex/crpbk84pocbafpk713c4
+  prefix: card-game-hps
