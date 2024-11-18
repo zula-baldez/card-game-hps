@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   eureka-server:
-    image: ${REGISTRY}/eureka-server:${EUREKA_VERSION}
+    image: ${REGISTRY}/eureka-server:${EUREKA_SERVER_VERSION}
     restart: always
     depends_on:
       - config-server
@@ -14,7 +14,7 @@ services:
 
 
   personal-account:
-    image: ${REGISTRY}/personal-account:${PERSONAL_ACCONUT_VERSION}
+    image: ${REGISTRY}/personal-account:${PERSONAL_ACCOUNT_VERSION}
     ports:
       - "8083:8083"
     environment:
@@ -78,7 +78,7 @@ services:
     restart: always
 
   gateway-server:
-    image: ${REGISTRY}/gateway-server:${GATEWAY_VERSION}
+    image: ${REGISTRY}/gateway-server:${GATEWAY_SERVER_VERSION}
     ports:
       - "8085:8085"
     depends_on:
