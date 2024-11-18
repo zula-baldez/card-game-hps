@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   eureka-server:
-    container_name: eureka-server
     restart: always
     build: ./eureka-server/
     image: eureka-server
