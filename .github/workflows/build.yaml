@@ -65,4 +65,4 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1go5br6klup6p2kbvom
           vm-name: compute-vm-2-2-20-hdd-1731957589204
-          docker-compose-file: temp.deploy.docker-compose.yml
+          docker-compose-path: ./temp.deploy.docker-compose.yml
