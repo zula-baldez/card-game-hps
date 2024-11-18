@@ -9,7 +9,9 @@ pwd
 
 ls -a
 
-. $env
+echo $env
+
+source $env
 
 cat <<EOF
 $(cat "$template")
