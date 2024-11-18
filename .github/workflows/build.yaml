@@ -3,52 +3,61 @@ name: Build and deploy
 on: push
 
 jobs:
-  push_service_image:
-    name: Push service image to registry
-    runs-on: ubuntu-latest
-    outputs:
-      eureka_server_version: ${{ steps.build_image.outputs.eureka_server_version }}
-      config_server_version: ${{ steps.build_image.outputs.config_server_version }}
-      gateway_server_version: ${{ steps.build_image.outputs.gateway_server_version }}
-      game_handler_version: ${{ steps.build_image.outputs.game_handler_version }}
-      auth_service_version: ${{ steps.build_image.outputs.auth_service_version }}
-      personal_account_version: ${{ steps.build_image.outputs.personal_account_version }}
-      room_service_version: ${{ steps.build_image.outputs.room_service_version }}
-    strategy:
-      matrix:
-        service:
-          - eureka-server
-          - config-server
-          - gateway-server
-          - game-handler
-          - auth-service
-          - personal-account
-          - room-service
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-      - name: Login to YC container registry
-        uses: yc-actions/yc-cr-login@v2
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-      - name: Build image
-        id: build_image
-        run: make ${{ matrix.service }} push
+#  push_service_image:
+#    name: Push service image to registry
+#    runs-on: ubuntu-latest
+#    outputs:
+#      eureka_server_version: ${{ steps.build_image.outputs.eureka_server_version }}
+#      config_server_version: ${{ steps.build_image.outputs.config_server_version }}
+#      gateway_server_version: ${{ steps.build_image.outputs.gateway_server_version }}
+#      game_handler_version: ${{ steps.build_image.outputs.game_handler_version }}
+#      auth_service_version: ${{ steps.build_image.outputs.auth_service_version }}
+#      personal_account_version: ${{ steps.build_image.outputs.personal_account_version }}
+#      room_service_version: ${{ steps.build_image.outputs.room_service_version }}
+#    strategy:
+#      matrix:
+#        service:
+#          - eureka-server
+#          - config-server
+#          - gateway-server
+#          - game-handler
+#          - auth-service
+#          - personal-account
+#          - room-service
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Login to YC container registry
+#        uses: yc-actions/yc-cr-login@v2
+#        with:
+#          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+#      - name: Build image
+#        id: build_image
+#        run: make ${{ matrix.service }} push
   deploy:
     name: Deploy to PROD
     runs-on: ubuntu-latest
-    needs:
-      - push_service_image
+#    needs:
+#      - push_service_image
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+      - name: test
+        run: ls
       - name: Generate appropriate docker-compose file
         env:
-          EUREKA_SERVER_VERSION: ${{ needs.push_service_image.outputs.eureka_server_version }}
-          CONFIG_SERVER_VERSION: ${{ needs.push_service_image.outputs.config_server_version }}
-          GATEWAY_SERVER_VERSION: ${{ needs.push_service_image.outputs.gateway_server_version }}
-          GAME_HANDLER_VERSION: ${{ needs.push_service_image.outputs.game_handler_version }}
-          AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
-          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
-          ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
+#          EUREKA_SERVER_VERSION: ${{ needs.push_service_image.outputs.eureka_server_version }}
+#          CONFIG_SERVER_VERSION: ${{ needs.push_service_image.outputs.config_server_version }}
+#          GATEWAY_SERVER_VERSION: ${{ needs.push_service_image.outputs.gateway_server_version }}
+#          GAME_HANDLER_VERSION: ${{ needs.push_service_image.outputs.game_handler_version }}
+#          AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
+#          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
+#          ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
+          EUREKA_SERVER_VERSION: 20241118.192002-runner
+          CONFIG_SERVER_VERSION: 20241118.191959-runner
+          GATEWAY_SERVER_VERSION: 20241118.192000-runner
+          GAME_HANDLER_VERSION: 20241118.191959-runner
+          AUTH_SERVICE_VERSION: 20241118.191959-runner
+          PERSONAL_ACCOUNT_VERSION: 20241118.192002-runner
+          ROOM_SERVICE_VERSION: 20241118.192000-runner
         run: ./envsub .env deploy.docker-compose.yml
