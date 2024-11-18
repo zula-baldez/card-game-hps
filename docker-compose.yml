@@ -4,7 +4,6 @@ services:
   eureka-server:
     restart: always
     build: ./eureka-server/
-    image: eureka-server
     depends_on:
       - config-server
     ports:
