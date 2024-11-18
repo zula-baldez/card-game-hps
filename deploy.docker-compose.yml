@@ -1,24 +1,138 @@
-services:
-  app:
-    image: ${REGISTRY}/app:${APP_VERSION}
-    ports:
-      - 8080:8080
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  db:
-    image: postgres:15.2
-    volumes:
-      - dbvolume:/var/lib/postgresql/dbvolume
-    expose:
-      - ${POSTGRES_PORT}
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+version: "3.9"
 
-volumes:
-  dbvolume:
+services:
+  eureka-server:
+    image: ${REGISTRY}/eureka-server:${EUREKA_VERSION}
+    restart: always
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    environment:
+      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+      - "CONFIG_SERVER_URL=http://config-server:8090"
+
+
+  personal-account:
+    image: ${REGISTRY}/personal-account:${PERSONAL_ACCONUT_VERSION}
+    ports:
+      - "8083:8083"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-personal-account
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
+    restart: always
+    depends_on:
+      - eureka-server
+      - db-personal-account
+      - config-server
+
+  auth-service:
+    image: ${REGISTRY}/auth-service:${AUTH_SERVICE_VERSION}
+    ports:
+      - "8081:8081"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-auth-service
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
+    depends_on:
+      - eureka-server
+      - db-auth-service
+      - config-server
+
+  game-handler:
+    image: ${REGISTRY}/game-handler:${GAME_HANDLER_VERSION}
+    ports:
+      - "8082:8082"
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
+    depends_on:
+      - eureka-server
+      - config-server
+
+  room-service:
+    image: ${REGISTRY}/room-service:${ROOM_SERVICE_VERSION}
+    ports:
+      - "8084:8084"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-room-service
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: KfvYuJQ8
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
+    depends_on:
+      - eureka-server
+      - db-room-service
+      - config-server
+    restart: always
+
+  gateway-server:
+    image: ${REGISTRY}/gateway-server:${GATEWAY_VERSION}
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - config-server
+    restart: always
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
+
+  config-server:
+    image: ${REGISTRY}/config-server:${CONFIG_SERVER_VERSION}
+    restart: always
+    ports:
+      - "8090:8090"
+
+  db-auth-service:
+    image: postgres:15.2
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  db-personal-account:
+    image: postgres:15.2
+    ports:
+      - "5434:5432"
+    expose:
+      - 5434
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  db-room-service:
+    image: postgres:15.2
+    ports:
+      - "5435:5432"
+    expose:
+      - 5435
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    deploy:
+      restart_policy:
+        condition: on-failure

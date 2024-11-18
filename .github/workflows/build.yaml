@@ -1,0 +1,19 @@
+name: Build an deploy
+
+on: push
+
+jobs:
+  push-eureka-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Run tests with Gradle
+        run: make eureka-server push
