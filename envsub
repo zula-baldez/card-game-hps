@@ -5,14 +5,9 @@
 env=$1
 template=$2
 
-pwd
-
-ls -a
-
-echo $env
-
+bash -c "
 source $env
 
 cat <<EOF
 $(cat "$template")
-EOF
+EOF"
