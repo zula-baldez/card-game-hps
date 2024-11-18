@@ -5,6 +5,10 @@
 env=$1
 template=$2
 
+pwd
+
+ls -a
+
 . $env
 
 cat <<EOF
