@@ -3,17 +3,56 @@ name: Build an deploy
 on: push
 
 jobs:
-  push-eureka-image:
+  push-eureka-server-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Login to YC container registry
+        uses: yc-actions/yc-cr-login@v2
         with:
-          distribution: 'temurin'
-          java-version: 21
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-      - name: Run tests with Gradle
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+      - name: Build image
         run: make eureka-server push
+#  push-config-server-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make config-server push
+#  push-gateway-server-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make gateway-server push
+#  push-auth-service-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make auth-service push
+#  push-personal-account-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make personal-account push
+#  push-room-service-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make room-service push
+#  push-game-handler-image:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v4
+#      - name: Build image
+#        run: make game-handler push
