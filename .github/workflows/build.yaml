@@ -23,4 +23,4 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Build image
-        run: make eureka-server push
+        run: make ${{ matrix.service }} push
