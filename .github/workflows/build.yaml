@@ -6,6 +6,14 @@ jobs:
   push-service-image:
     name: Push service image to registry
     runs-on: ubuntu-latest
+    outputs:
+      eureka_server_version: ${{ steps.build_image.outputs.eureka_server_version }}
+      config_server_version: ${{ steps.build_image.outputs.config_server_version }}
+      gateway_server_version: ${{ steps.build_image.outputs.gateway_server_version }}
+      game_handler_version: ${{ steps.build_image.outputs.game_handler_version }}
+      auth_service_version: ${{ steps.build_image.outputs.auth_service_version }}
+      personal_account_version: ${{ steps.build_image.outputs.personal_account_version }}
+      room_service_version: ${{ steps.build_image.outputs.room_service_version }}
     strategy:
       matrix:
         service:
@@ -24,6 +32,7 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Build image
+        id: build_image
         run: make ${{ matrix.service }} push
 #  deploy:
 #    name: Deploy to PROD
