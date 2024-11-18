@@ -44,9 +44,9 @@ jobs:
         uses: actions/checkout@v4
       - name: test
         run: |
-          ls -a
+          bash -c "
           . .env
-          echo $POSTGRES_USER
+          echo $POSTGRES_USER"
       - name: Generate appropriate docker-compose file
         env:
 #          EUREKA_SERVER_VERSION: ${{ needs.push_service_image.outputs.eureka_server_version }}
