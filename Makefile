@@ -6,6 +6,7 @@ action = COMPONENT="$@" $(MAKE) $(call internalize, $(call tasks))
 
 push-component:
 	docker compose build $(COMPONENT)
+	docker image ls
 	docker tag $(COMPONENT) $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
 	docker push $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
 	@echo Pushed image $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
