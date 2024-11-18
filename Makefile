@@ -5,7 +5,7 @@ internalize = $(foreach wrd, $(1),$(wrd)-component)
 action = COMPONENT="$@" $(MAKE) $(call internalize, $(call tasks))
 
 push-component:
-	docker-compose build $(COMPONENT)
+	docker compose build $(COMPONENT)
 	docker tag $(COMPONENT) $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
 	docker push $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
 	@echo Pushed image $(REGISTRY)/$(COMPONENT):$(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
