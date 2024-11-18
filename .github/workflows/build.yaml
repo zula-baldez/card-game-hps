@@ -3,8 +3,18 @@ name: Build an deploy
 on: push
 
 jobs:
-  push-eureka-server-image:
+  push-service-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - eureka-server
+          - config-server
+          - gateway-server
+          - game-handler
+          - auth-service
+          - personal-account
+          - room-service
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -14,45 +24,3 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Build image
         run: make eureka-server push
-#  push-config-server-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make config-server push
-#  push-gateway-server-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make gateway-server push
-#  push-auth-service-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make auth-service push
-#  push-personal-account-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make personal-account push
-#  push-room-service-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make room-service push
-#  push-game-handler-image:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout sources
-#        uses: actions/checkout@v4
-#      - name: Build image
-#        run: make game-handler push

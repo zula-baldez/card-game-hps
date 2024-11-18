@@ -42,4 +42,4 @@ room-service:
 game-handler:
 	$(action)
 
-.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler
+.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler push deploy
