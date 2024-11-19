@@ -11,8 +11,11 @@ class CyclicQueue<T>(items: List<T>) {
     fun current(): T = items[currentIndex]
 
     fun next(): T {
-        currentIndex = (currentIndex + 1) % items.size
-        return items[currentIndex]
+        return items[(currentIndex + 1) % items.size]
+    }
+
+    fun move(count: Int) {
+        currentIndex = (currentIndex + count) % items.size
     }
 
     fun first(): T = items[0]

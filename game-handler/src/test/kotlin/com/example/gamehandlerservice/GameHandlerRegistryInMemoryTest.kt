@@ -53,7 +53,7 @@ class GameHandlerRegistryInMemoryTest {
         )
         gameHandlerRegistry = GameHandlerRegistryInMemoryImpl(factory)
         `when`(gameHandler.gameData).thenReturn(gameData)
-        `when`(factory.instantGameHandler(gameName, roomId)).thenReturn(gameHandler)
+        `when`(factory.instantiateGameHandler(gameName, roomId)).thenReturn(gameHandler)
     }
 
     @Test
@@ -62,7 +62,7 @@ class GameHandlerRegistryInMemoryTest {
 
         assertNotNull(createdGameHandler)
         assertNotNull(gameHandlerRegistry.getGame(gameId))
-        verify(factory).instantGameHandler(gameName, roomId)
+        verify(factory).instantiateGameHandler(gameName, roomId)
     }
 
     @Test

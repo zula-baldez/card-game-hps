@@ -10,8 +10,8 @@ class GameHandlerRegistryInMemoryImpl(
     private val factory: GameHandlerFactory,
     private val games: ConcurrentHashMap<Long, GameHandler> = ConcurrentHashMap()
 ) : GameHandlerRegistry {
-    override fun createGame(name: String, roomId: Long): GameHandler {
-        val game = factory.instantGameHandler(name, roomId)
+    override fun createGame(roomId: Long): GameHandler {
+        val game = factory.instantiateGameHandler(roomId)
         games[game.gameData.gameId] = game
         return game
     }

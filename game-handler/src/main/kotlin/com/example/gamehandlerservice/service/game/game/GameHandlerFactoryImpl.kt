@@ -1,25 +1,15 @@
 package com.example.gamehandlerservice.service.game.game
 
-import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
-import com.example.gamehandlerservice.util.id.generator.IdGenerator
-import org.springframework.beans.factory.ObjectFactory
+import com.example.common.client.RoomServiceClient
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
 
 @Component
 class GameHandlerFactoryImpl(
-    private val idGenerator: IdGenerator,
-    private val beanFactoryGameHandler: ObjectFactory<GameHandler>,
-    private val beanFactoryStateMachine: ObjectFactory<StageStateMachineHandler>
-
+    val roomServiceClient: RoomServiceClient,
+    val simpMessagingTemplate: SimpMessagingTemplate
 ) : GameHandlerFactory {
-    override fun instantGameHandler(name: String, roomId: Long): GameHandler {
-        val id = idGenerator.generateId()
-        val gameHandler: GameHandler = beanFactoryGameHandler.getObject()
-        val stateMachineHandler: StageStateMachineHandler = beanFactoryStateMachine.getObject()
-
-        gameHandler.configureGameHandler(
-            name, id, roomId, stateMachineHandler
-        )
-        return gameHandler
+    override fun instantiateGameHandler(roomId: Long): GameHandler {
+        return GameHandlerImpl(roomServiceClient, simpMessagingTemplate, roomId)
     }
 }

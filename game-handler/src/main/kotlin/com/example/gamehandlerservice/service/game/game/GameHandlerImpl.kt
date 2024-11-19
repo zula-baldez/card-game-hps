@@ -1,92 +1,212 @@
 package com.example.gamehandlerservice.service.game.game
 
 import com.example.common.client.RoomServiceClient
-import com.example.common.dto.personalaccout.AccountDto
-import com.example.gamehandlerservice.model.dto.MoveCardRequest
-import com.example.gamehandlerservice.model.dto.MoveCardResponse
+import com.example.gamehandlerservice.exceptions.GameException
+import com.example.gamehandlerservice.model.dto.*
 import com.example.gamehandlerservice.model.game.Card
-import com.example.gamehandlerservice.model.game.Stage
-import com.example.gamehandlerservice.service.game.model.GameData
-import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
+import com.example.gamehandlerservice.model.game.CardCompareResult
+import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.stereotype.Component
-import java.time.Instant
 
-@Component
-@Scope("prototype")
 class GameHandlerImpl(
-    val roomServiceClient: RoomServiceClient,
-    val simpMessagingTemplate: SimpMessagingTemplate
+    private val roomServiceClient: RoomServiceClient,
+    private val simpMessagingTemplate: SimpMessagingTemplate,
+    val roomId: Long
 ) : GameHandler {
 
-    override lateinit var gameData: GameData
-    override lateinit var stateMachine: StageStateMachineHandler
+    private val playersCards: MutableMap<Long, MutableList<Card>> = mutableMapOf()
+    private var lastRoundWinner: Long? = null
+    private var trumpCard: Card? = null
+    private val deck: MutableList<Card> = mutableListOf()
+    private val table: MutableList<Card> = mutableListOf()
+    private var stage: GameStage = GameStage.WAITING
+    private var queue: CyclicQueue<Long> = CyclicQueue(listOf())
+    private var state: GameState = GameState(0, 0, isDefending = false)
 
-    private var timerJob: Job? = null
-
-    override fun configureGameHandler(
-        name: String,
-        id: Long,
-        roomId: Long,
-        stateStageMachineHandler: StageStateMachineHandler
-    ) {
-        val room = roomServiceClient.findById(roomId)
-        gameData = GameData(
-            id,
-            roomId,
-            null,
-            CyclicQueue(room.players.shuffled())
-        )
-
-        this.stateMachine = stateStageMachineHandler
+    private fun fillDeck() {
+        deck.clear()
+        Suit.values().forEach { suit ->
+            for (i in 6..14) {
+                deck.add(Card(suit, i))
+            }
+        }
+        deck.shuffle()
     }
 
-    override fun turningPlayer(): AccountDto = gameData.playersTurnQueue.current()
-
-    override fun changeTurn() {
-        gameData.playersTurnQueue.next()
+    private fun fillPlayersCards() {
+        for (player in playersCards.keys) {
+            while (playersCards[player]!!.size < 6 && deck.isNotEmpty()) {
+                playersCards[player]!!.add(deck.removeLast())
+            }
+        }
     }
 
-    override fun moveCard(moveCardRequest: MoveCardRequest) {
-        restartTimer()
-        stateMachine.processTurn(this, moveCardRequest)
+    private fun newRound() {
+        state = GameState(queue.current(), queue.next(), isDefending = false)
+    }
+
+    private fun switchRound() {
+        state = state.copy(isDefending = !state.isDefending)
     }
 
     override fun startGame() {
-        val room = roomServiceClient.findById(gameData.roomId)
-        gameData.playersTurnQueue = CyclicQueue(room.players.shuffled())
-        stateMachine.nextStage(this)
-        changeTurn()
-        restartTimer()
-        sendStartGame()
+        if (stage == GameStage.STARTED) {
+            throw GameException("Game already started")
+        }
+
+        table.clear()
+        fillDeck()
+
+        val room = roomServiceClient.findById(roomId)
+        val players = room.players.map { it.id }
+        trumpCard = deck.first()
+        for (player in room.players.map { it.id }) {
+            playersCards[player] = mutableListOf()
+        }
+        fillPlayersCards()
+
+        queue = CyclicQueue(players.shuffled())
+        newRound()
+        stage = GameStage.STARTED
+
+        sendGameState()
     }
 
-    override fun getStage(): Stage = stateMachine.stage
+    override fun handle(playerAction: PlayerActionRequest) {
+        if (stage != GameStage.STARTED) {
+            throw GameException("Game hasn't started")
+        }
 
-    private fun restartTimer() {
-        timerJob?.cancel()
-        timerJob = CoroutineScope(Dispatchers.IO).launch {
-            delay(30000)
-            timeOver()
+        val nextRoundAction = if (!state.isDefending && playerAction.playerId == state.attackPlayer) {
+            handleAttack(playerAction)
+        } else if (state.isDefending && playerAction.playerId == state.defendPlayer) {
+            handleDefense(playerAction)
+        } else {
+            throw GameException("Not your turn yet!")
+        }
+
+        if (nextRoundAction != NextRoundAction.SWITCH_ROUND) {
+            fillPlayersCards()
+            for (player in playersCards.keys) {
+                if (playersCards[player]!!.isEmpty()) {
+                    queue.delete(player)
+                }
+            }
+
+            if (queue.getSize() <= 1) {
+                lastRoundWinner = queue.current()
+                stage = GameStage.WAITING
+            } else {
+                if (nextRoundAction == NextRoundAction.NEXT_ROUND) {
+                    queue.move(1)
+                } else if (nextRoundAction == NextRoundAction.SKIP_ROUND) {
+                    queue.move(2)
+                }
+                newRound()
+            }
+        } else {
+            switchRound()
+        }
+
+        sendGameState()
+    }
+
+    private fun takePlayerCardIfPossible(player: Long, card: Card) {
+        if (!playersCards[player]!!.contains(card)) {
+            throw GameException("No card in hand!")
+        }
+        playersCards[player]!!.remove(card)
+    }
+
+    private fun handleDefense(action: PlayerActionRequest): NextRoundAction {
+        return when (action.action) {
+            PlayerAction.DROP_CARD -> {
+                if (action.droppedCard == null) {
+                    throw GameException("No card in request")
+                }
+
+                val topCardOnTable = table.last()
+
+                if (action.droppedCard.compareTo(trumpCard!!.suit, topCardOnTable) != CardCompareResult.MORE) {
+                    throw GameException("Card is not more than top card")
+                }
+
+                takePlayerCardIfPossible(action.playerId, action.droppedCard)
+                table.add(action.droppedCard)
+                sendPlayerCards(action.playerId)
+
+                if (playersCards[action.playerId]!!.isEmpty()) {
+                    NextRoundAction.NEXT_ROUND
+                } else {
+                    NextRoundAction.SWITCH_ROUND
+                }
+            }
+
+            PlayerAction.TAKE -> {
+                playersCards[action.playerId]!!.addAll(table)
+                table.clear()
+                sendPlayerCards(action.playerId)
+                NextRoundAction.SKIP_ROUND
+            }
+
+            PlayerAction.BEAT -> {
+                throw GameException("Invalid move when defending")
+            }
         }
     }
 
-    private fun timeOver() {
-        changeTurn()
-        restartTimer()
-    }
+    private fun handleAttack(action: PlayerActionRequest): NextRoundAction {
+        return when (action.action) {
+            PlayerAction.DROP_CARD -> {
+                if (action.droppedCard == null) {
+                    throw GameException("No card in request")
+                }
 
-    private fun sendStartGame() {
-        CoroutineScope(Dispatchers.IO).launch {
-            simpMessagingTemplate.convertAndSend("/topic/start-game", MoveCardResponse(-1, -1, Card(), System.currentTimeMillis()))
+                val strengthsOnTable = table.map { it.strength }.toSet()
+
+                if (strengthsOnTable.isNotEmpty() && !strengthsOnTable.contains(action.droppedCard.strength)) {
+                    throw GameException("Invalid card dropped by attacker")
+                }
+
+                takePlayerCardIfPossible(action.playerId, action.droppedCard)
+                table.add(action.droppedCard)
+                sendPlayerCards(action.playerId)
+
+                NextRoundAction.SWITCH_ROUND
+            }
+            PlayerAction.BEAT -> {
+                table.clear()
+                NextRoundAction.NEXT_ROUND
+            }
+            PlayerAction.TAKE -> {
+                throw GameException("Invalid move when attacking")
+            }
         }
     }
 
+    private fun sendPlayerCards(playerId: Long) {
+        simpMessagingTemplate.convertAndSend(
+            "/app/room/$roomId/players/$playerId/events",
+            PlayerCardsEvent(cardsInHand = playersCards[playerId]!!)
+        )
+    }
+
+    private fun sendGameState() {
+        simpMessagingTemplate.convertAndSend(
+            "app/room/$roomId/events",
+            getGameState()
+        )
+    }
+
+    override fun getGameState(): GameStateResponse {
+        return GameStateResponse(
+            table = table,
+            state = state,
+            trumpCard = trumpCard,
+            deckSize = deck.size,
+            stage = stage,
+            winner = lastRoundWinner
+        )
+    }
 }

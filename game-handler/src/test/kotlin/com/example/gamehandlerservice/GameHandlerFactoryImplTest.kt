@@ -38,7 +38,7 @@ class GameHandlerFactoryImplTest {
         `when`(beanFactoryGameHandler.getObject()).thenReturn(mockGameHandler)
         `when`(beanFactoryStateMachine.getObject()).thenReturn(mockStateHandler)
 
-        val gameHandler = gameHandlerFactory.instantGameHandler(name, roomId)
+        val gameHandler = gameHandlerFactory.instantiateGameHandler(name, roomId)
 
         assertEquals(mockGameHandler, gameHandler)
         Mockito.verify(mockGameHandler).configureGameHandler(name, 1L, roomId, mockStateHandler)
@@ -59,8 +59,8 @@ class GameHandlerFactoryImplTest {
         `when`(beanFactoryGameHandler.getObject()).thenReturn(mockGameHandler1).thenReturn(mockGameHandler2)
         `when`(beanFactoryStateMachine.getObject()).thenReturn(mockStateHandler1).thenReturn(mockStateHandler2)
 
-        val gameHandler1 = gameHandlerFactory.instantGameHandler(name1, roomId1)
-        val gameHandler2 = gameHandlerFactory.instantGameHandler(name2, roomId2)
+        val gameHandler1 = gameHandlerFactory.instantiateGameHandler(name1, roomId1)
+        val gameHandler2 = gameHandlerFactory.instantiateGameHandler(name2, roomId2)
 
         assertEquals(mockGameHandler1, gameHandler1)
         assertEquals(mockGameHandler2, gameHandler2)

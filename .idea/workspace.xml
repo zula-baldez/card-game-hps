@@ -5,15 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/GameStage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/GameState.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/GameStateResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/PlayerAction.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/PlayerActionRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/PlayerCardsEvent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/exceptions/GameException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/NextRoundAction.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/CreateGameRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/CreateGameRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/aspects/TrueTurnValidation.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/aspects/TrueTurnValidationAnnotationAspect.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/SocketSecurityConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameHandlerController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameHandlerController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/controllers/GameProcessController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/AccountActionDTO.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/AccountActionRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MessageDTO.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/MoveCardResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/PlayerActionRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/dto/PlayerActionRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/AfterDropCardResult.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/Card.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/Card.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/model/game/Stage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/security/AuthChannelInterceptorAdapter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/cards/CardMovementHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/cards/CardMovementHandlerImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/drop/DistributionDropStrategy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/drop/DropStrategy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/drop/FinesDropStrategy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/drop/PlayingDropHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/drop/WaitingDropStrategy.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactoryImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/model/GameData.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/registry/GameHandlerRegistry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/registry/GameHandlerRegistry.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/registry/GameHandlerRegistryInMemoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/registry/GameHandlerRegistryInMemoryImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/DistributionEventHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/FinesEventHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/PlayingEventHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageEventHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageStateMachineHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/StageStateMachineHandlerImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/stage/WaitingEventHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/util/CyclicQueue.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/util/CyclicQueue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/util/FinesCounter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/util/VirtualPlayers.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/util/id/generator/IdGenerator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/util/id/generator/NonDatabaseEntityIdGenerator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/GameHandlerFactoryImplTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/GameHandlerFactoryImplTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/GameHandlerRegistryInMemoryTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/test/kotlin/com/example/gamehandlerservice/GameHandlerRegistryInMemoryTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,9 +101,9 @@
         <option value="Kotlin Object" />
         <option value="Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>
@@ -554,6 +592,7 @@
       <workItem from="1730045325186" duration="17980000" />
       <workItem from="1732021522675" duration="465000" />
       <workItem from="1732031228122" duration="3395000" />
+      <workItem from="1732050779547" duration="2590000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />

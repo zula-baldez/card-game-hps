@@ -15,7 +15,7 @@ class GameHandlerController(
     @PostMapping("/create")
     @Operation(summary = "create game")
     fun createGame(@RequestBody createGameRequest: CreateGameRequest): CreateGameResponse {
-        val gameHandler = registry.createGame(createGameRequest.name, createGameRequest.roomId)
+        val gameHandler = registry.createGame(createGameRequest.roomId)
         return CreateGameResponse(gameHandler.gameData.gameId)
     }
 }
