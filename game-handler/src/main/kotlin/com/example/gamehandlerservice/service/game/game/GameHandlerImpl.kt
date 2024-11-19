@@ -7,8 +7,12 @@ import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardCompareResult
 import com.example.gamehandlerservice.model.game.Suit
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
+import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
+import org.springframework.stereotype.Component
 
+@Component
+@Scope("prototype")
 class GameHandlerImpl(
     private val roomServiceClient: RoomServiceClient,
     private val simpMessagingTemplate: SimpMessagingTemplate,
@@ -193,14 +197,14 @@ class GameHandlerImpl(
 
     private fun sendPlayerCards(playerId: Long) {
         simpMessagingTemplate.convertAndSend(
-            "/app/room/$roomId/players/$playerId/events",
+            "/topic/room/$roomId/players/$playerId/events",
             PlayerCardsEvent(cardsInHand = playersCards[playerId]!!)
         )
     }
 
     private fun sendGameState() {
         simpMessagingTemplate.convertAndSend(
-            "/app/room/$roomId/events",
+            "/topic/room/$roomId/events",
             getGameState()
         )
     }

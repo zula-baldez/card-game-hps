@@ -1,6 +1,5 @@
 package com.example.gamehandlerservice.config
 
-import jakarta.inject.Inject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered

@@ -25,7 +25,7 @@ function connect() {
         console.log("Connected: " + frame);
 
         // Listen for cards in hand
-        stompClient.subscribe(`/app/room/${roomId}/players/${userId}/events`, (message) => {
+        stompClient.subscribe(`/topic/room/${roomId}/players/${userId}/events`, (message) => {
             const cards = JSON.parse(message.body)['cardsInHand'];
             $("#jsonList").empty();
             cards.forEach((card, index) => {
@@ -39,7 +39,7 @@ function connect() {
         });
 
         // Listen for game state updates
-        stompClient.subscribe(`/app/room/${roomId}/events`, (message) => {
+        stompClient.subscribe(`/topic/room/${roomId}/events`, (message) => {
             gameState = JSON.parse(message.body);
 
             updateGameStateUI();
@@ -97,31 +97,35 @@ function sendStart() {
 }
 
 function updateGameStateUI() {
-    const { attackPlayer, defendPlayer, isDefending, table, state, stage } = gameState;
-    let turningPlayerId = isDefending ? defendPlayer : attackPlayer
+    const { state, table, trumpCard, deckSize, stage, winner } = gameState;
+    let turningPlayerId = state.isDefending ? state.defendPlayer : state.attackPlayer
     $("#gameState").html(`
-            <p><strong>Attacking Player ID:</strong> ${attackPlayer}</p>
-            <p><strong>Defending Player ID:</strong> ${defendPlayer}</p>
+            <p><strong>Attacking Player ID:</strong> ${state.attackPlayer}</p>
+            <p><strong>Defending Player ID:</strong> ${state.defendPlayer}</p>
             <p><strong>Turing Player ID:</strong> ${turningPlayerId} </p>
-            <p><strong>Cards on Table:</strong> ${JSON.stringify(table.slice(-1)[0] || {}, null, 2)}</p>
+            <p><strong>Trump card:</strong> ${JSON.stringify(trumpCard)} </p>
+            <p><strong>Desk size:</strong> ${deckSize} </p>
+            <p><strong>Cards on Table:</strong> ${JSON.stringify(table)}</p>
             <p><strong>Game Stage:</strong> ${stage}</p>
+            <p><strong>Winner:</strong> ${winner} </p>
+
         `);
 }
 
 function enableButtonsBasedOnGameState() {
     const userId = $("#userId").val();
 
-    const { attackPlayer, defendPlayer, stage } = gameState;
+    const { state, stage } = gameState;
 
     $("#moveCard").prop("disabled", true);
     $("#beat").prop("disabled", true);
     $("#take").prop("disabled", true);
 
     if (stage === "STARTED") {
-        if (parseInt(userId) === defendPlayer) {
+        if (parseInt(userId) === state.defendPlayer && state.isDefending) {
             $("#take").prop("disabled", false);
             $("#moveCard").prop("disabled", false);
-        } else if (parseInt(userId) === attackPlayer) {
+        } else if (parseInt(userId) === state.attackPlayer && !state.isDefending) {
             $("#beat").prop("disabled", false);
             $("#moveCard").prop("disabled", false);
         }
