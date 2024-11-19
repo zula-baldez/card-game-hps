@@ -5,5 +5,6 @@ import com.example.gamehandlerservice.model.game.Card
 data class MoveCardResponse(
     var idFrom: Long? = 0,
     var idTo: Long = 0,
-    var card: Card = Card()
+    var card: Card = Card(),
+    var timestamp: Long = 0
 )

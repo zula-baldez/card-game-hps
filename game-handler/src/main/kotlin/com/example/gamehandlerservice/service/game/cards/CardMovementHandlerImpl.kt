@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
+import java.time.Instant
 
 @Component
 @Scope("prototype")
@@ -72,7 +73,7 @@ class CardMovementHandlerImpl(
 
     private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
         CoroutineScope(Dispatchers.IO).launch {
-            simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card))
+            simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card, System.currentTimeMillis()))
         }
     }
 }

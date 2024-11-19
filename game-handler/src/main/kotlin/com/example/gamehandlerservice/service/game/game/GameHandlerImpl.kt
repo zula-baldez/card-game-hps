@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import org.springframework.context.annotation.Scope
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
+import java.time.Instant
 
 @Component
 @Scope("prototype")
@@ -84,7 +85,7 @@ class GameHandlerImpl(
 
     private fun sendStartGame() {
         CoroutineScope(Dispatchers.IO).launch {
-            simpMessagingTemplate.convertAndSend("/topic/start-game", MoveCardResponse(-1, -1, Card()))
+            simpMessagingTemplate.convertAndSend("/topic/start-game", MoveCardResponse(-1, -1, Card(), System.currentTimeMillis()))
         }
     }
 
