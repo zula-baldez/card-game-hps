@@ -47,8 +47,11 @@ class RoomManagerImpl(
                 )
             ).flatMap {
                 roomEntity.currentGameId = it.gameId
-                roomRepository.save(roomEntity)
-            }.flatMap { makeRoomDto(i) }
+                println(roomEntity.currentGameId)
+                return@flatMap roomRepository.save(roomEntity)
+            }.flatMap {
+                makeRoomDto(it)
+            }
         }
     }
 

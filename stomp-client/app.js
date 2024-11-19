@@ -8,6 +8,7 @@ function setConnected(connected) {
 function connect() {
     const roomId = $("#roomId").val();
     const authToken = $("#authorization").val();
+
     alert(authToken);
     const brokerURL = `ws://localhost:8082/app/game?roomId=${roomId}`;
 
@@ -67,9 +68,10 @@ function disconnect() {
 function sendJson() {
     const jsonInput = $("#jsonInput").val(); // Get the raw JSON from the text area
     try {
+        const url = $("#url").val();
         const parsedJson = JSON.parse(jsonInput); // Parse the JSON to ensure it's valid
         stompClient.publish({
-            destination: "/app/move-card", // Replace with your server's topic
+            destination: `${url}`, // Replace with your server's topic
             body: JSON.stringify(parsedJson) // Send the parsed JSON as a string
         });
         console.log('Sent to /app/move-card:', parsedJson);
