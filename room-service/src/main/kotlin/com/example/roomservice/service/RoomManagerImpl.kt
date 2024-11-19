@@ -39,15 +39,14 @@ class RoomManagerImpl(
     }
 
     override fun createRoom(name: String, hostId: Long, capacity: Int): Mono<RoomDto> {
-        var roomEntity = RoomEntity(0, name, hostId, capacity, 0)
-        return roomRepository.save(roomEntity).flatMap { i ->
+        val createRoomEntity = RoomEntity(0, name, hostId, capacity, 0)
+        return roomRepository.save(createRoomEntity).flatMap { roomEntity ->
             reactiveGameHandlerClient.createGame(
                 CreateGameRequest(
-                    i.id, name
+                    roomEntity.id, name
                 )
             ).flatMap {
                 roomEntity.currentGameId = it.gameId
-                println(roomEntity.currentGameId)
                 return@flatMap roomRepository.save(roomEntity)
             }.flatMap {
                 makeRoomDto(it)
