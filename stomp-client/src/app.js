@@ -9,8 +9,7 @@ function connect() {
     const roomId = $("#roomId").val();
     const authToken = $("#authorization").val();
 
-    alert(authToken);
-    const brokerURL = `ws://localhost:8082/app/game?roomId=${roomId}`;
+    const brokerURL = `ws://penki.dmtrq.ru:8082/app/game?roomId=${roomId}`;
 
     stompClient = new StompJs.Client({
         brokerURL: brokerURL,

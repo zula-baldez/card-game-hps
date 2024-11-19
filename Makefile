@@ -17,11 +17,6 @@ push-component:
 		echo $(subst -,_,$(COMPONENT))_version=$(VERSION) >> $(GITHUB_OUTPUT);\
 	fi
 
-deploy:
-	./envsub .env deploy.docker-compose.yml > deploy.docker-compose.temp.yml
-	yc compute instance update-container $(INSTANCE) --docker-compose-file=deploy.docker-compose.temp.yml
-	rm deploy.docker-compose.temp.yml
-
 %-component:
 	@echo
 	@echo Unknown command $@!
@@ -49,4 +44,7 @@ room-service:
 game-handler:
 	$(action)
 
-.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler push deploy
+frontend:
+	$(action)
+
+.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler frontend push deploy

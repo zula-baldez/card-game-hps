@@ -136,3 +136,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+
+  frontend:
+    image: ${REGISTRY}/frontend:${FRONTEND_VERSION}
+    ports:
+      - "80:3000"

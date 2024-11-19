@@ -139,3 +139,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+
+  frontend:
+    build: ./stomp-client/
+    ports:
+      - "80:3000"
