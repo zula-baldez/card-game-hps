@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/stomp-client/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stomp-client/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stomp-client/body.json" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/body.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stomp-client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stomp-client/stomp-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stomp-client/stomp-client.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

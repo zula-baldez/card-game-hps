@@ -35,6 +35,7 @@ services:
     image: ${REGISTRY}/auth-service:${AUTH_SERVICE_VERSION}
     ports:
       - "8081:8081"
+    restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST: coi-db-auth-service-1
@@ -50,6 +51,7 @@ services:
 
   game-handler:
     image: ${REGISTRY}/game-handler:${GAME_HANDLER_VERSION}
+    restart: always
     ports:
       - "8082:8082"
     environment:
