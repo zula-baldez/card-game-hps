@@ -53,11 +53,10 @@ class AccountAndGameHandlerStompArgumentResolver(
     @Throws(AuthenticationException::class)
     fun getUsernamePasswordAuthenticationToken(uid: Long): UsernamePasswordAuthenticationToken {
 
-        // null credentials, we do not pass the password along
         return UsernamePasswordAuthenticationToken(
             uid,
             null,
-            listOf(GrantedAuthority { "USER" }) // MUST provide at least one role
+            listOf(GrantedAuthority { "USER" })
         )
     }
 }

@@ -65,7 +65,9 @@ class GameHandlerImpl(
             playersCards[player] = mutableListOf()
         }
         fillPlayersCards()
-
+        for (player in playersCards.keys) {
+            sendPlayerCards(player)
+        }
         queue = CyclicQueue(players.shuffled())
         newRound()
         stage = GameStage.STARTED
@@ -113,10 +115,10 @@ class GameHandlerImpl(
     }
 
     private fun takePlayerCardIfPossible(player: Long, card: Card) {
-        if (!playersCards[player]!!.contains(card)) {
+        if (!playersCards[player]?.contains(card)!!) {
             throw GameException("No card in hand!")
         }
-        playersCards[player]!!.remove(card)
+        playersCards[player]?.remove(card)
     }
 
     private fun handleDefense(action: PlayerActionRequest): NextRoundAction {
@@ -136,7 +138,7 @@ class GameHandlerImpl(
                 table.add(action.droppedCard)
                 sendPlayerCards(action.playerId)
 
-                if (playersCards[action.playerId]!!.isEmpty()) {
+                if (playersCards[action.playerId]?.isEmpty() == true) {
                     NextRoundAction.NEXT_ROUND
                 } else {
                     NextRoundAction.SWITCH_ROUND
@@ -194,7 +196,7 @@ class GameHandlerImpl(
 
     private fun sendGameState() {
         simpMessagingTemplate.convertAndSend(
-            "app/room/$roomId/events",
+            "/app/room/$roomId/events",
             getGameState()
         )
     }

@@ -16,7 +16,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer
 
 @Configuration
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableWebSocketMessageBroker
 class WebSocketConfig(
     val userHandshakeInterceptor: UserHandshakeInterceptor,

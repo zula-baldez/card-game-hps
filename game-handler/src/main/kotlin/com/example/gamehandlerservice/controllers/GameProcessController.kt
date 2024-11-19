@@ -10,6 +10,7 @@ import jakarta.validation.Valid
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
+import java.util.*
 
 @Controller
 class GameProcessController(private val registry: GameHandlerRegistry) {
@@ -19,7 +20,7 @@ class GameProcessController(private val registry: GameHandlerRegistry) {
         @Valid roomDto: RoomDto,
         @Valid @RequestBody playerActionRequest: PlayerActionRequest
     ) {
-        registry.getGame(roomDto.id)!!.handle(playerActionRequest.copy(playerId = accountDto.id))
+        registry.getGame(roomDto.id)?.handle(playerActionRequest.copy(playerId = accountDto.id))
     }
 
     @HostOnly
@@ -28,6 +29,6 @@ class GameProcessController(private val registry: GameHandlerRegistry) {
         @Valid accountDto: AccountDto,
         @Valid roomDto: RoomDto,
     ) {
-        registry.getGame(roomDto.id)!!.startGame()
+        registry.getGame(roomDto.id)?.startGame()
     }
 }

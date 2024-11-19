@@ -2,47 +2,105 @@
 <html>
 <head>
     <title>WebSocket Demo</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="./stomp-client.js"></script>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            margin-top: 20px;
+        }
+        .form-inline {
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+        #jsonList {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #gameState {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .list-group-item {
+            cursor: pointer;
+        }
+        .list-group-item:hover {
+            background-color: #f0f8ff;
+        }
+        .btn {
+            min-width: 100px;
+        }
+    </style>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! WebSocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
+    <h1 class="text-center">WebSocket Game Manager</h1>
+    <hr>
+
+    <!-- Connection Form -->
     <div class="row">
         <div class="col-md-12">
-            <form class="form-inline">
+            <form class="form-inline text-center">
                 <div class="form-group">
                     <label for="authorization">Authorization Header:</label>
                     <input type="text" id="authorization" class="form-control" placeholder="Enter token here">
                 </div>
-
-                <div class="form-group">
-                    <label for="url">Url:</label>
-                    <input type="text" id="url" class="form-control" placeholder="Enter url here">
-                </div>
-
                 <div class="form-group">
                     <label for="roomId">Room ID:</label>
                     <input type="text" id="roomId" class="form-control" placeholder="Enter room ID here">
                 </div>
-                <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
+                <div class="form-group">
+                    <label for="userId">User ID:</label>
+                    <input type="text" id="userId" class="form-control" placeholder="Enter user ID here">
+                </div>
+                <button id="connect" class="btn btn-success" type="submit">Connect</button>
+                <button id="disconnect" class="btn btn-danger" type="submit" disabled="disabled">Disconnect</button>
             </form>
         </div>
     </div>
+
+    <!-- JSON List -->
     <div class="row">
         <div class="col-md-12">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="jsonInput">JSON Input:</label>
-                    <textarea id="jsonInput" rows="20" cols="100"  class="form-control" placeholder="Paste your JSON here"></textarea>
-                </div>
-                <button id="sendJson" class="btn btn-default" type="submit">Send JSON</button>
-            </form>
+            <h3>Available Cards</h3>
+            <div id="jsonList" class="list-group">
+                <!-- Dynamically populated JSON list -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Controls -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Actions</h3>
+            <div class="btn-group">
+                <button id="moveCard" class="btn btn-primary" disabled="disabled">Move Card</button>
+                <button id="beat" class="btn btn-warning" disabled="disabled">Beat</button>
+                <button id="take" class="btn btn-danger" disabled="disabled">Take</button>
+                <button id="start" class="btn btn-danger">START</button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Game State -->
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Game State</h3>
+            <div id="gameState">
+                <p><strong>Attacking Player ID:</strong> N/A</p>
+                <p><strong>Defending Player ID:</strong> N/A</p>
+                <p><strong>Cards on Table:</strong> N/A</p>
+                <p><strong>Game Stage:</strong> N/A</p>
+            </div>
         </div>
     </div>
 </div>

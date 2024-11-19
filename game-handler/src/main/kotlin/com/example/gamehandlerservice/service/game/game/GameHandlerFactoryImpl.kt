@@ -2,9 +2,9 @@ package com.example.gamehandlerservice.service.game.game
 
 import com.example.common.client.RoomServiceClient
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class GameHandlerFactoryImpl(
     val roomServiceClient: RoomServiceClient,
     val simpMessagingTemplate: SimpMessagingTemplate
