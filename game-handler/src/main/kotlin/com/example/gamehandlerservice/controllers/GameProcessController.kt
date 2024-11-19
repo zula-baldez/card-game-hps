@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 @Controller
 class GameProcessController {
     @TrueTurnValidation
-    @MessageMapping("/move-card")
+    @MessageMapping("/move")
     fun moveCard(
         gameHandler: GameHandler,
         @Valid accountDto: AccountDto,
