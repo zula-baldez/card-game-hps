@@ -4,6 +4,6 @@ import com.example.gamehandlerservice.service.game.game.GameHandler
 
 interface GameHandlerRegistry {
     fun createGame(roomId: Long): GameHandler
-    fun deleteGame(gameId: Long)
-    fun getGame(gameId: Long): GameHandler?
+    fun deleteGame(roomId: Long)
+    fun getGame(roomId: Long): GameHandler?
 }

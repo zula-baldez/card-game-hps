@@ -12,15 +12,15 @@ class GameHandlerRegistryInMemoryImpl(
 ) : GameHandlerRegistry {
     override fun createGame(roomId: Long): GameHandler {
         val game = factory.instantiateGameHandler(roomId)
-        games[game.gameData.gameId] = game
+        games[roomId] = game
         return game
     }
 
-    override fun deleteGame(gameId: Long) {
-        games -= gameId
+    override fun deleteGame(roomId: Long) {
+        games -= roomId
     }
 
-    override fun getGame(gameId: Long): GameHandler? {
-        return games[gameId]
+    override fun getGame(roomId: Long): GameHandler? {
+        return games[roomId]
     }
 }
