@@ -49,7 +49,7 @@ jobs:
           GATEWAY_SERVER_VERSION: ${{ needs.push_service_image.outputs.gateway_server_version }}
           GAME_HANDLER_VERSION: ${{ needs.push_service_image.outputs.game_handler_version }}
           AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
-          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_a  ccount_version }}
+          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
           ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
         run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
       - name: Login to YC CLI
