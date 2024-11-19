@@ -59,9 +59,10 @@ jobs:
           PERSONAL_ACCOUNT_VERSION: 20241118.192002-runner
           ROOM_SERVICE_VERSION: 20241118.192000-runner
         run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
-      - name: Login to YC cli
+      - name: Login to YC CLI
         uses: okar1/yc-cli-install@master
         with:
           SA_KEY: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-      - name: Test
-        run: yc config profile get default
+      - name: Run deploy
+        run: |
+          yc compute instance update-container epdd9td5s2o33u6f5ln7 --docker-compose-file=temp.deploy.docker-compose.yml
