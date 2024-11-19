@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -565,7 +565,7 @@
       <workItem from="1730044753507" duration="540000" />
       <workItem from="1730045325186" duration="17980000" />
       <workItem from="1732021522675" duration="465000" />
-      <workItem from="1732031228122" duration="2543000" />
+      <workItem from="1732031228122" duration="3329000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
