@@ -49,8 +49,7 @@ jobs:
 #          AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
 #          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_a  ccount_version }}
 #          ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
-      - name: Run deploy
-        uses: yc-actions/yc-coi-deploy@v2
+      - name: Create deploy file
         env:
           EUREKA_SERVER_VERSION: 20241118.192002-runner
           CONFIG_SERVER_VERSION: 20241118.191959-runner
@@ -59,11 +58,4 @@ jobs:
           AUTH_SERVICE_VERSION: 20241118.191959-runner
           PERSONAL_ACCOUNT_VERSION: 20241118.192002-runner
           ROOM_SERVICE_VERSION: 20241118.192000-runner
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          folder-id: b1go5br6klup6p2kbvom
-          vm-subnet-id: e2l1nqusb386r5s1mafj
-          vm-name: compute-vm-2-2-20-hdd-1731957589204
-          vm-service-account-name: cardgame-bot
-          docker-compose-path: ./deploy.docker-compose.yml
-          user-data-path: ./user-data.yml
+        run: ./envsub .env deploy.docker-compose.yml

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   eureka-server:
-    image: {{docker.registry}}/eureka-server:{{env.EUREKA_SERVER_VERSION}}
+    image: ${REGISTRY}/eureka-server:${EUREKA_SERVER_VERSION}
     restart: always
     depends_on:
       - config-server
@@ -14,15 +14,15 @@ services:
 
 
   personal-account:
-    image: {{docker.registry}}/personal-account:{{env.PERSONAL_ACCOUNT_VERSION}}
+    image: ${REGISTRY}/personal-account:${PERSONAL_ACCOUNT_VERSION}
     ports:
       - "8083:8083"
     environment:
-      POSTGRES_DB: {{postgres.db}}
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST: db-personal-account
       POSTGRES_PORT: 5432
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_USER: ${POSTGRES_SUER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
       CONFIG_SERVER_URL: http://config-server:8090
     restart: always
@@ -32,15 +32,15 @@ services:
       - config-server
 
   auth-service:
-    image: {{docker.registry}}/auth-service:{{env.AUTH_SERVICE_VERSION}}
+    image: ${REGISTRY}/auth-service:${AUTH_SERVICE_VERSION}
     ports:
       - "8081:8081"
     environment:
-      POSTGRES_DB: {{postgres.db}}
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST: db-auth-service
       POSTGRES_PORT: 5432
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
       CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
@@ -49,7 +49,7 @@ services:
       - config-server
 
   game-handler:
-    image: {{docker.registry}}/game-handler:{{env.GAME_HANDLER_VERSION}}
+    image: ${REGISTRY}/game-handler:${GAME_HANDLER_VERSION}
     ports:
       - "8082:8082"
     environment:
@@ -60,15 +60,15 @@ services:
       - config-server
 
   room-service:
-    image: {{docker.registry}}/room-service:{{env.ROOM_SERVICE_VERSION}}
+    image: ${REGISTRY}/room-service:${ROOM_SERVICE_VERSION}
     ports:
       - "8084:8084"
     environment:
-      POSTGRES_DB: {{postgres.db}}
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST: db-room-service
       POSTGRES_PORT: 5432
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
       CONFIG_SERVER_URL: http://config-server:8090
     depends_on:
@@ -78,7 +78,7 @@ services:
     restart: always
 
   gateway-server:
-    image: {{docker.registry}}/gateway-server:{{env.GATEWAY_SERVER_VERSION}}
+    image: ${REGISTRY}/gateway-server:${GATEWAY_SERVER_VERSION}
     ports:
       - "8085:8085"
     depends_on:
@@ -90,7 +90,7 @@ services:
       CONFIG_SERVER_URL: http://config-server:8090
 
   config-server:
-    image: {{docker.registry}}/config-server:{{env.CONFIG_SERVER_VERSION}}
+    image: ${REGISTRY}/config-server:${CONFIG_SERVER_VERSION}
     restart: always
     ports:
       - "8090:8090"
@@ -102,9 +102,9 @@ services:
     expose:
       - 5432
     environment:
-      POSTGRES_DB: {{postgres.db}}
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     deploy:
       restart_policy:
         condition: on-failure
@@ -116,9 +116,9 @@ services:
     expose:
       - 5434
     environment:
-      POSTGRES_DB: {{postgres.db}}
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     deploy:
       restart_policy:
         condition: on-failure
@@ -130,9 +130,9 @@ services:
     expose:
       - 5435
     environment:
-      POSTGRES_DB: {{postgres.db}}
-      POSTGRES_USER: {{postgres.user}}
-      POSTGRES_PASSWORD: {{postgres.password}}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     deploy:
       restart_policy:
         condition: on-failure
