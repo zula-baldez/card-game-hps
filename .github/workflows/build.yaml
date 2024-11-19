@@ -58,4 +58,8 @@ jobs:
           AUTH_SERVICE_VERSION: 20241118.191959-runner
           PERSONAL_ACCOUNT_VERSION: 20241118.192002-runner
           ROOM_SERVICE_VERSION: 20241118.192000-runner
-        run: ./envsub .env deploy.docker-compose.yml
+        run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
+      - name: Login to YC cli
+        uses: okar1/yc-cli-install@master
+        with:
+          SA_KEY: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
