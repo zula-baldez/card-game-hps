@@ -9,8 +9,8 @@ services:
     ports:
       - "8761:8761"
     environment:
-      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
-      - "CONFIG_SERVER_URL=http://config-server:8090"
+      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://coi-eureka-server-1:8761/eureka"
+      - "CONFIG_SERVER_URL=http://coi-config-server-1:8090"
 
 
   personal-account:
@@ -19,12 +19,12 @@ services:
       - "8083:8083"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: db-personal-account
+      POSTGRES_HOST: coi-db-personal-account-1
       POSTGRES_PORT: 5432
       POSTGRES_USER: ${POSTGRES_SUER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
-      CONFIG_SERVER_URL: http://config-server:8090
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
     restart: always
     depends_on:
       - eureka-server
@@ -37,12 +37,12 @@ services:
       - "8081:8081"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: db-auth-service
+      POSTGRES_HOST: coi-db-auth-service-1
       POSTGRES_PORT: 5432
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
-      CONFIG_SERVER_URL: http://config-server:8090
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
     depends_on:
       - eureka-server
       - db-auth-service
@@ -53,8 +53,8 @@ services:
     ports:
       - "8082:8082"
     environment:
-      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
-      CONFIG_SERVER_URL: http://config-server:8090
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
     depends_on:
       - eureka-server
       - config-server
@@ -65,12 +65,12 @@ services:
       - "8084:8084"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: db-room-service
+      POSTGRES_HOST: coi-db-room-service-1
       POSTGRES_PORT: 5432
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
-      CONFIG_SERVER_URL: http://config-server:8090
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
     depends_on:
       - eureka-server
       - db-room-service
@@ -86,8 +86,8 @@ services:
       - config-server
     restart: always
     environment:
-      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
-      CONFIG_SERVER_URL: http://config-server:8090
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
 
   config-server:
     image: ${REGISTRY}/config-server:${CONFIG_SERVER_VERSION}
