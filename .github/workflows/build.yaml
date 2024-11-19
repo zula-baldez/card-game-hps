@@ -63,3 +63,5 @@ jobs:
         uses: okar1/yc-cli-install@master
         with:
           SA_KEY: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+      - name: Test
+        run: yc config profile default
