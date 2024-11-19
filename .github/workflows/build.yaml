@@ -64,4 +64,4 @@ jobs:
         with:
           SA_KEY: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Test
-        run: yc config profile default
+        run: yc config profile get default
