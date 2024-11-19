@@ -11,7 +11,7 @@ function connect() {
     const userId = $("#userId").val();
     const authToken = $("#authorization").val();
 
-    const brokerURL = `ws://localhost:8082/app/game?roomId=${roomId}`;
+    const brokerURL = `ws://penki.dmtrq.ru:8082/app/game?roomId=${roomId}`;
 
     stompClient = new StompJs.Client({
         brokerURL: brokerURL,
