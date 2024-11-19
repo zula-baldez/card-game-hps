@@ -12,7 +12,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate
 class GameHandlerImpl(
     private val roomServiceClient: RoomServiceClient,
     private val simpMessagingTemplate: SimpMessagingTemplate,
-    val roomId: Long
 ) : GameHandler {
 
     private val playersCards: MutableMap<Long, MutableList<Card>> = mutableMapOf()
@@ -23,6 +22,11 @@ class GameHandlerImpl(
     private var stage: GameStage = GameStage.WAITING
     private var queue: CyclicQueue<Long> = CyclicQueue(listOf())
     private var state: GameState = GameState(0, 0, isDefending = false)
+    private var roomId: Long = 0
+
+    override fun setRoomId(roomId: Long) {
+        this.roomId = roomId
+    }
 
     private fun fillDeck() {
         deck.clear()

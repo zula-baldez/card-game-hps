@@ -1,15 +1,15 @@
 package com.example.gamehandlerservice.service.game.game
 
-import com.example.common.client.RoomServiceClient
-import org.springframework.messaging.simp.SimpMessagingTemplate
+import org.springframework.beans.factory.ObjectFactory
 import org.springframework.stereotype.Service
 
 @Service
 class GameHandlerFactoryImpl(
-    val roomServiceClient: RoomServiceClient,
-    val simpMessagingTemplate: SimpMessagingTemplate
+    private val beanFactoryGameHandler: ObjectFactory<GameHandler>
 ) : GameHandlerFactory {
     override fun instantiateGameHandler(roomId: Long): GameHandler {
-        return GameHandlerImpl(roomServiceClient, simpMessagingTemplate, roomId)
+        val gameHandler = beanFactoryGameHandler.getObject()
+        gameHandler.setRoomId(roomId)
+        return gameHandler
     }
 }

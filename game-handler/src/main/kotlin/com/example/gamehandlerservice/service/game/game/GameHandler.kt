@@ -7,4 +7,5 @@ interface GameHandler {
     fun handle(playerAction: PlayerActionRequest)
     fun getGameState(): GameStateResponse
     fun startGame()
+    fun setRoomId(roomId: Long)
 }
