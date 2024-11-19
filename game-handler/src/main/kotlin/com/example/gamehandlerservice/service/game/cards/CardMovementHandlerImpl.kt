@@ -28,7 +28,7 @@ class CardMovementHandlerImpl(
         sourceArea?.let { source ->
             if (destinationArea != null && source.remove(moveCardRequest.card)) {
                 destinationArea.add(moveCardRequest.card)
-                sendCardMoveToDest(moveCardRequest.fromDropArea, moveCardRequest.toDropArea, moveCardRequest.card)
+                sendCardMoveToDest(moveCardRequest.fromDropArea, moveCardRequest.toDropArea, moveCardRequest.card, 0)
             }
         }
     }
@@ -44,18 +44,18 @@ class CardMovementHandlerImpl(
                 deck.removeLastOrNull()?.let { card ->
                     card.secret = true
                     gameHandler.gameData.userCards[account.id]?.add(card)
-                    sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card)
+                    sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card, 0)
                 }
             }
             deck.removeLastOrNull()?.let { card ->
                 gameHandler.gameData.userCards[account.id]?.add(card)
-                sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card)
+                sendCardMoveToDest(VirtualPlayers.DECK.id, account.id, card, 0)
             }
         }
-
+        var index = 0L
         deck.forEach {
             gameHandler.gameData.userCards[VirtualPlayers.TABLE.id]?.add(it)
-            sendCardMoveToDest(VirtualPlayers.DECK.id, VirtualPlayers.TABLE.id, it)
+            sendCardMoveToDest(VirtualPlayers.DECK.id, VirtualPlayers.TABLE.id, it, index++)
         }
     }
 
@@ -71,9 +71,9 @@ class CardMovementHandlerImpl(
         }.toMutableList()
     }
 
-    private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card) {
+    private fun sendCardMoveToDest(idFrom: Long?, idTo: Long, card: Card, index: Long) {
         CoroutineScope(Dispatchers.IO).launch {
-            simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card, System.currentTimeMillis()))
+            simpMessagingTemplate.convertAndSend("/topic/card-changes", MoveCardResponse(idFrom, idTo, card, index))
         }
     }
 }
