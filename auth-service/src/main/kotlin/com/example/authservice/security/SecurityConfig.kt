@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.*
 import org.springframework.security.web.server.SecurityWebFilterChain
+import org.springframework.web.cors.reactive.CorsConfigurationSource
 
 @Configuration
 @EnableWebFluxSecurity
@@ -32,7 +33,7 @@ class SecurityConfig(
     @Bean
     @Throws(Exception::class)
     fun filterChain(
-        http: ServerHttpSecurity,
+        http: ServerHttpSecurity
     ): SecurityWebFilterChain {
         http
             .authorizeExchange {
@@ -45,6 +46,7 @@ class SecurityConfig(
                     jwt.jwtDecoder(reactiveJwtDecoder())
                 }
             }
+            .cors { it.disable() }
             .csrf { it.disable() }
             .formLogin { it.disable() }
             .logout { it.disable() }

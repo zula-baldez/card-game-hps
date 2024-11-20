@@ -1,6 +1,10 @@
 let stompClient;
 let selectedCard = null;
 let gameState = {"stage": "WAITING"};
+
+const hostname = window.location.hostname;
+const gateway = `http://${hostname}:8085`
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -11,7 +15,7 @@ function connect() {
     const userId = $("#userId").val();
     const authToken = $("#authorization").val();
 
-    const brokerURL = `ws://penki.dmtrq.ru:8082/app/game?roomId=${roomId}`;
+    const brokerURL = `ws://${hostname}:8082/app/game?roomId=${roomId}`;
 
     stompClient = new StompJs.Client({
         brokerURL: brokerURL,
@@ -67,9 +71,6 @@ function disconnect() {
 }
 
 function sendPlayerAction(actionType) {
-    const roomId = $("#roomId").val();
-    const userId = $("#userId").val();
-
     if (!selectedCard && actionType !== "TAKE") {
         alert("Please select a card first.");
         return;
@@ -132,6 +133,78 @@ function enableButtonsBasedOnGameState() {
     }
 }
 
+/*
+ * Utils
+ */
+
+function error(jqxhr, exception, error) {
+    console.log(`${jqxhr.status} (${error}, ${exception})`)
+    if (jqxhr.responseText) {
+        console.log(JSON.parse(jqxhr.responseText))
+    }
+}
+
+function post(path, data, callback) {
+    const headers = {}
+    const token = $("#authorization").val()
+
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`
+    }
+
+    $.ajax({
+        url: `${gateway}${path}`,
+        headers: headers,
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: callback,
+        error: error
+    })
+}
+
+/*
+ * User authentication
+ */
+
+function login() {
+    const username = $("#username").val()
+    const password = $("#password").val()
+
+    post(
+        "/auth-service/auth/login",
+        {
+            username: username,
+            password: password
+        },
+        function (data) {
+            $("#authorization").val(data.token)
+            $("#userId").val(data.id)
+        }
+    )
+}
+
+function register() {
+    const username = $("#username").val()
+    const password = $("#password").val()
+
+    post(
+        "/auth-service/auth/register",
+        {
+            username: username,
+            password: password
+        },
+        function (data) {
+            alert(`Success! User with id ${data.id} registered`)
+        }
+    )
+}
+
+/*
+ * Binding
+ */
+
 $(function () {
     $("form").on("submit", (e) => e.preventDefault());
     $("#connect").click(() => connect());
@@ -142,4 +215,6 @@ $(function () {
     $("#take").click(() => sendPlayerAction("TAKE"));
     $("#start").click(() => sendStart());
 
+    $("#login").click(() => login())
+    $("#register").click(() => register())
 });
