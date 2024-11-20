@@ -98,6 +98,9 @@ class GameHandlerImpl(
 
         if (nextRoundAction != NextRoundAction.SWITCH_ROUND) {
             fillPlayersCards()
+            sendPlayerCards(state.attackPlayer)
+            sendPlayerCards(state.defendPlayer)
+
             for (player in playersCards.keys) {
                 if (playersCards[player]!!.isEmpty()) {
                     queue.delete(player)

@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerFactoryImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -550,6 +548,7 @@
       <workItem from="1732021522675" duration="465000" />
       <workItem from="1732031228122" duration="3395000" />
       <workItem from="1732050779547" duration="3483000" />
+      <workItem from="1732091994870" duration="74000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
