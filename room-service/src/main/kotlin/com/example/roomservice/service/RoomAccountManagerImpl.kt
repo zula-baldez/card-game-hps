@@ -82,7 +82,7 @@ class RoomAccountManagerImpl(
 
                         if (accounts.size <= 1) {
                             return@withAccounts roomRepository.delete(room)
-                                .then(updateAccountRoom(accountId, roomId))
+                                .then(updateAccountRoom(accountId, null))
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(
@@ -106,13 +106,13 @@ class RoomAccountManagerImpl(
                                         Mono.empty()
                                     }
                                 )
-                                .then(updateAccountRoom(accountId, roomId))
+                                .then(updateAccountRoom(accountId, null))
                         }
                     }
             }
     }
 
-    private fun updateAccountRoom(accountId: Long, roomId: Long): Mono<Void> {
+    private fun updateAccountRoom(accountId: Long, roomId: Long?): Mono<Void> {
         return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)).then()
     }
 

@@ -5,13 +5,8 @@ let gameState = {"stage": "WAITING"};
 const hostname = window.location.hostname;
 const gateway = `http://${hostname}:8085`
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-}
-
 function connect() {
-    const roomId = $("#roomId").val();
+    const roomId = $("#room-id").val();
     const userId = $("#userId").val();
     const authToken = $("#authorization").val();
 
@@ -25,7 +20,6 @@ function connect() {
     });
 
     stompClient.onConnect = (frame) => {
-        setConnected(true);
         console.log("Connected: " + frame);
 
         // Listen for cards in hand
@@ -66,7 +60,7 @@ function disconnect() {
     if (stompClient) {
         stompClient.deactivate();
     }
-    setConnected(false);
+    stompClient = undefined
     console.log("Disconnected");
 }
 
@@ -144,7 +138,7 @@ function error(jqxhr, exception, error) {
     }
 }
 
-function post(path, data, callback) {
+function headers() {
     const headers = {}
     const token = $("#authorization").val()
 
@@ -152,13 +146,42 @@ function post(path, data, callback) {
         headers["Authorization"] = `Bearer ${token}`
     }
 
+    return headers
+}
+
+function post(path, data, callback) {
     $.ajax({
         url: `${gateway}${path}`,
-        headers: headers,
+        headers: headers(),
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(data),
+        success: callback,
+        error: error
+    })
+}
+
+function del(path, data, callback) {
+    $.ajax({
+        url: `${gateway}${path}`,
+        headers: headers(),
+        type: 'delete',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: callback,
+        error: error
+    })
+}
+
+function get(path, data, callback) {
+    $.ajax({
+        url: `${gateway}${path}`,
+        headers: headers(),
+        type: 'get',
+        dataType: 'json',
+        data: data,
         success: callback,
         error: error
     })
@@ -201,15 +224,173 @@ function register() {
     )
 }
 
+function getAccount(accountId, callback) {
+    get(
+        `/personal-account/accounts/${accountId}`,
+        {},
+        callback
+    )
+}
+
+/*
+ * Rooms
+ */
+
+function getRoom(roomId, callback) {
+    get(
+        `/room-service/rooms/${roomId}`,
+        {},
+        callback
+    )
+}
+
+function joinRoom(roomId) {
+    const accountId = $("#userId").val()
+
+    post(
+        `/room-service/rooms/${roomId}/players`,
+        {
+            "account_id": accountId
+        },
+        function (data) {
+            console.log(`Joined room ${roomId}`)
+        }
+    )
+}
+
+function getRooms(callback) {
+    get(
+        "/room-service/rooms",
+        {},
+        callback
+    )
+}
+
+function createRoom() {
+    const roomName = $("#room-name").val()
+    const roomCapacity = $("#room-capacity").val()
+
+    post(
+        "/room-service/rooms",
+        {
+            name: roomName,
+            capacity: roomCapacity
+        },
+        function (data) {
+            console.log(`Created room: ${JSON.stringify(data)}`)
+            joinRoom(data.id)
+        }
+    )
+}
+
+function leaveRoom() {
+    const roomId = $("#room-id").val()
+    const accountId = $("#userId").val()
+
+    del(
+        `/room-service/rooms/${roomId}/players/${accountId}`,
+        {
+            reason: "LEAVE"
+        },
+        function (data) {
+            console.log(`Left room ${roomId}`)
+        }
+    )
+}
+
+function removeAccountFromRoom(accountId, roomId, reason) {
+    del(
+        `/room-service/rooms/${roomId}/players/${accountId}`,
+        {
+            reason: reason
+        },
+        function (data) {
+            console.log(`${accountId} left room ${roomId} (${reason})`)
+        }
+    )
+}
+
+function roomsPolling() {
+    const accountId = $("#userId").val()
+
+    getAccount(accountId, function (account) {
+        const currentRoom = account.room_id
+
+        if (currentRoom) {
+            $("#rooms-list").html("")
+            $("#leave-room").prop("disabled", false)
+            $("#create-room").prop("disabled", true)
+
+            getRoom(currentRoom, function (room) {
+                $("#room-id").val(room.id)
+                $("#room-name").val(room.name)
+                $("#room-name").prop("disabled", true)
+                $("#room-capacity").val(room.capacity)
+                $("#room-capacity").prop("disabled", true)
+
+                let html = ""
+
+                room.players.sort((a, b) => a.id - b.id)
+
+                room.players.forEach(function (player, index) {
+                    html += `
+                        <div class="row">
+                            <h4>${index+1}. ${player.name} ${player.id === room.host_id ? "(host)" : ""}</h4>
+                            ${accountId == room.host_id ? `
+                                <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'KICK')">KICK</button>
+                                <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'BAN')">BAN</button>
+                            ` : ""}
+                        </div>
+                    `
+                })
+
+                $("#current-room").html(html)
+
+                if (!stompClient) {
+                    connect()
+                }
+            })
+        } else {
+            $("#current-room").html("")
+            $("#leave-room").prop("disabled", true)
+            $("#create-room").prop("disabled", false)
+            $("#room-id").val("")
+            $("#room-name").prop("disabled", false)
+            $("#room-capacity").prop("disabled", false)
+
+            getRooms(function (rooms) {
+                let html = ""
+
+                for (const room of rooms) {
+                    const banned = room.banned_players.map(player => player.id).includes(parseInt(accountId))
+
+                    html += `
+                        <div class="row">
+                            <h4>${room.name} (${room.id})</h4>
+                            <p>Players: ${room.players.length}/${room.capacity}</p>
+                            ${banned ? "<button disabled='disabled'>You are banned!</button>" :
+                            `<button onClick="joinRoom(${room.id})">Join</button>`}
+                        </div>
+                    `
+                }
+
+                $("#rooms-list").html(html)
+            })
+
+            if (stompClient) {
+                disconnect()
+            }
+        }
+    })
+
+    setTimeout(roomsPolling, 500)
+}
+
 /*
  * Binding
  */
 
 $(function () {
-    $("form").on("submit", (e) => e.preventDefault());
-    $("#connect").click(() => connect());
-    $("#disconnect").click(() => disconnect());
-
     $("#moveCard").click(() => sendPlayerAction("DROP_CARD"));
     $("#beat").click(() => sendPlayerAction("BEAT"));
     $("#take").click(() => sendPlayerAction("TAKE"));
@@ -217,4 +398,9 @@ $(function () {
 
     $("#login").click(() => login())
     $("#register").click(() => register())
+
+    $("#create-room").click(() => createRoom())
+    $("#leave-room").click(() => leaveRoom())
+
+    roomsPolling()
 });

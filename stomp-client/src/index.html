@@ -48,32 +48,55 @@
     <!-- Connection Form -->
     <div class="row">
         <div class="col-md-12">
-            <form class="form-inline text-center">
-                <div class="form-group">
-                    <label for="authorization">Authorization Header:</label>
-                    <input type="text" id="authorization" class="form-control" placeholder="Your token will appear here" readonly="readonly">
-                </div>
-                <div class="form-group">
-                    <label for="userId">User ID:</label>
-                    <input type="text" id="userId" class="form-control" placeholder="Your id will appear here" readonly="readonly">
-                </div>
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" class="form-control">
-                    <br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" class="form-control">
-                    <br>
-                    <button id="login" class="btn btn-success">Login</button>
-                    <button id="register" class="btn btn-success">Register</button>
-                </div>
-                <div class="form-group">
-                    <label for="roomId">Room ID:</label>
-                    <input type="text" id="roomId" class="form-control" placeholder="Enter room ID here">
-                </div>
-                <button id="connect" class="btn btn-success" type="submit">Connect</button>
-                <button id="disconnect" class="btn btn-danger" type="submit" disabled="disabled">Disconnect</button>
-            </form>
+            <div class="form-group">
+                <label for="authorization">Authorization Header:</label>
+                <input type="text" id="authorization" class="form-control" placeholder="Your token will appear here" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" class="form-control" placeholder="Your id will appear here" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" class="form-control">
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" class="form-control">
+                <br>
+                <button id="login" class="btn btn-success">Login</button>
+                <button id="register" class="btn btn-success">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="room-id">Room id:</label>
+                <input type="text" id="room-id" class="form-control" placeholder="Room id will be displayed here" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <label for="room-name">Room name:</label>
+                <input type="text" id="room-name" class="form-control" placeholder="My awesome room">
+            </div>
+            <div class="form-group">
+                <label for="room-capacity">Room capacity:</label>
+                <input type="number" id="room-capacity" class="form-control" min="2" max="6" value="2">
+            </div>
+            <button id="create-room" class="btn btn-success">Create room</button>
+            <button id="leave-room" class="btn btn-success" disabled="disabled">Leave room</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="current-room">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="rooms-list">
+
         </div>
     </div>
 
