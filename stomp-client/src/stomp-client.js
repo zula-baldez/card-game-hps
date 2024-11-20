@@ -141,17 +141,14 @@ function enableButtonsBasedOnGameState() {
 
     const { state, stage } = gameState;
 
-    $("#moveCard").prop("disabled", true);
     $("#beat").prop("disabled", true);
     $("#take").prop("disabled", true);
 
     if (stage === "STARTED") {
         if (parseInt(userId) === state.defendPlayer && state.isDefending) {
             $("#take").prop("disabled", false);
-            $("#moveCard").prop("disabled", false);
         } else if (parseInt(userId) === state.attackPlayer && !state.isDefending) {
             $("#beat").prop("disabled", false);
-            $("#moveCard").prop("disabled", false);
         }
     }
 }

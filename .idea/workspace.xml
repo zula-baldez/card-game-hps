@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stomp-client/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -492,7 +493,7 @@
       <workItem from="1732092153963" duration="3000" />
       <workItem from="1732105700600" duration="11000" />
       <workItem from="1732123031893" duration="8989000" />
-      <workItem from="1732132056086" duration="5256000" />
+      <workItem from="1732132056086" duration="5894000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
