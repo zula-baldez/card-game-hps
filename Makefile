@@ -17,6 +17,7 @@ push-component:
 		echo $(subst -,_,$(COMPONENT))_version=$(VERSION) >> $(GITHUB_OUTPUT);\
 	fi
 
+
 %-component:
 	@echo
 	@echo Unknown command $@!
