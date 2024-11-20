@@ -19,8 +19,10 @@
         }
         #jsonList {
             margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-around;
+            align-items: center;
         }
         #gameState {
             background-color: #fff;
@@ -37,6 +39,22 @@
         }
         .btn {
             min-width: 100px;
+        }
+
+        .card {
+            width: 100px;
+            box-shadow: grey 0px 5px 10px 0px;
+            transform: rotate(-2deg);
+        }
+
+        .beat-row>*:last-child:not(:first-child) {
+            margin-left: -50px;
+            transform: rotate(2deg);
+        }
+
+        .beat-row {
+            width: fit-content;
+            margin: 0 auto 15px;
         }
     </style>
 </head>

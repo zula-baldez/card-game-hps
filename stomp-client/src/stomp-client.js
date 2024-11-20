@@ -1,5 +1,4 @@
 let stompClient;
-let selectedCard = null;
 let gameState = {"stage": "WAITING"};
 
 const hostname = window.location.hostname;
@@ -26,13 +25,12 @@ function connect() {
         stompClient.subscribe(`/topic/room/${roomId}/players/${userId}/events`, (message) => {
             const cards = JSON.parse(message.body)['cardsInHand'];
             $("#jsonList").empty();
-            cards.forEach((card, index) => {
-                const listItem = $(`<a href="#" class="list-group-item">${JSON.stringify(card)}</a>`);
-                listItem.click(() => {
-                    selectedCard = card;
-                    $("#jsonInput").val(JSON.stringify(card, null, 2));
+            cards.forEach((card) => {
+                const cardElement = renderCard(card)
+                cardElement.click(() => {
+                    sendPlayerAction("DROP_CARD", card)
                 });
-                $("#jsonList").append(listItem);
+                $("#jsonList").append(cardElement);
             });
         });
 
@@ -56,6 +54,24 @@ function connect() {
     stompClient.activate();
 }
 
+function renderCard(card) {
+    let suitIndex
+
+    if (card.suit === "DIAMONDS") {
+        suitIndex = 1
+    } else if (card.suit === "HEARTS") {
+        suitIndex = 2
+    } else if (card.suit === "CLUBS") {
+        suitIndex = 3
+    } else if (card.suit === "SPADES") {
+        suitIndex = 4
+    }
+
+    const cardIndex = card.strength * 10 + suitIndex
+
+    return $(`<img class="card" src="./cards/${cardIndex}.png" alt='${JSON.stringify(card)}'/>`)
+}
+
 function disconnect() {
     if (stompClient) {
         stompClient.deactivate();
@@ -64,9 +80,9 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendPlayerAction(actionType) {
-    if (!selectedCard && actionType !== "TAKE") {
-        alert("Please select a card first.");
+function sendPlayerAction(actionType, selectedCard) {
+    if (!selectedCard && actionType === "DROP_CARD") {
+        console.log("No card selected")
         return;
     }
 
@@ -98,13 +114,26 @@ function updateGameStateUI() {
             <p><strong>Attacking Player ID:</strong> ${state.attackPlayer}</p>
             <p><strong>Defending Player ID:</strong> ${state.defendPlayer}</p>
             <p><strong>Turing Player ID:</strong> ${turningPlayerId} </p>
-            <p><strong>Trump card:</strong> ${JSON.stringify(trumpCard)} </p>
+            <p id="trump-card"><strong>Trump card:</strong></p>
             <p><strong>Desk size:</strong> ${deckSize} </p>
-            <p><strong>Cards on Table:</strong> ${JSON.stringify(table)}</p>
+            <p><strong>Cards on Table:</strong></p>
+            <div id="deck"></div>
             <p><strong>Game Stage:</strong> ${stage}</p>
             <p><strong>Winner:</strong> ${winner} </p>
-
         `);
+
+    $("#trump-card").append(renderCard(trumpCard))
+
+    for (let i = 0; i < table.length; i += 2) {
+        const row = $("<div class='row beat-row'/>")
+
+        row.append(renderCard(table[i]))
+        if (i + 1 < table.length) {
+            row.append(renderCard(table[i+1]))
+        }
+
+        $("#deck").append(row)
+    }
 }
 
 function enableButtonsBasedOnGameState() {
@@ -391,7 +420,6 @@ function roomsPolling() {
  */
 
 $(function () {
-    $("#moveCard").click(() => sendPlayerAction("DROP_CARD"));
     $("#beat").click(() => sendPlayerAction("BEAT"));
     $("#take").click(() => sendPlayerAction("TAKE"));
     $("#start").click(() => sendStart());

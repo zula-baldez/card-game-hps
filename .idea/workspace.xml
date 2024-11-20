@@ -5,8 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/101.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/102.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/103.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/104.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/111.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/112.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/113.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/114.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/121.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/122.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/123.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/124.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/131.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/134.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/141.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/142.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/143.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/144.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/61.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/62.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/63.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/71.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/72.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/73.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/74.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/81.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/82.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/83.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/84.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/91.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/92.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/93.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/94.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stomp-client/src/cards/rubashka.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stomp-client/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" afterDir="false" />
     </list>
@@ -220,11 +256,11 @@
       <recent name="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/stomp-client/src/cards" />
       <recent name="$PROJECT_DIR$/stomp-client/src" />
       <recent name="$PROJECT_DIR$/stomp-client" />
       <recent name="$PROJECT_DIR$/common/src/main/resources" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout" />
-      <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.example.personalaccount.security" />
@@ -494,7 +530,7 @@
       <workItem from="1732092153963" duration="3000" />
       <workItem from="1732105700600" duration="11000" />
       <workItem from="1732123031893" duration="8989000" />
-      <workItem from="1732132056086" duration="2030000" />
+      <workItem from="1732132056086" duration="4716000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
