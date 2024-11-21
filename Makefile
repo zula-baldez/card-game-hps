@@ -48,4 +48,7 @@ game-handler:
 frontend:
 	$(action)
 
-.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler frontend push deploy
+avatars-service:
+	$(action)
+
+.PHONY: eureka-server gateway-server config-server auth-service personal-account room-service game-handler frontend avatars-service push deploy

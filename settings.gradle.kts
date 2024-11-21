@@ -13,5 +13,6 @@ include(
     "game-handler",
     "eureka-server",
     "gateway-server",
-    "config-server"
+    "config-server",
+    "avatars-service"
 )

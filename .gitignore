@@ -6,6 +6,8 @@ build/
 
 node_modules
 
+.env.secrets
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

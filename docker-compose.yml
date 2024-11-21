@@ -144,3 +144,13 @@ services:
     build: ./stomp-client/
     ports:
       - "80:3000"
+
+  avatars-service:
+    build:
+      dockerfile: ./avatars-service/Dockerfile
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+    env_file:
+      - .env.secrets

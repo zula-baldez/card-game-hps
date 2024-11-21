@@ -1,5 +1,6 @@
 package com.example.personalaccount.service
 
+import com.example.common.dto.Avatar
 import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.database.AccountEntity
@@ -23,6 +24,7 @@ class AccountServiceImpl(
                 id = createAccountDto.id,
                 name = createAccountDto.username,
                 fines = 0,
+                avatar = "",
                 currentRoomId = null
             )
 
@@ -35,6 +37,12 @@ class AccountServiceImpl(
     override fun updateAccountRoom(userId: Long, roomId: Long?): AccountEntity {
         val account = accountRepository.findByIdOrNull(userId) ?: throw AccountNotFoundException(userId)
         account.currentRoomId = roomId
+        return accountRepository.save(account)
+    }
+
+    override fun updateAccountAvatar(avatar: Avatar): AccountEntity {
+        val account = accountRepository.findByIdOrNull(avatar.accountId) ?: throw AccountNotFoundException(avatar.accountId)
+        account.avatar = avatar.url
         return accountRepository.save(account)
     }
 }

@@ -143,3 +143,13 @@ services:
     image: ${REGISTRY}/frontend:${FRONTEND_VERSION}
     ports:
       - "80:3000"
+
+  avatars-service:
+    image: ${REGISTRY}/avatars-service:${AVATARS_SERVICE_VERSION}
+    ports:
+      - "8086:8086"
+    expose:
+      - 8086
+    environment:
+      ACCESS_KEY_ID: ${ACCESS_KEY_ID}
+      SECRET_ACCESS_KEY: ${SECRET_ACCESS_KEY}

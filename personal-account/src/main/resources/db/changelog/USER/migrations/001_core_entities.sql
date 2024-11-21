@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS accounts
     id              BIGINT PRIMARY KEY DEFAULT nextval ('account_id_seq'),
     name            VARCHAR(255) NOT NULL,
     fines           INT CHECK (fines >= 0),
+    avatar          VARCHAR(255),
     current_room_id BIGINT
 );
 

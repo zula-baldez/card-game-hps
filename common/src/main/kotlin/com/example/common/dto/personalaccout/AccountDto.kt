@@ -13,6 +13,8 @@ data class AccountDto(
     @field:Min(0)
     var fines: Int,
 
+    var avatar: String,
+
     @JsonProperty("room_id")
     val roomId: Long?
 )

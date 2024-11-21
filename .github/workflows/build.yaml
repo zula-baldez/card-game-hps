@@ -15,6 +15,7 @@ jobs:
       personal_account_version: ${{ steps.build_image.outputs.personal_account_version }}
       room_service_version: ${{ steps.build_image.outputs.room_service_version }}
       frontend_version: ${{ steps.build_image.outputs.frontend_version }}
+      avatars_service_version: ${{ steps.build_image.outputs.avatars_service_version }}
     strategy:
       matrix:
         service:
@@ -26,6 +27,7 @@ jobs:
           - personal-account
           - room-service
           - frontend
+          - avatars-service
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -54,6 +56,7 @@ jobs:
           PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
           ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
           FRONTEND_VERSION: ${{ needs.push_service_image.outputs.frontend_version }}
+          AVATARS_SERVICE_VERSION: ${{ needs.push_service_image.outputs.avatars_service_version }}
         run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
       - name: Login to YC CLI
         uses: okar1/yc-cli-install@master

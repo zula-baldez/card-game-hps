@@ -18,6 +18,10 @@ class AccountEntity(
     @field:PositiveOrZero
     @Column(name = "fines")
     var fines: Int,
+
+    @Column(name = "avatar")
+    var avatar: String,
+
     @OneToMany(mappedBy = "fromAccount", cascade = [CascadeType.PERSIST])
     var friends: MutableSet<FriendshipEntity> = HashSet(),
     @OneToMany(mappedBy = "toAccount", cascade = [CascadeType.PERSIST])
@@ -31,6 +35,7 @@ class AccountEntity(
             id,
             name,
             fines,
+            avatar,
             currentRoomId
         )
     }
