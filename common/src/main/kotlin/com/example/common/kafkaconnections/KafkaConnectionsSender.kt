@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 @Lazy
 class KafkaConnectionsSender(private val kafkaTemplate: KafkaTemplate<String, ConnectionMessage>) {
-    fun send(connectionMessage: ConnectionMessage) {
-        kafkaTemplate.send("game-connections", connectionMessage)
+    fun send(topic: String, connectionMessage: ConnectionMessage) {
+        kafkaTemplate.send(topic, connectionMessage)
     }
 }

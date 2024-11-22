@@ -2,10 +2,10 @@ package com.example.gamehandlerservice.service.game.game
 
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.gamehandlerservice.exceptions.GameException
-import com.example.common.kafkaconnections.KafkaConnectionsSender
 import com.example.common.kafkaconnections.ConnectionMessage
 import com.example.common.kafkaconnections.ConnectionMessageType
+import com.example.common.kafkaconnections.KafkaConnectionsSender
+import com.example.gamehandlerservice.exceptions.GameException
 import com.example.gamehandlerservice.model.dto.*
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardCompareResult
@@ -41,6 +41,7 @@ class GameHandlerImpl(
     override fun playerDisconnect(accountId: Long): AccountDto {
         val player = kickPlayer(accountId)
         sender.send(
+            "game-connection-to-room-service",
             ConnectionMessage(
                 ConnectionMessageType.DISCONNECT,
                 roomId,
@@ -219,10 +220,12 @@ class GameHandlerImpl(
 
                 NextRoundAction.SWITCH_ROUND
             }
+
             PlayerAction.BEAT -> {
                 table.clear()
                 NextRoundAction.NEXT_ROUND
             }
+
             PlayerAction.TAKE -> {
                 throw GameException("Invalid move when attacking")
             }

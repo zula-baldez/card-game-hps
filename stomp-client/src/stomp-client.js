@@ -1,6 +1,6 @@
 let stompClient;
 let gameState = {"stage": "WAITING"};
-
+let pollingEnabled = true
 const hostname = window.location.hostname;
 const gateway = `http://${hostname}:8085`
 
@@ -108,8 +108,9 @@ function sendStart() {
 }
 
 function updateGameStateUI() {
-    const { state, table, trumpCard, deckSize, stage, winner } = gameState;
+    const { state, table, trumpCard, deckSize, stage, winner, players } = gameState;
     let turningPlayerId = state.isDefending ? state.defendPlayer : state.attackPlayer
+    players.forEach(i => console.log(JSON.parse(i)["name"]))
     $("#gameState").html(`
             <p><strong>Attacking Player ID:</strong> ${state.attackPlayer}</p>
             <p><strong>Defending Player ID:</strong> ${state.defendPlayer}</p>
@@ -310,18 +311,7 @@ function createRoom() {
 }
 
 function leaveRoom() {
-    const roomId = $("#room-id").val()
-    const accountId = $("#userId").val()
-
-    del(
-        `/room-service/rooms/${roomId}/players/${accountId}`,
-        {
-            reason: "LEAVE"
-        },
-        function (data) {
-            console.log(`Left room ${roomId}`)
-        }
-    )
+    disconnect()
 }
 
 function removeAccountFromRoom(accountId, roomId, reason) {
@@ -337,6 +327,9 @@ function removeAccountFromRoom(accountId, roomId, reason) {
 }
 
 function roomsPolling() {
+    if (!pollingEnabled) {
+        return
+    }
     const accountId = $("#userId").val()
 
     getAccount(accountId, function (account) {

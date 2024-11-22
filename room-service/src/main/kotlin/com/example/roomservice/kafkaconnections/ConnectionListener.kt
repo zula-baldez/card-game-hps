@@ -16,7 +16,7 @@ class ConnectionListener(
     private val accountsInRoomRepository: AccountInRoomRepository,
     private val roomRepository: RoomRepository
 ) {
-    @KafkaListener(topics = ["game-connections"])
+    @KafkaListener(topics = ["game-connection-to-room-service"])
     fun listen(data: ConnectionMessage): Mono<Void> {
         val accountId = data.accountDto.id
 

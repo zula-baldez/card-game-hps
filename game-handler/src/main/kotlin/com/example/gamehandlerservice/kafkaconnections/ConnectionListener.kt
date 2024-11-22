@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class ConnectionListener(
     private val registry: GameHandlerRegistry,
 ) {
-    @KafkaListener(topics = ["game-connections"])
+    @KafkaListener(topics = ["game-connection-to-game-handler"])
     fun listen(data: ConnectionMessage) {
         val game = registry.getGame(data.roomId)
         if (data.type == ConnectionMessageType.CONNECT) {

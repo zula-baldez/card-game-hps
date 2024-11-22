@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
+    <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="it works">
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/kafkaconnections/ConnectionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/kafkaconnections/ConnectionListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +39,9 @@
         <task path="$PROJECT_DIR$/common">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/room-service">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -40,7 +52,38 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="common" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="common" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="common" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="room-service" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="room-service" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="card-game-hps" type="f1a62948:ProjectNode" />
+                <item name="room-service" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -52,13 +95,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="Class" />
         <option value="Kotlin Enum" />
+        <option value="Interface" />
+        <option value="Kotlin Data Class" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
+        <option value="Class" />
+        <option value="package-info" />
         <option value="Kotlin Class" />
-        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>
@@ -100,11 +144,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Docker.docker-compose.yml.auth-service: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.avatars-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.config-server: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.db-auth-service: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.db-personal-account: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.db-room-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.eureka-server: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.frontend: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.game-handler: Compose Deployment.executor": "Run",
@@ -151,14 +191,20 @@
     "Gradle.card-game-hps [clean].executor": "Run",
     "Gradle.card-game-hps [jar].executor": "Run",
     "Gradle.card-game-hps [kotlinSourcesJar].executor": "Run",
+    "Gradle.card-game-hps:common [clean].executor": "Run",
+    "Gradle.card-game-hps:room-service [buildDependents].executor": "Run",
+    "Gradle.card-game-hps:room-service [build].executor": "Run",
+    "Gradle.card-game-hps:room-service [clean].executor": "Run",
     "JUnit.All in card-game-hps (1).executor": "Coverage",
     "JUnit.All in card-game-hps.executor": "Coverage",
     "JUnit.Whole project.executor": "Coverage",
     "Kotlin script (Beta).settings.gradle.kts.executor": "Run",
-    "Kotlin.AuthServiceApplicationKt.executor": "Debug",
+    "Kotlin.AuthServiceApplicationKt.executor": "Run",
+    "Kotlin.AvatarsServiceApplicationKt.executor": "Run",
     "Kotlin.ConfigServerApplicationKt.executor": "Run",
     "Kotlin.EurekaServerApplicationKt.executor": "Run",
-    "Kotlin.GameHandlerApplicationKt.executor": "Run",
+    "Kotlin.GameHandlerApplicationKt.executor": "Debug",
+    "Kotlin.GatewayServerApplicationKt.executor": "Run",
     "Kotlin.PenkiApplicationKt.executor": "Run",
     "Kotlin.PersonalAccountApplicationKt.executor": "Run",
     "Kotlin.RoomServiceApplicationKt.executor": "Run",
@@ -173,28 +219,27 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.AuthServiceApplication.executor": "Run",
-    "Spring Boot.AvatarsServiceApplication.executor": "Run",
     "Spring Boot.ConfigServerApplication.executor": "Run",
     "Spring Boot.EurekaServerApplication.executor": "Run",
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.GatewayServerApplication.executor": "Run",
-    "Spring Boot.PersonalAccountApplication (1).executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
     "Spring Boot.RoomServiceApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/dmitritsiu/card-game-hps/config-server/src/main/resources/config-repo",
+    "last_opened_file_path": "/Users/moyakkauntda/IdeaProjects/card-game-hps",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "coverage",
+    "settings.editor.selected.configurable": "project.kotlinCompiler",
+    "ts.external.directory.path": "/Users/moyakkauntda/Applications/IntelliJ IDEA Ultimate 2024.1.1.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -217,32 +262,32 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/config-server/src/main/resources/config-repo" />
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/room-service" />
       <recent name="$PROJECT_DIR$/game-handler" />
       <recent name="$PROJECT_DIR$/personal-account" />
+      <recent name="$PROJECT_DIR$/auth-service" />
+      <recent name="$PROJECT_DIR$/auth-service/src/test/kotlin/com/example/authservice" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/stomp-client/src/cards" />
+      <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections" />
       <recent name="$PROJECT_DIR$/stomp-client/src" />
       <recent name="$PROJECT_DIR$/stomp-client" />
       <recent name="$PROJECT_DIR$/common/src/main/resources" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.example.common.kafkaconnections" />
-      <recent name="com.example.common.dto" />
       <recent name="com.example.personalaccount.security" />
       <recent name="com.example.common.config" />
       <recent name="com.example.common.security" />
+      <recent name="com.example.common.dto.roomservice" />
+      <recent name="com.example.common.dto.personalaccout" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="com.example.avatarsservice.config" />
-      <recent name="com.example.personalaccount.config" />
       <recent name="com.example.roomservice.security" />
+      <recent name="com.example.personalaccount.config" />
       <recent name="com.example.common.client" />
       <recent name="com.example.common.exceptions" />
+      <recent name="com.example.gamehandlerservice.service.game.process.game" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -254,10 +299,38 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AvatarsServiceApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.AvatarsServiceApplicationKt" />
+      <module name="card-game-hps.avatars-service.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameHandlerApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.GameHandlerApplicationKt" />
+      <module name="card-game-hps.game-handler.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PersonalAccountApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.PersonalAccountApplicationKt" />
+      <module name="card-game-hps.personal-account.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RoomServiceApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.RoomServiceApplicationKt" />
+      <module name="card-game-hps.room-service.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -266,31 +339,6 @@
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.auth-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.AuthServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AvatarsServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="card-game-hps.avatars-service.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.AvatarsServiceApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="true" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-          <ENTRY IS_ENABLED="false" PARSER="env" IS_EXECUTABLE="false" PATH=".env.secrets" />
-        </ENTRIES>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -324,14 +372,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PersonalAccountApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="card-game-hps.personal-account.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.PersonalAccountApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PersonalAccountApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.personal-account.main" />
@@ -341,9 +381,21 @@
       </method>
     </configuration>
     <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.room-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.RoomServiceApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -354,89 +406,37 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.avatars-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
-          <option name="services">
-            <list>
-              <option value="avatars-service" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.db-auth-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="db-auth-service" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.db-personal-account: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="db-personal-account" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.db-room-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="db-room-service" />
-            </list>
-          </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
         </settings>
       </deployment>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose.yml.avatars-service: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.db-auth-service: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.db-personal-account: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.db-room-service: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
-      <item itemvalue="Spring Boot.GatewayServerApplication" />
-      <item itemvalue="Spring Boot.RoomServiceApplication" />
-      <item itemvalue="Spring Boot.PersonalAccountApplication (1)" />
-      <item itemvalue="Spring Boot.AuthServiceApplication" />
-      <item itemvalue="Spring Boot.ConfigServerApplication" />
-      <item itemvalue="Spring Boot.EurekaServerApplication" />
-      <item itemvalue="Spring Boot.GameHandlerApplication" />
-      <item itemvalue="Spring Boot.PersonalAccountApplication" />
-      <item itemvalue="Spring Boot.AvatarsServiceApplication" />
+      <item itemvalue="Kotlin.AvatarsServiceApplicationKt" />
+      <item itemvalue="Kotlin.GameHandlerApplicationKt" />
+      <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
+      <item itemvalue="Kotlin.RoomServiceApplicationKt" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.AvatarsServiceApplication" />
-        <item itemvalue="Docker.docker-compose.yml.db-room-service: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml.db-personal-account: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml.db-auth-service: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml.avatars-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Kotlin.GameHandlerApplicationKt" />
+        <item itemvalue="Kotlin.RoomServiceApplicationKt" />
+        <item itemvalue="Kotlin.PersonalAccountApplicationKt" />
+        <item itemvalue="Kotlin.AvatarsServiceApplicationKt" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-995e55e7" />
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -484,16 +484,9 @@
       <workItem from="1730045325186" duration="17980000" />
       <workItem from="1732021522675" duration="465000" />
       <workItem from="1732031228122" duration="3395000" />
-      <workItem from="1732050779547" duration="3483000" />
-      <workItem from="1732091994870" duration="74000" />
-      <workItem from="1732092153963" duration="3000" />
-      <workItem from="1732105700600" duration="11000" />
-      <workItem from="1732123031893" duration="8989000" />
-      <workItem from="1732132056086" duration="5917000" />
-      <workItem from="1732181147959" duration="5000" />
-      <workItem from="1732206275221" duration="12861000" />
-      <workItem from="1732288660035" duration="7054000" />
-      <workItem from="1732295735566" duration="1521000" />
+      <workItem from="1732207859557" duration="11771000" />
+      <workItem from="1732289423765" duration="10368000" />
+      <workItem from="1732299872491" duration="6672000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -727,7 +720,63 @@
       <option name="project" value="LOCAL" />
       <updated>1730154240306</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="init stomp-client">
+      <option name="closed" value="true" />
+      <created>1732039792300</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732039792300</updated>
+    </task>
+    <task id="LOCAL-00031" summary="init stomp-client">
+      <option name="closed" value="true" />
+      <created>1732041211353</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1732041211353</updated>
+    </task>
+    <task id="LOCAL-00032" summary="init stomp-client">
+      <option name="closed" value="true" />
+      <created>1732056181745</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1732056181745</updated>
+    </task>
+    <task id="LOCAL-00033" summary="it works">
+      <option name="closed" value="true" />
+      <created>1732057807015</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1732057807015</updated>
+    </task>
+    <task id="LOCAL-00034" summary="it works">
+      <option name="closed" value="true" />
+      <created>1732058020788</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1732058020788</updated>
+    </task>
+    <task id="LOCAL-00035" summary="it works">
+      <option name="closed" value="true" />
+      <created>1732298124272</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1732298124273</updated>
+    </task>
+    <task id="LOCAL-00036" summary="it works">
+      <option name="closed" value="true" />
+      <created>1732298138399</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1732298138399</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -758,7 +807,9 @@
     <MESSAGE value="auth service started" />
     <MESSAGE value="added init feigh client" />
     <MESSAGE value="circuit breaker" />
-    <option name="LAST_COMMIT_MESSAGE" value="circuit breaker" />
+    <MESSAGE value="init stomp-client" />
+    <MESSAGE value="it works" />
+    <option name="LAST_COMMIT_MESSAGE" value="it works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -783,6 +834,61 @@
           <line>59</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt</url>
+          <line>38</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt</url>
+          <line>10</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/kafkaconnections/ConnectionListener.kt</url>
+          <line>14</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt</url>
+          <line>20</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt</url>
+          <line>62</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/kafkaconnections/ConnectionListener.kt</url>
+          <line>16</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/AfterCloseWebSocketHandler.kt</url>
+          <line>13</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt</url>
+          <line>23</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt</url>
+          <line>42</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/config/WebSocketEventListener.kt</url>
+          <line>25</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/gamehandlerservice/service/game/game/GameHandlerImpl.kt</url>
+          <line>50</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -790,11 +896,6 @@
         <PinnedItemInfo parentTag="com.example.gamehandlerservice.model.dto.MoveCardRequest" memberName="toDropArea" />
       </pinned-members>
     </pin-to-top-manager>
-    <watches-manager>
-      <configuration name="SpringBootApplicationConfigurationType">
-        <watch expression="instanceInfo.homePageUrl" language="kotlin" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

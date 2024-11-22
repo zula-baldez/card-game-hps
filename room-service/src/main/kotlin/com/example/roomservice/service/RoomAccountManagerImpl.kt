@@ -120,6 +120,7 @@ class RoomAccountManagerImpl(
 
     private fun updateGameHandler(accountDto: AccountDto): Mono<Void> {
         sender.send(
+            "game-connection-to-game-handler",
             ConnectionMessage(
                 ConnectionMessageType.CONNECT,
                 accountDto.roomId!!,
