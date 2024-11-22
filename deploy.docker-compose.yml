@@ -109,6 +109,7 @@ services:
       - eureka-server
       - db-personal-account
       - config-server
+      - avatars-service
 
   auth-service:
     image: ${REGISTRY}/auth-service:${AUTH_SERVICE_VERSION}
@@ -140,6 +141,7 @@ services:
     depends_on:
       - eureka-server
       - config-server
+      - init-kafka
 
   room-service:
     image: ${REGISTRY}/room-service:${ROOM_SERVICE_VERSION}
@@ -158,6 +160,7 @@ services:
       - eureka-server
       - db-room-service
       - config-server
+      - init-kafka
     restart: always
 
   gateway-server:
@@ -229,9 +232,15 @@ services:
     image: ${REGISTRY}/avatars-service:${AVATARS_SERVICE_VERSION}
     ports:
       - "8086:8086"
+    depends_on:
+      - init-kafka
+      - eureka-server
+      - config-server
     expose:
       - 8086
     environment:
+      EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
+      CONFIG_SERVER_URL: http://coi-config-server-1:8090
       ACCESS_KEY_ID: ${ACCESS_KEY_ID}
       SECRET_ACCESS_KEY: ${SECRET_ACCESS_KEY}
       KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094
