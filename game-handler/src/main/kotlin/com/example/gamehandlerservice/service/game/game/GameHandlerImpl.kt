@@ -1,7 +1,11 @@
 package com.example.gamehandlerservice.service.game.game
 
 import com.example.common.client.RoomServiceClient
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.exceptions.GameException
+import com.example.common.kafkaconnections.KafkaConnectionsSender
+import com.example.common.kafkaconnections.ConnectionMessage
+import com.example.common.kafkaconnections.ConnectionMessageType
 import com.example.gamehandlerservice.model.dto.*
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardCompareResult
@@ -16,9 +20,11 @@ import org.springframework.stereotype.Component
 class GameHandlerImpl(
     private val roomServiceClient: RoomServiceClient,
     private val simpMessagingTemplate: SimpMessagingTemplate,
+    private val sender: KafkaConnectionsSender
 ) : GameHandler {
 
     private val playersCards: MutableMap<Long, MutableList<Card>> = mutableMapOf()
+    private var players: List<AccountDto> = mutableListOf()
     private var lastRoundWinner: Long? = null
     private var trumpCard: Card? = null
     private val deck: MutableList<Card> = mutableListOf()
@@ -30,6 +36,31 @@ class GameHandlerImpl(
 
     override fun setRoomId(roomId: Long) {
         this.roomId = roomId
+    }
+
+    override fun playerDisconnect(accountId: Long): AccountDto {
+        val player = kickPlayer(accountId)
+        sender.send(
+            ConnectionMessage(
+                ConnectionMessageType.DISCONNECT,
+                roomId,
+                player
+            )
+        )
+        return player
+    }
+
+    override fun kickPlayer(accountId: Long): AccountDto {
+        queue.delete(accountId)
+        val player = players.find { it.id == accountId } ?: throw IllegalArgumentException()
+        players -= player
+        sendGameState()
+        return player
+    }
+
+    override fun addPlayer(account: AccountDto) {
+        players += account
+        sendGameState()
     }
 
     private fun fillDeck() {
@@ -219,7 +250,8 @@ class GameHandlerImpl(
             trumpCard = trumpCard,
             deckSize = deck.size,
             stage = stage,
-            winner = lastRoundWinner
+            winner = lastRoundWinner,
+            players = players
         )
     }
 }

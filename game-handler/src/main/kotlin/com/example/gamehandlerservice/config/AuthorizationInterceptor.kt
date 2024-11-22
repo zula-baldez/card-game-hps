@@ -26,7 +26,8 @@ class AuthorizationInterceptor(
         val accessor = StompHeaderAccessor.wrap(message)
 
         if (StompCommand.CONNECT == accessor.command) {
-            val token = accessor.getFirstNativeHeader("Authorization")?.removePrefix("Bearer ") ?: throw IllegalArgumentException()
+            val token = accessor.getFirstNativeHeader("Authorization")?.removePrefix("Bearer ")
+                ?: throw IllegalArgumentException()
 
             val user: UsernamePasswordAuthenticationToken =
                 getUsernamePasswordAuthenticationToken(tokenParser.getIdFromToken(token)!!.toLong())

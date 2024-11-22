@@ -4,16 +4,17 @@ import com.example.common.aspects.HostOnly
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.model.dto.PlayerActionRequest
-import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import jakarta.validation.Valid
 import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.messaging.simp.SimpMessageSendingOperations
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
-import java.util.*
 
 @Controller
-class GameProcessController(private val registry: GameHandlerRegistry) {
+class GameProcessController(private val registry: GameHandlerRegistry,
+                            private val messagingTemplate: SimpMessageSendingOperations
+) {
     @MessageMapping("/move")
     fun moveCard(
         @Valid accountDto: AccountDto,

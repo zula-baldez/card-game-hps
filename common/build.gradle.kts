@@ -30,6 +30,8 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")
     implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
+    implementation("org.springframework.kafka:spring-kafka:3.3.0")
+
     implementation("org.aspectj:aspectjrt:1.9.7")
     implementation("org.springframework.data:spring-data-jpa:3.3.5")
     implementation("org.springframework.data:spring-data-commons:3.3.5")

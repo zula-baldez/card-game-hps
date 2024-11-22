@@ -1,5 +1,6 @@
 package com.example.gamehandlerservice.model.dto
 
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.Card
 
 data class GameStateResponse(
@@ -8,5 +9,6 @@ data class GameStateResponse(
     val trumpCard: Card?,
     val deckSize: Int,
     val stage: GameStage,
-    val winner: Long?
+    val winner: Long?,
+    val players: List<AccountDto>
 )

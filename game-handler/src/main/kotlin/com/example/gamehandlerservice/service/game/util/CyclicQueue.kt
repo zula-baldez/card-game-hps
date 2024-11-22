@@ -6,7 +6,7 @@ class CyclicQueue<T>(items: List<T>) {
 
     fun getSize(): Int = items.size
 
-    fun getAll(): List<T> = items
+    fun getAll(): MutableList<T> = items
 
     fun current(): T = items[currentIndex]
 

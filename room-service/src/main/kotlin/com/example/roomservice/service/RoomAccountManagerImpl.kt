@@ -1,18 +1,17 @@
 package com.example.roomservice.service
 
 import com.example.common.client.ReactivePersonalAccountClient
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.dto.roomservice.AccountAction
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
-import com.example.roomservice.repository.AccountInRoomEntity
-import com.example.roomservice.repository.AccountInRoomRepository
-import com.example.roomservice.repository.BannedAccountInRoomEntity
-import com.example.roomservice.repository.BannedAccountInRoomRepository
-import com.example.roomservice.repository.RoomEntity
-import com.example.roomservice.repository.RoomRepository
+import com.example.common.kafkaconnections.KafkaConnectionsSender
+import com.example.common.kafkaconnections.ConnectionMessage
+import com.example.common.kafkaconnections.ConnectionMessageType
+import com.example.roomservice.repository.*
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -25,7 +24,8 @@ class RoomAccountManagerImpl(
     val roomRepository: RoomRepository,
     val accountInRoomRepository: AccountInRoomRepository,
     val bannedAccountInRoomRepository: BannedAccountInRoomRepository,
-    val personalAccountClient: ReactivePersonalAccountClient
+    val personalAccountClient: ReactivePersonalAccountClient,
+    val sender: KafkaConnectionsSender
 ) : RoomAccountManager {
     @Transactional
     override fun addAccount(roomId: Long, accountId: Long): Mono<Void> {
@@ -62,9 +62,13 @@ class RoomAccountManagerImpl(
                     .switchIfEmpty(Mono.just(room))
             }
             .flatMap { room ->
-                return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true)).then<Void?>(Mono.empty())
-                    .then(updateAccountRoom(accountId, roomId))
+                return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true))
+                    .flatMap { updateAccountRoom(accountId, roomId) }
+                    .flatMap {
+                        updateGameHandler(it)
+                    }
             }
+
     }
 
     override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction): Mono<Void> {
@@ -83,6 +87,7 @@ class RoomAccountManagerImpl(
                         if (accounts.size <= 1) {
                             return@withAccounts roomRepository.delete(room)
                                 .then(updateAccountRoom(accountId, null))
+                                .then(Mono.empty())
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(
@@ -107,13 +112,26 @@ class RoomAccountManagerImpl(
                                     }
                                 )
                                 .then(updateAccountRoom(accountId, null))
+                                .then()
                         }
                     }
             }
     }
 
-    private fun updateAccountRoom(accountId: Long, roomId: Long?): Mono<Void> {
-        return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId)).then()
+    private fun updateGameHandler(accountDto: AccountDto): Mono<Void> {
+        sender.send(
+            ConnectionMessage(
+                ConnectionMessageType.CONNECT,
+                accountDto.roomId!!,
+                accountDto
+            )
+        )
+        return Mono.empty()
+    }
+
+
+    private fun updateAccountRoom(accountId: Long, roomId: Long?): Mono<AccountDto> {
+        return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId))
     }
 
     override fun getAccountRoom(accountId: Long): Mono<Long> {

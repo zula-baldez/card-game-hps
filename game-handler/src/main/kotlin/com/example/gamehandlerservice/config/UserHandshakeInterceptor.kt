@@ -1,8 +1,5 @@
 package com.example.gamehandlerservice.config
 
-import com.example.common.client.PersonalAccountClient
-import com.example.common.client.RoomServiceClient
-import com.example.common.security.TokenParser
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.stereotype.Component
@@ -11,11 +8,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor
 import org.springframework.web.util.UriComponentsBuilder
 
 @Component
-class UserHandshakeInterceptor(
-    private val roomManager: RoomServiceClient,
-    private val accountClient: PersonalAccountClient,
-    private val tokenParser: TokenParser
-) : HandshakeInterceptor {
+class UserHandshakeInterceptor : HandshakeInterceptor {
     @Throws(Exception::class)
     override fun beforeHandshake(
         request: ServerHttpRequest,
