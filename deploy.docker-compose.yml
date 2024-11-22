@@ -230,8 +230,6 @@ services:
 
   avatars-service:
     image: ${REGISTRY}/avatars-service:${AVATARS_SERVICE_VERSION}
-    ports:
-      - "8086:8086"
     depends_on:
       - init-kafka
       - eureka-server
@@ -244,3 +242,4 @@ services:
       ACCESS_KEY_ID: ${ACCESS_KEY_ID}
       SECRET_ACCESS_KEY: ${SECRET_ACCESS_KEY}
       KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094
+    restart: always
