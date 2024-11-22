@@ -65,22 +65,22 @@ services:
   init-kafka:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
+      - kafka0
       - kafka1
       - kafka2
-      - kafka3
     entrypoint: [ '/bin/sh', '-c' ]
     command: |
       "
       # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka1:29092 --list
+      kafka-topics --bootstrap-server kafka0:9090 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
 
       echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka1:29092 --list
+      kafka-topics --bootstrap-server kafka0:9090 --list
       "
 
   eureka-server:
