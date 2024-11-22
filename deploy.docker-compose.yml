@@ -1,6 +1,84 @@
 version: "3.9"
 
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.1.1
+    expose:
+      - 2101
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka1:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    expose:
+      - '9092'
+      - '29092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_PORT: 9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  kafka2:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    expose:
+      - '9093'
+      - '29093'
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29093,PLAINTEXT_HOST://localhost:9093
+      KAFKA_LISTENER_PORT: 9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  kafka3:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    expose:
+      - '9094'
+      - '29094'
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:29094,PLAINTEXT_HOST://localhost:9094
+      KAFKA_LISTENER_PORT: 9094
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  init-kafka:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - kafka1
+      - kafka2
+      - kafka3
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka1:29092 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic game-connections --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka1:29092 --list
+      "
+
   eureka-server:
     image: ${REGISTRY}/eureka-server:${EUREKA_SERVER_VERSION}
     restart: always
@@ -25,6 +103,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
       CONFIG_SERVER_URL: http://coi-config-server-1:8090
+      KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094
     restart: always
     depends_on:
       - eureka-server
@@ -57,6 +136,7 @@ services:
     environment:
       EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
       CONFIG_SERVER_URL: http://coi-config-server-1:8090
+      KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094
     depends_on:
       - eureka-server
       - config-server
@@ -73,6 +153,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       EUREKA_SERVER_URL: http://coi-eureka-server-1:8761/eureka/
       CONFIG_SERVER_URL: http://coi-config-server-1:8090
+      KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094
     depends_on:
       - eureka-server
       - db-room-service
@@ -153,3 +234,4 @@ services:
     environment:
       ACCESS_KEY_ID: ${ACCESS_KEY_ID}
       SECRET_ACCESS_KEY: ${SECRET_ACCESS_KEY}
+      KAFKA_BOOTSTRAP_SERVERS: coi-kafka1-1:9092,coi-kafka2-1:9093,coi-kafka3-1:9094

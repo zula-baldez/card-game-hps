@@ -40,6 +40,9 @@ s3:
   accessKeyId: ${ACCESS_KEY_ID:hackme}
   secretAccessKey: ${SECRET_ACCESS_KEY:hackme}
 
+kafka:
+  bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
+
 eureka:
   client:
     serviceUrl:

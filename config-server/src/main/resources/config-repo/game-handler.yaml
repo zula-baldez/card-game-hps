@@ -10,6 +10,9 @@ spring:
 rsa:
   public-key: classpath:certs/public.pem
 
+kafka:
+  bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
+
 service:
   robot:
     username:

@@ -5,23 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/config/WebSocketConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/ProcessAvatarRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/exceptions/InvalidAvatarFileException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsServiceClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsServiceSessionHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/WebSocketAvatarsServiceClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/config/AvatarKafkaProducerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarResultProducer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/KafkaAvatarResultProducer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProperties.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/AvatarsKafkaConsumerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/ProcessedAvatarsListener.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/avatars-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/AvatarsServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/AvatarsServiceApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/security/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/security/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConsumerConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConsumerConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProducerConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProducerConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/personal-account/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,10 +76,10 @@
         <option value="Interface" />
         <option value="Class" />
         <option value="Kotlin Enum" />
-        <option value="Kotlin Data Class" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>
@@ -246,18 +252,18 @@
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.example.common.kafkaconnections" />
       <recent name="com.example.common.dto" />
       <recent name="com.example.personalaccount.security" />
       <recent name="com.example.common.config" />
       <recent name="com.example.common.security" />
-      <recent name="com.example.common.dto.roomservice" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="com.example.roomservice.security" />
+      <recent name="com.example.avatarsservice.config" />
       <recent name="com.example.personalaccount.config" />
+      <recent name="com.example.roomservice.security" />
       <recent name="com.example.common.client" />
       <recent name="com.example.common.exceptions" />
-      <recent name="com.example.gamehandlerservice.service.game.process.game" />
     </key>
   </component>
   <component name="RunDashboard">
