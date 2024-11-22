@@ -1,29 +1,28 @@
 package com.example.avatarsservice.controllers
 
 import com.example.avatarsservice.exceptions.InvalidImageException
-import com.example.common.dto.Avatar
 import com.example.avatarsservice.service.AvatarProcessingService
+import com.example.common.dto.ProcessAvatarRequest
 import com.example.common.exceptions.AccountNotFoundException
-import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.multipart.MultipartFile
+import java.util.*
 
-@RestController
-@RequestMapping("/avatars")
+@Controller
 class AvatarsController(
     private val avatarProcessingService: AvatarProcessingService
 ) {
 
-    @PostMapping("/{id}")
-    @Operation(summary = "Process avatar for account")
-    fun getAccountById(@PathVariable id: Long, file: MultipartFile): Avatar {
-        if (file.contentType?.equals("image/jpeg") != true) {
-            throw InvalidImageException()
-        }
-
-        val avatar = avatarProcessingService.processAvatar(id, file)
-        return avatar
+    @MessageMapping("/process-avatar")
+    fun processAvatar(request: ProcessAvatarRequest) {
+        val avatar =
+            avatarProcessingService.processAvatar(
+                request.accountId,
+                Base64.getDecoder().decode(request.encodedImage)
+            )
+        println(avatar)
     }
 
     @ExceptionHandler(InvalidImageException::class)

@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS friendships
     CONSTRAINT fk_to_account FOREIGN KEY (to_account_id) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
-INSERT INTO accounts (name, fines, current_room_id) VALUES
-    ('admin', 0, null);
+INSERT INTO accounts (name, fines, avatar, current_room_id) VALUES
+    ('admin', 0, '', null);

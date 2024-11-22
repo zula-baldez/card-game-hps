@@ -4,6 +4,7 @@ import com.example.common.dto.Avatar
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 import kotlin.math.min
@@ -14,8 +15,9 @@ class AvatarProcessingServiceImpl(
 ) : AvatarProcessingService {
     private val imageSizePixels = 100
 
-    override fun processAvatar(accountId: Long, file: MultipartFile): Avatar {
-        val image = ImageIO.read(file.inputStream)
+    override fun processAvatar(accountId: Long, bytes: ByteArray): Avatar {
+        val imageIS = ByteArrayInputStream(bytes)
+        val image = ImageIO.read(imageIS)
         val minSize = min(image.width, image.height)
 
         val cutImage = image.getSubimage(0, 0, minSize, minSize)

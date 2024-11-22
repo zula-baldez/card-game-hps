@@ -31,6 +31,9 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-config:4.1.3")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.1.4")
 
+    implementation("org.springframework:spring-websocket:6.1.14")
+    implementation("org.springframework:spring-messaging:6.1.14")
+
     implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.3")

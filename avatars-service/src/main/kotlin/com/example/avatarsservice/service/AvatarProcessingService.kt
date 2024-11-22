@@ -4,5 +4,5 @@ import com.example.common.dto.Avatar
 import org.springframework.web.multipart.MultipartFile
 
 interface AvatarProcessingService {
-    fun processAvatar(accountId: Long, file: MultipartFile): Avatar
+    fun processAvatar(accountId: Long, bytes: ByteArray): Avatar
 }

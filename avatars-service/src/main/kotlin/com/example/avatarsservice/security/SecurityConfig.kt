@@ -13,11 +13,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
-@EnableConfigurationProperties(RsaKeyProperties::class, S3Config::class)
+@EnableConfigurationProperties(S3Config::class)
 @EnableWebSecurity
-class SecurityConfig(
-    val rsaKeyProperties: RsaKeyProperties
-) {
+class SecurityConfig {
     @Bean
     @Throws(Exception::class)
     fun filterChain(
@@ -25,20 +23,9 @@ class SecurityConfig(
     ): SecurityFilterChain {
         http
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests { it.requestMatchers( "/v3/api-docs*/**").permitAll()
-                .anyRequest().authenticated() }
-            .oauth2ResourceServer {
-                it.jwt { jwt ->
-                    jwt.decoder(jwtDecoder())
-                }
-            }
+            .authorizeHttpRequests { it.anyRequest().permitAll() }
             .csrf { it.disable() }
             .formLogin { it.disable() }
         return http.build()
-    }
-
-    @Bean
-    fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey).build()
     }
 }

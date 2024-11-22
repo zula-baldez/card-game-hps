@@ -152,5 +152,10 @@ services:
       - "8086:8086"
     depends_on:
       - eureka-server
+      - config-server
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server:8090
     env_file:
       - .env.secrets
+    restart: always

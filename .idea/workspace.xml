@@ -5,35 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/avatars-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/AvatarsServiceApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/exceptions/InvalidImageException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/exceptions/S3UploadException.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/model/S3Config.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/security/SecurityConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingServiceImpl.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarsStorage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/S3AvatarsStorage.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/Avatar.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/config/WebSocketConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/ProcessAvatarRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/exceptions/InvalidAvatarFileException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsServiceClient.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AvatarsServiceSessionHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/WebSocketAvatarsServiceClient.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/AccountDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/dto/personalaccout/AccountDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/security/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/security/SecurityConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarProcessingServiceImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/database/AccountEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/AccountServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/controllers/AccountController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/resources/db/changelog/USER/migrations/001_core_entities.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,9 +71,9 @@
         <option value="Class" />
         <option value="Kotlin Enum" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
-        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
@@ -129,6 +117,9 @@
     "Docker.docker-compose.yml.auth-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.avatars-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.config-server: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.db-auth-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.db-personal-account: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.db-room-service: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.eureka-server: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.frontend: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.game-handler: Compose Deployment.executor": "Run",
@@ -202,6 +193,7 @@
     "Spring Boot.EurekaServerApplication.executor": "Run",
     "Spring Boot.GameHandlerApplication.executor": "Run",
     "Spring Boot.GatewayServerApplication.executor": "Run",
+    "Spring Boot.PersonalAccountApplication (1).executor": "Run",
     "Spring Boot.PersonalAccountApplication.executor": "Run",
     "Spring Boot.RoomServiceApplication.executor": "Run",
     "git-widget-placeholder": "master",
@@ -277,7 +269,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.avatars-service: Compose Deployment">
+  <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />
@@ -340,15 +332,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="card-game-hps.gateway-server.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.GatewayServerApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -369,16 +355,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="card-game-hps.room-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.RoomServiceApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -402,12 +382,38 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.frontend: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml.db-auth-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="frontend" />
+              <option value="db-auth-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.db-personal-account: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="db-personal-account" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.db-room-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="db-room-service" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
@@ -417,8 +423,12 @@
     </configuration>
     <list>
       <item itemvalue="Docker.docker-compose.yml.avatars-service: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.frontend: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.db-auth-service: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.db-personal-account: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.db-room-service: Compose Deployment" />
       <item itemvalue="Kotlin.AuthServiceApplicationKt" />
+      <item itemvalue="Spring Boot.GatewayServerApplication" />
+      <item itemvalue="Spring Boot.RoomServiceApplication" />
       <item itemvalue="Spring Boot.PersonalAccountApplication (1)" />
       <item itemvalue="Spring Boot.AuthServiceApplication" />
       <item itemvalue="Spring Boot.ConfigServerApplication" />
@@ -426,16 +436,14 @@
       <item itemvalue="Spring Boot.GameHandlerApplication" />
       <item itemvalue="Spring Boot.PersonalAccountApplication" />
       <item itemvalue="Spring Boot.AvatarsServiceApplication" />
-      <item itemvalue="Spring Boot.GatewayServerApplication" />
-      <item itemvalue="Spring Boot.RoomServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml.avatars-service: Compose Deployment" />
         <item itemvalue="Spring Boot.AvatarsServiceApplication" />
-        <item itemvalue="Spring Boot.RoomServiceApplication" />
-        <item itemvalue="Spring Boot.GatewayServerApplication" />
-        <item itemvalue="Docker.docker-compose.yml.frontend: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.db-room-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.db-personal-account: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.db-auth-service: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.avatars-service: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -498,7 +506,9 @@
       <workItem from="1732123031893" duration="8989000" />
       <workItem from="1732132056086" duration="5917000" />
       <workItem from="1732181147959" duration="5000" />
-      <workItem from="1732206275221" duration="8918000" />
+      <workItem from="1732206275221" duration="12861000" />
+      <workItem from="1732288660035" duration="7054000" />
+      <workItem from="1732295735566" duration="1521000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -795,6 +805,11 @@
         <PinnedItemInfo parentTag="com.example.gamehandlerservice.model.dto.MoveCardRequest" memberName="toDropArea" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="instanceInfo.homePageUrl" language="kotlin" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
