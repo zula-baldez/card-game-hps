@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
@@ -16,6 +17,14 @@
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/kafkaconnections/ConnectionListener.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/roomservice/service/RoomAccountManagerImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" beforeDir="false" afterPath="$PROJECT_DIR$/stomp-client/src/stomp-client.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+>>>>>>> 4400e0f (Fix kafka)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,7 +308,11 @@
       </set>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
+=======
+  <component name="RunManager" selected="Spring Boot.ConfigServerApplication">
+>>>>>>> 4400e0f (Fix kafka)
     <configuration name="AuthServiceApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.AuthServiceApplicationKt" />
       <module name="card-game-hps.auth-service.main" />

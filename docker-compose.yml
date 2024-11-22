@@ -3,26 +3,44 @@ version: "3.9"
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.1
-    ports:
-      - "2181:2181"
+    expose:
+      - 2181
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka0:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    ports:
+      - '19090:19090'
+    expose:
+      - '9090'
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka0:9090,HOST://0.0.0.0:19090
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka0:9090,HOST://localhost:19090
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
 
   kafka1:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
       - zookeeper
     ports:
-      - '9092:9092'
+      - "19091:19091"
     expose:
-      - '29092'
+      - '9091'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_PORT: 9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka1:9091,HOST://0.0.0.0:19091
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka1:9091,HOST://localhost:19091
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
       KAFKA_MIN_INSYNC_REPLICAS: '2'
 
@@ -31,56 +49,39 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - '9093:9093'
+      - "19092:19092"
     expose:
-      - '29093'
+      - '9092'
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29093,PLAINTEXT_HOST://localhost:9093
-      KAFKA_LISTENER_PORT: 9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
-      KAFKA_MIN_INSYNC_REPLICAS: '2'
-
-  kafka3:
-    image: confluentinc/cp-kafka:6.1.1
-    depends_on:
-      - zookeeper
-    ports:
-      - '9094:9094'
-    expose:
-      - '29094'
-    environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:29094,PLAINTEXT_HOST://localhost:9094
-      KAFKA_LISTENER_PORT: 9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka2:9092,HOST://0.0.0.0:19092
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka2:9092,HOST://localhost:19092
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
       KAFKA_MIN_INSYNC_REPLICAS: '2'
 
   init-kafka:
     image: confluentinc/cp-kafka:6.1.1
     depends_on:
+      - kafka0
       - kafka1
       - kafka2
-      - kafka3
     entrypoint: [ '/bin/sh', '-c' ]
     command: |
       "
       # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka1:29092 --list
+      kafka-topics --bootstrap-server kafka0:9090 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
-      kafka-topics --bootstrap-server kafka1:29092 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
+      
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
 
       echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka1:29092 --list
+      kafka-topics --bootstrap-server kafka0:9090 --list
       "
 
   eureka-server:

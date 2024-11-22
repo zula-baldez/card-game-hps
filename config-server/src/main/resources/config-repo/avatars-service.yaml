@@ -41,7 +41,7 @@ s3:
   secretAccessKey: ${SECRET_ACCESS_KEY:hackme}
 
 kafka:
-  bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
+  bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19090,localhost:19091,localhost:19092}
 
 eureka:
   client:
