@@ -37,7 +37,9 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
       - name: Build image
         id: build_image
-        run: make ${{ matrix.service }} push
+        run: |
+          touch .env.secrets
+          make ${{ matrix.service }} push
   deploy:
     name: Deploy to PROD
     runs-on: ubuntu-latest

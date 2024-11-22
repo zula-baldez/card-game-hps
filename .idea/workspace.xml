@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bad9cd9-9b27-42f9-87ab-5c99c6f359f4" name="Changes" comment="circuit breaker">
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/config/AvatarKafkaProducerConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/AvatarResultProducer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/service/KafkaAvatarResultProducer.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProperties.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/config/AvatarsKafkaConsumerConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/personalaccount/service/ProcessedAvatarsListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/AvatarsServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/AvatarsServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/avatars-service/src/main/kotlin/com/example/avatarsservice/controllers/AvatarsController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConnectionsSender.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConsumerConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaConsumerConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProducerConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/example/common/kafkaconnections/KafkaProducerConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/avatars-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/game-handler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/personal-account.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/config-repo/room-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/game-handler/src/main/kotlin/com/example/GameHandlerApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/personal-account/src/main/kotlin/com/example/PersonalAccountApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/kotlin/com/example/RoomServiceApplication.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
