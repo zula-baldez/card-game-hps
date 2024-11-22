@@ -59,6 +59,8 @@ jobs:
           ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
           FRONTEND_VERSION: ${{ needs.push_service_image.outputs.frontend_version }}
           AVATARS_SERVICE_VERSION: ${{ needs.push_service_image.outputs.avatars_service_version }}
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
       - name: Login to YC CLI
         uses: okar1/yc-cli-install@master
