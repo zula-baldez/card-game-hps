@@ -92,15 +92,16 @@ class RoomAccountManagerImpl(
 
                         if (accounts.size <= 1) {
                             return@withAccounts roomRepository.deleteById(roomId)
-                                .then(updateAccountRoom(accountId, null))
-                                .flatMap {
-                                    sender.sendRoomUpdateEvent(
-                                        RoomUpdateEvent(
-                                            roomId, RoomUpdateEventType.ROOM_DELETED
-                                        )
-                                    )
-                                    Mono.empty<Void>()
-                                }
+                                .and(
+                                    updateAccountRoom(accountId, null)
+                                        .map { _ ->
+                                            sender.sendRoomUpdateEvent(
+                                                RoomUpdateEvent(
+                                                    roomId, RoomUpdateEventType.ROOM_DELETED
+                                                )
+                                            )
+                                        }
+                                )
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(
