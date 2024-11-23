@@ -14,6 +14,10 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
@@ -69,8 +73,23 @@ class RoomController(
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
         principal: Principal
     ): Mono<Void> {
+        val user: UsernamePasswordAuthenticationToken =
+            getUsernamePasswordAuthenticationToken(principal.name.toLong())
+        val authContext = ReactiveSecurityContextHolder.withAuthentication(user)
+
         return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
+            .contextWrite(authContext)
     }
+
+    @Throws(AuthenticationException::class)
+    fun getUsernamePasswordAuthenticationToken(uid: Long): UsernamePasswordAuthenticationToken {
+        return UsernamePasswordAuthenticationToken(
+            uid,
+            null,
+            listOf(GrantedAuthority { "USER" })
+        )
+    }
+
 
     @ExceptionHandler(RoomNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
