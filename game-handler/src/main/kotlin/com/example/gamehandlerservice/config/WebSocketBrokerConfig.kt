@@ -25,7 +25,6 @@ class WebSocketBrokerConfig(
     val accountAndGameHandlerStompArgumentResolver: AccountAndGameHandlerStompArgumentResolver,
     val objectMapper: ObjectMapper,
     val interceptor: AuthorizationInterceptor,
-    val gameHandlerRegistry: GameHandlerRegistry
 ) : WebSocketMessageBrokerConfigurer {
     override fun addArgumentResolvers(argumentResolvers: MutableList<HandlerMethodArgumentResolver?>) {
         argumentResolvers.add(accountAndGameHandlerStompArgumentResolver)

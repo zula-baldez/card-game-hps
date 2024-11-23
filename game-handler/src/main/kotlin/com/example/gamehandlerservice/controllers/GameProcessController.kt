@@ -12,8 +12,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 
 @Controller
-class GameProcessController(private val registry: GameHandlerRegistry,
-                            private val messagingTemplate: SimpMessageSendingOperations
+class GameProcessController(
+    private val registry: GameHandlerRegistry,
+    private val messagingTemplate: SimpMessageSendingOperations
 ) {
     @MessageMapping("/move")
     fun moveCard(
@@ -22,6 +23,13 @@ class GameProcessController(private val registry: GameHandlerRegistry,
         @Valid @RequestBody playerActionRequest: PlayerActionRequest
     ) {
         registry.getGame(roomDto.id)?.handle(playerActionRequest.copy(playerId = accountDto.id))
+    }
+
+    @MessageMapping("/current-state")
+    fun getFullState(@Valid roomDto: RoomDto) {
+        val game =
+            registry.getGame(roomDto.id) ?: throw IllegalArgumentException("Game ${roomDto.id} not found in registry")
+        messagingTemplate.convertAndSend("/topic/room/${roomDto.id}/events", game.getGameState())
     }
 
     @HostOnly

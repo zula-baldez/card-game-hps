@@ -1,5 +1,6 @@
 package com.example.gamehandlerservice.service.game.game
 
+import com.example.common.dto.roomservice.RoomDto
 import org.springframework.beans.factory.ObjectFactory
 import org.springframework.stereotype.Service
 
@@ -7,9 +8,9 @@ import org.springframework.stereotype.Service
 class GameHandlerFactoryImpl(
     private val beanFactoryGameHandler: ObjectFactory<GameHandler>
 ) : GameHandlerFactory {
-    override fun instantiateGameHandler(roomId: Long): GameHandler {
+    override fun instantiateGameHandler(room: RoomDto): GameHandler {
         val gameHandler = beanFactoryGameHandler.getObject()
-        gameHandler.setRoomId(roomId)
+        gameHandler.setRoom(room)
         return gameHandler
     }
 }

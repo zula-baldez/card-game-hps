@@ -8,9 +8,9 @@ import com.example.common.exceptions.AccountNotFoundException
 import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
-import com.example.common.kafkaconnections.KafkaConnectionsSender
-import com.example.common.kafkaconnections.ConnectionMessage
-import com.example.common.kafkaconnections.ConnectionMessageType
+import com.example.common.kafkaconnections.RoomUpdateEvent
+import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.RoomUpdateEventType
+import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.PlayerLeaveEvent
 import com.example.roomservice.repository.*
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -21,11 +21,12 @@ import reactor.core.publisher.Mono
 @Component
 @Scope("prototype")
 class RoomAccountManagerImpl(
+    val roomManager: RoomManager,
     val roomRepository: RoomRepository,
     val accountInRoomRepository: AccountInRoomRepository,
     val bannedAccountInRoomRepository: BannedAccountInRoomRepository,
     val personalAccountClient: ReactivePersonalAccountClient,
-    val sender: KafkaConnectionsSender
+    val sender: RoomUpdateEventSender
 ) : RoomAccountManager {
     @Transactional
     override fun addAccount(roomId: Long, accountId: Long): Mono<Void> {
@@ -64,9 +65,7 @@ class RoomAccountManagerImpl(
             .flatMap { room ->
                 return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true))
                     .flatMap { updateAccountRoom(accountId, roomId) }
-                    .flatMap {
-                        updateGameHandler(it)
-                    }
+                    .then()
             }
 
     }
@@ -80,20 +79,22 @@ class RoomAccountManagerImpl(
                     .collectList()
                     .flatMap withAccounts@{ accounts ->
                         val accountToRemove = accounts.find { it.accountId == accountId }
+                        var hostId = room.hostId
                         if (accountToRemove == null) {
                             return@withAccounts Mono.error(AccountNotFoundException(accountId))
                         }
 
                         if (accounts.size <= 1) {
-                            return@withAccounts roomRepository.delete(room)
+                            return@withAccounts roomManager.deleteRoom(roomId)
                                 .then(updateAccountRoom(accountId, null))
                                 .then(Mono.empty())
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(
-                                    if (accountId == room.hostId) {
+                                    if (accountId == hostId) {
                                         accounts.remove(accountToRemove)
-                                        roomRepository.save(room.copy(hostId = accounts.first().accountId)).then()
+                                        hostId = accounts.first().accountId
+                                        roomRepository.save(room.copy(hostId = hostId)).then()
                                     } else {
                                         Mono.empty()
                                     }
@@ -111,28 +112,40 @@ class RoomAccountManagerImpl(
                                         Mono.empty()
                                     }
                                 )
-                                .then(updateAccountRoom(accountId, null))
+                                .then(updateAccountRoom(accountId, null).map { account ->
+                                    sendPlayerRoomUpdate(account, roomId, hostId, isLeave = true)
+                                })
                                 .then()
                         }
                     }
             }
     }
 
-    private fun updateGameHandler(accountDto: AccountDto): Mono<Void> {
-        sender.send(
-            "game-connection-to-game-handler",
-            ConnectionMessage(
-                ConnectionMessageType.CONNECT,
-                accountDto.roomId!!,
-                accountDto
-            )
-        )
-        return Mono.empty()
-    }
-
-
     private fun updateAccountRoom(accountId: Long, roomId: Long?): Mono<AccountDto> {
         return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId))
+    }
+
+    private fun sendPlayerRoomUpdate(account: AccountDto, roomId: Long, roomHost: Long, isLeave: Boolean) {
+        if (isLeave) {
+            sender.sendRoomUpdateEvent(
+                RoomUpdateEvent(
+                    roomId,
+                    RoomUpdateEventType.PLAYER_LEAVE,
+                    playerLeave = PlayerLeaveEvent(
+                        accountId = account.id,
+                        newHost = roomHost
+                    )
+                )
+            )
+        } else {
+            sender.sendRoomUpdateEvent(
+                RoomUpdateEvent(
+                    roomId,
+                    RoomUpdateEventType.PLAYER_JOIN,
+                    newPlayer = account
+                )
+            )
+        }
     }
 
     override fun getAccountRoom(accountId: Long): Mono<Long> {

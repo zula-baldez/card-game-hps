@@ -1,6 +1,9 @@
 package com.example.gamehandlerservice.config
 
-import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
+import com.example.common.kafkaconnections.GameUpdateEvent
+import com.example.common.kafkaconnections.GameUpdateEvent.Companion.GameUpdateEventType
+import com.example.common.kafkaconnections.GameUpdateEvent.Companion.PlayerDisconnectGameUpdateEvent
+import com.example.gamehandlerservice.kafkaconnections.KafkaGameUpdateEventSender
 import org.springframework.context.ApplicationListener
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -13,7 +16,7 @@ import javax.security.sasl.AuthenticationException
 
 @Component
 class WebSocketEventListener(
-    private val gameHandlerRegistry: GameHandlerRegistry
+    private val disconnectEventSender: KafkaGameUpdateEventSender
 ) : ApplicationListener<SessionDisconnectEvent> {
     override fun onApplicationEvent(event: SessionDisconnectEvent) {
         val headerAccessor = StompHeaderAccessor.wrap(event.message)
@@ -23,7 +26,7 @@ class WebSocketEventListener(
             getUsernamePasswordAuthenticationToken(accountId)
 
         SecurityContextHolder.getContext().authentication = user
-        gameHandlerRegistry.getGame(gameId)?.playerDisconnect(accountId)
+        disconnectEventSender.sendDisconnectEvent(GameUpdateEvent(gameId, GameUpdateEventType.PLAYER_DISCONNECT, PlayerDisconnectGameUpdateEvent(accountId)))
     }
 
     @Throws(AuthenticationException::class)

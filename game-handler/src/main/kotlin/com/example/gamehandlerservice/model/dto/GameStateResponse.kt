@@ -10,5 +10,7 @@ data class GameStateResponse(
     val deckSize: Int,
     val stage: GameStage,
     val winner: Long?,
-    val players: List<AccountDto>
+    val players: List<AccountDto>,
+    val playersCardsCount: Map<Long, Int>,
+    val hostId: Long
 )

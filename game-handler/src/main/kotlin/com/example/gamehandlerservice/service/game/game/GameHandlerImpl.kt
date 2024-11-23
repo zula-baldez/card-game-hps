@@ -1,10 +1,7 @@
 package com.example.gamehandlerservice.service.game.game
 
-import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.kafkaconnections.ConnectionMessage
-import com.example.common.kafkaconnections.ConnectionMessageType
-import com.example.common.kafkaconnections.KafkaConnectionsSender
+import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.exceptions.GameException
 import com.example.gamehandlerservice.model.dto.*
 import com.example.gamehandlerservice.model.game.Card
@@ -18,50 +15,59 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("prototype")
 class GameHandlerImpl(
-    private val roomServiceClient: RoomServiceClient,
     private val simpMessagingTemplate: SimpMessagingTemplate,
-    private val sender: KafkaConnectionsSender
 ) : GameHandler {
 
-    private val playersCards: MutableMap<Long, MutableList<Card>> = mutableMapOf()
-    private var players: List<AccountDto> = mutableListOf()
+
     private var lastRoundWinner: Long? = null
+
     private var trumpCard: Card? = null
     private val deck: MutableList<Card> = mutableListOf()
     private val table: MutableList<Card> = mutableListOf()
+
     private var stage: GameStage = GameStage.WAITING
-    private var queue: CyclicQueue<Long> = CyclicQueue(listOf())
     private var state: GameState = GameState(0, 0, isDefending = false)
+
     private var roomId: Long = 0
+    private var roomName: String = ""
+    private var roomHost: Long = 0
 
-    override fun setRoomId(roomId: Long) {
-        this.roomId = roomId
+    private val playersCards: MutableMap<Long, MutableList<Card>> = mutableMapOf() // only active players
+    private var players: MutableList<AccountDto> = mutableListOf() // all players, including spectators
+    private var queue: CyclicQueue<Long> = CyclicQueue(listOf()) // only active players who are still playing
+
+
+    override fun setRoom(room: RoomDto) {
+        roomId = room.id
+        roomName = room.name
+        roomHost = room.hostId
     }
 
-    override fun playerDisconnect(accountId: Long): AccountDto {
-        val player = kickPlayer(accountId)
-        sender.send(
-            "game-connection-to-room-service",
-            ConnectionMessage(
-                ConnectionMessageType.DISCONNECT,
-                roomId,
-                player
-            )
-        )
-        return player
-    }
-
-    override fun kickPlayer(accountId: Long): AccountDto {
-        queue.delete(accountId)
-        val player = players.find { it.id == accountId } ?: throw IllegalArgumentException()
-        players -= player
+    override fun updateHostId(newHostId: Long) {
+        roomHost = newHostId
         sendGameState()
-        return player
     }
 
     override fun addPlayer(account: AccountDto) {
         players += account
         sendGameState()
+    }
+
+    override fun removePlayer(accountId: Long) {
+        players.removeIf { it.id == accountId }
+        playersCards -= accountId
+        queue.delete(accountId)
+
+        if (accountId == state.defendPlayer || accountId == state.attackPlayer) {
+            table.clear()
+            // Step back so next round will not skip a player
+            if (accountId == state.defendPlayer) {
+                queue.move(-1)
+            }
+            handleNextRoundAction(NextRoundAction.NEXT_ROUND) // also sends new game state
+        } else {
+            sendGameState()
+        }
     }
 
     private fun fillDeck() {
@@ -98,36 +104,24 @@ class GameHandlerImpl(
         table.clear()
         fillDeck()
 
-        val room = roomServiceClient.findById(roomId)
-        val players = room.players.map { it.id }
+        players.shuffle()
+        val players = players.map { it.id }
         trumpCard = deck.first()
-        for (player in room.players.map { it.id }) {
+        for (player in players) {
             playersCards[player] = mutableListOf()
         }
         fillPlayersCards()
         for (player in playersCards.keys) {
             sendPlayerCards(player)
         }
-        queue = CyclicQueue(players.shuffled())
+        queue = CyclicQueue(players)
         newRound()
         stage = GameStage.STARTED
 
         sendGameState()
     }
 
-    override fun handle(playerAction: PlayerActionRequest) {
-        if (stage != GameStage.STARTED) {
-            throw GameException("Game hasn't started")
-        }
-
-        val nextRoundAction = if (!state.isDefending && playerAction.playerId == state.attackPlayer) {
-            handleAttack(playerAction)
-        } else if (state.isDefending && playerAction.playerId == state.defendPlayer) {
-            handleDefense(playerAction)
-        } else {
-            throw GameException("Not your turn yet!")
-        }
-
+    private fun handleNextRoundAction(nextRoundAction: NextRoundAction) {
         if (nextRoundAction != NextRoundAction.SWITCH_ROUND) {
             fillPlayersCards()
             sendPlayerCards(state.attackPlayer)
@@ -155,6 +149,22 @@ class GameHandlerImpl(
         }
 
         sendGameState()
+    }
+
+    override fun handle(playerAction: PlayerActionRequest) {
+        if (stage != GameStage.STARTED) {
+            throw GameException("Game hasn't started")
+        }
+
+        val nextRoundAction = if (!state.isDefending && playerAction.playerId == state.attackPlayer) {
+            handleAttack(playerAction)
+        } else if (state.isDefending && playerAction.playerId == state.defendPlayer) {
+            handleDefense(playerAction)
+        } else {
+            throw GameException("Not your turn yet!")
+        }
+
+        handleNextRoundAction(nextRoundAction)
     }
 
     private fun takePlayerCardIfPossible(player: Long, card: Card) {
@@ -233,6 +243,11 @@ class GameHandlerImpl(
     }
 
     private fun sendPlayerCards(playerId: Long) {
+        // Skip if player is not active anymore
+        if (!playersCards.keys.contains(playerId)) {
+            return
+        }
+
         simpMessagingTemplate.convertAndSend(
             "/topic/room/$roomId/players/$playerId/events",
             PlayerCardsEvent(cardsInHand = playersCards[playerId]!!)
@@ -254,7 +269,9 @@ class GameHandlerImpl(
             deckSize = deck.size,
             stage = stage,
             winner = lastRoundWinner,
-            players = players
+            players = players,
+            playersCardsCount = playersCards.mapValues { it.value.size },
+            hostId = roomHost
         )
     }
 }
