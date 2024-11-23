@@ -9,9 +9,14 @@ import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomNotFoundException
 import com.example.common.exceptions.RoomOverflowException
 import com.example.common.kafkaconnections.RoomUpdateEvent
-import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.RoomUpdateEventType
 import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.PlayerLeaveEvent
-import com.example.roomservice.repository.*
+import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.RoomUpdateEventType
+import com.example.roomservice.repository.AccountInRoomEntity
+import com.example.roomservice.repository.AccountInRoomRepository
+import com.example.roomservice.repository.BannedAccountInRoomEntity
+import com.example.roomservice.repository.BannedAccountInRoomRepository
+import com.example.roomservice.repository.RoomEntity
+import com.example.roomservice.repository.RoomRepository
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -71,9 +76,8 @@ class RoomAccountManagerImpl(
                     .map { account ->
                         sendPlayerRoomUpdate(account, roomId, room.hostId, false)
                     }
-                    .then()
             }
-
+            .then()
     }
 
     override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction): Mono<Void> {
@@ -92,16 +96,16 @@ class RoomAccountManagerImpl(
 
                         if (accounts.size <= 1) {
                             return@withAccounts roomRepository.deleteById(roomId)
-                                .and(
-                                    updateAccountRoom(accountId, null)
-                                        .map { _ ->
-                                            sender.sendRoomUpdateEvent(
-                                                RoomUpdateEvent(
-                                                    roomId, RoomUpdateEventType.ROOM_DELETED
-                                                )
+                                .then(Mono.defer { updateAccountRoom(accountId, null) })
+                                .flatMap {
+                                    Mono.fromRunnable<Void> {
+                                        sender.sendRoomUpdateEvent(
+                                            RoomUpdateEvent(
+                                                roomId, RoomUpdateEventType.ROOM_DELETED
                                             )
-                                        }
-                                )
+                                        )
+                                    }
+                                }
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(
@@ -113,7 +117,7 @@ class RoomAccountManagerImpl(
                                         Mono.empty()
                                     }
                                 )
-                                .then(
+                                .then(Mono.defer {
                                     if (reason == AccountAction.BAN) {
                                         bannedAccountInRoomRepository.save(
                                             BannedAccountInRoomEntity(
@@ -121,15 +125,17 @@ class RoomAccountManagerImpl(
                                                 accountId,
                                                 roomId
                                             )
-                                        ).then()
+                                        )
                                     } else {
                                         Mono.empty()
                                     }
-                                )
-                                .then(updateAccountRoom(accountId, null).map { account ->
-                                    sendPlayerRoomUpdate(account, roomId, hostId, isLeave = true)
                                 })
-                                .then()
+                                .flatMap {
+                                    updateAccountRoom(accountId, null)
+                                }
+                                .flatMap {
+                                    sendPlayerRoomUpdate(it, roomId, hostId, isLeave = true)
+                                }
                         }
                     }
             }
@@ -139,26 +145,28 @@ class RoomAccountManagerImpl(
         return personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(roomId))
     }
 
-    private fun sendPlayerRoomUpdate(account: AccountDto, roomId: Long, roomHost: Long, isLeave: Boolean) {
-        if (isLeave) {
-            sender.sendRoomUpdateEvent(
-                RoomUpdateEvent(
-                    roomId,
-                    RoomUpdateEventType.PLAYER_LEAVE,
-                    playerLeave = PlayerLeaveEvent(
-                        accountId = account.id,
-                        newHost = roomHost
+    private fun sendPlayerRoomUpdate(account: AccountDto, roomId: Long, roomHost: Long, isLeave: Boolean): Mono<Void> {
+        return Mono.fromRunnable {
+            if (isLeave) {
+                sender.sendRoomUpdateEvent(
+                    RoomUpdateEvent(
+                        roomId,
+                        RoomUpdateEventType.PLAYER_LEAVE,
+                        playerLeave = PlayerLeaveEvent(
+                            accountId = account.id,
+                            newHost = roomHost
+                        )
                     )
                 )
-            )
-        } else {
-            sender.sendRoomUpdateEvent(
-                RoomUpdateEvent(
-                    roomId,
-                    RoomUpdateEventType.PLAYER_JOIN,
-                    newPlayer = account
+            } else {
+                sender.sendRoomUpdateEvent(
+                    RoomUpdateEvent(
+                        roomId,
+                        RoomUpdateEventType.PLAYER_JOIN,
+                        newPlayer = account
+                    )
                 )
-            )
+            }
         }
     }
 
