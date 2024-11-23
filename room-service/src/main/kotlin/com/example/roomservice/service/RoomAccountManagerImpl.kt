@@ -72,12 +72,10 @@ class RoomAccountManagerImpl(
             .flatMap { room ->
                 return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true))
                     .flatMap { updateAccountRoom(accountId, roomId) }
-                    .flatMap { personalAccountClient.getAccountById(accountId) }
-                    .map { account ->
+                    .flatMap { account ->
                         sendPlayerRoomUpdate(account, roomId, room.hostId, false)
                     }
             }
-            .then()
     }
 
     override fun removeAccount(roomId: Long, accountId: Long, reason: AccountAction): Mono<Void> {
@@ -87,58 +85,62 @@ class RoomAccountManagerImpl(
             .flatMap { room ->
                 return@flatMap accountInRoomRepository.findAllByRoomId(room.id)
                     .collectList()
-                    .flatMap withAccounts@{ accounts ->
-                        val accountToRemove = accounts.find { it.accountId == accountId }
-                        var hostId = room.hostId
-                        if (accountToRemove == null) {
-                            return@withAccounts Mono.error(AccountNotFoundException(accountId))
-                        }
-
-                        if (accounts.size <= 1) {
-                            return@withAccounts roomRepository.deleteById(roomId)
-                                .then(Mono.defer { updateAccountRoom(accountId, null) })
-                                .flatMap {
-                                    Mono.fromRunnable<Void> {
-                                        sender.sendRoomUpdateEvent(
-                                            RoomUpdateEvent(
-                                                roomId, RoomUpdateEventType.ROOM_DELETED
-                                            )
-                                        )
-                                    }
-                                }
-                        } else {
-                            return@withAccounts accountInRoomRepository.delete(accountToRemove)
-                                .then(
-                                    if (accountId == hostId) {
-                                        accounts.remove(accountToRemove)
-                                        hostId = accounts.first().accountId
-                                        roomRepository.save(room.copy(hostId = hostId)).then()
-                                    } else {
-                                        Mono.empty()
-                                    }
-                                )
-                                .then(Mono.defer {
-                                    if (reason == AccountAction.BAN) {
-                                        bannedAccountInRoomRepository.save(
-                                            BannedAccountInRoomEntity(
-                                                0,
-                                                accountId,
-                                                roomId
-                                            )
-                                        )
-                                    } else {
-                                        Mono.empty()
-                                    }
-                                })
-                                .flatMap {
-                                    updateAccountRoom(accountId, null)
-                                }
-                                .flatMap {
-                                    sendPlayerRoomUpdate(it, roomId, hostId, isLeave = true)
-                                }
-                        }
+                    .flatMap {
+                        handlePlayerLeave(room, it, accountId, reason)
                     }
             }
+    }
+
+    private fun handlePlayerLeave(room: RoomEntity, playersInRoom: MutableList<AccountInRoomEntity>, accountId: Long, reason: AccountAction): Mono<Void> {
+        val accountToRemove = playersInRoom.find { it.accountId == accountId }
+        var hostId = room.hostId
+        if (accountToRemove == null) {
+            return Mono.error(AccountNotFoundException(accountId))
+        }
+
+        if (playersInRoom.size <= 1) {
+            return roomRepository.deleteById(room.id)
+                .then(Mono.defer { updateAccountRoom(accountId, null) })
+                .flatMap {
+                    Mono.fromRunnable {
+                        sender.sendRoomUpdateEvent(
+                            RoomUpdateEvent(
+                                room.id, RoomUpdateEventType.ROOM_DELETED
+                            )
+                        )
+                    }
+                }
+        } else {
+            return accountInRoomRepository.delete(accountToRemove)
+                .then(
+                    if (accountId == hostId) {
+                        playersInRoom.remove(accountToRemove)
+                        hostId = playersInRoom.first().accountId
+                        roomRepository.save(room.copy(hostId = hostId)).then()
+                    } else {
+                        Mono.empty()
+                    }
+                )
+                .then(Mono.defer {
+                    if (reason == AccountAction.BAN) {
+                        bannedAccountInRoomRepository.save(
+                            BannedAccountInRoomEntity(
+                                0,
+                                accountId,
+                                room.id
+                            )
+                        )
+                    } else {
+                        Mono.empty()
+                    }
+                })
+                .flatMap {
+                    updateAccountRoom(accountId, null)
+                }
+                .flatMap {
+                    sendPlayerRoomUpdate(it, room.id, hostId, isLeave = true)
+                }
+        }
     }
 
     private fun updateAccountRoom(accountId: Long, roomId: Long?): Mono<AccountDto> {
