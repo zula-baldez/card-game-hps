@@ -100,7 +100,7 @@ class RoomAccountManagerImpl(
 
         if (playersInRoom.size <= 1) {
             return roomRepository.deleteById(room.id)
-                .then(Mono.defer { updateAccountRoom(accountId, null) })
+                .then(updateAccountRoom(accountId, null))
                 .flatMap {
                     Mono.fromRunnable {
                         sender.sendRoomUpdateEvent(
@@ -121,7 +121,7 @@ class RoomAccountManagerImpl(
                         Mono.empty()
                     }
                 )
-                .then(Mono.defer {
+                .then(
                     if (reason == AccountAction.BAN) {
                         bannedAccountInRoomRepository.save(
                             BannedAccountInRoomEntity(
@@ -133,7 +133,7 @@ class RoomAccountManagerImpl(
                     } else {
                         Mono.empty()
                     }
-                })
+                )
                 .flatMap {
                     updateAccountRoom(accountId, null)
                 }
