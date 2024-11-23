@@ -134,12 +134,11 @@ class RoomAccountManagerImpl(
                         Mono.empty()
                     }
                 )
-                .flatMap {
-                    updateAccountRoom(accountId, null)
-                }
-                .flatMap {
-                    sendPlayerRoomUpdate(it, room.id, hostId, isLeave = true)
-                }
+                .then(
+                    updateAccountRoom(accountId, null).flatMap {
+                        sendPlayerRoomUpdate(it, room.id, hostId, isLeave = true)
+                    }
+                )
         }
     }
 
