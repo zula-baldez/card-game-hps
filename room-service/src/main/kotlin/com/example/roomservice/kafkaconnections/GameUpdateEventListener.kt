@@ -14,12 +14,10 @@ class GameUpdateEventListener(
     private val roomAccountManager: RoomAccountManager
 ) {
     @KafkaListener(topics = ["game-connection-to-room-service"])
-    fun listen(data: GameUpdateEvent): Mono<Void> {
+    fun listen(data: GameUpdateEvent) {
         if (data.eventType == GameUpdateEventType.PLAYER_DISCONNECT) {
             val event = data.playerDisconnect ?: throw IllegalArgumentException("broken message")
-            return roomAccountManager.removeAccount(data.roomId, event.accountId, AccountAction.BAN)
+            roomAccountManager.removeAccount(data.roomId, event.accountId, AccountAction.BAN).block()
         }
-
-        return Mono.empty()
     }
 }

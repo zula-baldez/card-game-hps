@@ -1,8 +1,6 @@
 package com.example.roomservice.service
 
-import com.example.common.client.ReactiveGameHandlerClient
 import com.example.common.client.ReactivePersonalAccountClient
-import com.example.common.dto.CreateGameRequest
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.roomservice.RoomDto
 import com.example.common.kafkaconnections.RoomUpdateEvent
@@ -57,15 +55,15 @@ class RoomManagerImpl(
     }
 
     override fun deleteRoom(id: Long): Mono<Void> {
-        return roomRepository.deleteById(id).map { it ->
-            roomUpdateEventSender.sendRoomUpdateEvent(
-                RoomUpdateEvent(
-                    id, RoomUpdateEventType.ROOM_DELETED
+        return roomRepository.deleteById(id).then(
+            Mono.fromRunnable {
+                roomUpdateEventSender.sendRoomUpdateEvent(
+                    RoomUpdateEvent(
+                        id, RoomUpdateEventType.ROOM_DELETED
+                    )
                 )
-            )
-
-            return@map it
-        }
+            }
+        )
     }
 
     override fun getRoom(id: Long): Mono<RoomDto> {

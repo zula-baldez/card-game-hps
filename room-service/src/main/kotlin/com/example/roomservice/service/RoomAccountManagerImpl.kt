@@ -12,6 +12,7 @@ import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.RoomUpdateEventType
 import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.PlayerLeaveEvent
 import com.example.roomservice.repository.*
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -21,13 +22,14 @@ import reactor.core.publisher.Mono
 @Component
 @Scope("prototype")
 class RoomAccountManagerImpl(
-    val roomManager: RoomManager,
     val roomRepository: RoomRepository,
     val accountInRoomRepository: AccountInRoomRepository,
     val bannedAccountInRoomRepository: BannedAccountInRoomRepository,
     val personalAccountClient: ReactivePersonalAccountClient,
     val sender: RoomUpdateEventSender
 ) : RoomAccountManager {
+    private val logger = LoggerFactory.getLogger(RoomAccountManagerImpl::class.java)
+
     @Transactional
     override fun addAccount(roomId: Long, accountId: Long): Mono<Void> {
         return roomRepository
@@ -65,6 +67,10 @@ class RoomAccountManagerImpl(
             .flatMap { room ->
                 return@flatMap accountInRoomRepository.save(AccountInRoomEntity(accountId, roomId, isNewAccount = true))
                     .flatMap { updateAccountRoom(accountId, roomId) }
+                    .flatMap { personalAccountClient.getAccountById(accountId) }
+                    .map { account ->
+                        sendPlayerRoomUpdate(account, roomId, room.hostId, false)
+                    }
                     .then()
             }
 
@@ -85,9 +91,16 @@ class RoomAccountManagerImpl(
                         }
 
                         if (accounts.size <= 1) {
-                            return@withAccounts roomManager.deleteRoom(roomId)
+                            return@withAccounts roomRepository.deleteById(roomId)
                                 .then(updateAccountRoom(accountId, null))
-                                .then(Mono.empty())
+                                .flatMap {
+                                    sender.sendRoomUpdateEvent(
+                                        RoomUpdateEvent(
+                                            roomId, RoomUpdateEventType.ROOM_DELETED
+                                        )
+                                    )
+                                    Mono.empty<Void>()
+                                }
                         } else {
                             return@withAccounts accountInRoomRepository.delete(accountToRemove)
                                 .then(

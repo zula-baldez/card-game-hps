@@ -22,7 +22,7 @@ class AccountAndGameHandlerStompArgumentResolver(
     private val accountClient: PersonalAccountClient,
     private val roomServiceClient: RoomServiceClient,
 
-) : HandlerMethodArgumentResolver {
+    ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.parameterType == AccountDto::class.java ||
                 parameter.parameterType == RoomDto::class.java
@@ -31,21 +31,24 @@ class AccountAndGameHandlerStompArgumentResolver(
     override fun resolveArgument(parameter: MethodParameter, message: Message<*>): Any? {
         val accessor = MessageHeaderAccessor.getAccessor(message, SimpMessageHeaderAccessor::class.java)
         val sessionAttributes = accessor?.sessionAttributes ?: return null
+        val accountId = sessionAttributes["x-user-id"] as? Long
+            ?: throw IllegalArgumentException("No accountId found in session attributes")
+        val user: UsernamePasswordAuthenticationToken =
+            getUsernamePasswordAuthenticationToken(accountId)
+
+        SecurityContextHolder.getContext().authentication = user
 
         return when (parameter.parameterType) {
             RoomDto::class.java -> {
-                val roomId = sessionAttributes["x-room-id"] as? Long ?: throw IllegalArgumentException("No roomId found in session attributes")
+                val roomId = sessionAttributes["x-room-id"] as? Long
+                    ?: throw IllegalArgumentException("No roomId found in session attributes")
                 return roomServiceClient.findById(roomId)
             }
+
             AccountDto::class.java -> {
-                val accountId = sessionAttributes["x-user-id"] as? Long ?: throw IllegalArgumentException("No accountId found in session attributes")
-                val user: UsernamePasswordAuthenticationToken =
-                    getUsernamePasswordAuthenticationToken(accountId)
-
-                SecurityContextHolder.getContext().authentication = user
-
                 return accountClient.getAccountById(accountId)
             }
+
             else -> null
         }
     }

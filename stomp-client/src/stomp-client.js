@@ -1,14 +1,10 @@
 let stompClient;
-let gameState = {
-    "stage": "WAITING",
-};
-let curRoom = undefined
 const hostname = window.location.hostname;
 const gateway = `http://${hostname}:8085`
 
 function connect() {
-    const roomId = $("#room-id").val();
-    const userId = $("#userId").val();
+    const roomId = parseInt($("#room-id").val());
+    const userId = parseInt($("#user-id").val());
     const authToken = $("#authorization").val();
 
     const brokerURL = `ws://${hostname}:8082/app/game?roomId=${roomId}`;
@@ -22,6 +18,8 @@ function connect() {
 
     stompClient.onConnect = (frame) => {
         console.log("Connected: " + frame);
+        $("#leave-room").prop("disabled", false)
+        $("#create-room").prop("disabled", true)
 
         // Listen for cards in hand
         stompClient.subscribe(`/topic/room/${roomId}/players/${userId}/events`, (message) => {
@@ -38,13 +36,19 @@ function connect() {
 
         // Listen for game state updates
         stompClient.subscribe(`/topic/room/${roomId}/events`, (message) => {
-            gameState = JSON.parse(message.body);
-            updateGameStateUI();
-            enableButtonsBasedOnGameState();
-            updateInRoomState()
+            const gameState = JSON.parse(message.body);
+            console.log(`Received game state ${message.body}`)
+            const isInGame = gameState.players.find((el) => el.id === userId)
+            if (!isInGame) {
+                console.log("Player is not in room anymore, disconnecting")
+                disconnect()
+                return
+            }
+            updateGameStateUI(gameState);
+            enableButtonsBasedOnGameState(gameState);
         });
 
-        updateInRoomState()
+        getGameState()
     };
 
     stompClient.onWebSocketError = (error) => {
@@ -103,6 +107,15 @@ function sendPlayerAction(actionType, selectedCard) {
     console.log("Player Action Sent:", playerAction);
 }
 
+function getGameState() {
+    stompClient.publish({
+        destination: '/app/current-state',
+        body: JSON.stringify({})
+    })
+
+    console.log("Fetching game state")
+}
+
 function sendStart() {
     stompClient.publish({
         destination: `/app/start-game`,
@@ -111,8 +124,10 @@ function sendStart() {
 
 }
 
-function updateGameStateUI() {
-    const {state, table, trumpCard, deckSize, stage, winner, players} = gameState;
+function updateGameStateUI(gameState) {
+    const accountId = parseInt($("#user-id").val())
+    const currentRoom = parseInt($("#room-id").val())
+    const {state, table, trumpCard, deckSize, stage, winner, players, hostId} = gameState;
     let turningPlayerId = state.isDefending ? state.defendPlayer : state.attackPlayer
     $("#gameState").html(`
             <p><strong>Attacking Player ID:</strong> ${state.attackPlayer}</p>
@@ -126,7 +141,9 @@ function updateGameStateUI() {
             <p><strong>Winner:</strong> ${winner} </p>
         `);
 
-    $("#trump-card").append(renderCard(trumpCard))
+    if (trumpCard) {
+        $("#trump-card").append(renderCard(trumpCard))
+    }
 
     for (let i = 0; i < table.length; i += 2) {
         const row = $("<div class='row beat-row'/>")
@@ -141,18 +158,11 @@ function updateGameStateUI() {
 
     let html = ""
 
-    players.sort((a, b) => a.id - b.id)
-
-    if (!players.find((el) => el.account_id === $("userId"))) {
-        curRoom = undefined
-        return
-    }
-
     players.forEach(function (player, index) {
         html += `
                         <div class="row">
-                            <h4>${index + 1}. ${player.name} ${player.id === curRoom.host_id ? "(host)" : ""}</h4>
-                            ${accountId === curRoom.host_id ? `
+                            <h4>${index + 1}. ${player.name} ${player.id === hostId ? "(host)" : ""}</h4>
+                            ${accountId === hostId ? `
                                 <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'KICK')">KICK</button>
                                 <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'BAN')">BAN</button>
                             ` : ""}
@@ -163,8 +173,8 @@ function updateGameStateUI() {
     $("#current-room").html(html)
 }
 
-function enableButtonsBasedOnGameState() {
-    const userId = $("#userId").val();
+function enableButtonsBasedOnGameState(gameState) {
+    const userId = $("#user-id").val();
 
     const {state, stage} = gameState;
 
@@ -207,7 +217,6 @@ function post(path, data, callback) {
         url: `${gateway}${path}`,
         headers: headers(),
         type: 'post',
-        dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: callback,
@@ -220,7 +229,6 @@ function del(path, data, callback) {
         url: `${gateway}${path}`,
         headers: headers(),
         type: 'delete',
-        dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: callback,
@@ -233,7 +241,6 @@ function get(path, data, callback) {
         url: `${gateway}${path}`,
         headers: headers(),
         type: 'get',
-        dataType: 'json',
         data: data,
         success: callback,
         error: error
@@ -256,7 +263,7 @@ function login() {
         },
         function (data) {
             $("#authorization").val(data.token)
-            $("#userId").val(data.id)
+            $("#user-id").val(data.id)
         }
     )
 }
@@ -298,7 +305,7 @@ function getRoom(roomId, callback) {
 }
 
 function joinRoom(roomId) {
-    const accountId = $("#userId").val()
+    const accountId = $("#user-id").val()
 
     post(
         `/room-service/rooms/${roomId}/players`,
@@ -307,6 +314,15 @@ function joinRoom(roomId) {
         },
         function (data) {
             console.log(`Joined room ${roomId}`)
+            getRoom(roomId, function (room) {
+                console.log(`Fetched room ${JSON.stringify(room)} state`)
+                $("#room-id").val(room.id)
+                $("#room-name").val(room.name).prop("disabled", true)
+                $("#room-capacity").val(room.capacity).prop("disabled", true)
+                if (!stompClient) {
+                    connect()
+                }
+            })
         }
     )
 }
@@ -353,68 +369,37 @@ function removeAccountFromRoom(accountId, roomId, reason) {
 }
 
 function updateInRoomState() {
-    const accountId = $("#userId").val()
-    getAccount(accountId, function (account) {
-        const currentRoom = account.room_id
-
-        if (currentRoom) {
-            $("#rooms-list").html("")
-            $("#leave-room").prop("disabled", false)
-            $("#create-room").prop("disabled", true)
-
-            getRoom(currentRoom, function (room) {
-                curRoom = JSON.parse(currentRoom)
-                $("#room-id").val(room.id)
-                $("#room-name").val(room.name)
-                $("#room-name").prop("disabled", true)
-                $("#room-capacity").val(room.capacity)
-                $("#room-capacity").prop("disabled", true)
-                if (!stompClient) {
-                    connect()
-                }
-            })
-        } else {
-            curRoom = undefined
-            $("#current-room").html("")
-            $("#leave-room").prop("disabled", true)
-            $("#create-room").prop("disabled", false)
-            $("#room-id").val("")
-            $("#room-name").prop("disabled", false)
-            $("#room-capacity").prop("disabled", false)
-
-            getRooms(function (rooms) {
-                let html = ""
-
-                for (const room of rooms) {
-                    const banned = room.banned_players.map(player => player.id).includes(parseInt(accountId))
-
-                    html += `
-                        <div class="row">
-                            <h4>${room.name} (${room.id})</h4>
-                            <p>Players: ${room.players.length}/${room.capacity}</p>
-                            ${banned ? "<button disabled='disabled'>You are banned!</button>" :
-                        `<button onClick="joinRoom(${room.id})">Join</button>`}
-                        </div>
-                    `
-                }
-
-                $("#rooms-list").html(html)
-            })
-
-            if (stompClient) {
-                disconnect()
-            }
-        }
-    })
-
-}
-
-function roomsPolling() {
-    if (curRoom) {
+    if (stompClient) {
+        $("#rooms-list").empty()
         return
     }
-    updateInRoomState()
-    setTimeout(roomsPolling, 500)
+
+    const accountId = $("#user-id").val()
+    $("#current-room").html("")
+    $("#leave-room").prop("disabled", true)
+    $("#create-room").prop("disabled", false)
+    $("#room-id").val("")
+    $("#room-name").prop("disabled", false)
+    $("#room-capacity").prop("disabled", false)
+
+    getRooms(function (rooms) {
+        let html = ""
+
+        for (const room of rooms) {
+            const banned = room.banned_players.map(player => player.id).includes(parseInt(accountId))
+
+            html += `
+                <div class="row">
+                    <h4>${room.name} (${room.id})</h4>
+                    <p>Players: ${room.players.length}/${room.capacity}</p>
+                    ${banned ? "<button disabled='disabled'>You are banned!</button>" :
+                `<button onClick="joinRoom(${room.id})">Join</button>`}
+                        </div>
+                    `
+        }
+
+        $("#rooms-list").html(html)
+    })
 }
 
 /*
@@ -432,5 +417,5 @@ $(function () {
     $("#create-room").click(() => createRoom())
     $("#leave-room").click(() => leaveRoom())
 
-    roomsPolling()
+    setInterval(updateInRoomState, 500)
 });

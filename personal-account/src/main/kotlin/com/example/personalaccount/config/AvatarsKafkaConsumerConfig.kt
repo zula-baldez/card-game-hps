@@ -5,7 +5,6 @@ import com.example.common.dto.Avatar
 import com.example.common.kafkaconnections.KafkaProperties
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
@@ -15,9 +14,9 @@ import org.springframework.kafka.support.serializer.JsonDeserializer
 
 
 @Configuration
-class AvatarsKafkaConsumerConfig(private val kafkaProperties: KafkaProperties) {
+class AvatarsKafkaConsumerConfig {
     @Bean
-    fun avatarsConsumerFactory(): ConsumerFactory<String, Avatar> {
+    fun consumerFactory(kafkaProperties: KafkaProperties): ConsumerFactory<String, Avatar> {
         val configProps: MutableMap<String, Any> = HashMap()
         configProps[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = kafkaProperties.bootstrapServers
         configProps[ConsumerConfig.GROUP_ID_CONFIG] = "gr"
@@ -34,10 +33,10 @@ class AvatarsKafkaConsumerConfig(private val kafkaProperties: KafkaProperties) {
     }
 
     @Bean
-    fun avatarsKafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, Avatar> {
+    fun kafkaListenerContainerFactory(consumerFactory: ConsumerFactory<String, Avatar>): ConcurrentKafkaListenerContainerFactory<String, Avatar> {
         val factory: ConcurrentKafkaListenerContainerFactory<String, Avatar> =
             ConcurrentKafkaListenerContainerFactory()
-        factory.consumerFactory = avatarsConsumerFactory()
+        factory.consumerFactory = consumerFactory
         return factory
     }
 }
