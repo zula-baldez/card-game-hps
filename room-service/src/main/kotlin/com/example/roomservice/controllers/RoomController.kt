@@ -5,7 +5,11 @@ import com.example.common.dto.roomservice.AddAccountRequest
 import com.example.common.dto.roomservice.CreateRoomRequest
 import com.example.common.dto.roomservice.RemoveAccountRequest
 import com.example.common.dto.roomservice.RoomDto
-import com.example.common.exceptions.*
+import com.example.common.exceptions.AccountNotFoundException
+import com.example.common.exceptions.ForbiddenOperationException
+import com.example.common.exceptions.HostOnlyException
+import com.example.common.exceptions.RoomNotFoundException
+import com.example.common.exceptions.RoomOverflowException
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManager
 import io.swagger.v3.oas.annotations.Operation
@@ -14,12 +18,15 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.security.Principal
@@ -73,23 +80,8 @@ class RoomController(
         @RequestBody @Valid removeAccountRequest: RemoveAccountRequest,
         principal: Principal
     ): Mono<Void> {
-        val user: UsernamePasswordAuthenticationToken =
-            getUsernamePasswordAuthenticationToken(principal.name.toLong())
-        val authContext = ReactiveSecurityContextHolder.withAuthentication(user)
-
         return roomAccountManger.removeAccount(roomId, accountId, removeAccountRequest.reason)
-            .contextWrite(authContext)
     }
-
-    @Throws(AuthenticationException::class)
-    fun getUsernamePasswordAuthenticationToken(uid: Long): UsernamePasswordAuthenticationToken {
-        return UsernamePasswordAuthenticationToken(
-            uid,
-            null,
-            listOf(GrantedAuthority { "USER" })
-        )
-    }
-
 
     @ExceptionHandler(RoomNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
