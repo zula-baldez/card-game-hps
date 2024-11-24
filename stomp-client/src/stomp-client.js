@@ -125,14 +125,15 @@ function sendStart() {
 }
 
 function updateGameStateUI(gameState) {
+    const roomId = parseInt($("#room-id").val())
     const accountId = parseInt($("#user-id").val())
-    const currentRoom = parseInt($("#room-id").val())
-    const {state, table, trumpCard, deckSize, stage, winner, players, hostId} = gameState;
-    let turningPlayerId = state.isDefending ? state.defendPlayer : state.attackPlayer
+    const {state, table, trumpCard, deckSize, stage, winner, players, hostId, playersCardsCount} = gameState;
+    const accountIsHost = hostId === accountId
+    const turningPlayerId = state.isDefending ? state.defendPlayer : state.attackPlayer
+    const answeringPlayerId = state.isDefending ? state.attackPlayer : state.defendPlayer
+
     $("#gameState").html(`
-            <p><strong>Attacking Player ID:</strong> ${state.attackPlayer}</p>
-            <p><strong>Defending Player ID:</strong> ${state.defendPlayer}</p>
-            <p><strong>Turing Player ID:</strong> ${turningPlayerId} </p>
+            <div id="players-in-room"></div>
             <p id="trump-card"><strong>Trump card:</strong></p>
             <p><strong>Desk size:</strong> ${deckSize} </p>
             <p><strong>Cards on Table:</strong></p>
@@ -156,21 +157,44 @@ function updateGameStateUI(gameState) {
         $("#deck").append(row)
     }
 
-    let html = ""
+    const playersInRoomElement = $("#players-in-room")
 
-    players.forEach(function (player, index) {
-        html += `
-                        <div class="row">
-                            <h4>${index + 1}. ${player.name} ${player.id === hostId ? "(host)" : ""}</h4>
-                            ${accountId === hostId ? `
-                                <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'KICK')">KICK</button>
-                                <button onclick="removeAccountFromRoom(${player.id}, ${currentRoom}, 'BAN')">BAN</button>
-                            ` : ""}
-                        </div>
-                    `
+    players.forEach(function (player) {
+        const playerElement = $("<div</div>")
+        playerElement.addClass("player")
+
+        if (player.id === turningPlayerId) {
+            playerElement.addClass("turning-player")
+        }
+
+        if (player.id === answeringPlayerId) {
+            playerElement.addClass("answering-player")
+        }
+
+        const avatarElement = $("<img alt='avatar'/>")
+        avatarElement.prop("src", player.avatar ? player.avatar : "https://storage.yandexcloud.net/card-game-avatars/user-avatar-1-1732312806121")
+        playerElement.append(avatarElement)
+
+        const isHost = player.id === hostId
+
+        const playerInfoElement = $(`<div>
+                <p><strong>${player.name}</strong> ${isHost ? "(host)" : ""}</p>
+                <p>${player.id in playersCardsCount ? `${playersCardsCount[player.id]} cards` : 'Spectating'}</p>
+            </div>`)
+
+        if (accountIsHost) {
+            const kickButton = $("<button>KICK</button>")
+            kickButton.click(() => removeAccountFromRoom(player.id, roomId, "KICK"))
+            const banButton = $("<button>BAN</button>")
+            banButton.click(() => removeAccountFromRoom(player.id, roomId, "BAN"))
+            playerInfoElement.append(kickButton)
+            playerInfoElement.append(banButton)
+        }
+
+        playerElement.append(playerInfoElement)
+
+        playersInRoomElement.append(playerElement)
     })
-
-    $("#current-room").html(html)
 }
 
 function enableButtonsBasedOnGameState(gameState) {
@@ -416,6 +440,28 @@ $(function () {
 
     $("#create-room").click(() => createRoom())
     $("#leave-room").click(() => leaveRoom())
+
+    $("#avatar-form").submit((e) => {
+        e.preventDefault()
+
+        const accountId = $("#user-id").val()
+        const formData = new FormData($("#avatar-form")[0])
+
+        $.ajax({
+            url: `${gateway}/personal-account/accounts/${accountId}/avatar`,
+            headers: headers(),
+            type: 'put',
+            processData: false,
+            contentType: false,
+            async: false,
+            cache: false,
+            data: formData,
+            success: function (response) {
+                console.log(`Sent avatar reuest ${response}`)
+            },
+            error: error
+        })
+    })
 
     setInterval(updateInRoomState, 500)
 });

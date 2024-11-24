@@ -31,6 +31,17 @@
             margin-top: 20px;
             border-radius: 5px;
         }
+        #avatar-form {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
         .list-group-item {
             cursor: pointer;
         }
@@ -55,6 +66,37 @@
         .beat-row {
             width: fit-content;
             margin: 0 auto 15px;
+        }
+
+        #players-in-room {
+            display: flex;
+            gap: 20px;
+        }
+
+        .player {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 5px 7px;
+            margin-top: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .player>img {
+            width: 75px;
+            border-radius: 15px;
+            margin-right: 10px;
+        }
+
+        .player.turning-player {
+            background-color: #e6f9ff;
+        }
+
+        .player.answering-player {
+            background-color: #ffe6e6;
         }
     </style>
 </head>
@@ -107,12 +149,6 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12" id="current-room">
-
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-12" id="rooms-list">
 
         </div>
@@ -152,6 +188,12 @@
             </div>
         </div>
     </div>
+
+    <form id="avatar-form">
+        <h3>Upload avatar here</h3>
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
 </div>
 </body>
 </html>

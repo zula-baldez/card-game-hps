@@ -27,7 +27,7 @@ class GameUpdateEventListener(
                     getUsernamePasswordAuthenticationToken(event.accountId)
                 val authContext = ReactiveSecurityContextHolder.withAuthentication(user)
                 roomAccountManager
-                    .removeAccount(data.roomId, event.accountId, AccountAction.BAN)
+                    .removeAccount(data.roomId, event.accountId, AccountAction.KICK)
                     .contextWrite(authContext)
                     .block()
             } catch (e: Exception) {
