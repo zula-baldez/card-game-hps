@@ -20,7 +20,7 @@ class AccountServiceImplTest {
     @Test
     fun `should return account when found by id`() {
         val accountId = 1L
-        val expectedAccount = AccountEntity(id = 1, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        val expectedAccount = AccountEntity(id = 1, name = "Alice", fines = 0, "avatar",mutableSetOf(), mutableSetOf(), 1)
 
         `when`(accountRepository.findById(accountId)).thenReturn(Optional.of(expectedAccount))
         val result = accountService.findByIdOrThrow(accountId)
@@ -34,7 +34,7 @@ class AccountServiceImplTest {
             1,
             "testUser"
         )
-        val existingAccount = AccountEntity(id = 1, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        val existingAccount = AccountEntity(id = 1, name = "Alice", fines = 0, "avatar",mutableSetOf(), mutableSetOf(), 1)
 
         whenever(accountRepository.findById(1)) doReturn Optional.of(existingAccount)
         val result = accountService.createAccountForUser(userEntity)

@@ -40,9 +40,9 @@ internal class FriendsControllerTest {
     private lateinit var principal: Principal
     @BeforeEach
     fun setUp() {
-        user =  AccountEntity(id = userId, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        user =  AccountEntity(id = userId, name = "Alice", fines = 0,"avatar", mutableSetOf(), mutableSetOf(), 1)
 
-        friend = AccountEntity(id = friendId, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        friend = AccountEntity(id = friendId, name = "Bob", fines = 0,"avatar", mutableSetOf(), mutableSetOf(), 1)
 
         accountRepositoryMock = mock<AccountRepository> {
             on { findById(userId) } doReturn Optional.of(user)

@@ -6,22 +6,14 @@ import com.example.common.dto.roomservice.AccountAction
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomOverflowException
-import com.example.roomservice.repository.AccountInRoomEntity
-import com.example.roomservice.repository.AccountInRoomRepository
-import com.example.roomservice.repository.BannedAccountInRoomEntity
-import com.example.roomservice.repository.BannedAccountInRoomRepository
-import com.example.roomservice.repository.RoomEntity
-import com.example.roomservice.repository.RoomRepository
+import com.example.roomservice.repository.*
 import com.example.roomservice.service.RoomAccountManagerImpl
+import com.example.roomservice.service.RoomUpdateEventSender
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.*
 import org.mockito.kotlin.any
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.verifyNoMoreInteractions
-import org.mockito.kotlin.whenever
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
@@ -32,12 +24,14 @@ class RoomAccountManagerTest {
     private val bannedAccountInRoomRepository: BannedAccountInRoomRepository =
         mock(BannedAccountInRoomRepository::class.java)
     private val personalAccountClient: ReactivePersonalAccountClient = mock(ReactivePersonalAccountClient::class.java)
+    private val sender: RoomUpdateEventSender = mock(RoomUpdateEventSender::class.java)
 
     private val roomAccountManager = RoomAccountManagerImpl(
         roomRepository,
         accountInRoomRepository,
         bannedAccountInRoomRepository,
-        personalAccountClient
+        personalAccountClient,
+        sender
     )
 
 

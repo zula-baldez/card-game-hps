@@ -40,9 +40,9 @@ class PersonalAccountManagerImplTest {
             friendshipRepository,
             accountService
         )
-        user = AccountEntity(id = 1L, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        user = AccountEntity(id = 1L, name = "Alice", fines = 0, "avatar", mutableSetOf(), mutableSetOf(), 1)
 
-        friend = AccountEntity(id = 2L, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        friend = AccountEntity(id = 2L, name = "Bob", fines = 0, "avatar", mutableSetOf(), mutableSetOf(), 1)
     }
 
     @Test
@@ -273,8 +273,8 @@ class PersonalAccountManagerImplTest {
     fun `getAllFriends returns friends list for valid accountId`() {
         val accountId = 1L
         val pagination = Pagination(0, 10)
-        val mockAccount  = AccountEntity(id = 1L, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
-        val mockAccount2 = AccountEntity(id = 2L, name = "Bob", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        val mockAccount = AccountEntity(id = 1L, name = "Alice", fines = 0, "avatar", mutableSetOf(), mutableSetOf(), 1)
+        val mockAccount2 = AccountEntity(id = 2L, name = "Bob", fines = 0, "avatar", mutableSetOf(), mutableSetOf(), 1)
         val friendships = listOf(
             FriendshipEntity(fromAccount = mockAccount2, toAccount = mockAccount, status = FriendshipStatus.ACCEPTED),
         )
@@ -310,7 +310,7 @@ class PersonalAccountManagerImplTest {
     @Test
     fun `addFine increases fines and sends fine notification`() {
         val accountId = 1L
-        val mockAccount = AccountEntity(id = 1, name = "Alice", fines = 0, mutableSetOf(), mutableSetOf(), 1)
+        val mockAccount = AccountEntity(id = 1, name = "Alice", fines = 0, "avatar", mutableSetOf(), mutableSetOf(), 1)
 
         `when`(accountService.findByIdOrThrow(accountId)).thenReturn(mockAccount)
         `when`(accountRepository.save(mockAccount)).thenReturn(mockAccount)
