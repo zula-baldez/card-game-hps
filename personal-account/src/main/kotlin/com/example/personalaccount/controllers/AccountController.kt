@@ -1,6 +1,5 @@
 package com.example.personalaccount.controllers
 
-import com.example.common.dto.ProcessAvatarRequest
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
@@ -8,7 +7,6 @@ import com.example.common.exceptions.AccountNotFoundException
 import com.example.personalaccount.exceptions.InvalidAvatarFileException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AvatarsHandler
-import com.example.personalaccount.service.AvatarsServiceClient
 import com.example.personalaccount.service.PersonalAccountManager
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -16,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.util.Base64
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")

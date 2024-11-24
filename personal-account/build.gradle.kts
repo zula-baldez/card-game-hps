@@ -78,6 +78,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.2")
     testImplementation("org.testcontainers:postgresql:1.20.1")
     testImplementation("org.testcontainers:junit-jupiter:1.20.1")
+    testImplementation("io.rest-assured:spring-mock-mvc:3.0.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }

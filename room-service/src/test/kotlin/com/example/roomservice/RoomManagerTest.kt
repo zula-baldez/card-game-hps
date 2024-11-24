@@ -3,6 +3,8 @@ package com.example.roomservice
 import com.example.common.client.ReactivePersonalAccountClient
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.personalaccout.AccountDto
+import com.example.common.dto.roomservice.RoomDto
+import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManager
@@ -50,6 +52,13 @@ class RoomManagerTest {
         assertEquals(capacity, result?.capacity)
         assertEquals(players, result?.players)
         assertEquals(bannedPlayers, result?.bannedPlayers)
+        val eventCaptor = argumentCaptor<RoomUpdateEvent>()
+        verify(roomUpdateEventSender, times(1)).sendRoomUpdateEvent(eventCaptor.capture())
+
+        with(eventCaptor.firstValue) {
+            assert(this.roomId == savedRoomEntity.id)
+            assert(this.eventType == RoomUpdateEvent.Companion.RoomUpdateEventType.ROOM_CREATED)
+        }
     }
 
     @Test
