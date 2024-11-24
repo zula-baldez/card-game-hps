@@ -18,3 +18,5 @@ springdoc:
         name: Game Handler
       - url: /personal-account/v3/api-docs
         name: Personal Account
+      - url: /avatars-service/v3/api-docs
+        name: Avatars Service

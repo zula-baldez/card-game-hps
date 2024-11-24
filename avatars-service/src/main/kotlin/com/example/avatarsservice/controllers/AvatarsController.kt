@@ -5,6 +5,8 @@ import com.example.avatarsservice.service.AvatarProcessingService
 import com.example.avatarsservice.service.AvatarResultProducer
 import com.example.common.dto.ProcessAvatarRequest
 import com.example.common.exceptions.AccountNotFoundException
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @Controller
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "avatars_controller", description = "API for avatars service")
 class AvatarsController(
     private val avatarProcessingService: AvatarProcessingService,
     private val avatarResultProducer: AvatarResultProducer

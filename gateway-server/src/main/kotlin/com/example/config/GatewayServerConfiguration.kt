@@ -30,6 +30,11 @@ class GatewayServerConfiguration {
                     .filters { f -> f.stripPrefix(1) }
                     .uri("lb://room-service:8084")
             }
+            .route("avatars-service") { r ->
+                r.path("/avatars-service/**")
+                    .filters { f -> f.stripPrefix(1) }
+                    .uri("lb://avatars-service:8086")
+            }
             .build()
     }
 }

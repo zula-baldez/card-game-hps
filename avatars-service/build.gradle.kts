@@ -42,7 +42,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.1")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.3")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
@@ -59,7 +59,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -77,8 +77,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.2")
     testImplementation("org.testcontainers:postgresql:1.20.1")
     testImplementation("org.testcontainers:junit-jupiter:1.20.1")
-
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation("org.testcontainers:localstack:1.17.3")
+    implementation("com.amazonaws:aws-java-sdk-core:1.12.300")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.300")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
 dependencyManagement {
