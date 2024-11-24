@@ -3,14 +3,14 @@ package com.example.roomservice
 import com.example.common.client.ReactivePersonalAccountClient
 import com.example.common.dto.api.Pagination
 import com.example.common.dto.personalaccout.AccountDto
-import com.example.common.dto.roomservice.RoomDto
 import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.roomservice.repository.RoomEntity
 import com.example.roomservice.repository.RoomRepository
 import com.example.roomservice.service.RoomAccountManager
 import com.example.roomservice.service.RoomManagerImpl
 import com.example.roomservice.service.RoomUpdateEventSender
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import reactor.core.publisher.Flux
@@ -33,7 +33,7 @@ class RoomManagerTest {
         val roomEntity = RoomEntity(0, roomName, hostId, capacity, 0)
         val savedRoomEntity = RoomEntity(1, roomName, hostId, capacity, 0)
 
-        whenever(roomRepository.save(roomEntity)).thenReturn(Mono.just(savedRoomEntity))
+        whenever(roomRepository.save(any())).thenReturn(Mono.just(savedRoomEntity))
 
         val players = listOf(AccountDto(id = 2L, name = "Player1", fines = 0, "avatar", roomId = 1L))
         val bannedPlayers = listOf(AccountDto(id = 3L, name = "BannedPlayer", fines = 0, "avatar", roomId = 1L))

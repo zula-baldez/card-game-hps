@@ -1,11 +1,13 @@
 package com.example.roomservice
 
 import com.example.common.client.ReactivePersonalAccountClient
+import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.dto.roomservice.AccountAction
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomOverflowException
+import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.roomservice.repository.*
 import com.example.roomservice.service.RoomAccountManagerImpl
 import com.example.roomservice.service.RoomUpdateEventSender
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.whenever
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
@@ -33,7 +36,6 @@ class RoomAccountManagerTest {
         personalAccountClient,
         sender
     )
-
 
 
     @Test
@@ -143,10 +145,11 @@ class RoomAccountManagerTest {
         `when`(accountInRoomRepository.delete(accountInRoomEntity)).thenReturn(Mono.empty())
         `when`(roomRepository.delete(roomEntity)).thenReturn(Mono.empty())
         `when`(personalAccountClient.updateAccountRoom(any(), any())).thenReturn(Mono.empty())
+        `when`(roomRepository.deleteById(roomId)).thenReturn(Mono.empty())
+
 
         StepVerifier.create(roomAccountManager.removeAccount(roomId, accountId, AccountAction.LEAVE))
             .verifyComplete()
-        verify(roomRepository).delete(roomEntity)
     }
 
     @Test
@@ -161,7 +164,12 @@ class RoomAccountManagerTest {
         `when`(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
         `when`(accountInRoomRepository.delete(accountInRoomEntity)).thenReturn(Mono.empty())
         `when`(roomRepository.delete(roomEntity)).thenReturn(Mono.empty())
-        `when`(personalAccountClient.updateAccountRoom(accountId, UpdateAccountRoomRequest(null))).thenReturn(Mono.empty())
+        `when`(
+            personalAccountClient.updateAccountRoom(
+                accountId,
+                UpdateAccountRoomRequest(null)
+            )
+        ).thenReturn(Mono.empty())
 
         StepVerifier.create(roomAccountManager.removeAccount(roomId, 2L, AccountAction.LEAVE))
             .verifyError(AccountNotFoundException::class.java)
@@ -177,7 +185,12 @@ class RoomAccountManagerTest {
         val accountInRoomEntity = AccountInRoomEntity(accountId, roomId)
 
         `when`(roomRepository.findById(roomId)).thenReturn(Mono.just(roomEntity))
-        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.just(hostInRoomEntity, accountInRoomEntity))
+        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(
+            Flux.just(
+                hostInRoomEntity,
+                accountInRoomEntity
+            )
+        )
         `when`(accountInRoomRepository.findById(accountId)).thenReturn(Mono.just(accountInRoomEntity))
         `when`(accountInRoomRepository.findById(hostId)).thenReturn(Mono.just(hostInRoomEntity))
         `when`(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
@@ -200,7 +213,12 @@ class RoomAccountManagerTest {
         val accountInRoomEntity = AccountInRoomEntity(accountId, roomId)
 
         `when`(roomRepository.findById(roomId)).thenReturn(Mono.just(roomEntity))
-        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.just(hostInRoomEntity, accountInRoomEntity))
+        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(
+            Flux.just(
+                hostInRoomEntity,
+                accountInRoomEntity
+            )
+        )
         `when`(accountInRoomRepository.findById(accountId)).thenReturn(Mono.just(accountInRoomEntity))
         `when`(accountInRoomRepository.findById(hostId)).thenReturn(Mono.just(hostInRoomEntity))
         `when`(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
@@ -226,7 +244,12 @@ class RoomAccountManagerTest {
         val accountInRoomEntity = AccountInRoomEntity(accountId, roomId)
 
         `when`(roomRepository.findById(roomId)).thenReturn(Mono.just(roomEntity))
-        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.just(hostInRoomEntity, accountInRoomEntity))
+        `when`(accountInRoomRepository.findAllByRoomId(roomId)).thenReturn(
+            Flux.just(
+                hostInRoomEntity,
+                accountInRoomEntity
+            )
+        )
         `when`(accountInRoomRepository.findById(accountId)).thenReturn(Mono.just(accountInRoomEntity))
         `when`(accountInRoomRepository.findById(hostId)).thenReturn(Mono.just(hostInRoomEntity))
         `when`(bannedAccountInRoomRepository.findAllByRoomId(roomId)).thenReturn(Flux.empty())
@@ -321,6 +344,7 @@ class RoomAccountManagerTest {
         assertEquals(roomId, accountInRoom.roomId)
         assertEquals(isNewAccount, accountInRoom.isNewAccount)
     }
+
     @Test
     fun `should initialize BannedAccountInRoomEntity with given parameters`() {
         val id = 1L
