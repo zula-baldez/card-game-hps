@@ -14,9 +14,6 @@ springdoc:
         name: Auth Service
       - url: /room-service/v3/api-docs
         name: Room Service
-      - url: /game-handler/v3/api-docs
-        name: Game Handler
       - url: /personal-account/v3/api-docs
         name: Personal Account
-      - url: /avatars-service/v3/api-docs
-        name: Avatars Service
+

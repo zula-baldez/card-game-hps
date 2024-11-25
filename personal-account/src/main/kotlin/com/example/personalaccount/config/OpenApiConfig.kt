@@ -1,9 +1,11 @@
 package com.example.personalaccount.config
+
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.info.Contact
 import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.annotations.security.SecurityScheme
+import io.swagger.v3.oas.annotations.servers.Server
 
 @OpenAPIDefinition(
     info = Info(
@@ -14,7 +16,8 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme
             name = "Vereschagin Egor, Tsyu Tyanshen, Sobolev Ivan",
             email = "penki@niuitmo.ru"
         )
-    )
+    ),
+    servers = [Server(url = "/personal-account", description = "Gateway server")]
 )
 @SecurityScheme(
     name = "Bearer Authentication",
