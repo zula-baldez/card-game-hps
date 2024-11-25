@@ -24,7 +24,9 @@ class CyclicQueueTest {
         val queue = CyclicQueue(listOf("a", "b", "c"))
         assertEquals("a", queue.current())
         assertEquals("b", queue.next())
+        queue.move(1)
         assertEquals("c", queue.next())
+        queue.move(1)
         assertEquals("a", queue.next())
     }
 
@@ -81,8 +83,8 @@ class CyclicQueueTest {
     @Test
     fun `should handle index change`() {
         val queue = CyclicQueue(listOf(1, 2, 3))
-        queue.next()
-        queue.next()
+        queue.move(1)
+        queue.move(1)
 
         queue.delete(2)
 

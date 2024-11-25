@@ -17,13 +17,13 @@ class TestConfiguration {
     fun personalAccountClient(): PersonalAccountClient {
         val mock = mock(PersonalAccountClient::class.java)
         lenient().`when`(mock.getAccountById(6)).thenReturn(
-            AccountDto(6, "name", 0, 6)
+            AccountDto(6, "name", 0, "avatar", 6)
         )
         lenient().`when`(mock.getAccountById(7)).thenReturn(
-            AccountDto(7, "name", 0, 7)
+            AccountDto(7, "name", 0, "avatar", 7)
         )
         lenient().`when`(mock.getAccountById(8)).thenReturn(
-            AccountDto(8, "name", 0, 8)
+            AccountDto(8, "name", 0, "avatar", 8)
         )
         return mock
 
@@ -40,9 +40,9 @@ class TestConfiguration {
                 6,
                 3,
                 listOf(
-                    AccountDto(6, "name", 0, 1),
-                    AccountDto(7, "name", 0, 1),
-                    AccountDto(8, "name", 0, 1)
+                    AccountDto(6, "name", 0, "avatar", 1),
+                    AccountDto(7, "name", 0,"avatar",  1),
+                    AccountDto(8, "name", 0, "avatar", 1)
                 ),
                 1
             )

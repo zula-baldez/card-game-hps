@@ -1,78 +1,79 @@
 package com.example.gamehandlerservice
 
+import com.example.common.dto.roomservice.RoomDto
 import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.game.GameHandlerFactoryImpl
-import com.example.gamehandlerservice.service.game.stage.StageStateMachineHandler
-import com.example.gamehandlerservice.util.id.generator.IdGenerator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.ObjectFactory
-
 
 class GameHandlerFactoryImplTest {
 
-    private lateinit var idGenerator: IdGenerator
-    private lateinit var beanFactoryGameHandler: ObjectFactory<GameHandler>
-    private lateinit var beanFactoryStateMachine: ObjectFactory<StageStateMachineHandler>
-    private lateinit var gameHandlerFactory: GameHandlerFactoryImpl
+    private lateinit var factory: GameHandlerFactoryImpl
+
+    private lateinit var objectFactory: ObjectFactory<GameHandler>
+
+    private lateinit var gameHandler: GameHandler
 
     @BeforeEach
     fun setUp() {
-        idGenerator = MockIdGenerator()
-        beanFactoryGameHandler = mock(ObjectFactory::class.java) as ObjectFactory<GameHandler>
-        beanFactoryStateMachine = mock(ObjectFactory::class.java) as ObjectFactory<StageStateMachineHandler>
-        gameHandlerFactory = GameHandlerFactoryImpl(idGenerator, beanFactoryGameHandler, beanFactoryStateMachine)
+        MockitoAnnotations.openMocks(this)
+        objectFactory = mock(ObjectFactory::class.java) as ObjectFactory<GameHandler>
+        gameHandler = mock(GameHandler::class.java)
+        factory = GameHandlerFactoryImpl(objectFactory)
+
+        `when`(objectFactory.getObject()).thenReturn(gameHandler)
     }
 
     @Test
-    fun `should create a game handler with a unique ID`() {
-        val name = "Test Game"
-        val roomId = 123L
-        val mockGameHandler = mock(GameHandler::class.java)
-        val mockStateHandler = mock(StageStateMachineHandler::class.java)
+    fun `instantiateGameHandler should create GameHandler and set room`() {
+        val roomDto = RoomDto(
+            id = 0,
+            name = "Комната для игры",
+            hostId = 1L,
+            capacity = 4,
+            currentGameId = 0L,
+            players = mutableListOf(), bannedPlayers = mutableListOf()
+        )
+        val result = factory.instantiateGameHandler(roomDto)
 
-        `when`(beanFactoryGameHandler.getObject()).thenReturn(mockGameHandler)
-        `when`(beanFactoryStateMachine.getObject()).thenReturn(mockStateHandler)
-
-        val gameHandler = gameHandlerFactory.instantiateGameHandler(name, roomId)
-
-        assertEquals(mockGameHandler, gameHandler)
-        Mockito.verify(mockGameHandler).configureGameHandler(name, 1L, roomId, mockStateHandler)
+        verify(objectFactory).getObject()
+        verify(gameHandler).setRoom(roomDto)
+        assertEquals(gameHandler, result)
     }
 
     @Test
-    fun `should not share game handlers between calls`() {
-        val name1 = "First Game"
-        val roomId1 = 1L
-        val mockGameHandler1 = mock(GameHandler::class.java)
-        val mockStateHandler1 = mock(StageStateMachineHandler::class.java)
+    fun `instantiateGameHandler should create different GameHandlers`() {
+        val roomDto1 = RoomDto(
+            id = 1L,
+            name = "Комната для игры",
+            hostId = 1L,
+            capacity = 4,
+            currentGameId = 0L,
+            players = mutableListOf(), bannedPlayers = mutableListOf()
+        )
+        val roomDto2 = RoomDto(
+            id = 2L,
+            name = "Комната для игры",
+            hostId = 1L,
+            capacity = 4,
+            currentGameId = 0L,
+            players = mutableListOf(), bannedPlayers = mutableListOf()
+        )
+        val gameHandler1 = mock(GameHandler::class.java)
+        val gameHandler2 = mock(GameHandler::class.java)
+        `when`(objectFactory.getObject()).thenReturn(gameHandler1, gameHandler2)
 
-        val name2 = "Second Game"
-        val roomId2 = 2L
-        val mockGameHandler2 = mock(GameHandler::class.java)
-        val mockStateHandler2 = mock(StageStateMachineHandler::class.java)
+        val result1 = factory.instantiateGameHandler(roomDto1)
+        verify(gameHandler1).setRoom(roomDto1)
 
-        `when`(beanFactoryGameHandler.getObject()).thenReturn(mockGameHandler1).thenReturn(mockGameHandler2)
-        `when`(beanFactoryStateMachine.getObject()).thenReturn(mockStateHandler1).thenReturn(mockStateHandler2)
+        val result2 = factory.instantiateGameHandler(roomDto2)
+        verify(gameHandler2).setRoom(roomDto2)
 
-        val gameHandler1 = gameHandlerFactory.instantiateGameHandler(name1, roomId1)
-        val gameHandler2 = gameHandlerFactory.instantiateGameHandler(name2, roomId2)
-
-        assertEquals(mockGameHandler1, gameHandler1)
-        assertEquals(mockGameHandler2, gameHandler2)
-        Mockito.verify(mockGameHandler1).configureGameHandler(name1, 1L, roomId1, mockStateHandler1)
-        Mockito.verify(mockGameHandler2).configureGameHandler(name2, 2L, roomId2, mockStateHandler2)
-    }
-}
-
-class MockIdGenerator: IdGenerator {
-    private var id = 0L
-    override fun generateId(): Long {
-        id++
-        return id
+        assertEquals(gameHandler1, result1)
+        assertEquals(gameHandler2, result2)
     }
 }

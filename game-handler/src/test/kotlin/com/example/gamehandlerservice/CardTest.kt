@@ -1,93 +1,73 @@
 package com.example.gamehandlerservice
 
-import com.example.common.dto.personalaccout.AccountDto
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.CardCompareResult
 import com.example.gamehandlerservice.model.game.Suit
-import com.example.gamehandlerservice.service.game.model.GameData
-import com.example.gamehandlerservice.service.game.util.CyclicQueue
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CardTest {
 
-    private val userId = 1L
-    private val friendId = 2L
-    private val initialFines = 2
-    private lateinit var user: AccountDto
-    private lateinit var friend: AccountDto
-    private lateinit var gameData: GameData
-    private val gameId: Long = 100L
-    private val roomId = 1L
-
-
-    @BeforeEach
-    fun setUp() {
-        user = AccountDto(
-            name = "User1",
-            fines = initialFines,
-            id = userId,
-            roomId = 1L
-        )
-        friend = AccountDto(
-            name = "User2",
-            fines = initialFines,
-            id = friendId,
-            roomId = 1L
-        )
-        gameData = GameData(
-            gameId = gameId,
-            roomId = roomId,
-            trump = null,
-            playersTurnQueue = CyclicQueue(
-                listOf(
-                    user, friend
-                )
-            ),
-            userCards = mutableMapOf(),
-            finesCounter = mutableMapOf()
-        )
-
-    }
-
     @Test
-    fun `compareTo should return MORE when first card has greater strength and same suit`() {
-        val card1 = Card(Suit.DIAMONDS, 10, false)
-        val card2 = Card(Suit.DIAMONDS, 5, false)
+    fun `compareTo should return MORE when card has higher strength and suit matches`() {
+        val card1 = Card(Suit.SPADES, 10)
+        val card2 = Card(Suit.SPADES, 5)
 
-        val result = card1.compareTo(gameData, card2)
+        val result = card1.compareTo(Suit.SPADES, card2)
 
         assertEquals(CardCompareResult.MORE, result)
     }
 
     @Test
-    fun `compareTo should return LESS when second card has greater strength and same suit`() {
-        val card1 = Card(Suit.CLUBS, 5, false)
-        val card2 = Card(Suit.CLUBS, 10, false)
+    fun `compareTo should return LESS when card has lower strength and suit matches`() {
+        val card1 = Card(Suit.SPADES, 5)
+        val card2 = Card(Suit.SPADES, 10)
 
-        val result = card1.compareTo(gameData, card2)
+        val result = card1.compareTo(Suit.SPADES, card2)
 
         assertEquals(CardCompareResult.LESS, result)
     }
 
     @Test
-    fun `compareTo should return NOT_COMPARABLE when cards have different suits and neither is trump`() {
-        val card1 = Card(Suit.DIAMONDS, 10, false)
-        val card2 = Card(Suit.CLUBS, 5, false)
+    fun `compareTo should return EQUALS when both cards have equal strength and suit matches`() {
+        val card1 = Card(Suit.SPADES, 10)
+        val card2 = Card(Suit.SPADES, 10)
 
-        val result = card1.compareTo(gameData, card2)
+        val result = card1.compareTo(Suit.SPADES, card2)
+
+        assertEquals(CardCompareResult.EQUALS, result)
+    }
+
+    @Test
+    fun `compareTo should return MORE when card's suit is trump suit`() {
+        val trumpCardSuit = Suit.HEARTS
+        val card1 = Card(Suit.HEARTS, 5)
+        val card2 = Card(Suit.SPADES, 10)
+
+        val result = card1.compareTo(trumpCardSuit, card2)
+
+        assertEquals(CardCompareResult.MORE, result)
+    }
+
+    @Test
+    fun `compareTo should return NOT_COMPARABLE when suits do not match and neither is trump suit`() {
+        val trumpCardSuit = Suit.HEARTS
+        val card1 = Card(Suit.SPADES, 5)
+        val card2 = Card(Suit.DIAMONDS, 10)
+
+        val result = card1.compareTo(trumpCardSuit, card2)
 
         assertEquals(CardCompareResult.NOT_COMPARABLE, result)
     }
 
     @Test
-    fun `compareTo should return NOT_COMPARABLE when cards have same strength but different suits and neither is trump`() {
-        val card1 = Card(Suit.SPADES, 10, false)
-        val card2 = Card(Suit.CLUBS, 10, false)
+    fun `compareTo should return NOT_COMPARABLE when suits do not match and first card is trump suit`() {
+        val trumpCardSuit = Suit.HEARTS
+        val card1 = Card(Suit.HEARTS, 5)
+        val card2 = Card(Suit.SPADES, 10)
 
-        val result = card1.compareTo(gameData, card2)
+        val result = card1.compareTo(trumpCardSuit, card2)
 
-        assertEquals(CardCompareResult.NOT_COMPARABLE, result)
+        assertEquals(CardCompareResult.MORE, result)
     }
 }
