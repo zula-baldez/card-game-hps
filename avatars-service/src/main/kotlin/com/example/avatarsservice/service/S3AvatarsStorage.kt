@@ -12,8 +12,9 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.net.URI
 
 @Component
-class S3AvatarsStorage(private val s3Config: S3Config) : AvatarsStorage {
-    private val s3Client = S3Client
+class S3AvatarsStorage(
+    private val s3Config: S3Config,
+    private val s3Client: S3Client = S3Client
         .builder()
         .region(Region.of(s3Config.region))
         .endpointOverride(URI.create(s3Config.endpoint))
@@ -26,6 +27,9 @@ class S3AvatarsStorage(private val s3Config: S3Config) : AvatarsStorage {
             )
         )
         .build()
+
+
+) : AvatarsStorage {
 
     private fun buildUrl(id: String): String {
         return "${s3Config.endpoint}/${s3Config.bucket}/$id"

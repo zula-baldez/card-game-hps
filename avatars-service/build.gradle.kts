@@ -25,7 +25,7 @@ dependencies {
     implementation(project(":common"))
     testImplementation(project(":common"))
 
-    implementation("software.amazon.awssdk:s3:2.29.17")
+    implementation("software.amazon.awssdk:s3:2.29.20")
 
     implementation("io.github.resilience4j:resilience4j-circuitbreaker:2.2.0")
     implementation("org.springframework.cloud:spring-cloud-starter-config:4.1.3")
@@ -78,8 +78,8 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:1.20.1")
     testImplementation("org.testcontainers:junit-jupiter:1.20.1")
     testImplementation("org.testcontainers:localstack:1.17.3")
-    implementation("com.amazonaws:aws-java-sdk-core:1.12.300")
-    implementation("com.amazonaws:aws-java-sdk-s3:1.12.300")
+    implementation("com.amazonaws:aws-java-sdk-core:1.12.778")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.778")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
