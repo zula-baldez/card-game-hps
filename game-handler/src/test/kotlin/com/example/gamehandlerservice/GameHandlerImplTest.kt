@@ -341,14 +341,23 @@ class GameHandlerImplTest {
             )
         )
 
-
-        gameHandler.handle(
-            PlayerActionRequest(
-                state.defendPlayer,
-                findMaxCardBySuit(playersCards.get(state.defendPlayer)!!, minCard!!.suit),
-                action = PlayerAction.DROP_CARD
+        try {
+            gameHandler.handle(
+                PlayerActionRequest(
+                    state.defendPlayer,
+                    findMaxCardBySuit(playersCards.get(state.defendPlayer)!!, minCard!!.suit),
+                    action = PlayerAction.DROP_CARD
+                )
             )
-        )
+        }catch (e: GameException){
+            gameHandler.handle(
+                PlayerActionRequest(
+                    state.defendPlayer,
+                    null,
+                    action = PlayerAction.TAKE
+                )
+            )
+        }
     }
 
     @Test

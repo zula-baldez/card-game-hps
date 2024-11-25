@@ -40,10 +40,8 @@ class S3AvatarsStorageTest {
         `when`(mockS3Client.putObject(any(PutObjectRequest::class.java), any(RequestBody::class.java)))
             .thenReturn(responseMock as PutObjectResponse?)
 
-        // Act
         val result = storage.storeFile(id, bytes)
 
-        // Assert
         assertEquals(expectedUrl, result)
 
         val requestCaptor = ArgumentCaptor.forClass(PutObjectRequest::class.java)
@@ -57,7 +55,6 @@ class S3AvatarsStorageTest {
 
     @Test
     fun `storeFile should throw S3UploadException on failure`() {
-        // Arrange
         val id = "avatar-id"
         val bytes = byteArrayOf(1, 2, 3)
         val responseMock = PutObjectResponse.builder()
@@ -67,7 +64,6 @@ class S3AvatarsStorageTest {
         `when`(mockS3Client.putObject(any(PutObjectRequest::class.java), any(RequestBody::class.java)))
             .thenReturn(responseMock as PutObjectResponse?)
 
-        // Act & Assert
         assertThrows(S3UploadException::class.java) {
             storage.storeFile(id, bytes)
         }
@@ -77,14 +73,12 @@ class S3AvatarsStorageTest {
 
     @Test
     fun `storeFile should throw exception if S3 client throws`() {
-        // Arrange
         val id = "avatar-id"
         val bytes = byteArrayOf(1, 2, 3)
 
         `when`(mockS3Client.putObject(any(PutObjectRequest::class.java), any(RequestBody::class.java)))
             .thenThrow(RuntimeException("S3 is down"))
 
-        // Act & Assert
         assertThrows(RuntimeException::class.java) {
             storage.storeFile(id, bytes)
         }
