@@ -1,8 +1,8 @@
-name: Build
+name: Sonar
 on: push
 jobs:
   build:
-    name: Build
+    name: Sonar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
