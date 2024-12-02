@@ -3,11 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
-    id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm")
     kotlin("plugin.spring") version "1.8.21"
-    id ("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
-    id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.sonarqube") version "5.1.0.4882"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -71,6 +73,26 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+
+sonar {
+    properties {
+        property("sonar.projectKey", "Auth Service")
+        property("sonar.projectName", "Auth Service")
+        property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
+        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
+        property("sonar.sourceEncoding", "UTF-8")
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+    dependsOn(tasks.test)
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()

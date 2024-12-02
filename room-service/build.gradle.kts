@@ -8,6 +8,8 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
     id ("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id ("org.sonarqube") version "5.1.0.4882"
+    id ("jacoco")
 }
 
 group = "com.example"
@@ -89,6 +91,25 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+sonar {
+    properties {
+        property("sonar.projectKey", "Room Service")
+        property("sonar.projectName", "Room Service")
+        property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
+        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
+        property("sonar.sourceEncoding", "UTF-8")
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+    dependsOn(tasks.test)
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
