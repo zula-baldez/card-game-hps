@@ -109,7 +109,7 @@ tasks.jacocoTestReport {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Avatars Service")
+        property("sonar.projectKey", "avatars_service")
         property("sonar.projectName", "Avatars Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")

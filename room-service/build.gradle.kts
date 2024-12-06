@@ -93,7 +93,7 @@ tasks.withType<KotlinCompile> {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Room Service")
+        property("sonar.projectKey", "room-service")
         property("sonar.projectName", "Room Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")

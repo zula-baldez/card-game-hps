@@ -76,7 +76,7 @@ tasks.withType<KotlinCompile> {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Auth Service")
+        property("sonar.projectKey", "auth_service")
         property("sonar.projectName", "Auth Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")

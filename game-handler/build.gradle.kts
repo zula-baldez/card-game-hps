@@ -86,7 +86,7 @@ tasks.withType<KotlinCompile> {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Game Handler")
+        property("sonar.projectKey", "game-handler")
         property("sonar.projectName", "Game Handler")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
