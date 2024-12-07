@@ -105,6 +105,16 @@ tasks.jacocoTestReport {
         xml.required = true
     }
     dependsOn(tasks.test)
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it) {
+            setExcludes(
+                listOf(
+                    "**/config/**",
+                    "**/security/**"
+                )
+            )
+        }
+    }))
 }
 
 sonar {
@@ -112,8 +122,8 @@ sonar {
         property("sonar.projectKey", "avatars_service")
         property("sonar.projectName", "Avatars Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
+        property("sonar.login", "admin")
+        property("sonar.password", "penki")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }

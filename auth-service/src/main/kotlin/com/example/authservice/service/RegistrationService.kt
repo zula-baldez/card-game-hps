@@ -4,7 +4,6 @@ import com.example.authservice.database.RoleRepository
 import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepository
 import com.example.authservice.jwt.TokenService
-import com.example.common.client.PersonalAccountClient
 import com.example.common.client.ReactivePersonalAccountClient
 import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.personalaccout.CreateAccountDto

@@ -97,7 +97,8 @@ tasks.jacocoTestReport {
         fileTree(it) {
             setExcludes(
                 listOf(
-                    "**/config/**", "**/security/**"
+                    "**/config/**",
+                    "**/security/**"
                 )
             )
         }
