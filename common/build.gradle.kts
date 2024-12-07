@@ -12,10 +12,12 @@ tasks.getByName<Jar>("jar") {
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
-    id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
-    id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.sonarqube") version "5.1.0.4882"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -76,6 +78,40 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+sonar {
+    val exclusions = listOf(
+        "**/security/**",
+        "**/config/**",
+        "**/client/**"
+    )
+    properties {
+        property("sonar.projectKey", "common")
+        property("sonar.projectName", "Common")
+        property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
+        property("sonar.login", "admin")
+        property("sonar.password", "penki")
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.coverage.exclusions", exclusions)
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = true
+    }
+    dependsOn(tasks.test)
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it).apply {
+            exclude("**/config/**")
+            exclude("**/security/**")
+            exclude("**/client/**")
+        }
+    }))
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()

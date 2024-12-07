@@ -98,6 +98,10 @@ tasks.withType<KotlinCompile> {
 }
 
 sonar {
+    val exclusions = listOf(
+        "**/security/**",
+        "**/config/**"
+    )
     properties {
         property("sonar.projectKey", "personal_account")
         property("sonar.projectName", "Personal Account")
@@ -105,6 +109,7 @@ sonar {
         property("sonar.login", "admin")
         property("sonar.password", "penki")
         property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.coverage.exclusions", exclusions)
     }
 }
 

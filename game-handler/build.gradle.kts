@@ -3,13 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
-    id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
-    id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
     id("com.google.protobuf") version "0.8.19"
-    id ("org.sonarqube") version "5.1.0.4882"
-    id ("jacoco")
+    id("org.sonarqube") version "5.1.0.4882"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -49,7 +49,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.apache.tomcat:tomcat-annotations-api:11.0.0-M9")
-    implementation ("org.aspectj:aspectjrt:1.9.7")
+    implementation("org.aspectj:aspectjrt:1.9.7")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -85,6 +85,10 @@ tasks.withType<KotlinCompile> {
 }
 
 sonar {
+    val exclusions = listOf(
+        "**/security/**",
+        "**/config/**"
+    )
     properties {
         property("sonar.projectKey", "game_handler")
         property("sonar.projectName", "Game Handler")
@@ -92,6 +96,7 @@ sonar {
         property("sonar.login", "admin")
         property("sonar.password", "penki")
         property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.coverage.exclusions", exclusions)
     }
 }
 
