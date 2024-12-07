@@ -35,4 +35,4 @@ jobs:
           GRADLE_OPTS: "-Xmx2048m -XX:MaxMetaspaceSize=1024m"
         run: |
           ./gradlew jacocoTestReport
-          ./gradlew sonar
+          ./gradlew --no-daemon sonar --info
