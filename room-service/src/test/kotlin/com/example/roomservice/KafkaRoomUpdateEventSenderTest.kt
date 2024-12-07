@@ -3,9 +3,10 @@ package com.example.roomservice
 import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.roomservice.kafkaconnections.KafkaRoomUpdateEventSender
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
-import org.mockito.Mockito.*
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.springframework.kafka.core.KafkaTemplate
 
 class KafkaRoomUpdateEventSenderTest {

@@ -1,17 +1,12 @@
 package com.example.configuration
 
-import com.example.common.kafkaconnections.GameUpdateEvent
 import com.example.gamehandlerservice.config.WebSocketEventListener
 import com.example.gamehandlerservice.kafkaconnections.KafkaGameUpdateEventSender
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentCaptor
-import org.mockito.Mockito.*
-import org.springframework.messaging.Message
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor
+import org.mockito.Mockito.mock
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.socket.messaging.SessionDisconnectEvent
 
 class WebSocketEventListenerTest {
 

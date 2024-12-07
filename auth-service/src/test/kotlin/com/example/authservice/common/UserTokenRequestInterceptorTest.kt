@@ -7,11 +7,12 @@ import com.example.common.interceptor.UserTokenRequestInterceptor
 import feign.RequestTemplate
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
-import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockitoExtension::class)
 class UserTokenRequestInterceptorTest {

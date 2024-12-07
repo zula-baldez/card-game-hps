@@ -5,7 +5,8 @@ import com.example.personalaccount.service.AvatarsHandler
 import com.example.personalaccount.service.AvatarsServiceClient
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.springframework.web.multipart.MultipartFile
 
 class AvatarsHandlerTest {

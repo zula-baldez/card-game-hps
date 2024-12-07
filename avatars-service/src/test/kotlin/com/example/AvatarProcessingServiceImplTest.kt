@@ -3,14 +3,14 @@ package com.example
 import com.example.avatarsservice.service.AvatarProcessingServiceImpl
 import com.example.avatarsservice.service.AvatarsStorage
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
-import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
+import javax.imageio.ImageIO
 
 class AvatarProcessingServiceImplTest {
 

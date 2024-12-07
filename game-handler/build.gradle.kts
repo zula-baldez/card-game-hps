@@ -87,7 +87,8 @@ tasks.withType<KotlinCompile> {
 sonar {
     val exclusions = listOf(
         "**/security/**",
-        "**/config/**"
+        "**/config/**",
+        "**/GameHandlerApplication.kt"
     )
     properties {
         property("sonar.projectKey", "game_handler")

@@ -116,7 +116,8 @@ tasks.jacocoTestReport {
 sonar {
     val exclusions = listOf(
         "**/security/**",
-        "**/config/**"
+        "**/config/**",
+        "**/AvatarsServiceApplication.kt"
     )
     properties {
         property("sonar.projectKey", "avatars_service")

@@ -1,13 +1,11 @@
 package com.example.roomservice
 
 import com.example.common.client.ReactivePersonalAccountClient
-import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.personalaccout.UpdateAccountRoomRequest
 import com.example.common.dto.roomservice.AccountAction
 import com.example.common.exceptions.AccountNotFoundException
 import com.example.common.exceptions.ForbiddenOperationException
 import com.example.common.exceptions.RoomOverflowException
-import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.roomservice.repository.*
 import com.example.roomservice.service.RoomAccountManagerImpl
 import com.example.roomservice.service.RoomUpdateEventSender
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.whenever
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier

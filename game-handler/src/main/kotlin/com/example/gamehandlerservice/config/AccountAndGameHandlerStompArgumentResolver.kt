@@ -4,8 +4,6 @@ import com.example.common.client.PersonalAccountClient
 import com.example.common.client.RoomServiceClient
 import com.example.common.dto.personalaccout.AccountDto
 import com.example.common.dto.roomservice.RoomDto
-import com.example.gamehandlerservice.service.game.game.GameHandler
-import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import org.springframework.core.MethodParameter
 import org.springframework.messaging.Message
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver

@@ -1,7 +1,8 @@
 package com.example.gamehandlerservice
 
 import com.example.gamehandlerservice.service.game.util.CyclicQueue
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
 class CyclicQueueTest {

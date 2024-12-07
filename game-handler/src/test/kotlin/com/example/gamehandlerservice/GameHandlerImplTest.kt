@@ -9,17 +9,13 @@ import com.example.gamehandlerservice.model.dto.PlayerAction
 import com.example.gamehandlerservice.model.dto.PlayerActionRequest
 import com.example.gamehandlerservice.model.game.Card
 import com.example.gamehandlerservice.model.game.Suit
-import com.example.gamehandlerservice.service.game.game.GameHandler
 import com.example.gamehandlerservice.service.game.game.GameHandlerImpl
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
-import org.mockito.kotlin.verify
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.test.util.ReflectionTestUtils
 
 
 class GameHandlerImplTest {

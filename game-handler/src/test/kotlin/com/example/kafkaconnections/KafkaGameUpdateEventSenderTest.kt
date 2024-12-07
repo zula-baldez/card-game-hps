@@ -2,9 +2,9 @@ package com.example.kafkaconnections
 
 import com.example.common.kafkaconnections.GameUpdateEvent
 import com.example.gamehandlerservice.kafkaconnections.KafkaGameUpdateEventSender
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.fail
+import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 import org.springframework.kafka.core.KafkaTemplate
 

@@ -8,7 +8,9 @@ import com.example.common.dto.authservice.CredentialsRequest
 import com.example.common.dto.authservice.GenerateServiceTokenRequest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.springframework.security.authentication.BadCredentialsException
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier

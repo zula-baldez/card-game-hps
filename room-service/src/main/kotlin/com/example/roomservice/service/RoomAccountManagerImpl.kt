@@ -11,12 +11,7 @@ import com.example.common.exceptions.RoomOverflowException
 import com.example.common.kafkaconnections.RoomUpdateEvent
 import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.PlayerLeaveEvent
 import com.example.common.kafkaconnections.RoomUpdateEvent.Companion.RoomUpdateEventType
-import com.example.roomservice.repository.AccountInRoomEntity
-import com.example.roomservice.repository.AccountInRoomRepository
-import com.example.roomservice.repository.BannedAccountInRoomEntity
-import com.example.roomservice.repository.BannedAccountInRoomRepository
-import com.example.roomservice.repository.RoomEntity
-import com.example.roomservice.repository.RoomRepository
+import com.example.roomservice.repository.*
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component

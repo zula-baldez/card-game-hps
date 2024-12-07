@@ -1,7 +1,6 @@
 package com.example.authservice
 
 import com.example.authservice.client.LocalServiceTokenClient
-import com.example.authservice.service.RegistrationService
 import com.example.authservice.service.UserService
 import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.authservice.GenerateServiceTokenRequest
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
-import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever

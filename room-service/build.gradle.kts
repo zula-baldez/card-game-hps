@@ -94,7 +94,8 @@ tasks.withType<KotlinCompile> {
 sonar {
     val exclusions = listOf(
         "**/security/**",
-        "**/config/**"
+        "**/config/**",
+        "**/RoomServiceApplication.kt"
     )
     properties {
         property("sonar.projectKey", "room_service")

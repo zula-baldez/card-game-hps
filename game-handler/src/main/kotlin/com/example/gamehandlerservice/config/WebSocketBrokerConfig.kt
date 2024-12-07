@@ -1,6 +1,5 @@
 package com.example.gamehandlerservice.config
 
-import com.example.gamehandlerservice.service.game.registry.GameHandlerRegistry
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered

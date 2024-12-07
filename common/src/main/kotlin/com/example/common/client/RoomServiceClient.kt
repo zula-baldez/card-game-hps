@@ -1,9 +1,9 @@
 package com.example.common.client
 
 import com.example.common.dto.api.Pagination
-import com.example.common.dto.roomservice.RoomDto
 import com.example.common.dto.roomservice.AddAccountRequest
 import com.example.common.dto.roomservice.CreateRoomRequest
+import com.example.common.dto.roomservice.RoomDto
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody

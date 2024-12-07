@@ -3,7 +3,8 @@ package com.example
 import com.example.avatarsservice.service.KafkaAvatarResultProducer
 import com.example.common.dto.Avatar
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.springframework.kafka.core.KafkaTemplate
 
 class KafkaAvatarResultProducerTest {

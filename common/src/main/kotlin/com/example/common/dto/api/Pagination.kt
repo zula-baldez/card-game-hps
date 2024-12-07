@@ -1,10 +1,9 @@
 package com.example.common.dto.api
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.springframework.data.domain.Pageable
-
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.PositiveOrZero
+import org.springframework.data.domain.Pageable
 import kotlin.math.min
 
 data class Pagination(

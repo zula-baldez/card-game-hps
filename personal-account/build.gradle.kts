@@ -100,7 +100,8 @@ tasks.withType<KotlinCompile> {
 sonar {
     val exclusions = listOf(
         "**/security/**",
-        "**/config/**"
+        "**/config/**",
+        "**/PersonalAccountApplication.kt"
     )
     properties {
         property("sonar.projectKey", "personal_account")

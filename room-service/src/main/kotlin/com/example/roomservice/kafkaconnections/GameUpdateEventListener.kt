@@ -8,9 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.ReactiveSecurityContextHolder
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 import javax.security.sasl.AuthenticationException
 
 
