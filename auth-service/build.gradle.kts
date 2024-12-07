@@ -93,14 +93,13 @@ tasks.jacocoTestReport {
         xml.required = true
     }
     dependsOn(tasks.test)
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.map {
-            fileTree(it).apply {
-                exclude("**/config/**")
-                exclude("**/security/**")
-            }
-        }))
-    }
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it).apply {
+            exclude("**/config/**")
+            exclude("**/security/**")
+        }
+    }))
+
 }
 
 tasks.withType<Test> {
