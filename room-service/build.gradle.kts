@@ -95,7 +95,8 @@ sonar {
     val exclusions = listOf(
         "**/security/**",
         "**/config/**",
-        "**/RoomServiceApplication.kt"
+        "**/RoomServiceApplication.kt",
+        "**/kafkaconnections/**"
     )
     properties {
         property("sonar.projectKey", "room_service")

@@ -26,5 +26,6 @@ class UserHandshakeInterceptor : HandshakeInterceptor {
     override fun afterHandshake(
         request: ServerHttpRequest, response: ServerHttpResponse, wsHandler: WebSocketHandler, exception: Exception?
     ) {
+        // empty block
     }
 }

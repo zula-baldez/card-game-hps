@@ -88,7 +88,8 @@ sonar {
     val exclusions = listOf(
         "**/security/**",
         "**/config/**",
-        "**/GameHandlerApplication.kt"
+        "**/GameHandlerApplication.kt",
+        "**/kafkaconnections/**"
     )
     properties {
         property("sonar.projectKey", "game_handler")

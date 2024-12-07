@@ -46,4 +46,16 @@ class AccountEntity(
         }
         return false
     }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + fines
+        result = 31 * result + avatar.hashCode()
+        result = 31 * result + friends.hashCode()
+        result = 31 * result + incomingFriendRequests.hashCode()
+        result = 31 * result + (currentRoomId?.hashCode() ?: 0)
+        return result
+    }
+
 }

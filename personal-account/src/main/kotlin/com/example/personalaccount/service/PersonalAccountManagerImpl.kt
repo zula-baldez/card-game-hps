@@ -154,10 +154,6 @@ class PersonalAccountManagerImpl(
             pagination.toPageable()
         ).map { it.toDto() }
     }
-//
-//    private fun sendAddFine(id: Long) {
-//        simpMessagingTemplate.convertAndSend("/topic/fines", FineDTO(id))
-//    }
 
     override fun addFine(accountId: Long) {
         val account = accountService.findByIdOrThrow(accountId)
