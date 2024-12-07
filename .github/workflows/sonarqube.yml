@@ -32,5 +32,5 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           GRADLE_OPTS: "-Dorg.gradle.caching=true -Xmx2048m -XX:MaxMetaspaceSize=1024m"
         run: |
-          ./gradlew sonar --info
           ./gradlew jacocoTestReport
+          ./gradlew sonar --info
