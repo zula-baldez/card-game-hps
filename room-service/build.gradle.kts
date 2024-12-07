@@ -93,11 +93,11 @@ tasks.withType<KotlinCompile> {
 
 sonar {
     properties {
-        property("sonar.projectKey", "room-service")
+        property("sonar.projectKey", "room_service")
         property("sonar.projectName", "Room Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
+        property("sonar.login", "admin")
+        property("sonar.password", "penki")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }
@@ -108,8 +108,15 @@ tasks.test {
 tasks.jacocoTestReport {
     reports {
         xml.required = true
+        csv.required = true
     }
     dependsOn(tasks.test)
+    classDirectories.setFrom(files(classDirectories.files.map {
+        fileTree(it).apply {
+            exclude("**/config/**")
+            exclude("**/security/**")
+        }
+    }))
 }
 
 tasks.withType<Test> {

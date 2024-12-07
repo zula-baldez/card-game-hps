@@ -106,13 +106,9 @@ tasks.jacocoTestReport {
     }
     dependsOn(tasks.test)
     classDirectories.setFrom(files(classDirectories.files.map {
-        fileTree(it) {
-            setExcludes(
-                listOf(
-                    "**/config/**",
-                    "**/security/**"
-                )
-            )
+        fileTree(it).apply {
+            exclude("**/config/**")
+            exclude("**/security/**")
         }
     }))
 }
