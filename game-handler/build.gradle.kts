@@ -90,7 +90,7 @@ sonar {
         property("sonar.projectName", "Game Handler")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-property("sonar.password", System.getenv("SONAR_PASSWORD") ?: "")
+        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }

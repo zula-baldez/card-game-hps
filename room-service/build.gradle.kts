@@ -3,13 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.0"
-    id ("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
+    id("org.jetbrains.kotlin.plugin.lombok") version "1.8.0"
     kotlin("jvm") version "1.8.21"
     kotlin("plugin.spring") version "1.8.21"
-    id ("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
-    id ("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id ("org.sonarqube") version "5.1.0.4882"
-    id ("jacoco")
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("org.sonarqube") version "5.1.0.4882"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -97,7 +97,7 @@ sonar {
         property("sonar.projectName", "Room Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
         property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-property("sonar.password", System.getenv("SONAR_PASSWORD") ?: "")
+        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }
