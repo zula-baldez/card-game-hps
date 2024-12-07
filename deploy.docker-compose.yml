@@ -257,6 +257,8 @@ services:
       - "9000:9000"
     expose:
       - 9000
+    networks:
+      - tools
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://coi-sonar-db-1:5432/sonar
       SONAR_JDBC_USERNAME: ${SONAR_USER}
@@ -268,6 +270,8 @@ services:
       - "5438:5432"
     expose:
       - 5438
+    networks:
+      - tools
     environment:
       POSTGRES_DB: ${SONAR_DB}
       POSTGRES_USER: ${SONAR_USER}
@@ -275,3 +279,6 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+
+networks:
+  tools:
