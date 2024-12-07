@@ -9,8 +9,8 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id ("org.sonarqube") version "5.1.0.4882"
-    id ("jacoco")
+    id("org.sonarqube") version "5.1.0.4882"
+    id("jacoco")
 }
 
 group = "com.example"
@@ -112,7 +112,8 @@ sonar {
         property("sonar.projectKey", "avatars_service")
         property("sonar.projectName", "Avatars Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
+        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
+        property("sonar.password", System.getenv("SONAR_PASSWORD") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }

@@ -79,8 +79,8 @@ sonar {
         property("sonar.projectKey", "auth_service")
         property("sonar.projectName", "Auth Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", "admin")
-        property("sonar.password", "penki")
+        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
+        property("sonar.password", System.getenv("SONAR_PASSWORD") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
     }
 }
