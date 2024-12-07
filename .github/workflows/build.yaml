@@ -3,6 +3,14 @@ name: Build and deploy
 on: push
 
 jobs:
+  clear_old_service_image:
+    name: Delete old images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete images
+        id: delete_images
+        run: |
+          docker rmi -f $(docker images -aq)
   push_service_image:
     name: Push service image to registry
     runs-on: ubuntu-latest
