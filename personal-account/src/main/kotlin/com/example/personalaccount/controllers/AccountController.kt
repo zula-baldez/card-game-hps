@@ -8,33 +8,46 @@ import com.example.personalaccount.exceptions.InvalidAvatarFileException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AvatarsHandler
 import com.example.personalaccount.service.PersonalAccountManager
+import com.hazelcast.core.HazelcastInstance
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
+import lombok.extern.slf4j.Slf4j
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import java.util.concurrent.ConcurrentMap
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/accounts")
 @Tag(name = "account_controller", description = "Rest API for accounts")
+@Slf4j
 class AccountController(
     private val accountService: AccountService,
     private val personalAccountManager: PersonalAccountManager,
-    private val avatarsHandler: AvatarsHandler
+    private val avatarsHandler: AvatarsHandler,
+    private val hazelcastInstance: HazelcastInstance
 ) {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get account by id")
     fun getAccountById(@PathVariable id: Long): AccountDto {
-        return accountService.findByIdOrThrow(id).toDto()
+        if (retrieveMap().containsKey(id)) {
+            return retrieveMap()[id]!!
+        } else {
+            val account = accountService.findByIdOrThrow(id).toDto()
+            retrieveMap()[account.id] = account
+            return account
+        }
     }
 
     @PostMapping("")
     @Operation(summary = "Create account")
     fun createAccount(@RequestBody createAccountDto: CreateAccountDto): AccountDto {
-        return accountService.createAccountForUser(createAccountDto).toDto()
+        val account = accountService.createAccountForUser(createAccountDto).toDto()
+        retrieveMap()[account.id] = account
+        return account
     }
 
     @PutMapping("/{id}/room")
@@ -43,19 +56,23 @@ class AccountController(
         @PathVariable id: Long,
         @RequestBody updateAccountRoomRequest: UpdateAccountRoomRequest
     ): AccountDto {
-        return accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
+        val account = accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
+        retrieveMap()[account.id] = account
+        return account
     }
 
     @PutMapping("/{id}/avatar")
     @Operation(summary = "Update account avatar")
     fun updateAccountAvatar(@PathVariable id: Long, file: MultipartFile) {
         avatarsHandler.handleFile(id, file)
+        retrieveMap().remove(id)
     }
 
     @PostMapping("/{id}/fine")
     @Operation(summary = "Add fine to account")
     fun addFine(@PathVariable id: Long) {
         personalAccountManager.addFine(accountId = id)
+        retrieveMap().remove(id)
     }
 
     @ExceptionHandler(AccountNotFoundException::class)
@@ -70,4 +87,7 @@ class AccountController(
         return ex.message ?: "Invalid file"
     }
 
+    private fun retrieveMap(): ConcurrentMap<Long, AccountDto> {
+        return hazelcastInstance.getMap("map")
+    }
 }
