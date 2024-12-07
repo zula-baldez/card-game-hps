@@ -107,8 +107,8 @@ sonar {
         property("sonar.projectKey", "personal_account")
         property("sonar.projectName", "Personal Account")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", "admin")
-        property("sonar.password", "penki")
+        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
+        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.coverage.exclusions", exclusions)
     }
