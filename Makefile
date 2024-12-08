@@ -8,7 +8,7 @@ VERSION = $(shell date +"%Y%m%d.%H%M%S")-$(shell whoami)
 
 
 push-component:
-	docker compose build $(COMPONENT)
+	docker-compose build $(COMPONENT)
 	docker tag $(PREFIX)-$(COMPONENT) $(REGISTRY)/$(COMPONENT):$(VERSION)
 	docker push $(REGISTRY)/$(COMPONENT):$(VERSION)
 	@echo Pushed image $(REGISTRY)/$(COMPONENT):$(VERSION)
