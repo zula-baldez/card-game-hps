@@ -1,13 +1,13 @@
 let stompClient;
 const hostname = window.location.hostname;
-const gateway = `http://${hostname}:8085`
+const gateway = `http://${hostname}/gateway`
 
 function connect() {
     const roomId = parseInt($("#room-id").val());
     const userId = parseInt($("#user-id").val());
     const authToken = $("#authorization").val();
 
-    const brokerURL = `ws://${hostname}:8082/app/game?roomId=${roomId}`;
+    const brokerURL = `ws://${hostname}/app/game?roomId=${roomId}`;
 
     stompClient = new StompJs.Client({
         brokerURL: brokerURL,
