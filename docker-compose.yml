@@ -78,7 +78,9 @@ services:
       
       kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
       kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
-      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3  
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic user-registration --replication-factor 3 --partitions 3  
+      kafka-topics --bootstrap-server kafka0:9090 --create --if-not-exists --topic account-creation --replication-factor 3 --partitions 3  
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka0:9090 --list

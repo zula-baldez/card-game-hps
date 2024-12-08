@@ -3,33 +3,25 @@ package com.example.authservice.service
 import com.example.authservice.database.RoleRepository
 import com.example.authservice.database.UserEntity
 import com.example.authservice.database.UserRepository
-import com.example.authservice.jwt.TokenService
-import com.example.common.client.ReactivePersonalAccountClient
-import com.example.common.dto.authservice.AuthenticationResponse
 import com.example.common.dto.personalaccout.CreateAccountDto
 import com.example.common.util.Role
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import reactor.core.publisher.Mono
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class RegistrationService(
     private val userRepo: UserRepository,
     private val roleRepository: RoleRepository,
     private val encoder: PasswordEncoder,
-    private val tokenService: TokenService,
-    private val personalAccountClient: ReactivePersonalAccountClient,
-    private val jwtDecoder: JwtDecoder
+    private val createAccountDtoSender: CreateAccountDtoSender,
 ) {
     @Transactional
-    fun register(username: String, password: String) : Mono<AuthenticationResponse> {
+    fun register(username: String, password: String) {
         if (userRepo.findByName(username) != null) {
-            return Mono.error(BadCredentialsException("username is taken"))
+            throw BadCredentialsException("username is taken")
         }
 
         val pass = encoder.encode(password)
@@ -38,14 +30,19 @@ class RegistrationService(
         val userRole = roleRepository.findFirstByRoleName(Role.USER)
         userEntity.roles += userRole
         val savedUser = userRepo.save(userEntity)
-        val token = tokenService.generateAccessToken(savedUser, "user-token")
-        SecurityContextHolder.getContext().authentication = JwtAuthenticationToken(jwtDecoder.decode(token))
 
-        return personalAccountClient
-            .createAccount(CreateAccountDto(id = savedUser.id!!, username = username))
-            .doOnError {
-                userRepo.delete(savedUser)
-            }
-            .then(Mono.fromCallable { AuthenticationResponse(token, savedUser.id!!) })
+        createAccountDtoSender.sendCreateAccount(CreateAccountDto(savedUser.id!!, username))
+    }
+
+    @Transactional
+    fun commitRegistration(userId: Long) {
+        val user = userRepo.findById(userId).getOrNull() ?: throw IllegalArgumentException("user not found")
+        user.registered = true
+        userRepo.save(user)
+    }
+
+    @Transactional
+    fun rollbackRegistration(userId: Long) {
+        userRepo.deleteById(userId)
     }
 }

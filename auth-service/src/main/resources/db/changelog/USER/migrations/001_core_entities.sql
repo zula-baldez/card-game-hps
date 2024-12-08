@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users
 (
     id              BIGSERIAL,
     name            VARCHAR(255) UNIQUE,
-    password        VARCHAR(255)
+    password        VARCHAR(255),
+    registered      BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS roles

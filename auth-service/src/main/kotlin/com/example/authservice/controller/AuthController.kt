@@ -26,8 +26,11 @@ class AuthController(
     @PostMapping("/auth/register")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Operation(summary = "Register user")
-    fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<AuthenticationResponse> {
-        return registrationService.register(credentialsRequest.username, credentialsRequest.password)
+    @ResponseStatus(HttpStatus.CREATED)
+    fun register(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<Void> {
+        return Mono.fromRunnable {
+            registrationService.register(credentialsRequest.username, credentialsRequest.password)
+        }
     }
 
     @PostMapping("/auth/login")
