@@ -16,22 +16,24 @@ class UserService(
     val encoder: PasswordEncoder,
     val tokenService: TokenService
 ) {
-    fun login(username: String, password: String): Mono<AuthenticationResponse> {
+    fun login(username: String, password: String): AuthenticationResponse {
         val user = userRepo.findByName(username) ?: throw UsernameNotFoundException("not found")
 
-        return if (encoder.matches(password, user.password)) {
+        if (encoder.matches(password, user.password)) {
             val token = tokenService.generateAccessToken(user, "user-token")
-            Mono.just(AuthenticationResponse(token, user.id!!))
-        } else Mono.error(BadCredentialsException("Incorrect password"))
+            return AuthenticationResponse(token, user.id!!)
+        } else {
+            throw BadCredentialsException("Incorrect password")
+        }
     }
 
-    fun generateServiceTokenForUser(userId: Long, service: String): Mono<AuthenticationResponse> {
+    fun generateServiceTokenForUser(userId: Long, service: String): AuthenticationResponse {
         val user = userRepo.findById(userId).getOrNull() ?: throw UsernameNotFoundException("user with id $userId not found")
         val token = tokenService.generateAccessToken(user, service)
 
-        return Mono.just(AuthenticationResponse(
+        return AuthenticationResponse(
             token,
             user.id!!
-        ))
+        )
     }
 }

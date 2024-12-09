@@ -36,14 +36,18 @@ class AuthController(
     @PostMapping("/auth/login")
     @Operation(summary = "Login")
     fun login(@RequestBody @Valid credentialsRequest: CredentialsRequest): Mono<AuthenticationResponse> {
-        return userService.login(credentialsRequest.username, credentialsRequest.password)
+        return Mono.fromRunnable {
+            userService.login(credentialsRequest.username, credentialsRequest.password)
+        }
     }
 
     @PostMapping("/auth/service-token")
     @PreAuthorize("hasAuthority('SCOPE_SERVICE') and @AuthUtils.jwtClaimEquals(principal, 'name', #serviceTokenRequest.component2())")
     @Operation(summary = "Generate token for service")
     fun generateTokenForService(@RequestBody @Valid serviceTokenRequest: GenerateServiceTokenRequest): Mono<AuthenticationResponse> {
-        return userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
+        return Mono.fromRunnable {
+            userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
+        }
     }
 
     @GetMapping("/me")
