@@ -10,11 +10,15 @@ import com.example.personalaccount.exceptions.InvalidAvatarFileException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AvatarsHandler
 import com.example.personalaccount.service.PersonalAccountManager
+import com.hazelcast.core.HazelcastInstance
+import com.hazelcast.map.IMap
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -28,14 +32,21 @@ class AccountControllerTest {
     private lateinit var accountService: AccountService
     private lateinit var personalAccountManager: PersonalAccountManager
     private lateinit var accountController: AccountController
+    private lateinit var hazelcastInstance: HazelcastInstance
     private lateinit var avatarsHandler: AvatarsHandler
+
+    @Mock
+    private lateinit var map:  IMap<Long, AccountDto>
+
 
     @BeforeEach
     fun setUp() {
+        MockitoAnnotations.openMocks(this)
         accountService = mock()
         personalAccountManager = mock()
         avatarsHandler = mock()
-        accountController = AccountController(accountService, personalAccountManager, avatarsHandler)
+        hazelcastInstance = mock()
+        accountController = AccountController(accountService, personalAccountManager, avatarsHandler, hazelcastInstance)
         mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
     }
 
@@ -43,15 +54,19 @@ class AccountControllerTest {
     fun `should add fine to account`() {
         val accountId = 1L
 
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
+
         accountController.addFine(accountId)
 
         verify(personalAccountManager).addFine(accountId)
+
     }
 
     @Test
     fun `should return NOT_FOUND status when account not found`() {
         val accountId = 999L
         whenever(accountService.findByIdOrThrow(accountId)).thenThrow(AccountNotFoundException(accountId))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
 
         val exception = assertThrows<AccountNotFoundException> {
             accountController.getAccountById(accountId)
@@ -63,6 +78,7 @@ class AccountControllerTest {
     fun `should return 400 when invalid avatar file`() {
         val accountId = 999L
         whenever(accountService.findByIdOrThrow(accountId)).thenThrow(InvalidAvatarFileException("Invalid file"))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
 
         val exception = assertThrows<InvalidAvatarFileException> {
             accountController.getAccountById(accountId)
@@ -74,6 +90,7 @@ class AccountControllerTest {
     fun `should get account by id`() {
         val accountDto = AccountDto(id = 1, name = "testUser", fines = 0, avatar = "avatar", roomId = 1)
         `when`(accountService.findByIdOrThrow(1L)).thenReturn(toEntity(accountDto))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
 
         val result = accountController.getAccountById(1L)
         assertEquals(1, result.id)
@@ -88,6 +105,7 @@ class AccountControllerTest {
         val createAccountDto = CreateAccountDto(id = 1, username = "newUser")
         val accountDto = AccountDto(id = 1, name = "testUser", fines = 0, avatar = "avatar", roomId = 1)
         `when`(accountService.createAccountForUser(createAccountDto)).thenReturn(toEntity(accountDto))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
 
         val result = accountController.createAccount(createAccountDto)
         assertEquals(1, result.id)
@@ -102,6 +120,7 @@ class AccountControllerTest {
         val updateRequest = UpdateAccountRoomRequest(roomId = 3)
         val accountDto = AccountDto(id = 1, name = "testUser", fines = 0, avatar = "avatar", roomId = 3)
         `when`(accountService.updateAccountRoom(1L, 3)).thenReturn(toEntity(accountDto))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
 
         val result = accountController.updateAccountRoom(1L, updateRequest)
         assertEquals(1, result.id)
@@ -114,6 +133,7 @@ class AccountControllerTest {
     @Test
     fun `should update account avatar`() {
         val mockFile = MockMultipartFile("file", "avatar.png", "image/png", ByteArray(10))
+        whenever(hazelcastInstance.getMap<Long, AccountDto>("map")).thenReturn(map)
         accountController.updateAccountAvatar(1L, mockFile)
         verify(avatarsHandler).handleFile(1L, mockFile)
     }

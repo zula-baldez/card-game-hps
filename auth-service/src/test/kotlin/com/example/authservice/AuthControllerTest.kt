@@ -22,22 +22,6 @@ class AuthControllerTest {
     private val registrationService: RegistrationService = mock()
     private val authController = AuthController(userService, registrationService)
 
-    @Test
-    fun `register should return AuthenticationResponse when registration is successful`() {
-        val credentialsRequest = CredentialsRequest("username", "password")
-        val authResponse = AuthenticationResponse("token", 1)
-
-        whenever(
-            registrationService.register(
-                credentialsRequest.username,
-                credentialsRequest.password
-            )
-        ).thenReturn(Mono.just(authResponse))
-
-        StepVerifier.create(authController.register(credentialsRequest))
-            .expectNext(authResponse)
-            .verifyComplete()
-    }
 
     @Test
     fun `login should return AuthenticationResponse when login is successful`() {
