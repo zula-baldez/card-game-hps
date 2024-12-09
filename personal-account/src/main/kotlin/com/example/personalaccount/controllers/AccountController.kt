@@ -8,6 +8,7 @@ import com.example.personalaccount.exceptions.InvalidAvatarFileException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AvatarsHandler
 import com.example.personalaccount.service.PersonalAccountManager
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.hazelcast.core.HazelcastInstance
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -27,7 +28,8 @@ class AccountController(
     private val accountService: AccountService,
     private val personalAccountManager: PersonalAccountManager,
     private val avatarsHandler: AvatarsHandler,
-    private val hazelcastInstance: HazelcastInstance
+    private val hazelcastInstance: HazelcastInstance,
+    private val objectMapper: ObjectMapper
 ) {
     private val logger: Logger = LoggerFactory.getLogger(AccountController::class.java)
 
@@ -36,10 +38,10 @@ class AccountController(
     fun getAccountById(@PathVariable id: Long): AccountDto {
         if (retrieveMap().containsKey(id)) {
             logger.info("Got account $id from hazelcast!")
-            return retrieveMap()[id]!!
+            return objectMapper.readValue(retrieveMap()[id]!!, AccountDto::class.java)
         } else {
             val account = accountService.findByIdOrThrow(id).toDto()
-            retrieveMap()[account.id] = account
+            retrieveMap()[account.id] = objectMapper.writeValueAsString(account)
             return account
         }
     }
@@ -48,7 +50,7 @@ class AccountController(
     @Operation(summary = "Create account")
     fun createAccount(@RequestBody createAccountDto: CreateAccountDto): AccountDto {
         val account = accountService.createAccountForUser(createAccountDto).toDto()
-        retrieveMap()[account.id] = account
+        retrieveMap()[account.id] = objectMapper.writeValueAsString(account)
         return account
     }
 
@@ -59,7 +61,7 @@ class AccountController(
         @RequestBody updateAccountRoomRequest: UpdateAccountRoomRequest
     ): AccountDto {
         val account = accountService.updateAccountRoom(id, updateAccountRoomRequest.roomId).toDto()
-        retrieveMap()[account.id] = account
+        retrieveMap()[account.id] = objectMapper.writeValueAsString(account)
         return account
     }
 
@@ -89,7 +91,7 @@ class AccountController(
         return ex.message ?: "Invalid file"
     }
 
-    private fun retrieveMap(): ConcurrentMap<Long, AccountDto> {
+    private fun retrieveMap(): ConcurrentMap<Long, String> {
         return hazelcastInstance.getMap("map")
     }
 }
