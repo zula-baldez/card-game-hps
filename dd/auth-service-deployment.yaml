@@ -38,7 +38,7 @@ spec:
               value: postgres
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka-broker-0.kafka-broker-headless.default.svc.cluster.local:9092,kafka-broker-1.kafka-broker-headless.default.svc.cluster.local:9092,kafka-broker-2.kafka-broker-headless.default.svc.cluster.local:9092
-          image: cr.yandex/crpbk84pocbafpk713c4/auth-service:20241209.190330-runner
+          image: cr.yandex/crpbk84pocbafpk713c4/auth-service:20241209.194413-runner
           name: auth-service
           ports:
             - containerPort: 8081

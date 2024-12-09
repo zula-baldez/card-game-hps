@@ -14,7 +14,7 @@ class LocalServiceTokenClient(
     private val userService: UserService
 ) : ReactiveServiceTokenClient {
     override fun getServiceToken(serviceTokenRequest: GenerateServiceTokenRequest): Mono<AuthenticationResponse> {
-        return Mono.fromRunnable {
+        return Mono.fromCallable {
             userService.generateServiceTokenForUser(serviceTokenRequest.userId, serviceTokenRequest.serviceName)
         }
     }
