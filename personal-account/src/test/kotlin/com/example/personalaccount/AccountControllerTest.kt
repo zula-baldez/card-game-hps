@@ -10,6 +10,7 @@ import com.example.personalaccount.exceptions.InvalidAvatarFileException
 import com.example.personalaccount.service.AccountService
 import com.example.personalaccount.service.AvatarsHandler
 import com.example.personalaccount.service.PersonalAccountManager
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.map.IMap
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -34,6 +35,7 @@ class AccountControllerTest {
     private lateinit var accountController: AccountController
     private lateinit var hazelcastInstance: HazelcastInstance
     private lateinit var avatarsHandler: AvatarsHandler
+    private lateinit var objectMapper: ObjectMapper
 
     @Mock
     private lateinit var map:  IMap<Long, AccountDto>
@@ -46,8 +48,9 @@ class AccountControllerTest {
         personalAccountManager = mock()
         avatarsHandler = mock()
         hazelcastInstance = mock()
-        accountController = AccountController(accountService, personalAccountManager, avatarsHandler, hazelcastInstance)
-        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
+        objectMapper = mock()
+        accountController = AccountController(accountService, personalAccountManager, avatarsHandler, hazelcastInstance,objectMapper)
+        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build()
     }
 
     @Test
