@@ -34,6 +34,8 @@ spec:
               value: jdbc:postgresql://sonar-db.default.svc.cluster.local:5438/sonar
             - name: SONAR_JDBC_USERNAME
               value: sonar
+            - name: SONAR_WEB_CONTEXT
+              value: /sonar
           image: sonarqube:9.9-community
           name: sonarqube
           ports:

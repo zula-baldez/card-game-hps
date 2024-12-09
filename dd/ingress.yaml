@@ -27,12 +27,19 @@ spec:
                 port:
                   number: 8085
           - pathType: Prefix
-            path: "/game-handler"
+            path: "/app"
             backend:
               service:
                 name: game-handler
                 port:
                   number: 8082
+          - pathType: Prefix
+            path: "/sonar"
+            backend:
+              service:
+                name: sonarqube
+                port:
+                  number: 9000
           - pathType: Prefix
             path: "/"
             backend:
@@ -40,10 +47,4 @@ spec:
                 name: frontend
                 port:
                   number: 80
-          - pathType: Prefix
-            path: "/sonar"
-            backend:
-              service:
-                name: sonarqube
-                port:
-                  number: 80
+
