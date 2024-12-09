@@ -9,6 +9,7 @@ springdoc:
     prefix: /gateway
   api-docs:
     enabled: true
+    path: /gateway/api-docs
   swagger-ui:
     enabled: true
     urls:

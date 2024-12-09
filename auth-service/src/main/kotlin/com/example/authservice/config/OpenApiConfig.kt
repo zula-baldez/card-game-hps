@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.servers.Server
             email = "penki@niuitmo.ru"
         )
     ),
-    servers = [Server(url = "/auth-service", description = "Gateway server")]
+    servers = [Server(url = "/gateway/auth-service", description = "Gateway server")]
 )
 @SecurityScheme(
     name = "Bearer Authentication",
