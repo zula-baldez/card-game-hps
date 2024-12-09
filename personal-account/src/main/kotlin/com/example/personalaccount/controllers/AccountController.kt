@@ -12,9 +12,18 @@ import com.hazelcast.core.HazelcastInstance
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
-import lombok.extern.slf4j.Slf4j
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.util.concurrent.ConcurrentMap
 
@@ -22,18 +31,19 @@ import java.util.concurrent.ConcurrentMap
 @SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/accounts")
 @Tag(name = "account_controller", description = "Rest API for accounts")
-@Slf4j
 class AccountController(
     private val accountService: AccountService,
     private val personalAccountManager: PersonalAccountManager,
     private val avatarsHandler: AvatarsHandler,
     private val hazelcastInstance: HazelcastInstance
 ) {
+    private val logger: Logger = LoggerFactory.getLogger(AccountController::class.java)
 
     @GetMapping("/{id}")
     @Operation(summary = "Get account by id")
     fun getAccountById(@PathVariable id: Long): AccountDto {
         if (retrieveMap().containsKey(id)) {
+            logger.info("Got account $id from hazelcast!")
             return retrieveMap()[id]!!
         } else {
             val account = accountService.findByIdOrThrow(id).toDto()
