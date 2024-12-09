@@ -3,14 +3,6 @@ name: Build and deploy
 on: push
 
 jobs:
-  clear_old_service_image:
-    name: Delete old images
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete images
-        id: delete_images
-        run: |
-          docker rmi -f $(docker images -aq)
   push_service_image:
     name: Push service image to registry
     runs-on: ubuntu-latest
@@ -48,32 +40,3 @@ jobs:
         run: |
           touch .env.secrets
           make ${{ matrix.service }} push
-  deploy:
-    name: Deploy to PROD
-    runs-on: ubuntu-latest
-    needs:
-      - push_service_image
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-      - name: Create deploy file
-        env:
-          EUREKA_SERVER_VERSION: ${{ needs.push_service_image.outputs.eureka_server_version }}
-          CONFIG_SERVER_VERSION: ${{ needs.push_service_image.outputs.config_server_version }}
-          GATEWAY_SERVER_VERSION: ${{ needs.push_service_image.outputs.gateway_server_version }}
-          GAME_HANDLER_VERSION: ${{ needs.push_service_image.outputs.game_handler_version }}
-          AUTH_SERVICE_VERSION: ${{ needs.push_service_image.outputs.auth_service_version }}
-          PERSONAL_ACCOUNT_VERSION: ${{ needs.push_service_image.outputs.personal_account_version }}
-          ROOM_SERVICE_VERSION: ${{ needs.push_service_image.outputs.room_service_version }}
-          FRONTEND_VERSION: ${{ needs.push_service_image.outputs.frontend_version }}
-          AVATARS_SERVICE_VERSION: ${{ needs.push_service_image.outputs.avatars_service_version }}
-          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-          SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        run: ./envsub .env deploy.docker-compose.yml > temp.deploy.docker-compose.yml
-      - name: Login to YC CLI
-        uses: okar1/yc-cli-install@master
-        with:
-          SA_KEY: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-      - name: Run deploy
-        run: |
-          yc compute instance update-container epdd9td5s2o33u6f5ln7 --docker-compose-file=temp.deploy.docker-compose.yml
