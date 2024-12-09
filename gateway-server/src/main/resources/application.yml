@@ -5,6 +5,8 @@ spring:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:8090}/
 
 springdoc:
+  webjars:
+    prefix: /gateway
   api-docs:
     enabled: true
   swagger-ui:
