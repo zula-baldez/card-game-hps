@@ -21,7 +21,7 @@ spec:
         io.kompose.service: config-server
     spec:
       containers:
-        - image: cr.yandex/crpbk84pocbafpk713c4/config-server:20241208.153639-runner
+        - image: cr.yandex/crpbk84pocbafpk713c4/config-server:20241209.192410-runner
           name: config-server
           ports:
             - containerPort: 8090

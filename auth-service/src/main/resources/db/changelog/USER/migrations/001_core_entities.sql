@@ -29,13 +29,13 @@ VALUES
     ('SERVICE');
 
 
-INSERT INTO users (name, password)
+INSERT INTO users (name, password, registered)
 VALUES
-    ('admin', '$2a$10$TygvXDD7sx23DJtILn2yZOAlDFDuhOO/T0lxQ2ZZ9tyHxSyh2tmji'),
-    ('room-service', '$2a$10$ItpNLjKo6WV5vwTeqJ.yh.GwjipMGzPI7MF865uWbP572L1RRi7vG'),
-    ('personal-account', '$2a$10$t33jE.yelsRFDxmiyjOKT.mk.DdM2xogDVrdTtyEselq2jcC7Rr06'),
-    ('game-handler', '$2a$10$yUdMQdaGJV/py9.tUKN83.Hn.1qb2Y4sPhj6AInn1fUm7MAZ3aaVC'),
-    ('auth-service', '$2a$10$uYlgFqhS4tqvb0w8oeaI7uUGHCiK2/aMM74MRUORmGE4OwWugaRNG');
+    ('admin', '$2a$10$TygvXDD7sx23DJtILn2yZOAlDFDuhOO/T0lxQ2ZZ9tyHxSyh2tmji', true),
+    ('room-service', '$2a$10$ItpNLjKo6WV5vwTeqJ.yh.GwjipMGzPI7MF865uWbP572L1RRi7vG', true),
+    ('personal-account', '$2a$10$t33jE.yelsRFDxmiyjOKT.mk.DdM2xogDVrdTtyEselq2jcC7Rr06', true),
+    ('game-handler', '$2a$10$yUdMQdaGJV/py9.tUKN83.Hn.1qb2Y4sPhj6AInn1fUm7MAZ3aaVC', true),
+    ('auth-service', '$2a$10$uYlgFqhS4tqvb0w8oeaI7uUGHCiK2/aMM74MRUORmGE4OwWugaRNG', true);
 
 INSERT INTO user_role
 (
