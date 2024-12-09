@@ -10,10 +10,11 @@ springdoc:
   swagger-ui:
     enabled: true
     urls:
-      - url: /auth-service/v3/api-docs
+      - url: /gateway/auth-service/v3/api-docs
         name: Auth Service
-      - url: /room-service/v3/api-docs
+      - url: /gateway/room-service/v3/api-docs
         name: Room Service
-      - url: /personal-account/v3/api-docs
+      - url: /gateway/personal-account/v3/api-docs
         name: Personal Account
-
+    disable-swagger-default-url: true
+    path: /gateway

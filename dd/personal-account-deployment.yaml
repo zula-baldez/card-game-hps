@@ -36,7 +36,7 @@ spec:
               value: postgres
             - name: POSTGRES_PORT
               value: "5434"
-          image: cr.yandex/crpbk84pocbafpk713c4/personal-account:20241202.165631-runner
+          image: cr.yandex/crpbk84pocbafpk713c4/personal-account:20241209.175733-runner
           name: personal-account
           ports:
             - containerPort: 8083
