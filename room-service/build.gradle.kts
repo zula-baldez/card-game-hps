@@ -102,8 +102,7 @@ sonar {
         property("sonar.projectKey", "room_service")
         property("sonar.projectName", "Room Service")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
+        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.coverage.exclusions", exclusions)
     }

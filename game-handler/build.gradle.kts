@@ -95,8 +95,7 @@ sonar {
         property("sonar.projectKey", "game_handler")
         property("sonar.projectName", "Game Handler")
         property("sonar.host.url", System.getenv("SONAR_HOST_URL") ?: "")
-        property("sonar.login", System.getenv("SONAR_LOGIN") ?: "")
-        property("sonar.password", System.getenv("SONAR_UI_PASSWORD") ?: "")
+        property("sonar.login", System.getenv("SONAR_TOKEN") ?: "")
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.coverage.exclusions", exclusions)
     }
