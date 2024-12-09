@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f dd.yaml
+    kompose.version: 1.34.0 (HEAD)
+  labels:
+    io.kompose.service: avatars-service
+  name: avatars-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: avatars-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f dd.yaml
+        kompose.version: 1.34.0 (HEAD)
+      labels:
+        io.kompose.service: avatars-service
+    spec:
+      containers:
+
+        - env:
+            - name: CONFIG_SERVER_URL
+              value: http://config-server.default.svc.cluster.local:8090
+            - name: EUREKA_SERVER_URL
+              value: http://eureka-server.default.svc.cluster.local:8761/eureka/
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-broker-0.kafka-broker-headless.default.svc.cluster.local:9092,kafka-broker-1.kafka-broker-headless.default.svc.cluster.local:9092,kafka-broker-2.kafka-broker-headless.default.svc.cluster.local:9092
+          image: cr.yandex/crpbk84pocbafpk713c4/avatars-service:20241207.132818-runner
+          name: avatars-service
+          ports:
+            - containerPort: 8086
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: configmap
+      restartPolicy: Always
+

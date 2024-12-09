@@ -1,0 +1,284 @@
+version: "3.9"
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.1.1
+    expose:
+      - 2101
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka0:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    ports:
+      - '19090:19090'
+    expose:
+      - '9090'
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper.default.svc.cluster.local:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka0.default.svc.cluster.local:9090,HOST://0.0.0.0:19090
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka0.default.svc.cluster.local:9090,HOST://localhost:19090
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  kafka1:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "19091:19091"
+    expose:
+      - '9091'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper.default.svc.cluster.local:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka1.default.svc.cluster.local:9091,HOST://0.0.0.0:19091
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka1.default.svc.cluster.local:9091,HOST://localhost:19091
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  kafka2:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "19092:19092"
+    expose:
+      - '9092'
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,HOST:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka2.default.svc.cluster.local:9092,HOST://0.0.0.0:19092
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka2.default.svc.cluster.local:9092,HOST://localhost:19092
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '3'
+      KAFKA_MIN_INSYNC_REPLICAS: '2'
+
+  init-kafka:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - kafka0
+      - kafka1
+      - kafka2
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka0.default.svc.cluster.local:9090 --list
+
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka0.default.svc.cluster.local:9090 --create --if-not-exists --topic game-connection-to-game-handler --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0.default.svc.cluster.local:9090 --create --if-not-exists --topic game-connection-to-room-service --replication-factor 3 --partitions 3
+      kafka-topics --bootstrap-server kafka0.default.svc.cluster.local:9090 --create --if-not-exists --topic processed-avatars --replication-factor 3 --partitions 3
+
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka0.default.svc.cluster.local:9090 --list
+      "
+
+  eureka-server:
+    image: cr.yandex/crpbk84pocbafpk713c4/eureka-server:20241207.132815-runner
+    restart: always
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    environment:
+      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server.default.svc.cluster.local:8761/eureka"
+      - "CONFIG_SERVER_URL=http://config-server.default.svc.cluster.local:8090"
+
+
+  personal-account:
+    image: cr.yandex/crpbk84pocbafpk713c4/personal-account:20241207.132816-runner
+    ports:
+      - "8083:8083"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-personal-account
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: 
+      POSTGRES_PASSWORD: postgres
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+      KAFKA_BOOTSTRAP_SERVERS: kafka0.default.svc.cluster.local:9090,kafka1.default.svc.cluster.local:9091,kafka2.default.svc.cluster.local:9092
+    restart: always
+    depends_on:
+      - eureka-server
+      - db-personal-account
+      - config-server
+      - avatars-service
+
+  auth-service:
+    image: cr.yandex/crpbk84pocbafpk713c4/auth-service:20241207.132816-runner
+    ports:
+      - "8081:8081"
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-auth-service.default.svc.cluster.local
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+    depends_on:
+      - eureka-server
+      - db-auth-service
+      - config-server
+
+  game-handler:
+    image: cr.yandex/crpbk84pocbafpk713c4/game-handler:20241207.132816-runner
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+      KAFKA_BOOTSTRAP_SERVERS: kafka0.default.svc.cluster.local:9090,kafka1.default.svc.cluster.local:9091,kafka2.default.svc.cluster.local:9092
+    depends_on:
+      - eureka-server
+      - config-server
+      - init-kafka
+
+  room-service:
+    image: cr.yandex/crpbk84pocbafpk713c4/room-service:20241207.132815-runner
+    ports:
+      - "8084:8084"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: db-room-service.default.svc.cluster.local
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+      KAFKA_BOOTSTRAP_SERVERS: kafka0.default.svc.cluster.local:9090,kafka1.default.svc.cluster.local:9091,kafka2.default.svc.cluster.local:9092
+    depends_on:
+      - eureka-server
+      - db-room-service
+      - config-server
+      - init-kafka
+    restart: always
+
+  gateway-server:
+    image: cr.yandex/crpbk84pocbafpk713c4/gateway-server:20241207.132816-runner
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - config-server
+    restart: always
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+
+  config-server:
+    image: cr.yandex/crpbk84pocbafpk713c4/config-server:20241207.132814-runner
+    restart: always
+    ports:
+      - "8090:8090"
+
+  db-auth-service:
+    image: postgres:15.2
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  db-personal-account:
+    image: postgres:15.2
+    ports:
+      - "5434:5432"
+    expose:
+      - 5434
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  db-room-service:
+    image: postgres:15.2
+    ports:
+      - "5435:5432"
+    expose:
+      - 5435
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  frontend:
+    image: cr.yandex/crpbk84pocbafpk713c4/frontend:20241207.132818-runner
+    ports:
+      - "80:3000"
+
+  avatars-service:
+    image: cr.yandex/crpbk84pocbafpk713c4/avatars-service:20241207.132818-runner
+    depends_on:
+      - init-kafka
+      - eureka-server
+      - config-server
+    expose:
+      - 8086
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server.default.svc.cluster.local:8761/eureka/
+      CONFIG_SERVER_URL: http://config-server.default.svc.cluster.local:8090
+      ACCESS_KEY_ID: 
+      SECRET_ACCESS_KEY: 
+      KAFKA_BOOTSTRAP_SERVERS: kafka0.default.svc.cluster.local:9090,kafka1.default.svc.cluster.local:9091,kafka2.default.svc.cluster.local:9092
+    restart: always
+
+  sonarqube:
+    image: sonarqube:9.9-community
+    restart: always
+    depends_on:
+      - sonar-db
+    ports:
+      - "9000:9000"
+    expose:
+      - 9000
+    networks:
+      - tools
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-db.default.svc.cluster.local:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+
+  sonar-db:
+    image: postgres:15.2
+    ports:
+      - "5438:5432"
+    expose:
+      - 5438
+    networks:
+      - tools
+    environment:
+      POSTGRES_DB: sonar
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+networks:
+  tools:
