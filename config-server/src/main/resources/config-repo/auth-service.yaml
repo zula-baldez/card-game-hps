@@ -34,6 +34,8 @@ service:
     password:
       auth-service
 
+kafka:
+  bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19090,localhost:19091,localhost:19092}
 
 rsa:
   private-key: classpath:certs/private.pem

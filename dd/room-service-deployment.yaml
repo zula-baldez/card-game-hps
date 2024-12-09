@@ -38,7 +38,7 @@ spec:
               value: "5435"
             - name: POSTGRES_USER
               value: postgres
-          image: cr.yandex/crpbk84pocbafpk713c4/room-service:20241207.132815-runner
+          image: cr.yandex/crpbk84pocbafpk713c4/room-service:20241209.190331-runner
           name: room-service
           ports:
             - containerPort: 8084
