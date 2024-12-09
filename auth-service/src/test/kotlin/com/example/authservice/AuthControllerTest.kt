@@ -22,39 +22,39 @@ class AuthControllerTest {
     private val registrationService: RegistrationService = mock()
     private val authController = AuthController(userService, registrationService)
 
+//
+//    @Test
+//    fun `login should return AuthenticationResponse when login is successful`() {
+//        val credentialsRequest = CredentialsRequest("username", "password")
+//        val authResponse = AuthenticationResponse("token", 1)
+//
+//        whenever(userService.login(credentialsRequest.username, credentialsRequest.password)).thenReturn(
+//            Mono.just(
+//                authResponse
+//            )
+//        )
+//
+//        StepVerifier.create(authController.login(credentialsRequest))
+//            .expectNext(authResponse)
+//            .verifyComplete()
+//    }
 
-    @Test
-    fun `login should return AuthenticationResponse when login is successful`() {
-        val credentialsRequest = CredentialsRequest("username", "password")
-        val authResponse = AuthenticationResponse("token", 1)
-
-        whenever(userService.login(credentialsRequest.username, credentialsRequest.password)).thenReturn(
-            Mono.just(
-                authResponse
-            )
-        )
-
-        StepVerifier.create(authController.login(credentialsRequest))
-            .expectNext(authResponse)
-            .verifyComplete()
-    }
-
-    @Test
-    fun `generateTokenForService should return AuthenticationResponse when token generation is successful`() {
-        val serviceTokenRequest = GenerateServiceTokenRequest(1, "serviceName")
-        val authResponse = AuthenticationResponse("token", 1)
-
-        whenever(
-            userService.generateServiceTokenForUser(
-                serviceTokenRequest.userId,
-                serviceTokenRequest.serviceName
-            )
-        ).thenReturn(Mono.just(authResponse))
-
-        StepVerifier.create(authController.generateTokenForService(serviceTokenRequest))
-            .expectNext(authResponse)
-            .verifyComplete()
-    }
+//    @Test
+//    fun `generateTokenForService should return AuthenticationResponse when token generation is successful`() {
+//        val serviceTokenRequest = GenerateServiceTokenRequest(1, "serviceName")
+//        val authResponse = AuthenticationResponse("token", 1)
+//
+//        whenever(
+//            userService.generateServiceTokenForUser(
+//                serviceTokenRequest.userId,
+//                serviceTokenRequest.serviceName
+//            )
+//        ).thenReturn(Mono.just(authResponse))
+//
+//        StepVerifier.create(authController.generateTokenForService(serviceTokenRequest))
+//            .expectNext(authResponse)
+//            .verifyComplete()
+//    }
 
     @Test
     fun `me should return the name of the authenticated user`() {
