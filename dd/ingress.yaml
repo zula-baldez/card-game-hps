@@ -34,7 +34,7 @@ spec:
                 port:
                   number: 8082
           - pathType: Prefix
-            path: ""
+            path: "/"
             backend:
               service:
                 name: frontend

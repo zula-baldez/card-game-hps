@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: sonarqube
   name: sonarqube
 spec:
+  type: NodePort
   ports:
     - name: "9000"
       port: 9000
