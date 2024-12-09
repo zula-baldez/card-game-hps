@@ -26,7 +26,7 @@ spec:
               value: http://config-server.default.svc.cluster.local:8090
             - name: EUREKA_SERVER_URL
               value: http://eureka-server.default.svc.cluster.local:8761/eureka/
-          image: cr.yandex/crpbk84pocbafpk713c4/gateway-server:20241207.132816-runner
+          image: cr.yandex/crpbk84pocbafpk713c4/gateway-server:20241209.181455-runner
           name: gateway-server
           ports:
             - containerPort: 8085
