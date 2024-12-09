@@ -33,7 +33,8 @@ dependencies {
     implementation("org.springframework:spring-websocket:6.1.14")
     implementation("org.springframework:spring-messaging:6.1.14")
     implementation("org.springframework.kafka:spring-kafka:3.3.0")
-    implementation("com.hazelcast:hazelcast:4.2")
+    implementation("com.hazelcast:hazelcast-kubernetes:2.2.3")
+
 
     implementation("com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1")
 

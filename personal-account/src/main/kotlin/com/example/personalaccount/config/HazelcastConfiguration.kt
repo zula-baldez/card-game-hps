@@ -12,6 +12,7 @@ class HazelcastConfiguration {
     fun hazelcastInstance(): HazelcastInstance {
         val config = ClientConfig()
         config.setClusterName("dev")
+
         config.networkConfig.kubernetesConfig.setEnabled(true)
             .setProperty("namespace", "default")
             .setProperty("service-name", "hz-hazelcast")
